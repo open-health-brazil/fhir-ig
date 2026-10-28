@@ -1,0 +1,55 @@
+name: Update FHIR packages
+
+on:
+  schedule:
+    - cron: '0 9 * * 1' # Mondays, 06:00 BRT
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - id: check
+        run: node scripts/check-updates.ts --write
+      - if: steps.check.outputs.changed == 'true'
+        id: generate
+        run: |
+          npm run fhir:update 2> warnings.txt
+          {
+            echo 'warnings<<EOF'
+            cat warnings.txt
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+          rm warnings.txt
+      # PRs opened with the default GITHUB_TOKEN do not trigger other workflows.
+      # Set the UPDATE_PR_TOKEN secret (a fine-grained PAT) so validate.yml runs on the PR.
+      - if: steps.check.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.UPDATE_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          branch: chore/update-fhir-packages
+          commit-message: 'chore: update pinned FHIR packages'
+          title: 'chore: update pinned FHIR packages'
+          body: |
+            Nova versão marcada como `current` por um publicador de pacotes:
+
+            ${{ steps.check.outputs.summary }}
+
+            Avisos do gerador:
+            ```
+            ${{ steps.generate.outputs.warnings }}
+            ```
+
+            Antes do merge:
+            - [ ] revisar o diff em `src/data/generated/` (perfis adicionados, removidos ou alterados);
+            - [ ] conferir se o validador de exemplos passou;
+            - [ ] revisar as páginas afetadas;
+            - [ ] adicionar uma entrada em `src/content/docs/sobre/changelog.mdx`.
