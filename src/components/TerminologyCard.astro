@@ -1,0 +1,79 @@
+---
+import { Aside } from '@astrojs/starlight/components';
+import { meta, terminologies } from '../data/fhir';
+
+interface Props {
+	/** CodeSystem id in the terminologia package, e.g. "BRCBO". */
+	id: string;
+}
+
+const cs = terminologies.find((t) => t.resourceType === 'CodeSystem' && t.id === Astro.props.id);
+if (!cs || cs.resourceType !== 'CodeSystem') throw new Error(`CodeSystem not found: ${Astro.props.id}`);
+
+const valueSets = terminologies.filter((t) => t.resourceType === 'ValueSet' && t.includes.includes(cs.url));
+const termVersion = meta.packages.find((p) => p.id === 'br.gov.saude.terminologia.fhir')?.version;
+---
+
+<div class="isb-term not-content">
+	<dl>
+		<dt>Nome</dt>
+		<dd>{cs.title ?? cs.name}</dd>
+		<dt>Canônica (CodeSystem)</dt>
+		<dd><code>{cs.url}</code></dd>
+		<dt>URIs legadas</dt>
+		<dd>{cs.legacy.length ? cs.legacy.map((u) => <code>{u}</code>) : '—'}</dd>
+		<dt>Conteúdo no pacote</dt>
+		<dd>
+			<code>{cs.content}</code>
+			{cs.count !== null && cs.content === 'complete' && ` (${cs.count} códigos)`}
+		</dd>
+		{valueSets.length > 0 && (
+			<>
+				<dt>ValueSets que o usam</dt>
+				<dd>{valueSets.map((v) => <code>{v.url}</code>)}</dd>
+			</>
+		)}
+		<dt>Página no guia de terminologia</dt>
+		<dd><a href={`https://terminologia.saude.gov.br/fhir/CodeSystem-${cs.id}.html`}>CodeSystem-{cs.id}</a></dd>
+	</dl>
+</div>
+{
+	cs.content === 'not-present' && (
+		<Aside type="caution" title="Códigos não incluídos no pacote">
+			O pacote de terminologia {termVersion} declara este CodeSystem com <code>content = not-present</code>: ele
+			define a URL canônica, mas não traz os códigos. Validadores não conseguem conferir os códigos sem um servidor de
+			terminologia. Obtenha a lista na fonte oficial indicada nesta página.
+		</Aside>
+	)
+}
+
+<style>
+	.isb-term {
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.5rem;
+		padding: 1rem;
+		margin-block: 1rem;
+	}
+	dl {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		gap: 0.35rem 1rem;
+		margin: 0;
+		font-size: var(--sl-text-sm);
+	}
+	dt {
+		color: var(--isb-muted);
+	}
+	dd {
+		margin: 0;
+	}
+	dd code {
+		display: block;
+		overflow-wrap: anywhere;
+	}
+	@media (max-width: 40rem) {
+		dl {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

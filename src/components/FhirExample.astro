@@ -1,0 +1,28 @@
+---
+import { Code } from '@astrojs/starlight/components';
+
+interface Props {
+	/** Path relative to examples/, e.g. "recursos/paciente.json". */
+	file: string;
+	title?: string;
+}
+
+const examples = import.meta.glob<string>('/examples/**/*.json', { query: '?raw', import: 'default', eager: true });
+const { file, title } = Astro.props;
+const source = examples[`/examples/${file}`];
+if (source === undefined) throw new Error(`Example not found: examples/${file}`);
+---
+
+<Code code={source.trimEnd()} lang="json" title={title ?? `examples/${file}`} />
+<p class="isb-example-note">
+	Exemplo validado no CI com o validador oficial da HL7 contra o BR Core.
+	<a href={`https://github.com/open-health-brazil/fhir-ig/blob/main/examples/${file}`}>Ver arquivo</a>.
+</p>
+
+<style>
+	.isb-example-note {
+		font-size: var(--sl-text-xs);
+		color: var(--isb-muted);
+		margin-top: 0.25rem;
+	}
+</style>

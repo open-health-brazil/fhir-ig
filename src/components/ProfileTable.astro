@@ -1,0 +1,127 @@
+---
+import { getProfile, lastSegment, sourceLabel, type ProfileElement, type ProfileSource } from '../data/fhir';
+
+interface Props {
+	source: ProfileSource;
+	id: string;
+	/** Only show elements whose id starts with this prefix, e.g. "Patient.identifier". */
+	only?: string;
+	/** Hide elements the profile prohibits (max = 0). */
+	hideProhibited?: boolean;
+}
+
+const { source, id, only, hideProhibited = false } = Astro.props;
+const profile = getProfile(source, id);
+
+const elements = profile.elements.filter(
+	(e) => (!only || e.id === only || e.id.startsWith(`${only}.`) || e.id.startsWith(`${only}:`)) && !(hideProhibited && e.max === '0'),
+);
+
+// Strip the resource type and show slices the way FHIR tooling does (identifier:cpf.system).
+const label = (e: ProfileElement) => e.id.slice(profile.type.length + 1) || e.id;
+const depth = (e: ProfileElement) => label(e).split('.').length - 1;
+const card = (e: ProfileElement) => `${e.min ?? '·'}..${e.max ?? '·'}`;
+const types = (e: ProfileElement) =>
+	(e.types ?? []).map((t) => (t.profiles?.length ? `${t.code}(${t.profiles.map(lastSegment).join(' | ')})` : t.code)).join(', ');
+const value = (e: ProfileElement) => {
+	if (!e.fixed) return '';
+	const v = e.fixed.value;
+	return typeof v === 'object' ? JSON.stringify(v) : String(v);
+};
+---
+
+<div class="isb-table-wrap not-content">
+	<table class="isb-profile-table">
+		<thead>
+			<tr>
+				<th>Elemento</th>
+				<th>Card.</th>
+				<th>Tipo</th>
+				<th title="Must Support">MS</th>
+				<th>Binding / valor</th>
+				<th>Descrição</th>
+			</tr>
+		</thead>
+		<tbody>
+			{
+				elements.map((e) => (
+					<tr class:list={{ prohibited: e.max === '0', slice: !!e.sliceName }}>
+						<td style={`padding-left: ${0.5 + depth(e) * 0.9}rem`}>
+							<code>{label(e)}</code>
+						</td>
+						<td class="nowrap">{card(e)}</td>
+						<td>{types(e)}</td>
+						<td>{e.mustSupport ? 'S' : ''}</td>
+						<td>
+							{e.binding && (
+								<span title={e.binding.valueSet}>
+									<code>{e.binding.valueSet ? lastSegment(e.binding.valueSet) : '—'}</code> ({e.binding.strength})
+								</span>
+							)}
+							{e.fixed && (
+								<span>
+									{e.fixed.kind === 'fixed' ? '= ' : '≈ '}
+									<code>{value(e)}</code>
+								</span>
+							)}
+						</td>
+						<td>{e.short}</td>
+					</tr>
+				))
+			}
+		</tbody>
+	</table>
+</div>
+<p class="isb-table-caption">
+	Elementos restringidos pelo perfil <code>{profile.name}</code> ({sourceLabel(profile)}), gerados automaticamente.
+	<strong>·</strong> na cardinalidade significa "herdado do perfil base". <strong>MS</strong> = Must Support.
+	<strong>=</strong> valor fixo; <strong>≈</strong> padrão (pattern). Linhas esmaecidas são proibidas (máx. 0).
+</p>
+
+<style>
+	.isb-table-wrap {
+		overflow-x: auto;
+		max-height: 36rem;
+		overflow-y: auto;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.5rem;
+		margin-top: 1rem;
+	}
+	.isb-profile-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: var(--sl-text-xs);
+	}
+	th {
+		position: sticky;
+		top: 0;
+		background: var(--sl-color-gray-6);
+		text-align: left;
+		padding: 0.4rem 0.5rem;
+		border-bottom: 1px solid var(--sl-color-gray-5);
+	}
+	td {
+		padding: 0.3rem 0.5rem;
+		vertical-align: top;
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+	tr:nth-child(even) td {
+		background: var(--isb-table-stripe);
+	}
+	tr.prohibited td {
+		opacity: 0.5;
+	}
+	tr.slice > td:first-child code {
+		color: var(--sl-color-accent-high);
+	}
+	td code {
+		overflow-wrap: anywhere;
+	}
+	.nowrap {
+		white-space: nowrap;
+	}
+	.isb-table-caption {
+		font-size: var(--sl-text-xs);
+		color: var(--isb-muted);
+	}
+</style>

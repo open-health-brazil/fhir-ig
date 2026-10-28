@@ -1,0 +1,70 @@
+---
+import { namingSystems } from '../data/fhir';
+
+interface Props {
+	/** NamingSystem ids from the terminologia package, in display order. */
+	ids: string[];
+}
+
+const rows = Astro.props.ids.map((id) => {
+	const ns = namingSystems.find((n) => n.id === id);
+	if (!ns) throw new Error(`NamingSystem not found: ${id}`);
+	return ns;
+});
+---
+
+<div class="isb-table-wrap not-content">
+	<table>
+		<thead>
+			<tr>
+				<th>Identificador</th>
+				<th><code>system</code> no BR Core</th>
+				<th>URI legada (RNDS)</th>
+			</tr>
+		</thead>
+		<tbody>
+			{
+				rows.map((ns) => (
+					<tr>
+						<td>{ns.description ?? ns.name}</td>
+						<td><code>{ns.preferred}</code></td>
+						<td>{ns.legacy.length ? ns.legacy.map((u) => <code>{u}</code>) : '—'}</td>
+					</tr>
+				))
+			}
+		</tbody>
+	</table>
+</div>
+<p class="isb-table-caption">Gerado a partir dos NamingSystems do pacote de terminologia.</p>
+
+<style>
+	.isb-table-wrap {
+		overflow-x: auto;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.5rem;
+		margin-top: 1rem;
+	}
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: var(--sl-text-sm);
+	}
+	th,
+	td {
+		text-align: left;
+		padding: 0.4rem 0.6rem;
+		vertical-align: top;
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+	th {
+		background: var(--sl-color-gray-6);
+	}
+	td code {
+		display: block;
+		overflow-wrap: anywhere;
+	}
+	.isb-table-caption {
+		font-size: var(--sl-text-xs);
+		color: var(--isb-muted);
+	}
+</style>
