@@ -1,0 +1,44 @@
+{
+  "key": "BRCodigoSerialMedicamento",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRCodigoSerialMedicamento",
+  "version": null,
+  "name": "BRCodigoSerialMedicamento",
+  "title": "Código Serial de Medicamento",
+  "status": "draft",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Extensão utilizada para identificar o código serial do medicamento.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.id",
+      "path": "Extension.id",
+      "max": "0"
+    },
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRCodigoSerialMedicamento"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Código serial da unidade de medicamento"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "key": "BRContatoHanseniase",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRContatoHanseniase",
+  "version": "1.0",
+  "name": "BRContatoHanseniase",
+  "title": "Contato Hanseníase",
+  "status": "active",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Extensão utilizada para identificar indivíduos com contato próximo de pacientes que vivem com Hanseníase.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRContatoHanseniase"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ]
+    }
+  ]
+}

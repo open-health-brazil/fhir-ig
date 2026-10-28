@@ -1,0 +1,38 @@
+{
+  "key": "BRAtendeSUS-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAtendeSUS-1.0",
+  "version": "1.0",
+  "name": "BRAtendeSUS",
+  "title": "Atende SUS?",
+  "status": "active",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Extensão utilizada para identificar se um profissional ou Estabelecimento de Saúde oferece atendimento pelo Sistema Único de Saúde (SUS).",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAtendeSUS-1.0"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ]
+    }
+  ]
+}

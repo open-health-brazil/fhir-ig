@@ -1,0 +1,64 @@
+{
+  "key": "br-core-organization-memberof",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization-memberof",
+  "version": "1.7.1",
+  "name": "BRCoreOrganizationMemberOf",
+  "title": "Vínculo do Estabelecimento",
+  "status": "active",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Extensão que representa a organização à qual o estabelecimento está vinculado, por exemplo um Polo-base da Saúde Indígena. Diferente de Organization.partOf (0..1, usado para a mantenedora), um estabelecimento pode ter vários vínculos: alguns estabelecimentos (CNES) estão vinculados a mais de um polo-base.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Extension.extension",
+      "path": "Extension.extension",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Extension"
+        }
+      ],
+      "sliced": true,
+      "short": "Extension"
+    },
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "http://hl7.org/fhirpath/System.String"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization-memberof"
+      },
+      "short": "identifies the meaning of the extension"
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Organização vinculada"
+    }
+  ]
+}

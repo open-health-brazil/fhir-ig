@@ -1,0 +1,165 @@
+{
+  "key": "BRProfissional-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProfissional-1.0",
+  "version": "1.0",
+  "name": "BRProfissional",
+  "title": "Profissional",
+  "status": "active",
+  "kind": "resource",
+  "type": "Practitioner",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Practitioner",
+  "description": "Indivíduo que realiza atividades profissionais.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Practitioner.identifier",
+      "path": "Practitioner.identifier",
+      "types": [
+        {
+          "code": "Identifier",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRDocumentoIndividuo-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Practitioner.active",
+      "path": "Practitioner.active",
+      "min": 1,
+      "mustSupport": true,
+      "short": "Registro em Uso"
+    },
+    {
+      "id": "Practitioner.name",
+      "path": "Practitioner.name",
+      "types": [
+        {
+          "code": "HumanName",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRNomeIndividuo-1.0"
+          ]
+        }
+      ],
+      "short": "Nome do Profissional"
+    },
+    {
+      "id": "Practitioner.telecom",
+      "path": "Practitioner.telecom",
+      "types": [
+        {
+          "code": "ContactPoint",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMeioContato-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Practitioner.address",
+      "path": "Practitioner.address",
+      "types": [
+        {
+          "code": "Address",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREndereco-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Practitioner.gender",
+      "path": "Practitioner.gender",
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRSexo-1.0"
+      },
+      "short": "Sexo"
+    },
+    {
+      "id": "Practitioner.birthDate",
+      "path": "Practitioner.birthDate",
+      "mustSupport": true,
+      "short": "Data de Nascimento"
+    },
+    {
+      "id": "Practitioner.photo",
+      "path": "Practitioner.photo",
+      "max": "0"
+    },
+    {
+      "id": "Practitioner.qualification",
+      "path": "Practitioner.qualification",
+      "mustSupport": true,
+      "short": "Qualificação"
+    },
+    {
+      "id": "Practitioner.qualification.identifier",
+      "path": "Practitioner.qualification.identifier",
+      "max": "0"
+    },
+    {
+      "id": "Practitioner.qualification.code",
+      "path": "Practitioner.qualification.code",
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BROcupacao-1.0"
+      },
+      "short": "Qualificação do Profissional"
+    },
+    {
+      "id": "Practitioner.qualification.code.coding",
+      "path": "Practitioner.qualification.code.coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Practitioner.qualification.code.coding.system",
+      "path": "Practitioner.qualification.code.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Practitioner.qualification.code.coding.code",
+      "path": "Practitioner.qualification.code.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Practitioner.qualification.code.coding.display",
+      "path": "Practitioner.qualification.code.coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Practitioner.qualification.code.coding.userSelected",
+      "path": "Practitioner.qualification.code.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Practitioner.qualification.code.text",
+      "path": "Practitioner.qualification.code.text",
+      "max": "0"
+    },
+    {
+      "id": "Practitioner.qualification.period",
+      "path": "Practitioner.qualification.period",
+      "mustSupport": true,
+      "short": "Período da Qualificação"
+    },
+    {
+      "id": "Practitioner.qualification.issuer",
+      "path": "Practitioner.qualification.issuer",
+      "max": "0"
+    },
+    {
+      "id": "Practitioner.communication",
+      "path": "Practitioner.communication",
+      "max": "0"
+    }
+  ]
+}

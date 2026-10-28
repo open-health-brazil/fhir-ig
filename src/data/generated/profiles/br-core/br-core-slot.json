@@ -1,0 +1,115 @@
+{
+  "key": "br-core-slot",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-slot",
+  "version": "1.7.1",
+  "name": "BRCoreSlot",
+  "title": "br-core-slot",
+  "status": "active",
+  "kind": "resource",
+  "type": "Slot",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Slot",
+  "description": "Perfil brasileiro do recurso FHIR R4 Slot, utilizado para representar a disponibilidade e reservas de tempo em sistemas de agendamento, interoperabilidade e integração com a RNDS, permitindo a comunicação entre agendas, prestadores e sistemas de marcação de consultas e procedimentos.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Slot.serviceCategory",
+      "path": "Slot.serviceCategory",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRModalidadeAssistencial"
+      },
+      "short": "Categoria do serviço"
+    },
+    {
+      "id": "Slot.serviceType",
+      "path": "Slot.serviceType",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRFormaOrganizacaoTabelaSUS"
+      },
+      "short": "Tipo de serviço"
+    },
+    {
+      "id": "Slot.specialty",
+      "path": "Slot.specialty",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BROcupacao"
+      },
+      "short": "Especialidade clínica"
+    },
+    {
+      "id": "Slot.appointmentType",
+      "path": "Slot.appointmentType",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://terminology.hl7.org/ValueSet/v2-0276"
+      },
+      "short": "Tipo de agendamento"
+    },
+    {
+      "id": "Slot.schedule",
+      "path": "Slot.schedule",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-schedule"
+          ]
+        }
+      ],
+      "short": "Referência para agenda"
+    },
+    {
+      "id": "Slot.status",
+      "path": "Slot.status",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/slotstatus"
+      },
+      "short": "Status do slot"
+    }
+  ]
+}

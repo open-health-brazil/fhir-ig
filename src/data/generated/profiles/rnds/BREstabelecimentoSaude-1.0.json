@@ -1,0 +1,233 @@
+{
+  "key": "BREstabelecimentoSaude-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+  "version": "1.0",
+  "name": "BREstabelecimentoSaude",
+  "title": "Estabelecimento de Saúde",
+  "status": "active",
+  "kind": "resource",
+  "type": "Organization",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Organization",
+  "description": "Espaço físico delimitado e permanente onde são realizadas ações e serviços de saúde humana sob responsabilidade técnica.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Organization.extension",
+      "path": "Organization.extension",
+      "sliced": true
+    },
+    {
+      "id": "Organization.extension:isSUS",
+      "path": "Organization.extension",
+      "sliceName": "isSUS",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAtendeSUS-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Atende SUS"
+    },
+    {
+      "id": "Organization.extension:outsourcedAdministrator",
+      "path": "Organization.extension",
+      "sliceName": "outsourcedAdministrator",
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAdministradorTerceiro-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true
+    },
+    {
+      "id": "Organization.extension:outsourcedAdministrator.value[x]",
+      "path": "Organization.extension.value[x]",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPessoaJuridica-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Organization.identifier",
+      "path": "Organization.identifier",
+      "max": "0"
+    },
+    {
+      "id": "Organization.active",
+      "path": "Organization.active",
+      "min": 1,
+      "short": "Estabelecimento de Saúde Ativo"
+    },
+    {
+      "id": "Organization.type",
+      "path": "Organization.type",
+      "min": 1,
+      "max": "1",
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRTipoEstabelecimentoSaude-1.0"
+      },
+      "short": "Tipo do Estabelecimento de Saúde"
+    },
+    {
+      "id": "Organization.type.coding",
+      "path": "Organization.type.coding",
+      "min": 1,
+      "max": "1",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRTipoEstabelecimentoSaude-1.0"
+      }
+    },
+    {
+      "id": "Organization.type.coding.system",
+      "path": "Organization.type.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Organization.type.coding.code",
+      "path": "Organization.type.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Organization.type.coding.display",
+      "path": "Organization.type.coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Organization.type.coding.userSelected",
+      "path": "Organization.type.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Organization.type.text",
+      "path": "Organization.type.text",
+      "max": "0"
+    },
+    {
+      "id": "Organization.name",
+      "path": "Organization.name",
+      "min": 1,
+      "mustSupport": true,
+      "short": "Nome"
+    },
+    {
+      "id": "Organization.alias",
+      "path": "Organization.alias",
+      "min": 1,
+      "max": "1",
+      "mustSupport": true,
+      "short": "Nome Empresarial"
+    },
+    {
+      "id": "Organization.telecom",
+      "path": "Organization.telecom",
+      "types": [
+        {
+          "code": "ContactPoint",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMeioContato-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Organization.telecom.period",
+      "path": "Organization.telecom.period",
+      "max": "0"
+    },
+    {
+      "id": "Organization.address",
+      "path": "Organization.address",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Address",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREndereco-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Organization.address.use",
+      "path": "Organization.address.use",
+      "max": "0"
+    },
+    {
+      "id": "Organization.address.type",
+      "path": "Organization.address.type",
+      "max": "0"
+    },
+    {
+      "id": "Organization.address.period",
+      "path": "Organization.address.period",
+      "max": "0"
+    },
+    {
+      "id": "Organization.partOf",
+      "path": "Organization.partOf",
+      "min": 1,
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPessoaJuridicaProfissionalLiberal-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "CPF/CNPJ do Estabelecimento/Mantenedora"
+    },
+    {
+      "id": "Organization.partOf.reference",
+      "path": "Organization.partOf.reference",
+      "min": 1
+    },
+    {
+      "id": "Organization.partOf.type",
+      "path": "Organization.partOf.type",
+      "max": "0"
+    },
+    {
+      "id": "Organization.partOf.identifier",
+      "path": "Organization.partOf.identifier",
+      "max": "0"
+    },
+    {
+      "id": "Organization.partOf.display",
+      "path": "Organization.partOf.display",
+      "max": "0"
+    },
+    {
+      "id": "Organization.contact",
+      "path": "Organization.contact",
+      "max": "0"
+    },
+    {
+      "id": "Organization.endpoint",
+      "path": "Organization.endpoint",
+      "max": "0"
+    }
+  ]
+}

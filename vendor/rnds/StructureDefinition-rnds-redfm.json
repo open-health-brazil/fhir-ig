@@ -1,0 +1,741 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "rnds-redfm",
+  "meta": {
+    "versionId": "1",
+    "lastUpdated": "2026-08-07T14:22:32.427+00:00"
+  },
+  "language": "pt-BR",
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSRegistroEletronicoDispensacaoFornecimentoMedicamentos",
+  "version": "2.0.0",
+  "name": "RNDSRegistroEletronicoDispensacaoFornecimentoMedicamentos",
+  "title": "Registro Eletrônico de Dispensação ou Fornecimento de Medicamentos - REDFM",
+  "status": "active",
+  "date": "2024-12-10",
+  "publisher": "Ministério da Saúde do Brasil",
+  "contact": [
+    {
+      "name": "COPIS - Coordenação de Padrões e Interoperabilidade em Saúde",
+      "telecom": [
+        {
+          "system": "url",
+          "value": "https://webatendimento.saude.gov.br/faq/rnds"
+        }
+      ]
+    }
+  ],
+  "description": "Documento público que coleta os dados das prescrições de medicamentos realizadas em qualquer estabelecimento de saúde do país, público ou privado.",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "BR",
+          "display": "Brazil"
+        }
+      ]
+    }
+  ],
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Composition",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Composition",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Composition",
+        "path": "Composition",
+        "constraint": [
+          {
+            "key": "dfm-1",
+            "severity": "error",
+            "human": "Caso a prescrição não esteja disponível na RNDS é necessário enviar as informações na seção Informações da Prescrição.",
+            "expression": "Composition.section.entry.resolve().ofType(MedicationDispense).authorizingPrescription.exists(id = 'out-of-rnds') implies Composition.section.code.coding.exists(code = '57828-6')"
+          },
+          {
+            "key": "ident-2",
+            "severity": "error",
+            "human": "O número de CPF ou CNS do indivíduo deve ser igual em seus respecitivos elementos dos recursos (subject.identifier.value).",
+            "expression": "section.entry.resolve().all(subject.exists().not() or (subject.identifier.value = %context.subject.identifier.value))"
+          },
+          {
+            "key": "ident-3",
+            "severity": "error",
+            "human": "O número de CPF ou CNS do indivíduo deve ser igual em seus respecitivos elementos dos recursos (subject.identifier.value).",
+            "expression": "section.section.entry.resolve().all(subject.exists().not() or (subject.identifier.value = %context.subject.identifier.value))"
+          }
+        ]
+      },
+      {
+        "id": "Composition.id",
+        "path": "Composition.id",
+        "short": "ID lógico deste artefato",
+        "min": 1
+      },
+      {
+        "id": "Composition.meta",
+        "path": "Composition.meta",
+        "short": "Metadados sobre o recurso"
+      },
+      {
+        "id": "Composition.implicitRules",
+        "path": "Composition.implicitRules",
+        "short": "Conjunto de regras utilizadas para a elaboração deste conteúdo"
+      },
+      {
+        "id": "Composition.language",
+        "path": "Composition.language",
+        "short": "Idioma do conteúdo do recurso"
+      },
+      {
+        "id": "Composition.text",
+        "path": "Composition.text",
+        "short": "Resumo do recurso para interpretação humana"
+      },
+      {
+        "id": "Composition.contained",
+        "path": "Composition.contained",
+        "short": "Recursos contidos neste artefato"
+      },
+      {
+        "id": "Composition.modifierExtension",
+        "path": "Composition.modifierExtension",
+        "short": "Extensões que não podem ser ignoradas"
+      },
+      {
+        "id": "Composition.identifier",
+        "path": "Composition.identifier",
+        "short": "Identificador independente da versão da Composition"
+      },
+      {
+        "id": "Composition.status",
+        "path": "Composition.status",
+        "short": "Estado do documento: final | entered-in-error",
+        "mustSupport": true,
+        "binding": {
+          "strength": "required",
+          "description": "Estado do Documento",
+          "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BREstadoDocumento-1.0"
+        }
+      },
+      {
+        "id": "Composition.type",
+        "path": "Composition.type",
+        "short": "Tipo de Documento",
+        "definition": "Especifica o tipo de documento que está sendo enviado na composição.",
+        "min": 1,
+        "mustSupport": true,
+        "binding": {
+          "strength": "required",
+          "description": "Tipo de Documento",
+          "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRTipoDocumento-1.0"
+        }
+      },
+      {
+        "id": "Composition.type.id",
+        "path": "Composition.type.id",
+        "short": "ID exclusivo para referência entre elementos"
+      },
+      {
+        "id": "Composition.type.extension",
+        "path": "Composition.type.extension",
+        "short": "Conteúdo adicional definido por implementações"
+      },
+      {
+        "id": "Composition.type.coding",
+        "path": "Composition.type.coding",
+        "short": "Código definido por uma terminologia",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Composition.type.coding.id",
+        "path": "Composition.type.coding.id",
+        "short": "ID exclusivo para referência entre elementos"
+      },
+      {
+        "id": "Composition.type.coding.extension",
+        "path": "Composition.type.coding.extension",
+        "short": "Conteúdo adicional definido por implementações"
+      },
+      {
+        "id": "Composition.type.coding.system",
+        "path": "Composition.type.coding.system",
+        "short": "Identificador do sistema de terminologia",
+        "min": 1
+      },
+      {
+        "id": "Composition.type.coding.version",
+        "path": "Composition.type.coding.version",
+        "short": "Versão da terminologia"
+      },
+      {
+        "id": "Composition.type.coding.code",
+        "path": "Composition.type.coding.code",
+        "short": "Código conforme terminologia",
+        "min": 1
+      },
+      {
+        "id": "Composition.type.coding.display",
+        "path": "Composition.type.coding.display",
+        "short": "Descrição conforme definição da terminologia"
+      },
+      {
+        "id": "Composition.type.coding.userSelected",
+        "path": "Composition.type.coding.userSelected",
+        "short": "Se esta codificação foi escolhida diretamente pelo usuário"
+      },
+      {
+        "id": "Composition.type.text",
+        "path": "Composition.type.text",
+        "short": "Representação em texto livre do conceito"
+      },
+      {
+        "id": "Composition.category",
+        "path": "Composition.category",
+        "short": "Categorização da Composition"
+      },
+      {
+        "id": "Composition.subject",
+        "path": "Composition.subject",
+        "short": "Sobre quem e/ou sobre o que é a Composition",
+        "definition": "Quem ou o quê a composição se refere. Pode ser um indivíduo, dispositivo, grupos (de indivíduos, dispositivos etc.).",
+        "comment": "Nesta versão, a RNDS suportará somente indivíduos.",
+        "min": 1,
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Composition.subject.id",
+        "path": "Composition.subject.id",
+        "short": "ID exclusivo para referência entre elementos"
+      },
+      {
+        "id": "Composition.subject.extension",
+        "path": "Composition.subject.extension",
+        "short": "Conteúdo adicional definido por implementações"
+      },
+      {
+        "id": "Composition.subject.reference",
+        "path": "Composition.subject.reference",
+        "short": "Referência literal, URL relativa, interna ou absoluta"
+      },
+      {
+        "id": "Composition.subject.type",
+        "path": "Composition.subject.type",
+        "short": "Tipo ao qual a referência se refere"
+      },
+      {
+        "id": "Composition.subject.identifier",
+        "path": "Composition.subject.identifier",
+        "short": "Referência lógica, quando a referência literal não é conhecida",
+        "min": 1,
+        "constraint": [
+          {
+            "key": "ident-1",
+            "severity": "error",
+            "human": "O número de CPF ou CNS do indivíduo informado é inválido (subject.identifier.value).",
+            "expression": "value.matches('^(?!(\\\\d)\\\\1{10})\\\\d{11}$') or value.matches('^(?!(\\\\d)\\\\1{14})[125789]\\\\d{14}$')"
+          }
+        ]
+      },
+      {
+        "id": "Composition.subject.identifier.system",
+        "path": "Composition.subject.identifier.system",
+        "min": 1
+      },
+      {
+        "id": "Composition.subject.identifier.value",
+        "path": "Composition.subject.identifier.value",
+        "min": 1
+      },
+      {
+        "id": "Composition.subject.display",
+        "path": "Composition.subject.display",
+        "short": "Texto alternativo para o recurso"
+      },
+      {
+        "id": "Composition.encounter",
+        "path": "Composition.encounter",
+        "short": "Contato assistencial descrito nesta Composition"
+      },
+      {
+        "id": "Composition.date",
+        "path": "Composition.date",
+        "short": "Data/hora de Geração do Documento",
+        "definition": "Data e hora em que o documento foi gerado.",
+        "constraint": [
+          {
+            "key": "date-1",
+            "severity": "error",
+            "human": "A data do documento (Composition.date) deve ser no formato 'Ano-Mês-Dia'. Exemplo: 2026-01-01.",
+            "expression": "value.matches('^(200[1-9]|20[1-9]\\\\d|[2-9]\\\\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\\\d|3[01])$')"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Composition.author",
+        "path": "Composition.author",
+        "short": "Quem e/ou o que foi o autor desta Composition",
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Composition.author.identifier",
+        "path": "Composition.author.identifier",
+        "short": "Referência lógica, quando a referência literal não é conhecida",
+        "min": 1,
+        "constraint": [
+          {
+            "key": "estab-1",
+            "severity": "error",
+            "human": "A identificação do estabelecimento de saúde é inválida.",
+            "expression": "value.matches('^(?!(\\\\d)\\\\1{6})\\\\d{7}$') or value.matches('^(?!(\\\\d)\\\\1{10})\\\\d{11}$') or value.matches('^(?!(\\\\d)\\\\1{13})[A-Z0-9]{12}\\\\d{2}$')"
+          }
+        ]
+      },
+      {
+        "id": "Composition.author.identifier.system",
+        "path": "Composition.author.identifier.system",
+        "min": 1
+      },
+      {
+        "id": "Composition.author.identifier.value",
+        "path": "Composition.author.identifier.value",
+        "min": 1
+      },
+      {
+        "id": "Composition.title",
+        "path": "Composition.title",
+        "short": "Título do Documento",
+        "definition": "Título do Documento",
+        "fixedString": "Registro Eletrônico de Dispensação ou Fornecimento de Medicamentos"
+      },
+      {
+        "id": "Composition.relatesTo",
+        "path": "Composition.relatesTo",
+        "short": "Relacionamentos com outras Compositions/Documents",
+        "definition": "Indica uma relação entre esse documento e outro documento (ou composição) existente.",
+        "requirements": "Este elemento deve ser utilizado exclusivamente para indicar que este documento substitui (replaces) outro documento / composição; ou seja, é utilizado para cancelar o anterior e passar a considerar este no seu lugar. Este documento receberá um ID próprio; o documento anterior continuará disponível na RNDS e poderá ser recuperado integralmente por referência direta ao seu ID, garantindo a rastreabilidade do processo, mas não estará diretamente disponível na timeline do cidadão.",
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Composition.relatesTo.code",
+        "path": "Composition.relatesTo.code",
+        "short": "Tipo de Relacionamento",
+        "definition": "Indica o tipo de relacionamento que este documento tem com o outro documento (composição).",
+        "requirements": "O valor é fixado em replaces, pois a substituição de documentos é a única operação permitida na RNDS.",
+        "fixedCode": "replaces"
+      },
+      {
+        "id": "Composition.relatesTo.target[x]",
+        "path": "Composition.relatesTo.target[x]",
+        "short": "Relacionamento alvo",
+        "definition": "Referência ao documento anterior que este documento está substituindo.",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSRegistroEletronicoDispensacaoFornecimentoMedicamentos"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.relatesTo.target[x].reference",
+        "path": "Composition.relatesTo.target[x].reference",
+        "min": 1
+      },
+      {
+        "id": "Composition.event",
+        "path": "Composition.event",
+        "short": "Serviços assistenciais documentados"
+      },
+      {
+        "id": "Composition.event.id",
+        "path": "Composition.event.id",
+        "short": "ID exclusivo para referência entre elementos"
+      },
+      {
+        "id": "Composition.event.extension",
+        "path": "Composition.event.extension",
+        "short": "Conteúdo adicional definido por implementações"
+      },
+      {
+        "id": "Composition.event.modifierExtension",
+        "path": "Composition.event.modifierExtension",
+        "short": "Extensões que não podem ser ignoradas mesmo que não sejam reconhecidas"
+      },
+      {
+        "id": "Composition.event.code",
+        "path": "Composition.event.code",
+        "short": "Código(s) aplicável(is) aos eventos documentados"
+      },
+      {
+        "id": "Composition.event.period",
+        "path": "Composition.event.period",
+        "short": "O período de tempo coberto pela composition."
+      },
+      {
+        "id": "Composition.event.detail",
+        "path": "Composition.event.detail",
+        "short": "Referência aos eventos da Composition"
+      },
+      {
+        "id": "Composition.section",
+        "path": "Composition.section",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "code"
+            }
+          ],
+          "rules": "open"
+        },
+        "short": "A seção inicial da composition a partir da qual as demais seções são definidas",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Composition.section.id",
+        "path": "Composition.section.id",
+        "short": "Identificador exclusivo para referência entre elemento"
+      },
+      {
+        "id": "Composition.section.extension",
+        "path": "Composition.section.extension",
+        "short": "Conteúdo adicional definido por implementações"
+      },
+      {
+        "id": "Composition.section.modifierExtension",
+        "path": "Composition.section.modifierExtension",
+        "short": "Extensões que não podem ser ignoradas mesmo que não sejam reconhecidas"
+      },
+      {
+        "id": "Composition.section.title",
+        "path": "Composition.section.title",
+        "short": "Título da seção"
+      },
+      {
+        "id": "Composition.section.code",
+        "path": "Composition.section.code",
+        "short": "Um código que identifica o tipo de conteúdo contido dentro da seção."
+      },
+      {
+        "id": "Composition.section.author",
+        "path": "Composition.section.author",
+        "short": "Quem e/ou o que foi o autor desta seção"
+      },
+      {
+        "id": "Composition.section.focus",
+        "path": "Composition.section.focus",
+        "short": "Quem/o que é a seção"
+      },
+      {
+        "id": "Composition.section.text",
+        "path": "Composition.section.text",
+        "short": "Resumo em texto livre da seção"
+      },
+      {
+        "id": "Composition.section.mode",
+        "path": "Composition.section.mode",
+        "short": "Método de processamento da seção"
+      },
+      {
+        "id": "Composition.section.orderedBy",
+        "path": "Composition.section.orderedBy",
+        "short": "Especifica a ordem dos itens nas sections.entry"
+      },
+      {
+        "id": "Composition.section.entry",
+        "path": "Composition.section.entry",
+        "short": "Uma referência ao recurso a partir  do qual narrativa da seção é derivada."
+      },
+      {
+        "id": "Composition.section.emptyReason",
+        "path": "Composition.section.emptyReason",
+        "short": "Explicação porquê a secção está vazia"
+      },
+      {
+        "id": "Composition.section.section",
+        "path": "Composition.section.section",
+        "short": "Uma subseção aninhada dentro desta seção",
+        "mustSupport": true
+      },
+      {
+        "id": "Composition.section:dispensedMedications",
+        "path": "Composition.section",
+        "sliceName": "dispensedMedications",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Composition.section:dispensedMedications.title",
+        "path": "Composition.section.title",
+        "min": 1,
+        "fixedString": "Medicamentos Dispensados"
+      },
+      {
+        "id": "Composition.section:dispensedMedications.code",
+        "path": "Composition.section.code",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "56445-0"
+            }
+          ]
+        },
+        "binding": {
+          "strength": "preferred",
+          "valueSet": "http://hl7.org/fhir/ValueSet/document-classcodes"
+        }
+      },
+      {
+        "id": "Composition.section:dispensedMedications.code.coding",
+        "path": "Composition.section.code.coding",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Composition.section:dispensedMedications.code.coding.system",
+        "path": "Composition.section.code.coding.system",
+        "min": 1
+      },
+      {
+        "id": "Composition.section:dispensedMedications.code.coding.code",
+        "path": "Composition.section.code.coding.code",
+        "min": 1,
+        "fixedCode": "56445-0"
+      },
+      {
+        "id": "Composition.section:dispensedMedications.entry",
+        "path": "Composition.section.entry",
+        "min": 1,
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSDispensacaoMedicamento"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.section:dispensedMedications.entry.reference",
+        "path": "Composition.section.entry.reference",
+        "min": 1
+      },
+      {
+        "id": "Composition.section:prescriptionInformation",
+        "path": "Composition.section",
+        "sliceName": "prescriptionInformation",
+        "max": "1"
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.title",
+        "path": "Composition.section.title",
+        "min": 1,
+        "fixedString": "Informações da Prescrição"
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.code",
+        "path": "Composition.section.code",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "57828-6"
+            }
+          ]
+        },
+        "binding": {
+          "strength": "preferred",
+          "valueSet": "http://hl7.org/fhir/ValueSet/document-classcodes"
+        }
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.code.coding",
+        "path": "Composition.section.code.coding",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.code.coding.system",
+        "path": "Composition.section.code.coding.system",
+        "min": 1
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.code.coding.code",
+        "path": "Composition.section.code.coding.code",
+        "min": 1,
+        "fixedCode": "57828-6"
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section",
+        "path": "Composition.section.section",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "code"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionReason",
+        "path": "Composition.section.section",
+        "sliceName": "prescriptionReason",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionReason.title",
+        "path": "Composition.section.section.title",
+        "min": 1,
+        "fixedString": "Motivo(s) da Prescrição"
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionReason.code",
+        "path": "Composition.section.section.code",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "75310-3"
+            }
+          ]
+        },
+        "binding": {
+          "strength": "preferred",
+          "valueSet": "http://hl7.org/fhir/ValueSet/c80-doc-typecodes"
+        }
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionReason.code.coding",
+        "path": "Composition.section.section.code.coding",
+        "min": 1
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionReason.code.coding.system",
+        "path": "Composition.section.section.code.coding.system",
+        "min": 1
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionReason.code.coding.code",
+        "path": "Composition.section.section.code.coding.code",
+        "min": 1,
+        "fixedCode": "75310-3"
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionReason.entry",
+        "path": "Composition.section.section.entry",
+        "min": 1,
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProblemaDiagnostico"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionReason.entry.reference",
+        "path": "Composition.section.section.entry.reference",
+        "min": 1
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionMedications",
+        "path": "Composition.section.section",
+        "sliceName": "prescriptionMedications",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionMedications.title",
+        "path": "Composition.section.section.title",
+        "min": 1,
+        "fixedString": "Medicamentos Prescritos"
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionMedications.code",
+        "path": "Composition.section.section.code",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "57828-6"
+            }
+          ]
+        },
+        "binding": {
+          "strength": "preferred",
+          "valueSet": "http://hl7.org/fhir/ValueSet/c80-doc-typecodes"
+        }
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionMedications.code.coding",
+        "path": "Composition.section.section.code.coding",
+        "min": 1
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionMedications.code.coding.system",
+        "path": "Composition.section.section.code.coding.system",
+        "min": 1
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionMedications.code.coding.code",
+        "path": "Composition.section.section.code.coding.code",
+        "min": 1,
+        "fixedCode": "57828-6"
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionMedications.entry",
+        "path": "Composition.section.section.entry",
+        "min": 1,
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSPrescricaoMedicamento"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.section:prescriptionInformation.section:prescriptionMedications.entry.reference",
+        "path": "Composition.section.section.entry.reference",
+        "min": 1
+      }
+    ]
+  }
+}

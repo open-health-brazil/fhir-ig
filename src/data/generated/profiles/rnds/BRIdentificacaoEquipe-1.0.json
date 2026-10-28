@@ -1,0 +1,38 @@
+{
+  "key": "BRIdentificacaoEquipe-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIdentificacaoEquipe-1.0",
+  "version": "1.0",
+  "name": "BRIdentificacaoEquipe",
+  "title": "Identificador Nacional de Equipe",
+  "status": "draft",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Extensão para permitir informar o código do Identificador Nacional de Equipe.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIdentificacaoEquipe-1.0"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "integer"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,776 @@
+{
+  "key": "br-core-cadsus-ml",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-cadsus-ml",
+  "version": "1.7.1",
+  "name": "BRCoreCadSUSML",
+  "title": "Modelo de Informação do CadSUS",
+  "status": "draft",
+  "kind": "logical",
+  "type": "https://br-core.saude.gov.br/fhir/StructureDefinition/BRCoreCadSUSML",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Base",
+  "description": "Modelo lógico do Modelo de Informação do Cadastro Nacional de Pessoas para a Saúde (CadSUS), Anexo XLII à Portaria de Consolidação GM/MS nº 1, de 28 de setembro de 2017, na redação da Portaria GM/MS nº 12.263, de 1º de outubro de 2026 (DOU de 5/10/2026, Seção 1, Edição Extra A, p. 6). Cada elemento cita o artigo do Anexo. O Anexo não define cardinalidades: todos os elementos são opcionais neste modelo, e as obrigatoriedades ficam nos perfis FHIR que o implementam.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "BRCoreCadSUSML.identificacao",
+      "path": "BRCoreCadSUSML.identificacao",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Bloco de identificação e dados pessoais"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.cpf",
+      "path": "BRCoreCadSUSML.identificacao.cpf",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "CPF"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.cns",
+      "path": "BRCoreCadSUSML.identificacao.cns",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "CNS"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.dnv",
+      "path": "BRCoreCadSUSML.identificacao.dnv",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Número da Declaração de Nascido Vivo"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.nomeCompleto",
+      "path": "BRCoreCadSUSML.identificacao.nomeCompleto",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Nome completo"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.nomeSocial",
+      "path": "BRCoreCadSUSML.identificacao.nomeSocial",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Nome social"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.gemeo",
+      "path": "BRCoreCadSUSML.identificacao.gemeo",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "Gêmeo"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.dataNascimento",
+      "path": "BRCoreCadSUSML.identificacao.dataNascimento",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "date"
+        }
+      ],
+      "short": "Data de nascimento"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.filiacao",
+      "path": "BRCoreCadSUSML.identificacao.filiacao",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Filiação"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.filiacao.nome",
+      "path": "BRCoreCadSUSML.identificacao.filiacao.nome",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Nome do genitor"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.filiacao.tipo",
+      "path": "BRCoreCadSUSML.identificacao.filiacao.tipo",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Mãe ou pai"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.sexoNascimento",
+      "path": "BRCoreCadSUSML.identificacao.sexoNascimento",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Sexo ao nascer"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.paisNascimento",
+      "path": "BRCoreCadSUSML.identificacao.paisNascimento",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "País de nascimento"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.municipioNascimento",
+      "path": "BRCoreCadSUSML.identificacao.municipioNascimento",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Município de nascimento"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.obito",
+      "path": "BRCoreCadSUSML.identificacao.obito",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Indicador de óbito e atributos"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.obito.indicador",
+      "path": "BRCoreCadSUSML.identificacao.obito.indicador",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "Indicador de óbito"
+    },
+    {
+      "id": "BRCoreCadSUSML.identificacao.obito.data",
+      "path": "BRCoreCadSUSML.identificacao.obito.data",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "Data do óbito"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Bloco de dados pessoais sensíveis e autodeclarados"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.identidadeGenero",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.identidadeGenero",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Identidade de gênero"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.sexoPaciente",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.sexoPaciente",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Sexo do paciente"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.orientacaoSexual",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.orientacaoSexual",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Orientação sexual"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.racaCor",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.racaCor",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Raça/cor"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.indigena",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.indigena",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Dados indígenas"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.indigena.etnia",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.indigena.etnia",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Etnia indígena"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.indigena.dsei",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.indigena.dsei",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Distrito Sanitário Especial Indígena"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.indigena.poloBase",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.indigena.poloBase",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Polo Base"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.indigena.aldeado",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.indigena.aldeado",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "Aldeado"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.indigena.aldeia",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.indigena.aldeia",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Aldeia"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.povoComunidadeTradicional",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.povoComunidadeTradicional",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Povos e comunidades tradicionais"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.situacaoMoradia",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.situacaoMoradia",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Situação de moradia"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.tipoSanguineo",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.tipoSanguineo",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Tipo sanguíneo"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.pessoaComDeficiencia",
+      "path": "BRCoreCadSUSML.dadosSensiveisAutodeclarados.pessoaComDeficiencia",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Pessoa com deficiência"
+    },
+    {
+      "id": "BRCoreCadSUSML.enderecoContato",
+      "path": "BRCoreCadSUSML.enderecoContato",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Bloco de endereços e contatos"
+    },
+    {
+      "id": "BRCoreCadSUSML.enderecoContato.endereco",
+      "path": "BRCoreCadSUSML.enderecoContato.endereco",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Endereço"
+    },
+    {
+      "id": "BRCoreCadSUSML.enderecoContato.endereco.cep",
+      "path": "BRCoreCadSUSML.enderecoContato.endereco.cep",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "CEP"
+    },
+    {
+      "id": "BRCoreCadSUSML.enderecoContato.endereco.logradouro",
+      "path": "BRCoreCadSUSML.enderecoContato.endereco.logradouro",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Logradouro"
+    },
+    {
+      "id": "BRCoreCadSUSML.enderecoContato.endereco.numero",
+      "path": "BRCoreCadSUSML.enderecoContato.endereco.numero",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Número"
+    },
+    {
+      "id": "BRCoreCadSUSML.enderecoContato.endereco.complemento",
+      "path": "BRCoreCadSUSML.enderecoContato.endereco.complemento",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Complemento"
+    },
+    {
+      "id": "BRCoreCadSUSML.enderecoContato.endereco.bairro",
+      "path": "BRCoreCadSUSML.enderecoContato.endereco.bairro",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Bairro"
+    },
+    {
+      "id": "BRCoreCadSUSML.enderecoContato.endereco.zona",
+      "path": "BRCoreCadSUSML.enderecoContato.endereco.zona",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Zona"
+    },
+    {
+      "id": "BRCoreCadSUSML.enderecoContato.endereco.pais",
+      "path": "BRCoreCadSUSML.enderecoContato.endereco.pais",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "País de residência"
+    },
+    {
+      "id": "BRCoreCadSUSML.enderecoContato.endereco.municipio",
+      "path": "BRCoreCadSUSML.enderecoContato.endereco.municipio",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Município de residência"
+    },
+    {
+      "id": "BRCoreCadSUSML.enderecoContato.email",
+      "path": "BRCoreCadSUSML.enderecoContato.email",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "E-mail"
+    },
+    {
+      "id": "BRCoreCadSUSML.enderecoContato.telefone",
+      "path": "BRCoreCadSUSML.enderecoContato.telefone",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Telefone"
+    },
+    {
+      "id": "BRCoreCadSUSML.enderecoContato.telefone.numero",
+      "path": "BRCoreCadSUSML.enderecoContato.telefone.numero",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Número com DDD"
+    },
+    {
+      "id": "BRCoreCadSUSML.enderecoContato.telefone.tipo",
+      "path": "BRCoreCadSUSML.enderecoContato.telefone.tipo",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Tipo de telefone"
+    },
+    {
+      "id": "BRCoreCadSUSML.educacaoTrabalhoRenda",
+      "path": "BRCoreCadSUSML.educacaoTrabalhoRenda",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Bloco de educação, trabalho, emprego e renda"
+    },
+    {
+      "id": "BRCoreCadSUSML.educacaoTrabalhoRenda.escolaridade",
+      "path": "BRCoreCadSUSML.educacaoTrabalhoRenda.escolaridade",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Nível de escolaridade"
+    },
+    {
+      "id": "BRCoreCadSUSML.educacaoTrabalhoRenda.ocupacao",
+      "path": "BRCoreCadSUSML.educacaoTrabalhoRenda.ocupacao",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Ocupação (CBO)"
+    },
+    {
+      "id": "BRCoreCadSUSML.educacaoTrabalhoRenda.atividadeEconomica",
+      "path": "BRCoreCadSUSML.educacaoTrabalhoRenda.atividadeEconomica",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Atividade econômica (CNAE)"
+    },
+    {
+      "id": "BRCoreCadSUSML.educacaoTrabalhoRenda.situacaoMercadoTrabalho",
+      "path": "BRCoreCadSUSML.educacaoTrabalhoRenda.situacaoMercadoTrabalho",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Situação no mercado de trabalho"
+    },
+    {
+      "id": "BRCoreCadSUSML.educacaoTrabalhoRenda.programaSocial",
+      "path": "BRCoreCadSUSML.educacaoTrabalhoRenda.programaSocial",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Participação em programas sociais federais"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosControle",
+      "path": "BRCoreCadSUSML.dadosControle",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Bloco de dados de controle"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosControle.dadosProtegidos",
+      "path": "BRCoreCadSUSML.dadosControle.dadosProtegidos",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "Dados protegidos"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosControle.cadastroVip",
+      "path": "BRCoreCadSUSML.dadosControle.cadastroVip",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "Cadastro VIP"
+    },
+    {
+      "id": "BRCoreCadSUSML.dadosControle.situacaoPrioridade",
+      "path": "BRCoreCadSUSML.dadosControle.situacaoPrioridade",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "short": "Pessoa em situação de prioridade"
+    },
+    {
+      "id": "BRCoreCadSUSML.saudeSuplementar",
+      "path": "BRCoreCadSUSML.saudeSuplementar",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Bloco de cobertura de planos de saúde suplementar"
+    },
+    {
+      "id": "BRCoreCadSUSML.atencaoPrimaria",
+      "path": "BRCoreCadSUSML.atencaoPrimaria",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Bloco de vínculo com a Atenção Primária à Saúde"
+    },
+    {
+      "id": "BRCoreCadSUSML.atencaoPrimaria.ubsReferencia",
+      "path": "BRCoreCadSUSML.atencaoPrimaria.ubsReferencia",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Unidade Básica de Saúde de referência"
+    },
+    {
+      "id": "BRCoreCadSUSML.atencaoPrimaria.equipe",
+      "path": "BRCoreCadSUSML.atencaoPrimaria.equipe",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Equipe de Atenção Primária"
+    },
+    {
+      "id": "BRCoreCadSUSML.atencaoPrimaria.areaAdscricao",
+      "path": "BRCoreCadSUSML.atencaoPrimaria.areaAdscricao",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Área de adscrição"
+    },
+    {
+      "id": "BRCoreCadSUSML.atencaoPrimaria.agenteComunitario",
+      "path": "BRCoreCadSUSML.atencaoPrimaria.agenteComunitario",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Agente Comunitário de Saúde"
+    },
+    {
+      "id": "BRCoreCadSUSML.atencaoPrimaria.microarea",
+      "path": "BRCoreCadSUSML.atencaoPrimaria.microarea",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Microárea"
+    }
+  ]
+}

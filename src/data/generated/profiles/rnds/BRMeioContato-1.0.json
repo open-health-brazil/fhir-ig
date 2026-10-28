@@ -1,0 +1,64 @@
+{
+  "key": "BRMeioContato-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMeioContato-1.0",
+  "version": "1.0",
+  "name": "BRMeioContato",
+  "title": "Meio de Contato",
+  "status": "active",
+  "kind": "complex-type",
+  "type": "ContactPoint",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/ContactPoint",
+  "description": "Padronização de meios de contato no Brasil.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "ContactPoint.system",
+      "path": "ContactPoint.system",
+      "min": 1,
+      "mustSupport": true,
+      "short": "Tipo de Meio de Contato"
+    },
+    {
+      "id": "ContactPoint.value",
+      "path": "ContactPoint.value",
+      "min": 1,
+      "mustSupport": true,
+      "short": "Contato"
+    },
+    {
+      "id": "ContactPoint.use",
+      "path": "ContactPoint.use",
+      "mustSupport": true,
+      "short": "Uso do Meio de Contato"
+    },
+    {
+      "id": "ContactPoint.rank",
+      "path": "ContactPoint.rank",
+      "mustSupport": true,
+      "short": "Ordem de Preferência"
+    },
+    {
+      "id": "ContactPoint.period",
+      "path": "ContactPoint.period",
+      "mustSupport": true,
+      "short": "Período do Meio de Contato"
+    },
+    {
+      "id": "ContactPoint.period.start",
+      "path": "ContactPoint.period.start",
+      "mustSupport": true,
+      "short": "Data de Início do Meio de Contato"
+    },
+    {
+      "id": "ContactPoint.period.end",
+      "path": "ContactPoint.period.end",
+      "mustSupport": true,
+      "short": "Data da Término do Meio de Contato"
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "key": "br-core-specimen",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-specimen",
+  "version": "1.7.1",
+  "name": "BRCoreSpecimen",
+  "title": null,
+  "status": "active",
+  "kind": "resource",
+  "type": "Specimen",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Specimen",
+  "description": "Este perfil restringe o recurso Specimen para representar as características de amostras biológicas no contexto de resultados laboratoriais integrados a um Sumário do Paciente. O recurso Specimen descreve uma amostra utilizada para análise laboratorial",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Specimen.type",
+      "path": "Specimen.type",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoAmostra"
+      },
+      "short": "Tipo de material que compõem a amostra"
+    },
+    {
+      "id": "Specimen.subject",
+      "path": "Specimen.subject",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "http://hl7.org/fhir/StructureDefinition/Group",
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "http://hl7.org/fhir/StructureDefinition/Substance",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-location"
+          ]
+        }
+      ],
+      "short": "Referência de onde veio a amostra. Pode ser de paciente(s), de um local (por exemplo, a fonte de uma amostra ambiental) ou uma amostra de uma substância ou dispositivo"
+    },
+    {
+      "id": "Specimen.parent",
+      "path": "Specimen.parent",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-specimen"
+          ]
+        }
+      ],
+      "short": "Referencia a origem da amostra"
+    },
+    {
+      "id": "Specimen.request",
+      "path": "Specimen.request",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-servicerequest"
+          ]
+        }
+      ],
+      "short": "Referencia a requisição associada"
+    },
+    {
+      "id": "Specimen.collection.collector",
+      "path": "Specimen.collection.collector",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole"
+          ]
+        }
+      ],
+      "short": "Referência ao profissional responsável pela coleta"
+    },
+    {
+      "id": "Specimen.collection.collected[x]",
+      "path": "Specimen.collection.collected[x]",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "dateTime"
+        },
+        {
+          "code": "Period"
+        }
+      ],
+      "short": "Data/Hora-Período da coleta"
+    },
+    {
+      "id": "Specimen.collection.quantity",
+      "path": "Specimen.collection.quantity",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Quantity",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1"
+          ]
+        }
+      ],
+      "short": "Quantidade de amostra coletada"
+    },
+    {
+      "id": "Specimen.collection.method",
+      "path": "Specimen.collection.method",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/specimen-collection-method"
+      },
+      "short": "Método de coleta da amostra"
+    },
+    {
+      "id": "Specimen.condition",
+      "path": "Specimen.condition",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://terminology.hl7.org/ValueSet/v2-0493"
+      },
+      "short": "Condições da amostra"
+    }
+  ]
+}

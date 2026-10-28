@@ -1,0 +1,1511 @@
+{
+  "key": "BRPrescricaoMedicamento",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPrescricaoMedicamento",
+  "version": "1.1.1",
+  "name": "BRPrescricaoMedicamento",
+  "title": "Prescrição de Medicamento",
+  "status": "draft",
+  "kind": "resource",
+  "type": "MedicationRequest",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/MedicationRequest",
+  "description": "Descreve a prescrição de um medicamento.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "MedicationRequest.implicitRules",
+      "path": "MedicationRequest.implicitRules",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "short": "A set of rules under which this content was created"
+    },
+    {
+      "id": "MedicationRequest.language",
+      "path": "MedicationRequest.language",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/languages"
+      },
+      "short": "Language of the resource content"
+    },
+    {
+      "id": "MedicationRequest.contained",
+      "path": "MedicationRequest.contained",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Resource"
+        }
+      ],
+      "short": "Contained, inline Resources"
+    },
+    {
+      "id": "MedicationRequest.identifier",
+      "path": "MedicationRequest.identifier",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "External ids for this request"
+    },
+    {
+      "id": "MedicationRequest.statusReason",
+      "path": "MedicationRequest.statusReason",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medicationrequest-status-reason"
+      },
+      "short": "Reason for current status"
+    },
+    {
+      "id": "MedicationRequest.category",
+      "path": "MedicationRequest.category",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medicationrequest-category"
+      },
+      "short": "Type of medication usage"
+    },
+    {
+      "id": "MedicationRequest.priority",
+      "path": "MedicationRequest.priority",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/request-priority|4.0.1"
+      },
+      "short": "routine | urgent | asap | stat"
+    },
+    {
+      "id": "MedicationRequest.doNotPerform",
+      "path": "MedicationRequest.doNotPerform",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "True if request is prohibiting action"
+    },
+    {
+      "id": "MedicationRequest.reported[x]",
+      "path": "MedicationRequest.reported[x]",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "boolean"
+        },
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Patient",
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
+            "http://hl7.org/fhir/StructureDefinition/PractitionerRole",
+            "http://hl7.org/fhir/StructureDefinition/RelatedPerson",
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Reported rather than primary record"
+    },
+    {
+      "id": "MedicationRequest.medication[x]",
+      "path": "MedicationRequest.medication[x]",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        },
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedicamento"
+          ]
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRPrescricaoNaoEstruturada"
+      },
+      "short": "Medicamento"
+    },
+    {
+      "id": "MedicationRequest.subject",
+      "path": "MedicationRequest.subject",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+          ]
+        }
+      ],
+      "short": "Sujeito da Composição"
+    },
+    {
+      "id": "MedicationRequest.subject.reference",
+      "path": "MedicationRequest.subject.reference",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Literal reference, Relative, internal or absolute URL"
+    },
+    {
+      "id": "MedicationRequest.subject.type",
+      "path": "MedicationRequest.subject.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+      },
+      "short": "Type the reference refers to (e.g. \"Patient\")"
+    },
+    {
+      "id": "MedicationRequest.subject.identifier",
+      "path": "MedicationRequest.subject.identifier",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Logical reference, when literal reference is not known"
+    },
+    {
+      "id": "MedicationRequest.subject.identifier.use",
+      "path": "MedicationRequest.subject.identifier.use",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "short": "usual | official | temp | secondary | old (If known)"
+    },
+    {
+      "id": "MedicationRequest.subject.identifier.type",
+      "path": "MedicationRequest.subject.identifier.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-type"
+      },
+      "short": "Description of identifier"
+    },
+    {
+      "id": "MedicationRequest.subject.identifier.period",
+      "path": "MedicationRequest.subject.identifier.period",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Period"
+        }
+      ],
+      "short": "Time period when id is/was valid for use"
+    },
+    {
+      "id": "MedicationRequest.subject.identifier.assigner",
+      "path": "MedicationRequest.subject.identifier.assigner",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Organization that issued id (may be just text)"
+    },
+    {
+      "id": "MedicationRequest.subject.display",
+      "path": "MedicationRequest.subject.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Text alternative for the resource"
+    },
+    {
+      "id": "MedicationRequest.encounter",
+      "path": "MedicationRequest.encounter",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Encounter"
+          ]
+        }
+      ],
+      "short": "Encounter created as part of encounter/admission/stay"
+    },
+    {
+      "id": "MedicationRequest.supportingInformation",
+      "path": "MedicationRequest.supportingInformation",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Resource"
+          ]
+        }
+      ],
+      "short": "Information to support ordering of the medication"
+    },
+    {
+      "id": "MedicationRequest.authoredOn",
+      "path": "MedicationRequest.authoredOn",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "Data e hora da prescrição"
+    },
+    {
+      "id": "MedicationRequest.requester",
+      "path": "MedicationRequest.requester",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0"
+          ]
+        }
+      ],
+      "short": "Estabelecimento de Saúde prescritor"
+    },
+    {
+      "id": "MedicationRequest.requester.reference",
+      "path": "MedicationRequest.requester.reference",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Literal reference, Relative, internal or absolute URL"
+    },
+    {
+      "id": "MedicationRequest.requester.type",
+      "path": "MedicationRequest.requester.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+      },
+      "short": "Type the reference refers to (e.g. \"Patient\")"
+    },
+    {
+      "id": "MedicationRequest.requester.identifier",
+      "path": "MedicationRequest.requester.identifier",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Logical reference, when literal reference is not known"
+    },
+    {
+      "id": "MedicationRequest.requester.identifier.use",
+      "path": "MedicationRequest.requester.identifier.use",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "short": "usual | official | temp | secondary | old (If known)"
+    },
+    {
+      "id": "MedicationRequest.requester.identifier.type",
+      "path": "MedicationRequest.requester.identifier.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-type"
+      },
+      "short": "Description of identifier"
+    },
+    {
+      "id": "MedicationRequest.requester.identifier.period",
+      "path": "MedicationRequest.requester.identifier.period",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Period"
+        }
+      ],
+      "short": "Time period when id is/was valid for use"
+    },
+    {
+      "id": "MedicationRequest.requester.identifier.assigner",
+      "path": "MedicationRequest.requester.identifier.assigner",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Organization that issued id (may be just text)"
+    },
+    {
+      "id": "MedicationRequest.requester.display",
+      "path": "MedicationRequest.requester.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Text alternative for the resource"
+    },
+    {
+      "id": "MedicationRequest.performer",
+      "path": "MedicationRequest.performer",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
+            "http://hl7.org/fhir/StructureDefinition/PractitionerRole",
+            "http://hl7.org/fhir/StructureDefinition/Organization",
+            "http://hl7.org/fhir/StructureDefinition/Patient",
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "http://hl7.org/fhir/StructureDefinition/RelatedPerson",
+            "http://hl7.org/fhir/StructureDefinition/CareTeam"
+          ]
+        }
+      ],
+      "short": "Intended performer of administration"
+    },
+    {
+      "id": "MedicationRequest.performerType",
+      "path": "MedicationRequest.performerType",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/performer-role"
+      },
+      "short": "Desired kind of performer of the medication administration"
+    },
+    {
+      "id": "MedicationRequest.recorder",
+      "path": "MedicationRequest.recorder",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProfissional-1.0"
+          ]
+        }
+      ],
+      "short": "Profissional prescritor"
+    },
+    {
+      "id": "MedicationRequest.recorder.type",
+      "path": "MedicationRequest.recorder.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+      },
+      "short": "Type the reference refers to (e.g. \"Patient\")"
+    },
+    {
+      "id": "MedicationRequest.recorder.identifier.use",
+      "path": "MedicationRequest.recorder.identifier.use",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "short": "usual | official | temp | secondary | old (If known)"
+    },
+    {
+      "id": "MedicationRequest.recorder.identifier.type",
+      "path": "MedicationRequest.recorder.identifier.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-type"
+      },
+      "short": "Description of identifier"
+    },
+    {
+      "id": "MedicationRequest.recorder.identifier.period",
+      "path": "MedicationRequest.recorder.identifier.period",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Period"
+        }
+      ],
+      "short": "Time period when id is/was valid for use"
+    },
+    {
+      "id": "MedicationRequest.recorder.identifier.assigner",
+      "path": "MedicationRequest.recorder.identifier.assigner",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Organization that issued id (may be just text)"
+    },
+    {
+      "id": "MedicationRequest.recorder.display",
+      "path": "MedicationRequest.recorder.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Text alternative for the resource"
+    },
+    {
+      "id": "MedicationRequest.reasonCode",
+      "path": "MedicationRequest.reasonCode",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/condition-code"
+      },
+      "short": "Reason or indication for ordering or not ordering the medication"
+    },
+    {
+      "id": "MedicationRequest.reasonReference",
+      "path": "MedicationRequest.reasonReference",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Condition",
+            "http://hl7.org/fhir/StructureDefinition/Observation"
+          ]
+        }
+      ],
+      "short": "Condition or observation that supports why the prescription is being written"
+    },
+    {
+      "id": "MedicationRequest.instantiatesCanonical",
+      "path": "MedicationRequest.instantiatesCanonical",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "canonical"
+        }
+      ],
+      "short": "Instantiates FHIR protocol or definition"
+    },
+    {
+      "id": "MedicationRequest.instantiatesUri",
+      "path": "MedicationRequest.instantiatesUri",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "short": "Instantiates external protocol or definition"
+    },
+    {
+      "id": "MedicationRequest.basedOn",
+      "path": "MedicationRequest.basedOn",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/CarePlan",
+            "http://hl7.org/fhir/StructureDefinition/MedicationRequest",
+            "http://hl7.org/fhir/StructureDefinition/ServiceRequest",
+            "http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation"
+          ]
+        }
+      ],
+      "short": "What request fulfills"
+    },
+    {
+      "id": "MedicationRequest.groupIdentifier",
+      "path": "MedicationRequest.groupIdentifier",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Composite request this is part of"
+    },
+    {
+      "id": "MedicationRequest.courseOfTherapyType",
+      "path": "MedicationRequest.courseOfTherapyType",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medicationrequest-course-of-therapy"
+      },
+      "short": "Overall pattern of medication administration"
+    },
+    {
+      "id": "MedicationRequest.insurance",
+      "path": "MedicationRequest.insurance",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Coverage",
+            "http://hl7.org/fhir/StructureDefinition/ClaimResponse"
+          ]
+        }
+      ],
+      "short": "Associated insurance coverage"
+    },
+    {
+      "id": "MedicationRequest.note",
+      "path": "MedicationRequest.note",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Annotation"
+        }
+      ],
+      "short": "Descrição da necessidade de uso do medicamento"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.sequence",
+      "path": "MedicationRequest.dosageInstruction.sequence",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "integer"
+        }
+      ],
+      "short": "The order of the dosage instructions"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.additionalInstruction",
+      "path": "MedicationRequest.dosageInstruction.additionalInstruction",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/additional-instruction-codes"
+      },
+      "short": "Supplemental instruction or warnings to the patient - e.g. \"with meals\", \"may cause drowsiness\""
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.event",
+      "path": "MedicationRequest.dosageInstruction.timing.event",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "When the event occurs"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Element"
+        }
+      ],
+      "short": "When the event is to occur"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.extension:period",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.extension",
+      "sliceName": "period",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIntervaloDoses"
+          ]
+        }
+      ],
+      "short": "Extensão - Intervalo entre doses"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.extension:when",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.extension",
+      "sliceName": "when",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRTurno"
+          ]
+        }
+      ],
+      "short": "Extensão - Turno do dia"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.extension:when.value[x].id",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.extension.value[x].id",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "http://hl7.org/fhirpath/System.String"
+        }
+      ],
+      "short": "Unique id for inter-element referencing"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.bounds[x]",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.bounds[x]",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Duration"
+        },
+        {
+          "code": "Range"
+        },
+        {
+          "code": "Period"
+        }
+      ],
+      "short": "Length/Range of lengths, or (Start and/or end) limits"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.count",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.count",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "positiveInt"
+        }
+      ],
+      "short": "Repetições de dose"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.countMax",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.countMax",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "positiveInt"
+        }
+      ],
+      "short": "Quantidade total de doses"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.duration",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.duration",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "decimal"
+        }
+      ],
+      "short": "How long when it happens"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.durationMax",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.durationMax",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "decimal"
+        }
+      ],
+      "short": "How long when it happens (Max)"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.durationUnit",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.durationUnit",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/units-of-time|4.0.1"
+      },
+      "short": "s | min | h | d | wk | mo | a - unit of time (UCUM)"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.frequencyMax",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.frequencyMax",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "positiveInt"
+        }
+      ],
+      "short": "Event occurs up to frequencyMax times per period"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.period",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.period",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "decimal"
+        }
+      ],
+      "short": "Intervalo entre doses"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.periodMax",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.periodMax",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "decimal"
+        }
+      ],
+      "short": "Upper limit of period (3-4 hours)"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.periodUnit",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.periodUnit",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/units-of-time|4.0.1"
+      },
+      "short": "Unidade de tempo entre doses"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.dayOfWeek",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.dayOfWeek",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/days-of-week|4.0.1"
+      },
+      "short": "mon | tue | wed | thu | fri | sat | sun"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.timeOfDay",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.timeOfDay",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "time"
+        }
+      ],
+      "short": "Time of day for action"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.when",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.when",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/event-timing|4.0.1"
+      },
+      "short": "Turno do dia"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.repeat.offset",
+      "path": "MedicationRequest.dosageInstruction.timing.repeat.offset",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "unsignedInt"
+        }
+      ],
+      "short": "Minutes from event (before or after)"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.timing.code",
+      "path": "MedicationRequest.dosageInstruction.timing.code",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/timing-abbreviation"
+      },
+      "short": "BID | TID | QID | AM | PM | QD | QOD | +"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.asNeeded[x]",
+      "path": "MedicationRequest.dosageInstruction.asNeeded[x]",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "Uso se necessário"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.site",
+      "path": "MedicationRequest.dosageInstruction.site",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/approach-site-codes"
+      },
+      "short": "Body site to administer to"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.route",
+      "path": "MedicationRequest.dosageInstruction.route",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRViaAdministracao-1.0"
+      },
+      "short": "Via de Administração"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.method",
+      "path": "MedicationRequest.dosageInstruction.method",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/administration-method-codes"
+      },
+      "short": "Technique for administering medication"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.doseAndRate",
+      "path": "MedicationRequest.dosageInstruction.doseAndRate",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Element"
+        }
+      ],
+      "short": "Amount of medication administered"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.doseAndRate.type",
+      "path": "MedicationRequest.dosageInstruction.doseAndRate.type",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRUnidadeConsumo"
+      },
+      "short": "Unidade de consumo da dose"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.doseAndRate.type.coding",
+      "path": "MedicationRequest.dosageInstruction.doseAndRate.type.coding",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRUnidadeConsumo"
+      },
+      "short": "Code defined by a terminology system"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.doseAndRate.type.coding.version",
+      "path": "MedicationRequest.dosageInstruction.doseAndRate.type.coding.version",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Version of the system - if relevant"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.doseAndRate.type.coding.display",
+      "path": "MedicationRequest.dosageInstruction.doseAndRate.type.coding.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Representation defined by the system"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.doseAndRate.type.coding.userSelected",
+      "path": "MedicationRequest.dosageInstruction.doseAndRate.type.coding.userSelected",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "If this coding was chosen directly by the user"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.doseAndRate.type.text",
+      "path": "MedicationRequest.dosageInstruction.doseAndRate.type.text",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Plain text representation of the concept"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.doseAndRate.dose[x]",
+      "path": "MedicationRequest.dosageInstruction.doseAndRate.dose[x]",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Quantity"
+        }
+      ],
+      "short": "Quantidade da Dose"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.doseAndRate.dose[x].unit",
+      "path": "MedicationRequest.dosageInstruction.doseAndRate.dose[x].unit",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Unit representation"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.doseAndRate.dose[x].system",
+      "path": "MedicationRequest.dosageInstruction.doseAndRate.dose[x].system",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "short": "System that defines coded unit form"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.doseAndRate.dose[x].code",
+      "path": "MedicationRequest.dosageInstruction.doseAndRate.dose[x].code",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "short": "Coded form of the unit"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.doseAndRate.rate[x]",
+      "path": "MedicationRequest.dosageInstruction.doseAndRate.rate[x]",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Quantity"
+        }
+      ],
+      "short": "Amount of medication per unit of time"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.maxDosePerPeriod",
+      "path": "MedicationRequest.dosageInstruction.maxDosePerPeriod",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Ratio"
+        }
+      ],
+      "short": "Upper limit on medication per unit of time"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.maxDosePerAdministration",
+      "path": "MedicationRequest.dosageInstruction.maxDosePerAdministration",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Quantity",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/SimpleQuantity"
+          ]
+        }
+      ],
+      "short": "Quantidade a ser dispensada por atendimento"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.maxDosePerAdministration.unit",
+      "path": "MedicationRequest.dosageInstruction.maxDosePerAdministration.unit",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Unit representation"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.maxDosePerAdministration.system",
+      "path": "MedicationRequest.dosageInstruction.maxDosePerAdministration.system",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "short": "System that defines coded unit form"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.maxDosePerAdministration.code",
+      "path": "MedicationRequest.dosageInstruction.maxDosePerAdministration.code",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "short": "Coded form of the unit"
+    },
+    {
+      "id": "MedicationRequest.dosageInstruction.maxDosePerLifetime",
+      "path": "MedicationRequest.dosageInstruction.maxDosePerLifetime",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Quantity",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/SimpleQuantity"
+          ]
+        }
+      ],
+      "short": "Upper limit on medication per lifetime of the patient"
+    },
+    {
+      "id": "MedicationRequest.dispenseRequest.initialFill",
+      "path": "MedicationRequest.dispenseRequest.initialFill",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "First fill details"
+    },
+    {
+      "id": "MedicationRequest.dispenseRequest.dispenseInterval",
+      "path": "MedicationRequest.dispenseRequest.dispenseInterval",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Duration"
+        }
+      ],
+      "short": "Intervalo em horas de cada dose do medicamento"
+    },
+    {
+      "id": "MedicationRequest.dispenseRequest.validityPeriod",
+      "path": "MedicationRequest.dispenseRequest.validityPeriod",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Period"
+        }
+      ],
+      "short": "Duração de uso do medicamento"
+    },
+    {
+      "id": "MedicationRequest.dispenseRequest.numberOfRepeatsAllowed",
+      "path": "MedicationRequest.dispenseRequest.numberOfRepeatsAllowed",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "unsignedInt"
+        }
+      ],
+      "short": "Number of refills authorized"
+    },
+    {
+      "id": "MedicationRequest.dispenseRequest.quantity.value",
+      "path": "MedicationRequest.dispenseRequest.quantity.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "decimal"
+        }
+      ],
+      "short": "Numerical value (with implicit precision)"
+    },
+    {
+      "id": "MedicationRequest.dispenseRequest.quantity.unit",
+      "path": "MedicationRequest.dispenseRequest.quantity.unit",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Unit representation"
+    },
+    {
+      "id": "MedicationRequest.dispenseRequest.quantity.system",
+      "path": "MedicationRequest.dispenseRequest.quantity.system",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "short": "System that defines coded unit form"
+    },
+    {
+      "id": "MedicationRequest.dispenseRequest.quantity.code",
+      "path": "MedicationRequest.dispenseRequest.quantity.code",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "short": "Coded form of the unit"
+    },
+    {
+      "id": "MedicationRequest.dispenseRequest.expectedSupplyDuration",
+      "path": "MedicationRequest.dispenseRequest.expectedSupplyDuration",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Duration"
+        }
+      ],
+      "short": "Number of days supply per dispense"
+    },
+    {
+      "id": "MedicationRequest.dispenseRequest.performer",
+      "path": "MedicationRequest.dispenseRequest.performer",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Intended dispenser"
+    },
+    {
+      "id": "MedicationRequest.substitution",
+      "path": "MedicationRequest.substitution",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Any restrictions on medication substitution"
+    },
+    {
+      "id": "MedicationRequest.priorPrescription",
+      "path": "MedicationRequest.priorPrescription",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/MedicationRequest"
+          ]
+        }
+      ],
+      "short": "An order/prescription that is being replaced"
+    },
+    {
+      "id": "MedicationRequest.detectedIssue",
+      "path": "MedicationRequest.detectedIssue",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/DetectedIssue"
+          ]
+        }
+      ],
+      "short": "Clinical Issue with action"
+    },
+    {
+      "id": "MedicationRequest.eventHistory",
+      "path": "MedicationRequest.eventHistory",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Provenance"
+          ]
+        }
+      ],
+      "short": "A list of events of interest in the lifecycle"
+    }
+  ]
+}

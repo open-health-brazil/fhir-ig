@@ -1,0 +1,184 @@
+{
+  "key": "br-core-practitionerrole",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+  "version": "1.7.1",
+  "name": "BRCorePractitionerRole",
+  "title": null,
+  "status": "active",
+  "kind": "resource",
+  "type": "PractitionerRole",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/PractitionerRole",
+  "description": "Este perfil restringe o recurso PractitionerRole que representa um conjunto específico de funções/locais/especialidades/serviços que um profissional pode desempenhar em uma organização por um período de tempo",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "PractitionerRole.identifier.use",
+      "path": "PractitionerRole.identifier.use",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use"
+      },
+      "short": "Uso do identificador"
+    },
+    {
+      "id": "PractitionerRole.identifier.type",
+      "path": "PractitionerRole.identifier.type",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-type|4.0.1"
+      },
+      "short": "Tipo do identificador"
+    },
+    {
+      "id": "PractitionerRole.identifier.type.coding.system",
+      "path": "PractitionerRole.identifier.type.coding.system",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema de terminologia"
+    },
+    {
+      "id": "PractitionerRole.active",
+      "path": "PractitionerRole.active",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "Informa se esta função do profissional está ativa"
+    },
+    {
+      "id": "PractitionerRole.period",
+      "path": "PractitionerRole.period",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Period"
+        }
+      ],
+      "short": "Período durante o qual o profissional está autorizado a exercer essa função"
+    },
+    {
+      "id": "PractitionerRole.practitioner",
+      "path": "PractitionerRole.practitioner",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner"
+          ]
+        }
+      ],
+      "short": "Referência ao profissional"
+    },
+    {
+      "id": "PractitionerRole.organization",
+      "path": "PractitionerRole.organization",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Referência à organização"
+    },
+    {
+      "id": "PractitionerRole.code",
+      "path": "PractitionerRole.code",
+      "min": 1,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BROcupacao"
+      },
+      "short": "Códigos das funções dos profissionais de saúde"
+    },
+    {
+      "id": "PractitionerRole.specialty",
+      "path": "PractitionerRole.specialty",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BROcupacao"
+      },
+      "short": "Especialidades do profissional"
+    },
+    {
+      "id": "PractitionerRole.location",
+      "path": "PractitionerRole.location",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-location"
+          ]
+        }
+      ],
+      "short": "Referência ao local de atuação do profissional"
+    },
+    {
+      "id": "PractitionerRole.healthcareService",
+      "path": "PractitionerRole.healthcareService",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-healthcareservice"
+          ]
+        }
+      ],
+      "short": "Referência à lista de serviços especializados deste profissional"
+    }
+  ]
+}

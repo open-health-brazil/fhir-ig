@@ -1,0 +1,35 @@
+{
+  "key": "br-core-relatedperson",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson",
+  "version": "1.7.1",
+  "name": "BRCoreRelatedPerson",
+  "title": null,
+  "status": "active",
+  "kind": "resource",
+  "type": "RelatedPerson",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/RelatedPerson",
+  "description": "O recurso [br-core-relatedperson](StructureDefinition-br-core-relatedperson.html) contém as informações sobre uma pessoa envolvida no cuidado de um paciente, mas que não é alvo de cuidados de saúde nem tem responsabilidade formal no processo de cuidado. \r\n\r\nA pessoa representada pelo recurso [br-core-relatedperson](StructureDefinition-br-core-relatedperson.html) normalmente tem um relacionamento profissional pessoal ou não específico de cuidado em saúde com o paciente. O recurso [br-core-relatedperson](StructureDefinition-br-core-relatedperson.html) é usado principalmente para atribuição de informações, já que geralmente é uma fonte de informações sobre o paciente. Para manter informações sobre pessoas para fins de contato para um paciente, use um elemento br-core-patien.contact. Alguns indivíduos podem ser representados simultaneamente como  um patient.contact e [br-core-relatedperson](StructureDefinition-br-core-relatedperson.html).\r\n\r\nExemplos de pessoas que podem ser um [br-core-relatedperson](StructureDefinition-br-core-relatedperson.html):\r\n-\tEsposa ou marido de um paciente\r\n-\tParentes ou amigos de um paciente\r\n-\tUm vizinho que leva um paciente para o hospital\r\n-\tO dono ou treinador de um cavalo\r\n-\tUm advogado ou tutor do paciente\r\n-\tUm cão-guia\r\n",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "RelatedPerson.patient",
+      "path": "RelatedPerson.patient",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient"
+          ]
+        }
+      ],
+      "short": "Referência ao paciente com quem essa pessoa está relacionada"
+    }
+  ]
+}

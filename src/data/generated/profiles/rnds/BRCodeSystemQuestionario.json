@@ -1,0 +1,71 @@
+{
+  "key": "BRCodeSystemQuestionario",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRCodeSystemQuestionario",
+  "version": "1.0.0",
+  "name": "BRCodeSystemQuestionario",
+  "title": "CodeSystem de Questionários da RNDS",
+  "status": "active",
+  "kind": "resource",
+  "type": "CodeSystem",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/CodeSystem",
+  "description": "Perfil destinado a modelar dados essenciais de respostas codificadas de um Questionário da RNDS.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "CodeSystem.url",
+      "path": "CodeSystem.url",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Canonical identifier for this code system, represented as a URI (globally unique) (Coding.system)"
+    },
+    {
+      "id": "CodeSystem.caseSensitive",
+      "path": "CodeSystem.caseSensitive",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "If code comparison is case sensitive"
+    },
+    {
+      "id": "CodeSystem.concept",
+      "path": "CodeSystem.concept",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Concepts in the code system"
+    },
+    {
+      "id": "CodeSystem.concept.display",
+      "path": "CodeSystem.concept.display",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Text to display to the user"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "key": "br-core-observationpregnancyoutcome",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observationpregnancyoutcome",
+  "version": "1.7.1",
+  "name": "BRCoreObservationPregnancyOutcome",
+  "title": null,
+  "status": "active",
+  "kind": "resource",
+  "type": "Observation",
+  "baseDefinition": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation",
+  "description": "Este perfil restringe o recurso [Observation](https://hl7.org/fhir/R4/observation.html) para representar o histórico resumido dos resultados da gravidez.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Observation.code",
+      "path": "Observation.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/uv/ips/ValueSet/pregnancies-summary-uv-ips"
+      },
+      "short": "Código da observação"
+    },
+    {
+      "id": "Observation.subject",
+      "path": "Observation.subject",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-location",
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "http://hl7.org/fhir/StructureDefinition/Group"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Referência ao paciente ou local ou dispositivo ou grupo desta bservação"
+    },
+    {
+      "id": "Observation.issued",
+      "path": "Observation.issued",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "instant"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Data/hora em que esta versão foi disponibilizada"
+    },
+    {
+      "id": "Observation.dataAbsentReason",
+      "path": "Observation.dataAbsentReason",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "mustSupport": true,
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/data-absent-reason|4.0.1"
+      },
+      "short": "Por quê o resultado está faltando"
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "key": "BRQuestionarioResposta",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRQuestionarioResposta",
+  "version": "1.0.0",
+  "name": "BRQuestionarioResposta",
+  "title": "Resposta de Questionário RNDS",
+  "status": "active",
+  "kind": "resource",
+  "type": "QuestionnaireResponse",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+  "description": "Perfil destinado a modelar dados de resposta de um questionário na RNDS.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "QuestionnaireResponse.questionnaire",
+      "path": "QuestionnaireResponse.questionnaire",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "canonical",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRQuestionarioBase"
+          ]
+        }
+      ],
+      "short": "Form being answered"
+    },
+    {
+      "id": "QuestionnaireResponse.authored",
+      "path": "QuestionnaireResponse.authored",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "Date the answers were gathered"
+    },
+    {
+      "id": "QuestionnaireResponse.item",
+      "path": "QuestionnaireResponse.item",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Groups and questions"
+    },
+    {
+      "id": "QuestionnaireResponse.item.answer",
+      "path": "QuestionnaireResponse.item.answer",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "mustSupport": true,
+      "short": "The response(s) to the question"
+    },
+    {
+      "id": "QuestionnaireResponse.item.answer.value[x]",
+      "path": "QuestionnaireResponse.item.answer.value[x]",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        },
+        {
+          "code": "decimal"
+        },
+        {
+          "code": "integer"
+        },
+        {
+          "code": "date"
+        },
+        {
+          "code": "dateTime"
+        },
+        {
+          "code": "time"
+        },
+        {
+          "code": "string"
+        },
+        {
+          "code": "uri"
+        },
+        {
+          "code": "Attachment"
+        },
+        {
+          "code": "Coding"
+        },
+        {
+          "code": "Quantity"
+        },
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Resource"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRRespostaMarcosDesenvolvimento"
+      },
+      "short": "Single-valued answer to the question"
+    },
+    {
+      "id": "QuestionnaireResponse.item.answer.item",
+      "path": "QuestionnaireResponse.item.answer.item",
+      "min": 0,
+      "max": "*",
+      "mustSupport": true,
+      "short": "Nested groups and questions"
+    },
+    {
+      "id": "QuestionnaireResponse.item.item",
+      "path": "QuestionnaireResponse.item.item",
+      "min": 0,
+      "max": "*",
+      "mustSupport": true,
+      "short": "Nested questionnaire response items"
+    }
+  ]
+}

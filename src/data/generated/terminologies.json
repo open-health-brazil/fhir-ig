@@ -1,0 +1,2661 @@
+[
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRAlergenosCBARA",
+    "name": "BRAlergenosCBARA",
+    "title": "BRAlergenosCBARA",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRAlergenosCBARA",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRAlergenosCBARA"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRAtendimentoPrestado",
+    "name": "BRAtendimentoPrestado",
+    "title": "BRAtendimentoPrestado",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRAtendimentoPrestado",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRAtendimentoPrestado"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRBaseLegalLGPD",
+    "name": "BRBaseLegalLGPD",
+    "title": "BRBaseLegalLGPD",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRBaseLegalLGPD",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRCBHPMTUSS",
+    "name": "BRCBHPMTUSS",
+    "title": "BRCBHPMTUSS",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBHPMTUSS",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBHPMTUSS"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRCBO",
+    "name": "BRCBO",
+    "title": "BRCBO",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRCIAP2",
+    "name": "BRCIAP2",
+    "title": "BRCIAP2",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCIAP2",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCIAP2",
+      "2.16.840.1.113883.6.139",
+      "http://hl7.org/fhir/sid/icpc-2"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRCID10",
+    "name": "BRCID10",
+    "title": "BRCID10",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCID10",
+      "2.16.840.1.113883.6.3",
+      "http://hl7.org/fhir/sid/icd-10"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRCaraterAtendimento",
+    "name": "BRCaraterAtendimento",
+    "title": "BRCaraterAtendimento",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCaraterAtendimento",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRCategoriaDiagnostico",
+    "name": "BRCategoriaDiagnostico",
+    "title": "BRCategoriaDiagnostico",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCategoriaDiagnostico",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCategoriaDiagnostico"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRConclusaoColposcopia",
+    "name": "BRConclusaoColposcopia",
+    "title": "BRConclusaoColposcopia",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRConclusaoColposcopia",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRCondicaoMaternal",
+    "name": "Condição Maternal",
+    "title": "Condição Maternal",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCondicaoMaternal",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCondicaoMaternal"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRCondutaColposcopia",
+    "name": "BRCondutaColposcopia",
+    "title": "BRCondutaColposcopia",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCondutaColposcopia",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRCondutaTeleconsultoria",
+    "name": "BRCondutaTeleconsultoria",
+    "title": "BRCondutaTeleconsultoria",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCondutaTeleconsultoria",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRConselhoProfissional",
+    "name": "BRConselhoProfissional",
+    "title": "Conselhos profissionais de saúde do Brasil",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRConselhoProfissional",
+    "status": "draft",
+    "content": "complete",
+    "count": 197,
+    "description": "Esse CodeSystem inclui os conselhos profissionais de saúde do Brasil, conforme a Resolução CNS 251/1997.",
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRDadoAusenteOuDesconhecido",
+    "name": "BRDadoAusenteOuDesconhecido",
+    "title": "BRDadoAusenteOuDesconhecido",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDadoAusenteOuDesconhecido",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRDadoAusenteOuDesconhecido"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRDesfechoProcedimento",
+    "name": "BRDesfechoProcedimento",
+    "title": "BRDesfechoProcedimento",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDesfechoProcedimento",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRDesfechoProcedimento"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRDireitoTitularDados",
+    "name": "BRDireitoTitularDados",
+    "title": "BRDireitoTitularDados",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDireitoTitularDados",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRDivisaoGeograficaBrasil",
+    "name": "BRDivisaoGeograficaBrasil",
+    "title": "BRDivisaoGeograficaBrasil",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDivisaoGeograficaBrasil",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRDivisaoGeograficaBrasil"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRDose",
+    "name": "BRDose",
+    "title": "BRDose",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDose",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRDose"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRElegibilidadeImunobiologico",
+    "name": "BRElegibilidadeImunobiologico",
+    "title": "BRElegibilidadeImunobiologico",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRElegibilidadeImunobiologico",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BREstadoCivil",
+    "name": "BREstadoCivil",
+    "title": "BREstadoCivil",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BREstadoCivil",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BREstrategiaVacinacao",
+    "name": "BREstrategiaVacinacao",
+    "title": "BREstrategiaVacinacao",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BREstrategiaVacinacao",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BREstrategiaVacinacao"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BREtniaIndigena",
+    "name": "BREtniaIndigena",
+    "title": "BREtniaIndigena",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BREtniaIndigena",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BREtniaIndigena"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRExameHPVCEPHEID",
+    "name": "BRExameHPVCEPHEID",
+    "title": "BRExameHPVCEPHEID",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRExameHPVCEPHEID",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRFabricantePNI",
+    "name": "BRFabricantePNI",
+    "title": "BRFabricantePNI",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRFabricantePNI",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRFabricantePNI"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRFinalidadeTratamentoDados",
+    "name": "BRFinalidadeTratamentoDados",
+    "title": "BRFinalidadeTratamentoDados",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRFinalidadeTratamentoDados",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRFormaOrganizacaoTabelaSUS",
+    "name": "BRFormaOrganizacaoTabelaSUS",
+    "title": "BRFormaOrganizacaoTabelaSUS",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRFormaOrganizacaoTabelaSUS",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRHPVInterpretacao",
+    "name": "BRHPVInterpretacao",
+    "title": "BRHPVInterpretacao",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRHPVInterpretacao",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRIBGE",
+    "name": "BRIBGE",
+    "title": "BRIBGE",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRIBGE",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRIdentidadeGenero",
+    "name": "BRIdentidadeGenero",
+    "title": "BRIdentidadeGenero",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRIdentidadeGenero",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRImunobiologico",
+    "name": "BRImunobiologico",
+    "title": "BRImunobiologico",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRImunobiologico",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRImunobiologico"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRInstalacoesFisicas",
+    "name": "BRInstalacoesFisicas",
+    "title": "BRInstalacoesFisicas",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRInstalacoesFisicas",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRInstalacoesFisicas"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRJustificativaIndividuoNaoIdentificado",
+    "name": "BRJustificativaIndividuoNaoIdentificado",
+    "title": "BRJustificativaIndividuoNaoIdentificado",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRJustificativaIndividuoNaoIdentificado",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRJustificativaIndividuoNaoIdentificado"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRLocalAfericao",
+    "name": "BRLocalAfericao",
+    "title": "BRLocalAfericao",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRLocalAfericao",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRLocalAfericao"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRLocalAplicacao",
+    "name": "BRLocalAplicação",
+    "title": "BRLocalAplicação",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRLocalAplicacao",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRLocalAplicacao"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRMedDRA",
+    "name": "BRMedDRA",
+    "title": "BRMedDRA",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMedDRA",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedDRA"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRMedicamento",
+    "name": "BRMedicamento",
+    "title": "BRMedicamento",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMedicamento",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedicamento"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRModalidadeAssistencial",
+    "name": "BRModalidadeAssistencial",
+    "title": "BRModalidadeAssistencial",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRModalidadeAssistencial",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeAssistencial"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRModalidadeFinanceira",
+    "name": "BRModalidadeFinanceira",
+    "title": "BRModalidadeFinanceira",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRModalidadeFinanceira",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeFinanceira"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRModalidadeTelessaude",
+    "name": "BRModalidadeTelessaude",
+    "title": "BRModalidadeTelessaude",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRModalidadeTelessaude",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRMotivoDesfecho",
+    "name": "BRMotivoDesfecho",
+    "title": "BRMotivoDesfecho",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMotivoDesfecho",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRMotivoProcedimentoNaoRealizado",
+    "name": "BRMotivoProcedimentoNaoRealizado",
+    "title": "BRMotivoProcedimentoNaoRealizado",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMotivoProcedimentoNaoRealizado",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMotivoProcedimentoNaoRealizado"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRMotivoRealizacaoExame",
+    "name": "BRMotivoRealizacaoExame",
+    "title": "BRMotivoRealizacaoExame",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMotivoRealizacaoExame",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRMotivoTeleconsultoria",
+    "name": "BRMotivoTeleconsultoria",
+    "title": "BRMotivoTeleconsultoria",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMotivoTeleconsultoria",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRNomeExameGAL",
+    "name": "BRNomeExameGAL",
+    "title": "BRNomeExameGAL",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRNomeExameGAL",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRNomeExameGAL"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRNomeExameLOINC",
+    "name": "BRNomeExameLOINC",
+    "title": "BRNomeExameLOINC",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRNomeExameLOINC",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRNomeExameLOINC",
+      "2.16.840.1.113883.6.1",
+      "http://loinc.org"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRObmAMPP",
+    "name": "BRObmAMPP",
+    "title": "BRObmAMPP",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmAMPP",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmAMPP"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRObmANVISA",
+    "name": "BRObmANVISA",
+    "title": "BRObmANVISA",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmANVISA",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmANVISA"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRObmCATMAT",
+    "name": "BRObmCATMAT",
+    "title": "BRObmCATMAT",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmCATMAT",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmCATMAT"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRObmEAN",
+    "name": "BRObmEAN",
+    "title": "BRObmEAN",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmEAN",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmEAN"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRObmVMP",
+    "name": "BRObmVMP",
+    "title": "BRObmVMP",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmVMP",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmVMP"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRObmVTM",
+    "name": "BRObmVTM",
+    "title": "BRObmVTM",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmVTM",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmVTM"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BROrgaoExpedidor",
+    "name": "BROrgaoExpedidor",
+    "title": "BROrgaoExpedidor",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BROrgaoExpedidor",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BROrgaoExpedidor"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BROrtesesProtesesImplantaveis",
+    "name": "BROrtesesProtesesImplantaveis",
+    "title": "BROrtesesProtesesImplantaveis",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BROrtesesProtesesImplantaveis",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRPais",
+    "name": "BRPais",
+    "title": "BRPais",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRPais",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRPais"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRParentesco",
+    "name": "BRParentesco",
+    "title": "BRParentesco",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRParentesco",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRParentesco"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRPopulacaoTradicional",
+    "name": "BRPopulacaoTradicional",
+    "title": "BRPopulacaoTradicional",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRPopulacaoTradicional",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRPosicaoIndividuo",
+    "name": "BRPosicaoIndividuo",
+    "title": "BRPosicaoIndividuo",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRPosicaoIndividuo",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRPosicaoIndividuo"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRPovoItinerante",
+    "name": "BRPovoItinerante",
+    "title": "BRPovoItinerante",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRPovoItinerante",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRPovoItinerante"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRProcedencia",
+    "name": "BRProcedencia",
+    "title": "BRProcedencia",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRProcedencia",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRProgramaSaude",
+    "name": "BRProgramaSaude",
+    "title": "BRProgramaSaude",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRProgramaSaude",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRRacaCor",
+    "name": "BRRacaCor",
+    "title": "BRRacaCor",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRRacaCor",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRRacaCor"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRRegistroOrigem",
+    "name": "BRRegistroOrigem",
+    "title": "BRRegistroOrigem",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRRegistroOrigem",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRRegistroOrigem"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRResponsabilidadeParticipante",
+    "name": "BRResponsabilidadeParticipante",
+    "title": "BRResponsabilidadeParticipante",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRResponsabilidadeParticipante",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRResultadoQualitativoExame",
+    "name": "BRResultadoQualitativoExame",
+    "title": "BRResultadoQualitativoExame",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRResultadoQualitativoExame",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRResultadoQualitativoExame"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRServicoEspecializado",
+    "name": "BRServicoEspecializado",
+    "title": "BRServicoEspecializado",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRServicoEspecializado",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRServicoEspecializado"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRSubgrupoTabelaSUS",
+    "name": "BRSubgrupoTabelaSUS",
+    "title": "BRSubgrupoTabelaSUS",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRSubgrupoTabelaSUS",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRSubgrupoTabelaSUS"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTabelaSUS",
+    "name": "BRTabelaSUS",
+    "title": "BRTabelaSUS",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTerminologiaPatogeno",
+    "name": "BRTerminologiaPatogeno",
+    "title": "BRTerminologiaPatogeno",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTerminologiaPatogeno",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTerminologiaPatogeno"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoAleitamentoMaterno",
+    "name": "BRTipoAleitamentoMaterno",
+    "title": "BRTipoAleitamentoMaterno",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoAleitamentoMaterno",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoAleitamentoMaterno"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoAmostraGAL",
+    "name": "BRTipoAmostraGAL",
+    "title": "BRTipoAmostraGAL",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoAmostraGAL",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoAmostraGAL"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoDadoPessoalLGPD",
+    "name": "BRTipoDadoPessoalLGPD",
+    "title": "BRTipoDadoPessoalLGPD",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoDadoPessoalLGPD",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoDeficiencia",
+    "name": "BRTipoDeficiencia",
+    "title": "BRTipoDeficiencia",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoDeficiencia",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoDocumento",
+    "name": "BRTipoDocumento",
+    "title": "BRTipoDocumento",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoDocumento",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDocumento"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoEstabelecimentoSaude",
+    "name": "BRTipoEstabelecimentoSaude",
+    "title": "BRTipoEstabelecimentoSaude",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoEstabelecimentoSaude",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoEstabelecimentoSaude"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoIdentificador",
+    "name": "BRTipoIdentificador",
+    "title": "BRTipoIdentificador",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoIdentificador",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoIdentificador"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoLogradouro",
+    "name": "BRTipoLogradouro",
+    "title": "BRTipoLogradouro",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoLogradouro",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoLogradouro"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoObservacao",
+    "name": "BRTipoObservacao",
+    "title": "BRTipoObservacao",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoObservacao",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoObservacao"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoParticipante",
+    "name": "BRTipoParticipante",
+    "title": "BRTipoParticipante",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoParticipante",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoParticipante"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoResultadoAVIDEZ",
+    "name": "BRTipoResultadoAVIDEZ",
+    "title": "BRTipoResultadoAVIDEZ",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoAVIDEZ",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoAVIDEZ"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoResultadoDTNT",
+    "name": "BRTipoResultadoDTNT",
+    "title": "BRTipoResultadoDTNT",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoDTNT",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoDTNT"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoResultadoHISPT",
+    "name": "BRTipoResultadoHISPT",
+    "title": "BRTipoResultadoHISPT",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoHISPT",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoHISPT"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoResultadoPRAU",
+    "name": "BRTipoResultadoPRAU",
+    "title": "BRTipoResultadoPRAU",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoPRAU",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoPRAU"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoResultadoPSNG",
+    "name": "BRTipoResultadoPSNG",
+    "title": "BRTipoResultadoPSNG",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoPSNG",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoPSNG"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoResultadoRGNR",
+    "name": "BRTipoResultadoRGNR",
+    "title": "BRTipoResultadoRGNR",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoRGNR",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoRGNR"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoResultadoRSBAC",
+    "name": "BRTipoResultadoRSBAC",
+    "title": "BRTipoResultadoRSBAC",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoRSBAC",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoRSBAC"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoResultadoRSCUL",
+    "name": "BRTipoResultadoRSCUL",
+    "title": "BRTipoResultadoRSCUL",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoRSCUL",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoRSCUL"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRTipoTeleconsultoria",
+    "name": "BRTipoTeleconsultoria",
+    "title": "BRTipoTeleconsultoria",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoTeleconsultoria",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRUnidadeMedida",
+    "name": "BRUnidadeMedida",
+    "title": "BRUnidadeMedida",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRUnidadeMedida",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRViaAdministracao",
+    "name": "BRViaAdministracao",
+    "title": "BRViaAdministracao",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRViaAdministracao",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRViaAdministracao"
+    ]
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "BRcondicao-amostra",
+    "name": "BRcondicao_amostra",
+    "title": "BRcondicao_amostra",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRcondicao-amostra",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": []
+  },
+  {
+    "resourceType": "CodeSystem",
+    "id": "TipoConvenio",
+    "name": "TipoConvenio",
+    "title": "TipoConvenio",
+    "url": "https://terminologia.saude.gov.br/fhir/CodeSystem/TipoConvenio",
+    "status": "active",
+    "content": "not-present",
+    "count": null,
+    "description": null,
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/TipoConvenio"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRAlergenos",
+    "name": "BRAlergenos",
+    "title": "BR Alergenos",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRAlergenos",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRImunobiologico",
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMedicamento",
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRAlergenosCBARA"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRAtendimentoPrestado",
+    "name": "BRAtendimentoPrestado",
+    "title": "BR Atendimento Prestado",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRAtendimentoPrestado",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRAtendimentoPrestado"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRBaseLegalLGPD",
+    "name": "BRBaseLegalLGPD",
+    "title": "BRBaseLegalLGPD",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRBaseLegalLGPD",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRBaseLegalLGPD"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCIAP2",
+    "name": "BRCIAP2",
+    "title": "BRCIAP 2",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCIAP2",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCIAP2"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCID10",
+    "name": "BRCID10",
+    "title": "BRCID 10",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCID10",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCOREN",
+    "name": "BRCOREN",
+    "title": "Conselhos regionais de Enfermagem do Brasil",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCOREN",
+    "status": "draft",
+    "description": "Conjunto de todos os conselhos regionais de enfermagem do Brasil",
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRConselhoProfissional"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCRF",
+    "name": "BRCRF",
+    "title": "Conselhos regionais de Farmácia do Brasil",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCRF",
+    "status": "draft",
+    "description": "Conjunto de todos os conselhos regionais de farmácia do Brasil",
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRConselhoProfissional"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCRM",
+    "name": "BRCRM",
+    "title": "Conselhos regionais de Medicina do Brasil",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCRM",
+    "status": "draft",
+    "description": "Conjunto de todos os conselhos regionais de medicina do Brasil",
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRConselhoProfissional"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCRO",
+    "name": "BRCRO",
+    "title": "Conselhos regionais de Odontologia do Brasil",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCRO",
+    "status": "draft",
+    "description": "Conjunto de todos os conselhos regionais de farmácia do Brasil",
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRConselhoProfissional"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCaraterAtendimento",
+    "name": "BRCaraterAtendimento",
+    "title": "BR Carater Atendimento",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCaraterAtendimento",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCaraterAtendimento"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCaraterAtendimentoMIRA",
+    "name": "BRCaraterAtendimentoMIRA",
+    "title": "BR Carater Atendimento MIRA",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCaraterAtendimentoMIRA",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://hl7.org/fhir/request-priority"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCategoriaAgenteAlergiasReacoesAdversas",
+    "name": "BRCategoriaAgenteAlergiasReacoesAdversas",
+    "title": "BR Categoria Agente Alergias Reacoes Adversas",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCategoriaAgenteAlergiasReacoesAdversas",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://hl7.org/fhir/allergy-intolerance-category",
+      "http://terminology.hl7.org/CodeSystem/v3-NullFlavor"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCategoriaDiagnostico",
+    "name": "BRCategoriaDiagnostico",
+    "title": "BR Categoria Diagnostico",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCategoriaDiagnostico",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCategoriaDiagnostico"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCategoriaExame",
+    "name": "BRCategoriaExame",
+    "title": "BR Categoria Exame",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCategoriaExame",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRSubgrupoTabelaSUS"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCategoriaProcedimento",
+    "name": "BRCategoriaProcedimento",
+    "title": "BR Categoria Procedimento",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCategoriaProcedimento",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRSubgrupoTabelaSUS",
+      "https://fhir.ans.gov.br/CodeSystem/tuss-50",
+      "https://fhir.ans.gov.br/CodeSystem/tuss-51"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRConclusaoColposcopia",
+    "name": "BRConclusaoColposcopia",
+    "title": "BRConclusaoColposcopia",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRConclusaoColposcopia",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRConclusaoColposcopia"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCondicaoMaternal",
+    "name": "BRCondicaoMaternal",
+    "title": "BR Condicao Maternal",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCondicaoMaternal",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCondicaoMaternal"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCondutaColposcopia",
+    "name": "BRCondutaColposcopia",
+    "title": "BRCondutaColposcopia",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCondutaColposcopia",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCondutaColposcopia"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCondutaTeleconsultoria",
+    "name": "BRCondutaTeleconsultoria",
+    "title": "BRCondutaTeleconsultoria",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCondutaTeleconsultoria",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCondutaTeleconsultoria"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCoreMedication-not-given",
+    "name": "BRCoreMedication-not-given",
+    "title": "BR Core Medication Not Given",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCoreMedication-not-given",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://hl7.org/fhir/reason-medication-not-given"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRCriticidadeAlergiasReacoesAdversas",
+    "name": "BRCriticidadeAlergiasReacoesAdversas",
+    "title": "BR Criticidade Alergias Reacoes Adversas",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCriticidadeAlergiasReacoesAdversas",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://hl7.org/fhir/allergy-intolerance-criticality"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRDeficiencias",
+    "name": "BRDeficiencias",
+    "title": "BRDeficiencias",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRDeficiencias",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10",
+      "http://snomed.info/sct"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRDesfechoProcedimento",
+    "name": "BRDesfechoProcedimento",
+    "title": "BR Desfecho Procedimento",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRDesfechoProcedimento",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDesfechoProcedimento"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRDireitoTitularDados",
+    "name": "BRDireitoTitularDados",
+    "title": "BRDireitoTitularDados",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRDireitoTitularDados",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDireitoTitularDados"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRDispositivo-Medico",
+    "name": "BRDispositivo_Medico",
+    "title": "BRDispositivo_Medico",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRDispositivo-Medico",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRDose",
+    "name": "BRDose",
+    "title": "BR Dose",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRDose",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDose"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRElegibilidadeImunobiologico",
+    "name": "BRElegibilidadeImunobiologico",
+    "title": "BR Elegibilidade Imunobiologico",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRElegibilidadeImunobiologico",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRElegibilidadeImunobiologico"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BREstadoCivil",
+    "name": "BREstadoCivil",
+    "title": "BR Estado Civil",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BREstadoCivil",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
+      "http://terminology.hl7.org/CodeSystem/v3-NullFlavor"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BREstadoEvento",
+    "name": "BREstadoEvento",
+    "title": "BR Estado Evento",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BREstadoEvento",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://hl7.org/fhir/event-status"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BREstadoObservacao",
+    "name": "BREstadoObservacao",
+    "title": "BR Estado Observacao",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BREstadoObservacao",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://hl7.org/fhir/observation-status"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BREstadoResolucaoDiagnosticoProblema",
+    "name": "BREstadoResolucaoDiagnosticoProblema",
+    "title": "BR Estado Resolucao Diagnostico Problema",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BREstadoResolucaoDiagnosticoProblema",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://terminology.hl7.org/CodeSystem/condition-clinical"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BREstadoSolicitacaoMedicamento",
+    "name": "BREstadoSolicitacaoMedicamento",
+    "title": "BR Estado Solicitacao Medicamento",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BREstadoSolicitacaoMedicamento",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://hl7.org/fhir/CodeSystem/medicationrequest-status"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BREstrategiaVacinacao",
+    "name": "BREstrategiaVacinacao",
+    "title": "BR Estrategia Vacinacao",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BREstrategiaVacinacao",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BREstrategiaVacinacao"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BREtniaIndigena",
+    "name": "BREtniaIndigena",
+    "title": "BR Etnia Indigena",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BREtniaIndigena",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://mangara.hsl.org.br/fhir/CodeSystem/etnias",
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BREtniaIndigena"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRExameHPV",
+    "name": "BRExameHPV",
+    "title": "BRExameHPV",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRExameHPV",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRExameHPVCEPHEID",
+      "http://loinc.org",
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRFabricanteImunobiologico",
+    "name": "BRFabricanteImunobiologico",
+    "title": "BR Fabricante Imunobiologico",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRFabricanteImunobiologico",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRFabricantePNI"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRFinalidadeTratamentoDados",
+    "name": "BRFinalidadeTratamentoDados",
+    "title": "BRFinalidadeTratamentoDados",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRFinalidadeTratamentoDados",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRFinalidadeTratamentoDados"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRFormaOrganizacaoTabelaSUS",
+    "name": "BRFormaOrganizacaoTabelaSUS",
+    "title": "BRFormaOrganizacaoTabelaSUS",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRFormaOrganizacaoTabelaSUS",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRFormaOrganizacaoTabelaSUS"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRFreqUsoSubstancia",
+    "name": "BRFreqUsoSubstancia",
+    "title": "BRFreqUsoSubstancia",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRFreqUsoSubstancia",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://loinc.org"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRGrauCertezaAlergiasReacoesAdversas",
+    "name": "BRGrauCertezaAlergiasReacoesAdversas",
+    "title": "BR Grau Certeza Alergias Reacoes Adversas",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRGrauCertezaAlergiasReacoesAdversas",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRHPVInterpretacao",
+    "name": "BRHPVInterpretacao",
+    "title": "BRHPVInterpretacao",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRHPVInterpretacao",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRHPVInterpretacao"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRIdentidadeGenero",
+    "name": "BRIdentidadeGenero",
+    "title": "BR Identidade Genero",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRIdentidadeGenero",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://terminology.hl7.org/CodeSystem/v3-NullFlavor",
+      "http://snomed.info/sct",
+      "http://terminology.hl7.org/CodeSystem/data-absent-reason"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRImunobiologico",
+    "name": "BRImunobiologico",
+    "title": "BR Imunobiologico",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRImunobiologico",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRImunobiologico"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRInstalacoesFisicas",
+    "name": "BRInstalacoesFisicas",
+    "title": "BR Instalacoes Fisicas",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRInstalacoesFisicas",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRInstalacoesFisicas"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRJustificativaIndividuoNaoIdentificado",
+    "name": "BRJustificativaIndividuoNaoIdentificado",
+    "title": "BR Justificativa Individuo Nao Identificado",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRJustificativaIndividuoNaoIdentificado",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRJustificativaIndividuoNaoIdentificado"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRLocalAfericao",
+    "name": "BRLocalAfericao",
+    "title": "BR Local Afericao",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRLocalAfericao",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRLocalAfericao"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRLocalAplicacao",
+    "name": "BRLocalAplicacao",
+    "title": "BR Local Aplicacao",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRLocalAplicacao",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRLocalAplicacao"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRModalidadeAssistencial",
+    "name": "BRModalidadeAssistencial",
+    "title": "BR Modalidade Assistencial",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRModalidadeAssistencial",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRModalidadeAssistencial"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRModalidadeAssistencialMIRA",
+    "name": "BRModalidadeAssistencialMIRA",
+    "title": "BR Modalidade Assistencial MIRA",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRModalidadeAssistencialMIRA",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRModalidadeAssistencial"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRModalidadeFinanceira",
+    "name": "BRModalidadeFinanceira",
+    "title": "BR Modalidade Financeira",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRModalidadeFinanceira",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRModalidadeFinanceira"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRModalidadeImagem",
+    "name": "BRModalidadeImagem",
+    "title": "BR Modalidade Imagem",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRModalidadeImagem",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://dicom.nema.org/resources/ontology/DCM"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRModalidadeTelessaude",
+    "name": "BRModalidadeTelessaude",
+    "title": "BRModalidadeTelessaude",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRModalidadeTelessaude",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRModalidadeTelessaude"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRMotivoDesfecho",
+    "name": "BRMotivoDesfecho",
+    "title": "BR Motivo Desfecho",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRMotivoDesfecho",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMotivoDesfecho"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRMotivoProcedimentoNaoRealizado",
+    "name": "BRMotivoProcedimentoNaoRealizado",
+    "title": "BR Motivo Procedimento Nao Realizado",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRMotivoProcedimentoNaoRealizado",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMotivoProcedimentoNaoRealizado"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRMotivoRealizacaoExame",
+    "name": "BRMotivoRealizacaoExame",
+    "title": "BRMotivoRealizacaoExame",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRMotivoRealizacaoExame",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMotivoRealizacaoExame"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRMotivoTeleconsultoria",
+    "name": "BRMotivoTeleconsultoria",
+    "title": "BRMotivoTeleconsultoria",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRMotivoTeleconsultoria",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMotivoTeleconsultoria"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRMunicipio",
+    "name": "BRMunicipio",
+    "title": "BR Municipio",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRMunicipio",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDivisaoGeograficaBrasil"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRNomeExame",
+    "name": "BRNomeExame",
+    "title": "BR Nome Exame",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRNomeExame",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRNomeExameGAL",
+      "http://loinc.org"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRNomeExameLOINC",
+    "name": "BRNomeExameLOINC",
+    "title": "BRNomeExameLOINC",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRNomeExameLOINC",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRNomeExameLOINC"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BROCI-IC",
+    "name": "BROCI-IC",
+    "title": "BROCI-IC",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BROCI-IC",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRObservationReferencia",
+    "name": "BRObservationReferencia",
+    "title": "BR Observation Referencia",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRObservationReferencia",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://snomed.info/sct"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRObservationRestricaoIntervaloReferencia",
+    "name": "BRObservationRestricaoIntervaloReferencia",
+    "title": null,
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRObservationRestricaoIntervaloReferencia",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRRacaCor",
+      "http://snomed.info/sct"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BROcupacao",
+    "name": "BROcupacao",
+    "title": "BR Ocupacao",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BROcupacao",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BROrgaoExpedidor",
+    "name": "BROrgaoExpedidor",
+    "title": "BR Orgao Expedidor",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BROrgaoExpedidor",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BROrgaoExpedidor"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BROrtesesProtesesImplantaveis",
+    "name": "BROrtesesProtesesImplantaveis",
+    "title": "BROrtesesProtesesImplantaveis",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BROrtesesProtesesImplantaveis",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BROrtesesProtesesImplantaveis"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BROutrosProfissionais",
+    "name": "BROutrosProfissionais",
+    "title": "Conselhos regionais de outros profissionais da saúde do Brasil",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BROutrosProfissionais",
+    "status": "draft",
+    "description": "Conjunto de todos os conselhos regionais de outros profissionais da saúde do Brasil",
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRConselhoProfissional"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRPais",
+    "name": "BRPais",
+    "title": "BR Pais",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRPais",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRPais"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRParentesco",
+    "name": "BRParentesco",
+    "title": "BR Parentesco",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRParentesco",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRParentesco"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRPopulacaoTradicional",
+    "name": "BRPopulacaoTradicional",
+    "title": "BR Populacao Tradicional",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRPopulacaoTradicional",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRPopulacaoTradicional"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRPosicaoIndividuo",
+    "name": "BRPosicaoIndividuo",
+    "title": "BR Posicao Individuo",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRPosicaoIndividuo",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRPosicaoIndividuo"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRPovoItinerante",
+    "name": "BRPovoItinerante",
+    "title": "BR Povo Itinerante",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRPovoItinerante",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRPovoItinerante"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRPrescricaoNaoEstruturada",
+    "name": "BRPrescricaoNaoEstruturada",
+    "title": null,
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRPrescricaoNaoEstruturada",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDadoAusenteOuDesconhecido"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRProblemaDiagnostico",
+    "name": "BRProblemaDiagnostico",
+    "title": "BR Problema Diagnostico",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRProblemaDiagnostico",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRProcedencia",
+    "name": "BRProcedencia",
+    "title": "BR Procedencia",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRProcedencia",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRProcedencia"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRProcedimentosNacionais",
+    "name": "BRProcedimentosNacionais",
+    "title": "BR Procedimentos Nacionais",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRProcedimentosNacionais",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://fhir.ans.gov.br/CodeSystem/tuss-22"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRProgramaSaude",
+    "name": "BRProgramaSaude",
+    "title": "BR Programa Saude",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRProgramaSaude",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRProgramaSaude"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRRacaCor",
+    "name": "BRRacaCor",
+    "title": "BR Raca Cor",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRRacaCor",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRRacaCor"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRReacoesAdversasMedDRA",
+    "name": "BRReacoesAdversasMedDRA",
+    "title": "BR Reacoes Adversas Med DRA",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRReacoesAdversasMedDRA",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMedDRA"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRReasonEncounter",
+    "name": "BRReasonEncounter",
+    "title": "BR Reason Encounter",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRReasonEncounter",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRRegistroOrigem",
+    "name": "BRRegistroOrigem",
+    "title": "BR Registro Origem",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRRegistroOrigem",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRRegistroOrigem"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRResponsabilidadeParticipante",
+    "name": "BRResponsabilidadeParticipante",
+    "title": "BR Responsabilidade Participante",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRResponsabilidadeParticipante",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRResponsabilidadeParticipante"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRResultadoQualitativoExame",
+    "name": "BRResultadoQualitativoExame",
+    "title": "BR Resultado Qualitativo Exame",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRResultadoQualitativoExame",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoDTNT",
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoHISPT",
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoPRAU",
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoRSBAC",
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoAVIDEZ",
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoRGNR",
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoRSCUL",
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRResultadoQualitativoExame",
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoPSNG"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRResultadoQualitativoHPV",
+    "name": "BRResultadoQualitativoHPV",
+    "title": "BRResultadoQualitativoHPV",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRResultadoQualitativoHPV",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRResultadoQualitativoExame"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRServicoEspecializado",
+    "name": "BRServicoEspecializado",
+    "title": "BR Servico Especializado",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRServicoEspecializado",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRServicoEspecializado"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRSexo",
+    "name": "BRSexo",
+    "title": "BR Sexo",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRSexo",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://hl7.org/fhir/administrative-gender"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRSexoNascimento",
+    "name": "BRSexoNascimento",
+    "title": "BR Sexo Nascimento",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRSexoNascimento",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://hl7.org/fhir/administrative-gender",
+      "http://terminology.hl7.org/CodeSystem/v3-NullFlavor"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRSinaisVitais",
+    "name": "BRSinaisVitais",
+    "title": "BR Sinais Vitais",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRSinaisVitais",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "http://loinc.org"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRSubgrupoTabelaSUS",
+    "name": "BRSubgrupoTabelaSUS",
+    "title": "BR Subgrupo Tabela SUS",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRSubgrupoTabelaSUS",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRSubgrupoTabelaSUS"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTabelaSUS",
+    "name": "BRTabelaSUS",
+    "title": "BRTabelaSUS",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTabelaSUS",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTabelaSUSOCI-IC",
+    "name": "BRTabelaSUSOCI_IC",
+    "title": "BRTabelaSUSOCI_IC",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTabelaSUSOCI-IC",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTerminologiaMedicamento",
+    "name": "BRTerminologiaMedicamento",
+    "title": "BR Terminologia Medicamento",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTerminologiaMedicamento",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmCATMAT"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTerminologiaPatogeno",
+    "name": "BRTerminologiaPatogeno",
+    "title": "BR Terminologia Patogeno",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTerminologiaPatogeno",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTerminologiaPatogeno"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTerminologiaSuspeitaDiagnostica",
+    "name": "BRTerminologiaSuspeitaDiagnostica",
+    "title": "BR Terminologia Suspeita Diagnostica",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTerminologiaSuspeitaDiagnostica",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTipoAleitamentoMaterno",
+    "name": "BRTipoAleitamentoMaterno",
+    "title": "BR Tipo Aleitamento Materno",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoAleitamentoMaterno",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoAleitamentoMaterno"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTipoAmostra",
+    "name": "BRTipoAmostra",
+    "title": "BR Tipo Amostra",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoAmostra",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoAmostraGAL",
+      "http://terminology.hl7.org/CodeSystem/v2-0487"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTipoDadoPessoal",
+    "name": "BRTipoDadoPessoal",
+    "title": "BRTipoDadoPessoal",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoDadoPessoal",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoDadoPessoalLGPD"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTipoDadoPessoalLGPD",
+    "name": "BRTipoDadoPessoalLGPD",
+    "title": "BRTipoDadoPessoalLGPD",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoDadoPessoalLGPD",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoDadoPessoalLGPD"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTipoDeficiencia",
+    "name": "BRTipoDeficiencia",
+    "title": "BRTipoDeficiencia",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoDeficiencia",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoDeficiencia"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTipoDocumento",
+    "name": "BRTipoDocumento",
+    "title": "BR Tipo Documento",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoDocumento",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoDocumento"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTipoDocumentoIndividuo",
+    "name": "BRTipoDocumentoIndividuo",
+    "title": "BR Tipo Documento Individuo",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoDocumentoIndividuo",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoIdentificador",
+      "http://terminology.hl7.org/CodeSystem/v2-0203"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTipoEstabelecimentoSaude",
+    "name": "BRTipoEstabelecimentoSaude",
+    "title": "BR Tipo Estabelecimento Saude",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoEstabelecimentoSaude",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoEstabelecimentoSaude"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTipoIdentificador",
+    "name": "BRTipoIdentificador",
+    "title": "BR Tipo Identificador",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoIdentificador",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoIdentificador",
+      "http://terminology.hl7.org/CodeSystem/v2-0203"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTipoIdentificadorProcedimento",
+    "name": "BRTipoIdentificadorProcedimento",
+    "title": "BR Tipo Identificador Procedimento",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoIdentificadorProcedimento",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoIdentificador"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTipoLogradouro",
+    "name": "BRTipoLogradouro",
+    "title": "BR Tipo Logradouro",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoLogradouro",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoLogradouro"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTipoObservacao",
+    "name": "BRTipoObservacao",
+    "title": "BR Tipo Observacao",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoObservacao",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoObservacao",
+      "http://loinc.org"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTipoParticipante",
+    "name": "BRTipoParticipante",
+    "title": "BR Tipo Participante",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoParticipante",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoParticipante"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRTipoTeleconsultoria",
+    "name": "BRTipoTeleconsultoria",
+    "title": "BRTipoTeleconsultoria",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoTeleconsultoria",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoTeleconsultoria"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRUnidadeFederativa",
+    "name": "BRUnidadeFederativa",
+    "title": "BR Unidade Federativa",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRUnidadeFederativa",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDivisaoGeograficaBrasil"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRUnidadeMedidaMedicamento",
+    "name": "BRUnidadeMedidaMedicamento",
+    "title": "BR Unidade Medida Medicamento",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRUnidadeMedidaMedicamento",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRUnidadeMedida"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRViaAdministracao",
+    "name": "BRViaAdministracao",
+    "title": "BR Via Administracao",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRViaAdministracao",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRViaAdministracao"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "BRcondicao-amostra",
+    "name": "BRcondicao_amostra",
+    "title": "BRcondicao_amostra",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/BRcondicao-amostra",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRcondicao_amostra",
+      "http://terminology.hl7.org/CodeSystem/v2-0493"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "OCIOftalmo",
+    "name": "OCIOftalmo",
+    "title": "OCIOftalmo",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/OCIOftalmo",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "OCIOnco",
+    "name": "OCIOnco",
+    "title": "OCIOnco",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/OCIOnco",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "OCIOrtopedia",
+    "name": "OCIOrtopedia",
+    "title": "OCIOrtopedia",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/OCIOrtopedia",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "OCIOtorrino",
+    "name": "OCIOtorrino",
+    "title": "OCIOtorrino",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/OCIOtorrino",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS"
+    ]
+  },
+  {
+    "resourceType": "ValueSet",
+    "id": "TipoConvenio",
+    "name": "TipoConvenio",
+    "title": "Tipo Convenio",
+    "url": "https://terminologia.saude.gov.br/fhir/ValueSet/TipoConvenio",
+    "status": "active",
+    "description": null,
+    "includes": [
+      "https://terminologia.saude.gov.br/fhir/CodeSystem/TipoConvenio"
+    ]
+  }
+]

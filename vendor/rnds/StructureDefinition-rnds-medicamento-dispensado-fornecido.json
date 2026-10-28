@@ -1,0 +1,745 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "rnds-medicamento-dispensado-fornecido",
+  "meta": {
+    "versionId": "1",
+    "lastUpdated": "2026-08-07T14:22:32.428+00:00"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSDispensacaoMedicamento",
+  "version": "2.0.0",
+  "name": "RNDSDispensacaoMedicamento",
+  "title": "Dispensação ou Fornecimento de Medicamento",
+  "status": "active",
+  "date": "2024-12-10",
+  "publisher": "Ministério da Saúde do Brasil",
+  "contact": [
+    {
+      "name": "COPIS - Coordenação de Padrões e Interoperabilidade em Saúde",
+      "telecom": [
+        {
+          "system": "url",
+          "value": "https://webatendimento.saude.gov.br/faq/rnds"
+        }
+      ]
+    }
+  ],
+  "description": "Este recurso Indica que um medicamento deve ser ou foi dispensado para uma pessoa/paciente. O recurso inclui a descrição do medicamento (suprimento) fornecido bem como as instruções para a sua administração. A dispensação do medicamento é o resultado de um  pedido de medicamentos feito por um sistema de informações",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "BR",
+          "display": "Brazil"
+        }
+      ]
+    }
+  ],
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "MedicationDispense",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/MedicationDispense",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "MedicationDispense",
+        "path": "MedicationDispense",
+        "short": "Dispensação ou fornecimento de um medicamento a um paciente específico.",
+        "definition": "Este recurso Indica que um medicamento deve ser ou foi dispensado para uma pessoa/paciente. O recurso inclui a descrição do medicamento (suprimento) fornecido bem como as instruções para a sua administração. A dispensação do medicamento é o resultado de um  pedido de medicamentos feito por um sistema de informações",
+        "constraint": [
+          {
+            "key": "dfm-2",
+            "severity": "error",
+            "human": "A identificação do indivíduo que retirou o medicamento (MedicationDispense.receiver.identifier.value) é obrigatória caso a dispensação seja realizada totalmente, parcialmente ou caso seja um estorno de medicamento (MedicationDipense.type).",
+            "expression": "MedicationDispense.type.coding.exists(code in 'fully-dispensing'|'partial-dispensing'|'medication-return') implies MedicationDispense.receiver.exists()"
+          },
+          {
+            "key": "dfm-3",
+            "severity": "error",
+            "human": "A quantidade de medicamento dispensada ou fornecida (MedicationDispense.quantity) é obrigatória caso a dispensação seja realizada totalmente, parcialmente ou caso seja um estorno de medicamento (MedicationDipense.type).",
+            "expression": "MedicationDispense.type.coding.exists(code in 'fully-dispensing'|'partial-dispensing'|'medication-return') implies MedicationDispense.quantity.exists()"
+          },
+          {
+            "key": "dfm-4",
+            "severity": "error",
+            "human": "Caso o profissional responsável pela dispensação (MedicationDispense.performer.actor) seja Farmacêutico devem ser informados os dados do conselho profissional (Practitioner.identifier).",
+            "expression": "MedicationDispense.performer.actor.resolve().ofType(PractitionerRole).code.coding.code.startsWith('2234') implies MedicationDispense.performer.actor.resolve().ofType(PractitionerRole).practitioner.resolve().ofType(Practitioner).identifier.type.coding.where(code = 'RPH').exists()"
+          },
+          {
+            "key": "dfm-5",
+            "severity": "error",
+            "human": "Em caso de dispensação parcial ou não atendimento (MedicationDispense.type.coding.code) deve ser fornecida uma justificativa (MedicationDispense.note).",
+            "expression": "MedicationDispense.type.coding.exists(code = 'partial-dispensing' or code = 'not-dispensed') implies MedicationDispense.note.exists()"
+          },
+          {
+            "key": "dfm-6",
+            "severity": "error",
+            "human": "A identificação do laboratório ou fabricante do medicamento (Medication.manufacturer) é obrigatória caso a dispensação seja realizada totalmente, parcialmente ou caso seja um estorno de medicamento (MedicationDipense.type), exceto se o código do medicamento for um AMP ou um AMPP, neste caso o laboratório ou fabricante não deve ser preenchido.",
+            "expression": "MedicationDispense.type.coding.exists(code in 'fully-dispensing'|'partial-dispensing'|'medication-return') implies (MedicationDispense.medication.resolve().manufacturer.exists() xor (MedicationDispense.medication.resolve().code.coding.system.contains('AMPP') or MedicationDispense.medication.resolve().code.coding.system.contains('AMP')))"
+          },
+          {
+            "key": "dfm-7",
+            "severity": "error",
+            "human": "O lote do medicamento (Medication.batch.lotNumber) é obrigatório caso a dispensação seja realizada totalmente, parcialmente ou caso seja um estorno de medicamento (MedicationDipense.type).",
+            "expression": "MedicationDispense.type.coding.exists(code in 'fully-dispensing'|'partial-dispensing'|'medication-return') implies MedicationDispense.medication.resolve().batch.lotNumber.exists()"
+          },
+          {
+            "key": "dfm-8",
+            "severity": "error",
+            "human": "A data de validade do medicamento (Medication.batch.expirationDate) é obrigatória caso a dispensação seja realizada totalmente, parcialmente ou caso seja um estorno de medicamento (MedicationDipense.type).",
+            "expression": "MedicationDispense.type.coding.exists(code in 'fully-dispensing'|'partial-dispensing'|'medication-return') implies MedicationDispense.medication.resolve().batch.expirationDate.exists()"
+          }
+        ]
+      },
+      {
+        "id": "MedicationDispense.id",
+        "path": "MedicationDispense.id",
+        "short": "ID lógico deste artefato",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.meta",
+        "path": "MedicationDispense.meta",
+        "short": "Metadados sobre o recurso"
+      },
+      {
+        "id": "MedicationDispense.implicitRules",
+        "path": "MedicationDispense.implicitRules",
+        "short": "Um conjunto de regras sob as quais este conteúdo foi criado"
+      },
+      {
+        "id": "MedicationDispense.language",
+        "path": "MedicationDispense.language",
+        "short": "Idioma do recurso"
+      },
+      {
+        "id": "MedicationDispense.text",
+        "path": "MedicationDispense.text",
+        "short": "Resumo do texto do recurso em linguagem natural"
+      },
+      {
+        "id": "MedicationDispense.contained",
+        "path": "MedicationDispense.contained",
+        "short": "Recursos contidos no recurso"
+      },
+      {
+        "id": "MedicationDispense.extension",
+        "path": "MedicationDispense.extension",
+        "short": "Extensões adicionais que não fazem parte do modelo base"
+      },
+      {
+        "id": "MedicationDispense.modifierExtension",
+        "path": "MedicationDispense.modifierExtension",
+        "short": "Extensões adicionais que não podem ser ignoradas, mesmo que não reconhecidas"
+      },
+      {
+        "id": "MedicationDispense.identifier",
+        "path": "MedicationDispense.identifier",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        },
+        "short": "Cada item dispensado ou fornecido DEVE ser identificado pelo ID local e também pode ser identificado pelo número do Sistema Nacional de Controle de Receituários - SNCR.",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.identifier:dispensedItemId",
+        "path": "MedicationDispense.identifier",
+        "sliceName": "dispensedItemId",
+        "short": "Identificadores local do item dispensado ou fornecido",
+        "min": 1,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.identifier:dispensedItemId.system",
+        "path": "MedicationDispense.identifier.system",
+        "min": 1,
+        "fixedUri": "http://www.saude.gov.br/fhir/r4/NamingSystem/dispensed-item-id"
+      },
+      {
+        "id": "MedicationDispense.identifier:dispensedItemId.value",
+        "path": "MedicationDispense.identifier.value",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.identifier:sncrNumber",
+        "path": "MedicationDispense.identifier",
+        "sliceName": "sncrNumber",
+        "short": "Número do Sistema Nacional de Controle de Receituários",
+        "definition": "Número do Sistema Nacional de Controle de Receituários (caso aplicado ao item dispensado ou fornecido)",
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.identifier:sncrNumber.system",
+        "path": "MedicationDispense.identifier.system",
+        "min": 1,
+        "fixedUri": "http://www.saude.gov.br/fhir/r4/NamingSystem/sncr-number"
+      },
+      {
+        "id": "MedicationDispense.identifier:sncrNumber.value",
+        "path": "MedicationDispense.identifier.value",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.partOf",
+        "path": "MedicationDispense.partOf",
+        "short": "Referência ao procedimento que esta dispensação faz parte"
+      },
+      {
+        "id": "MedicationDispense.status",
+        "path": "MedicationDispense.status",
+        "short": "Código de status da dispensação de medicamentos",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.statusReason[x]",
+        "path": "MedicationDispense.statusReason[x]",
+        "short": "Porquê uma dispensação não foi realizada",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ]
+      },
+      {
+        "id": "MedicationDispense.category",
+        "path": "MedicationDispense.category",
+        "short": "Categoria de dispensação de medicamentos",
+        "definition": "Na Atenção Primária, o código `community` deve ser usado. Na Atenção Especializada, a categoria frequentemente corresponderá ao tipo de atendimento prestado.\r\n\r\n```json\r\n\"category\": [\r\n    {\r\n        \"coding\": [\r\n            {\r\n                \"system\": \"http://terminology.hl7.org/CodeSystem/medicationdispense-category\",\r\n                \"code\": \"community\"\r\n            }\r\n        ]\r\n    }\r\n],\r\n```"
+      },
+      {
+        "id": "MedicationDispense.medication[x]",
+        "path": "MedicationDispense.medication[x]",
+        "short": "Medicamento que foi dispensado ou fornecido",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSMedicamento"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.subject",
+        "path": "MedicationDispense.subject",
+        "short": "Para quem é a dispensação ou fornecimento de medicamento",
+        "definition": "É necessária a identificação de um paciente com um número de CPF ou CNS.\r\n\r\n```json\r\n\"subject\": {\r\n    \"identifier\": {\r\n        \"system\": \"http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0\",\r\n        \"value\": \"53678720454\"\r\n    }\r\n}\r\n```",
+        "min": 1,
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.subject.identifier",
+        "path": "MedicationDispense.subject.identifier",
+        "min": 1,
+        "constraint": [
+          {
+            "key": "ident-1",
+            "severity": "error",
+            "human": "O número de CPF ou CNS informado é inválido (MedicationDispense.subject.identifier.value).",
+            "expression": "value.matches('^(?!(\\\\d)\\\\1{10})\\\\d{11}$') or value.matches('^(?!(\\\\d)\\\\1{14})[125789]\\\\d{14}$')"
+          }
+        ]
+      },
+      {
+        "id": "MedicationDispense.subject.identifier.system",
+        "path": "MedicationDispense.subject.identifier.system",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.subject.identifier.value",
+        "path": "MedicationDispense.subject.identifier.value",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.context",
+        "path": "MedicationDispense.context",
+        "short": "Referência ao atendimento o qual o medicamento foi dispensado"
+      },
+      {
+        "id": "MedicationDispense.supportingInformation",
+        "path": "MedicationDispense.supportingInformation",
+        "short": "Referência à outros recursos que subsidiam a dispensação do medicamento"
+      },
+      {
+        "id": "MedicationDispense.performer",
+        "path": "MedicationDispense.performer",
+        "short": "Quem realizou a dispensação ou fornecimento do medicamento",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.performer.id",
+        "path": "MedicationDispense.performer.id",
+        "short": "Identificador exclusivo para referência entre elementos"
+      },
+      {
+        "id": "MedicationDispense.performer.function",
+        "path": "MedicationDispense.performer.function",
+        "short": "Função do profissional da dispensação do medicamento"
+      },
+      {
+        "id": "MedicationDispense.performer.actor",
+        "path": "MedicationDispense.performer.actor",
+        "short": "Referência ao profissional/organização/dispositivo/pessoa/paciente que realizou a dispensação do medicamento",
+        "min": 1,
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSLotacaoProfissional"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "MedicationDispense.performer.actor.reference",
+        "path": "MedicationDispense.performer.actor.reference",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.location",
+        "path": "MedicationDispense.location",
+        "short": "Referência ao local de dispensação do medicamento"
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription",
+        "path": "MedicationDispense.authorizingPrescription",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "id"
+            }
+          ],
+          "rules": "open"
+        },
+        "short": "Receita médica que autoriza a dispensação do medicamento",
+        "definition": "Indica a prescrição médica referente ao medicamento que está sendo dispensado.",
+        "min": 1,
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSPrescricaoMedicamento"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription.id",
+        "path": "MedicationDispense.authorizingPrescription.id",
+        "short": "Identificador exclusivo para referência entre elementos"
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription.reference",
+        "path": "MedicationDispense.authorizingPrescription.reference",
+        "short": "Referência literal, URL relativa, interna ou absoluta"
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription.type",
+        "path": "MedicationDispense.authorizingPrescription.type",
+        "short": "Tipo ao qual a referência se refere (ex.: Patient)"
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription.identifier",
+        "path": "MedicationDispense.authorizingPrescription.identifier",
+        "short": "Referência lógica, quando a referência literal não é conhecida"
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription.display",
+        "path": "MedicationDispense.authorizingPrescription.display",
+        "short": "Texto alternativo para o recurso"
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription:prescriptionInRNDS",
+        "path": "MedicationDispense.authorizingPrescription",
+        "sliceName": "prescriptionInRNDS",
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSPrescricaoMedicamento"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription:prescriptionInRNDS.id",
+        "path": "MedicationDispense.authorizingPrescription.id",
+        "fixedString": "in-rnds"
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription:prescriptionInRNDS.reference",
+        "path": "MedicationDispense.authorizingPrescription.reference",
+        "max": "0"
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription:prescriptionInRNDS.identifier",
+        "path": "MedicationDispense.authorizingPrescription.identifier",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription:prescriptionInRNDS.identifier.system",
+        "path": "MedicationDispense.authorizingPrescription.identifier.system",
+        "min": 1,
+        "fixedUri": "http://www.saude.gov.br/fhir/r4/NamingSystem/prescription-item-id"
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription:prescriptionInRNDS.identifier.value",
+        "path": "MedicationDispense.authorizingPrescription.identifier.value",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription:prescriptionOutOfRNDS",
+        "path": "MedicationDispense.authorizingPrescription",
+        "sliceName": "prescriptionOutOfRNDS",
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSPrescricaoMedicamento"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription:prescriptionOutOfRNDS.id",
+        "path": "MedicationDispense.authorizingPrescription.id",
+        "fixedString": "out-of-rnds"
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription:prescriptionOutOfRNDS.reference",
+        "path": "MedicationDispense.authorizingPrescription.reference",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.authorizingPrescription:prescriptionOutOfRNDS.identifier",
+        "path": "MedicationDispense.authorizingPrescription.identifier",
+        "max": "0"
+      },
+      {
+        "id": "MedicationDispense.type",
+        "path": "MedicationDispense.type",
+        "short": "Tipo de dispensação do medicamento",
+        "min": 1,
+        "mustSupport": true,
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRTipoDispensacaoRealizada"
+        }
+      },
+      {
+        "id": "MedicationDispense.type.coding",
+        "path": "MedicationDispense.type.coding",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "MedicationDispense.type.coding.system",
+        "path": "MedicationDispense.type.coding.system",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.type.coding.code",
+        "path": "MedicationDispense.type.coding.code",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.quantity",
+        "path": "MedicationDispense.quantity",
+        "short": "Quantidade de medicamento dispensada",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.quantity.value",
+        "path": "MedicationDispense.quantity.value",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.daysSupply",
+        "path": "MedicationDispense.daysSupply",
+        "short": "Número de dias de dispensação do medicamento"
+      },
+      {
+        "id": "MedicationDispense.whenPrepared",
+        "path": "MedicationDispense.whenPrepared",
+        "short": "Quando o produto foi embalado e revisado"
+      },
+      {
+        "id": "MedicationDispense.whenHandedOver",
+        "path": "MedicationDispense.whenHandedOver",
+        "short": "Quando o produto foi entregue",
+        "definition": "O horário em que o produto foi entregue ao paciente ou ao seu representante.",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.destination",
+        "path": "MedicationDispense.destination",
+        "short": "Para onde o medicamento foi enviado"
+      },
+      {
+        "id": "MedicationDispense.receiver",
+        "path": "MedicationDispense.receiver",
+        "short": "Quem recebeu o medicamento",
+        "definition": "Identifica a pessoa que retirou o medicamento. Geralmente, trata-se do paciente ou de seu cuidador, mas em alguns casos pode ser um profissional de saúde.",
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.receiver.identifier",
+        "path": "MedicationDispense.receiver.identifier",
+        "min": 1,
+        "constraint": [
+          {
+            "key": "ident-1",
+            "severity": "error",
+            "human": "O número de CPF ou CNS do indivíduo informado é inválido (subject.identifier.value).",
+            "expression": "value.matches('^(?!(\\\\d)\\\\1{10})\\\\d{11}$') or value.matches('^(?!(\\\\d)\\\\1{14})[125789]\\\\d{14}$')"
+          }
+        ]
+      },
+      {
+        "id": "MedicationDispense.receiver.identifier.system",
+        "path": "MedicationDispense.receiver.identifier.system",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.receiver.identifier.value",
+        "path": "MedicationDispense.receiver.identifier.value",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.note",
+        "path": "MedicationDispense.note",
+        "short": "Informações sobre a dispensação do medicamento",
+        "definition": "Informações sobre a dispensação do medicamento",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction",
+        "path": "MedicationDispense.dosageInstruction",
+        "short": "Como o medicamento deve ser usado pelo paciente ou administrado pelo cuidador",
+        "definition": "O conteúdo do `dosageInstruction` deve seguir as orientações contidas em cada elemento.\r\n\r\n`dosageInstruction.text` **DEVE** ser fornecido e é uma versão legível por humanos da dose estruturada, como seria impressa em uma prescrição de papel. O prescritor deve inserir uma dosagem de item de medicamento. \r\n\r\nO prescritor deve inserir uma dosagem de item de medicamento. O uso de um valor padrão genérico, por exemplo, \"Use conforme as instruções\", se um valor não for inserido, não é aceitável de uma perspectiva clínica. O usuário deve ser solicitado a selecionar uma instrução de dosagem de uma lista de seleção, digitar manualmente ou fazer com que o sistema preencha com uma instrução de dosagem válida e clinicamente segura, relevante para o medicamento prescrito ou circunstâncias clínicas.\r\n\r\n\r\n```json\r\n\"dosageInstruction\": [\r\n   {\r\n        \"text\": \"Tomar 1 comprimido via oral pela manhã por 10 dias\",\r\n        \"timing\": {\r\n            \"repeat\": {\r\n                \"boundsDuration\": {\r\n                    \"value\": 10,\r\n                    \"unit\": \"day\",\r\n                     \"system\": \"http://unitsofmeasure.org\",\r\n                     \"code\": \"d\"\r\n                },\r\n                 \"frequency\": 1,\r\n                 \"period\": 1,\r\n                 \"periodUnit\": \"d\",\r\n                 \"when\": \"MORN\"\r\n             }\r\n        },\r\n        \"route\": {\r\n            \"coding\": [\r\n                {\r\n                    \"system\": \"http://www.saude.gov.br/fhir/r4/CodeSystem/BRViaAdministracao\",\r\n                    \"code\": \"10907\",\r\n                    \"display\": \"Oral\"\r\n                }\r\n            ]\r\n        },\r\n        \"doseAndRate\": [\r\n   {\r\n    \"doseQuantity\": {\r\n     \"value\": 1,\r\n     \"unit\": \"Comprimido\",\r\n     \"system\": \"http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida\",\r\n     \"code\": \"19\"\r\n    }\r\n   }\r\n  ],\r\n }\r\n]\r\n\r\n\r\n```"
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.sequence",
+        "path": "MedicationDispense.dosageInstruction.sequence",
+        "short": "Instruções de dosagem multissequencial.",
+        "definition": "Uma sequência múltipla seria necessária quando uma instrução de dosagem muda ao longo de um determinado cronograma, quando uma instrução de dosagem inclui doses de acompanhamento opcionais ou quando uma instrução de dosagem simultânea é necessária para o mesmo medicamento em uma dose diferente.\r\n\r\nOs exemplos abaixo incluem Prednisolona para tratar paralisia de Bell, onde uma dose começa em 60 mg por dia por um período de tempo e depois reduz em 10 mg por dia. Isso seria descrito como uma instrução de dosagem sequencial. Um exemplo de dosagem simultânea é fornecido para descrever uma dose diferente pela manhã daquela ao meio-dia.\r\n\r\n#### Instruções sequenciais\r\n\r\nOnde o valor da sequência é um inteiro incremental, ele define uma instrução sequencial.\r\n\r\n```json\r\n\"dosageInstruction\": [\r\n    {\r\n        \"sequence\": 1,\r\n        \"text\": \"60 milligram - once a day - for 4 days\",\r\n        \"timing\": {\r\n            \"repeat\": {\r\n                \"boundsDuration\": {\r\n                    \"value\": 4,\r\n                    \"unit\": \"day\",\r\n                    \"system\": \"http://unitsofmeasure.org\",\r\n                    \"code\": \"d\"\r\n                },\r\n                \"frequency\": 1,\r\n                \"period\": 1,\r\n                \"periodUnit\": \"d\"\r\n            }\r\n        },\r\n        \"doseAndRate\": [\r\n            {\r\n                \"doseQuantity\": {\r\n                    \"value\": 60,\r\n                    \"unit\": \"milligram\",\r\n                    \"system\": \"http://unitsofmeasure.org\",\r\n                    \"code\": \"mg\"\r\n                }\r\n            }\r\n        ]\r\n    },\r\n    {\r\n        \"sequence\": 2,\r\n        \"text\": \"50 milligram - once a day - for 1 day\",\r\n        \"timing\": {\r\n            \"repeat\": {\r\n                \"boundsDuration\": {\r\n                    \"value\": 1,\r\n                    \"unit\": \"day\",\r\n                    \"system\": \"http://unitsofmeasure.org\",\r\n                    \"code\": \"d\"\r\n                },\r\n                \"frequency\": 1,\r\n                \"period\": 1,\r\n                \"periodUnit\": \"d\"\r\n            }\r\n        },\r\n        \"doseAndRate\": [\r\n            {\r\n                \"doseQuantity\": {\r\n                    \"value\": 50,\r\n                    \"unit\": \"milligram\",\r\n                    \"system\": \"http://unitsofmeasure.org\",\r\n                    \"code\": \"mg\"\r\n                }\r\n            }\r\n        ]\r\n    }\r\n]\r\n```\r\n\r\n#### Instruções simultâneas\r\n\r\nOnde o mesmo valor inteiro da sequência é definido, significa uma instrução simultânea.\r\n\r\n```json\r\n\"dosageInstruction\": [\r\n    {\r\n        \"sequence\": 1,\r\n        \"text\": \"2 tablet - daily - at 08:00 - for 1 week\",\r\n        \"timing\": {\r\n            \"repeat\": {\r\n                \"boundsDuration\": {\r\n                    \"value\": 1,\r\n                    \"unit\": \"week\",\r\n                    \"system\": \"http://unitsofmeasure.org\",\r\n                    \"code\": \"wk\"\r\n                },\r\n                \"period\": 1,\r\n                \"periodUnit\": \"d\",\r\n                \"timeOfDay\": [\r\n                    \"08:00:00\"\r\n                ]\r\n            }\r\n        },\r\n        \"doseAndRate\": [\r\n            {\r\n                \"doseQuantity\": {\r\n                    \"value\": 2,\r\n                    \"unit\": \"tablet\",\r\n                    \"system\": \"http://snomed.info/sct\",\r\n                    \"code\": \"428673006\"\r\n                }\r\n            }\r\n        ]\r\n    },\r\n    {\r\n        \"sequence\": 1,\r\n        \"text\": \"1 tablet - daily - at 12:00 - for 1 week\",\r\n        \"timing\": {\r\n            \"repeat\": {\r\n                \"boundsDuration\": {\r\n                    \"value\": 1,\r\n                    \"unit\": \"week\",\r\n                    \"system\": \"http://unitsofmeasure.org\",\r\n                    \"code\": \"wk\"\r\n                },\r\n                \"period\": 1,\r\n                \"periodUnit\": \"d\",\r\n                \"timeOfDay\": [\r\n                    \"12:00:00\"\r\n                ]\r\n            }\r\n        },\r\n        \"doseAndRate\": [\r\n            {\r\n                \"doseQuantity\": {\r\n                    \"value\": 1,\r\n                    \"unit\": \"tablet\",\r\n                    \"system\": \"http://snomed.info/sct\",\r\n                    \"code\": \"428673006\"\r\n                }\r\n            }\r\n        ]\r\n    }\r\n]\r\n```",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.text",
+        "path": "MedicationDispense.dosageInstruction.text",
+        "short": "As instruções completas de dosagem como uma sequência legível por humanos.",
+        "definition": "A instrução de dosagem completa como um texto legível por humanos.\r\n\r\nPor exemplo:\r\n\r\n```json\r\n\"text\": \"1 comprimido - a cada 6 horas - oral\"\r\n```\r\nOnde instruções de dosagem adicionais precisam ser transmitidas e não podem ser descritas usando nenhum outro elemento da estrutura de dosagem, anexe-as ao final do texto de dosagem.\r\n\r\nPor exemplo, a instrução para `“infundir o mais rápido possível via porta intraperitoneal”` não é um termo codificado, portanto, não pode ser compartilhado como uma `additionalInstruction`. Também não seria apropriado como uma string `patientInstruction`.\r\n\r\nPor exemplo:\r\n\r\n```json\r\n\"text\": \"{os elementos de dosagem traduzidos como texto} - infundir o mais rápido possível via porta intraperitoneal\"\r\n```\r\n\r\nPor exemplo, a instrução `“imediatamente após o medicamento {X}”)`, onde {X} é o nome de um medicamento, não é adequada como uma `additionalInstruction` nem como `patientInstruction`.\r\n\r\nPor exemplo:\r\n\r\n```json\r\n\"text\": \"500 miligramas - uma vez - oral - imediatamente após o medicamento {X}\"\r\n```",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.additionalInstruction",
+        "path": "MedicationDispense.dosageInstruction.additionalInstruction",
+        "short": "Instruções suplementares ou advertências ao paciente.",
+        "definition": "Essas elementos , `additionalInstruction` e `patientInstruction`, **DEVEM** ser usadas somente para passar notas sobre a prescrição ao farmacêutico ou paciente.\r\nInstruções adicionais devem ser codificadas, mas onde não houver código, o elemento pode incluir texto. Por exemplo, \"Engula com bastante água\", que pode ou não ser codificado.\r\n\r\n```json\r\n\"dosageInstruction\": [\r\n    {\r\n        \"text\": \"10 milligram, Inject, Subcutaneous route, once weekly\",\r\n        \"additionalInstruction\": [\r\n            \"coding\": [\r\n                {\r\n                    \"system\": \"http://snomed.info/sct\",\r\n                    \"code\": \"421769005\",\r\n                    \"display\": \"Follow directions\"\r\n                }\r\n            ],\r\n        ],\r\n        \"patientInstruction\": \"Engula com bastante água\"\r\n    }\r\n]\r\n```",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.patientInstruction",
+        "path": "MedicationDispense.dosageInstruction.patientInstruction",
+        "short": "Instruções em termos que sejam compreendidos pelo paciente ou consumidor.",
+        "definition": "Essas elementos , `additionalInstruction` e `patientInstruction`, **DEVEM** ser usadas somente para passar notas sobre a prescrição ao farmacêutico ou paciente.\r\nInstruções adicionais devem ser codificadas, mas onde não houver código, o elemento pode incluir texto. Por exemplo, \"Engula com bastante água\", que pode ou não ser codificado.\r\n\r\n```json\r\n\"dosageInstruction\": [\r\n    {\r\n        \"text\": \"10 milligram, Inject, Subcutaneous route, once weekly\",\r\n        \"additionalInstruction\": [\r\n            \"coding\": [\r\n                {\r\n                    \"system\": \"http://snomed.info/sct\",\r\n                    \"code\": \"421769005\",\r\n                    \"display\": \"Follow directions\"\r\n                }\r\n            ],\r\n        ],\r\n        \"patientInstruction\": \"Engula com bastante água\"\r\n    }\r\n]\r\n```",
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.timing",
+        "path": "MedicationDispense.dosageInstruction.timing",
+        "short": "Quando o medicamento deve ser administrado",
+        "definition": "Quando o medicamento deve ser administrado",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.timing.repeat",
+        "path": "MedicationDispense.dosageInstruction.timing.repeat",
+        "short": "Quando o evento deve ocorrer",
+        "definition": "Um conjunto de regras que descrevem quando o evento está agendado.",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.asNeeded[x]",
+        "path": "MedicationDispense.dosageInstruction.asNeeded[x]",
+        "short": "Uso - se necessário",
+        "definition": "A estrutura `asNeeded` pode ser usada para definir instruções simples “conforme necessário”.\r\nNeste caso, use a opção `asNeededBoolean`. A ausência de `asNeededBoolean` é equivalente a onde `asNeededBoolean` tem um valor de `false`.",
+        "type": [
+          {
+            "code": "boolean"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.site",
+        "path": "MedicationDispense.dosageInstruction.site",
+        "short": "Local anatômico de administração do medicamento",
+        "definition": "Local do corpo onde administrar o medicamento."
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.route",
+        "path": "MedicationDispense.dosageInstruction.route",
+        "short": "Via de admiminstração do medicamento",
+        "definition": "Conceito - referência a uma terminologia que representa a via de administração do medicamento.\r\n\r\n```json\r\n\"route\": {\r\n    \"coding\": [\r\n        {\r\n            \"system\": \"http://www.saude.gov.br/fhir/r4/CodeSystem/BRViaAdministracao\",\r\n            \"code\": \"10907\",\r\n            \"display\": \"Oral\"\r\n        }\r\n    ]\r\n}\r\n```",
+        "min": 1,
+        "mustSupport": true,
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRViaAdministracao-1.0"
+        }
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.route.coding",
+        "path": "MedicationDispense.dosageInstruction.route.coding",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.route.coding.system",
+        "path": "MedicationDispense.dosageInstruction.route.coding.system",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.route.coding.code",
+        "path": "MedicationDispense.dosageInstruction.route.coding.code",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.method",
+        "path": "MedicationDispense.dosageInstruction.method",
+        "short": "Técnica para a administração do medicamento",
+        "definition": "Um valor codificado que indica o método pelo qual o medicamento é introduzido no corpo ou sobre ele. Mais comumente usado para injeções. Por exemplo: Injeção Lenta; IV Profunda."
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.doseAndRate",
+        "path": "MedicationDispense.dosageInstruction.doseAndRate",
+        "min": 1
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.doseAndRate.type",
+        "path": "MedicationDispense.dosageInstruction.doseAndRate.type",
+        "short": "O tipo de dose ou taxa de administração especificada",
+        "definition": "O tipo de dose ou taxa especificada, por exemplo, prescrita ou calculada."
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.doseAndRate.dose[x]",
+        "path": "MedicationDispense.dosageInstruction.doseAndRate.dose[x]",
+        "short": "Quantidade de medicamento por dose",
+        "definition": "A quantidade de substância terapêutica ou outra substância administrada em uma única sessão.",
+        "type": [
+          {
+            "code": "Quantity"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRUnidadeMedidaMedicamento"
+        }
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.doseAndRate.rate[x]",
+        "path": "MedicationDispense.dosageInstruction.doseAndRate.rate[x]",
+        "short": "Quantidade de medicamento por unidade de tempo",
+        "definition": "Identifica a velocidade com que o medicamento foi ou será administrado ao paciente. Normalmente, refere-se à taxa de infusão, por exemplo, 100 ml por hora ou 100 ml/h. Também pode ser expressa como uma taxa por unidade de tempo, por exemplo, 500 ml por 2 horas. Outros exemplos: 200 mcg/min ou 200 mcg/1 minuto; 1 litro/8 horas. Às vezes, a taxa pode indicar a duração quando expressa como volume total/duração (por exemplo, 500 ml/2 horas implica uma duração de 2 horas). No entanto, quando a taxa não indica a duração (por exemplo, 250 ml/hora), o parâmetro `time.repeat.duration` é necessário para indicar o período de infusão."
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.maxDosePerPeriod",
+        "path": "MedicationDispense.dosageInstruction.maxDosePerPeriod",
+        "short": "Quantidade máxima de medicamento por unidade de tempo",
+        "definition": "A quantidade máxima total de uma substância terapêutica que pode ser administrada a um indivíduo durante um determinado período de tempo. Por exemplo, 1000 mg em 24 horas."
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.maxDosePerAdministration",
+        "path": "MedicationDispense.dosageInstruction.maxDosePerAdministration",
+        "short": "Quantidade máxima de medicamento por administração",
+        "definition": "A quantidade total máxima de uma substância terapêutica que pode ser administrada a um indivíduo por administração."
+      },
+      {
+        "id": "MedicationDispense.dosageInstruction.maxDosePerLifetime",
+        "path": "MedicationDispense.dosageInstruction.maxDosePerLifetime",
+        "short": "Quantidade máxima de medicamento por toda a vida do paciente",
+        "definition": "A quantidade máxima total de uma substância terapêutica que pode ser administrada durante a vida do indivíduo."
+      },
+      {
+        "id": "MedicationDispense.substitution",
+        "path": "MedicationDispense.substitution",
+        "short": "Se uma substituição foi realizada na dispensação"
+      },
+      {
+        "id": "MedicationDispense.substitution.wasSubstituted",
+        "path": "MedicationDispense.substitution.wasSubstituted",
+        "short": "Se foi ou não realizada uma substituição na dispensação do medicamento"
+      },
+      {
+        "id": "MedicationDispense.substitution.type",
+        "path": "MedicationDispense.substitution.type",
+        "short": "Código que indica se um medicamento diferente do prescrito foi substituido"
+      },
+      {
+        "id": "MedicationDispense.substitution.reason",
+        "path": "MedicationDispense.substitution.reason",
+        "short": "Porque a substituição foi feita"
+      },
+      {
+        "id": "MedicationDispense.substitution.responsibleParty",
+        "path": "MedicationDispense.substitution.responsibleParty",
+        "short": "Referência ao profissional responsável pela substituição do medicamento",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSLotacaoProfissional"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "MedicationDispense.detectedIssue",
+        "path": "MedicationDispense.detectedIssue",
+        "short": "Referência à condição clínica"
+      },
+      {
+        "id": "MedicationDispense.eventHistory",
+        "path": "MedicationDispense.eventHistory",
+        "short": "Referência à uma lista de eventos"
+      }
+    ]
+  }
+}

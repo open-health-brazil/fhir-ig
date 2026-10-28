@@ -1,0 +1,77 @@
+{
+  "key": "BRNomeIndividuo-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRNomeIndividuo-1.0",
+  "version": "1.0",
+  "name": "BRNomeIndividuo",
+  "title": "Nome de Indivíduos",
+  "status": "active",
+  "kind": "complex-type",
+  "type": "HumanName",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/HumanName",
+  "description": "Padronização de uso de nomes de indivíduo no Brasil.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "HumanName.use",
+      "path": "HumanName.use",
+      "min": 1,
+      "mustSupport": true,
+      "short": "Tipo de Nome"
+    },
+    {
+      "id": "HumanName.text",
+      "path": "HumanName.text",
+      "min": 1,
+      "mustSupport": true,
+      "short": "Nome Completo"
+    },
+    {
+      "id": "HumanName.family",
+      "path": "HumanName.family",
+      "mustSupport": true,
+      "short": "Sobrenome"
+    },
+    {
+      "id": "HumanName.given",
+      "path": "HumanName.given",
+      "max": "1",
+      "mustSupport": true,
+      "short": "Nome Próprio"
+    },
+    {
+      "id": "HumanName.prefix",
+      "path": "HumanName.prefix",
+      "mustSupport": true,
+      "short": "Prefixo do Nome"
+    },
+    {
+      "id": "HumanName.suffix",
+      "path": "HumanName.suffix",
+      "mustSupport": true,
+      "short": "Sufixo do Nome"
+    },
+    {
+      "id": "HumanName.period",
+      "path": "HumanName.period",
+      "mustSupport": true,
+      "short": "Período de Uso do Nome"
+    },
+    {
+      "id": "HumanName.period.start",
+      "path": "HumanName.period.start",
+      "mustSupport": true,
+      "short": "Data Inicial"
+    },
+    {
+      "id": "HumanName.period.end",
+      "path": "HumanName.period.end",
+      "mustSupport": true,
+      "short": "Data Final"
+    }
+  ]
+}

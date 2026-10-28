@@ -1,0 +1,19 @@
+{
+  "key": "RNDSPaciente",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSPaciente",
+  "version": null,
+  "name": "RNDSPaciente",
+  "title": null,
+  "status": "draft",
+  "kind": "resource",
+  "type": "Patient",
+  "baseDefinition": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+  "description": null,
+  "hasSnapshot": false,
+  "elements": []
+}

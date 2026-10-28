@@ -1,0 +1,189 @@
+{
+  "key": "br-core-observation",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation",
+  "version": "1.7.1",
+  "name": "BRCoreObservation",
+  "title": null,
+  "status": "active",
+  "kind": "resource",
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "description": "O recurso [br-core-Observation](StructureDefinition-br-core-observation.html) herda do recurso FHIR R4 [observation](https://hl7.org/fhir/R4B/observation.html) e registra medidas e resumo simples feitas sobre um paciente, dispositivo ou outro assunto",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Observation.basedOn",
+      "path": "Observation.basedOn",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-careplan",
+            "http://hl7.org/fhir/StructureDefinition/DeviceRequest",
+            "http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationrequest",
+            "http://hl7.org/fhir/StructureDefinition/NutritionOrder",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-servicerequest"
+          ]
+        }
+      ],
+      "short": "Referência ao pedido ou ao plano de tratamento que gerou este recurso"
+    },
+    {
+      "id": "Observation.partOf",
+      "path": "Observation.partOf",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationadministration",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationdispense",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationstatement",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-procedure",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-immunization",
+            "http://hl7.org/fhir/StructureDefinition/ImagingStudy"
+          ]
+        }
+      ],
+      "short": "Referência ao evento do qual este recurso faz parte"
+    },
+    {
+      "id": "Observation.subject",
+      "path": "Observation.subject",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-location",
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "http://hl7.org/fhir/StructureDefinition/Group"
+          ]
+        }
+      ],
+      "short": "Referência ao paciente ou local ou dispositivo ou grupo desta bservação"
+    },
+    {
+      "id": "Observation.encounter",
+      "path": "Observation.encounter",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-encounter"
+          ]
+        }
+      ],
+      "short": "Referência ao atendimento durante o qual esta observação foi registrada"
+    },
+    {
+      "id": "Observation.performer",
+      "path": "Observation.performer",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization",
+            "http://hl7.org/fhir/StructureDefinition/CareTeam",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson"
+          ]
+        }
+      ],
+      "short": "Referência ao responsável pela observação"
+    },
+    {
+      "id": "Observation.specimen",
+      "path": "Observation.specimen",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-specimen"
+          ]
+        }
+      ],
+      "short": "Amostra utilizada para esta observação"
+    },
+    {
+      "id": "Observation.referenceRange.modifierExtension",
+      "path": "Observation.referenceRange.modifierExtension",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension"
+        }
+      ],
+      "short": "Extensões adicionais que não podem ser ignoradas, mesmo que não reconhecidas"
+    },
+    {
+      "id": "Observation.referenceRange.text",
+      "path": "Observation.referenceRange.text",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Intervalo de referência em formato textual"
+    },
+    {
+      "id": "Observation.hasMember",
+      "path": "Observation.hasMember",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation",
+            "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+            "http://hl7.org/fhir/StructureDefinition/MolecularSequence"
+          ]
+        }
+      ],
+      "short": "Referência à Observação/Resposta de questionário associada a esta observação"
+    },
+    {
+      "id": "Observation.derivedFrom",
+      "path": "Observation.derivedFrom",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/DocumentReference",
+            "http://hl7.org/fhir/StructureDefinition/ImagingStudy",
+            "http://hl7.org/fhir/StructureDefinition/Media",
+            "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation",
+            "http://hl7.org/fhir/StructureDefinition/MolecularSequence"
+          ]
+        }
+      ],
+      "short": "Referência à Documents, Imagens, Mídias associadas a esta observação"
+    }
+  ]
+}

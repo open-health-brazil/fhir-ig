@@ -1,0 +1,151 @@
+{
+  "key": "BRIndividuoNaoIdentificadoANS-1.0.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuoNaoIdentificadoANS-1.0.0",
+  "version": "1.0.0",
+  "name": "BRIndividuoNaoIdentificadoANS",
+  "title": "Informações Complementares de Indivíduos Não Identificados ANS",
+  "status": "draft",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Informações complementares necessárias ao Contato Assistencial na hipótese do indivíduo não poder ser identificado.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.extension",
+      "path": "Extension.extension",
+      "min": 3,
+      "sliced": true
+    },
+    {
+      "id": "Extension.extension:gender",
+      "path": "Extension.extension",
+      "sliceName": "gender",
+      "min": 1,
+      "max": "1",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRSexo-1.0"
+      },
+      "short": "Sexo"
+    },
+    {
+      "id": "Extension.extension:gender.url",
+      "path": "Extension.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "gender"
+      }
+    },
+    {
+      "id": "Extension.extension:gender.value[x]",
+      "path": "Extension.extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "code"
+        }
+      ]
+    },
+    {
+      "id": "Extension.extension:birthYear",
+      "path": "Extension.extension",
+      "sliceName": "birthYear",
+      "min": 1,
+      "max": "1",
+      "short": "Ano de nascimento estimado"
+    },
+    {
+      "id": "Extension.extension:birthYear.url",
+      "path": "Extension.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "birthYear"
+      }
+    },
+    {
+      "id": "Extension.extension:birthYear.value[x]",
+      "path": "Extension.extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "date"
+        }
+      ]
+    },
+    {
+      "id": "Extension.extension:reason",
+      "path": "Extension.extension",
+      "sliceName": "reason",
+      "min": 1,
+      "max": "1",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRJustificativaIndividuoNaoIdentificado-1.0"
+      },
+      "short": "Justificativa da impossibilidade de identificação do indivíduo"
+    },
+    {
+      "id": "Extension.extension:reason.url",
+      "path": "Extension.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "reason"
+      }
+    },
+    {
+      "id": "Extension.extension:reason.value[x]",
+      "path": "Extension.extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ]
+    },
+    {
+      "id": "Extension.extension:operator",
+      "path": "Extension.extension",
+      "sliceName": "operator",
+      "min": 0,
+      "max": "1",
+      "short": "Identificação do operador responsável pela informação."
+    },
+    {
+      "id": "Extension.extension:operator.url",
+      "path": "Extension.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "operator"
+      }
+    },
+    {
+      "id": "Extension.extension:operator.value[x]",
+      "path": "Extension.extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "string"
+        }
+      ]
+    },
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuoNaoIdentificadoANS-1.0.0"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "max": "0"
+    }
+  ]
+}

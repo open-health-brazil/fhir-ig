@@ -1,0 +1,365 @@
+{
+  "key": "BRIndividuo-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+  "version": "01.10",
+  "name": "BRIndividuo",
+  "title": "Indivíduo",
+  "status": "active",
+  "kind": "resource",
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "description": "Indíviduo, sujeito da assistência à saúde.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Patient.extension",
+      "path": "Patient.extension",
+      "min": 1,
+      "sliced": true
+    },
+    {
+      "id": "Patient.extension:registerQuality",
+      "path": "Patient.extension",
+      "sliceName": "registerQuality",
+      "min": 0,
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRQualidadeCadastroIndividuo-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true
+    },
+    {
+      "id": "Patient.extension:registerQuality.value[x]",
+      "path": "Patient.extension.value[x]"
+    },
+    {
+      "id": "Patient.extension:parents",
+      "path": "Patient.extension",
+      "sliceName": "parents",
+      "min": 0,
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRParentesIndividuo-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true
+    },
+    {
+      "id": "Patient.extension:parents.extension",
+      "path": "Patient.extension.extension",
+      "min": 2,
+      "sliced": true
+    },
+    {
+      "id": "Patient.extension:parents.extension:relationship",
+      "path": "Patient.extension.extension",
+      "sliceName": "relationship",
+      "min": 1,
+      "mustSupport": true
+    },
+    {
+      "id": "Patient.extension:parents.extension:parent",
+      "path": "Patient.extension.extension",
+      "sliceName": "parent",
+      "min": 1,
+      "mustSupport": true
+    },
+    {
+      "id": "Patient.extension:raceEthnicity",
+      "path": "Patient.extension",
+      "sliceName": "raceEthnicity",
+      "min": 0,
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRacaCorEtnia-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true
+    },
+    {
+      "id": "Patient.extension:raceEthnicity.extension",
+      "path": "Patient.extension.extension",
+      "min": 1,
+      "sliced": true
+    },
+    {
+      "id": "Patient.extension:raceEthnicity.extension:race",
+      "path": "Patient.extension.extension",
+      "sliceName": "race",
+      "min": 1,
+      "mustSupport": true
+    },
+    {
+      "id": "Patient.extension:raceEthnicity.extension:indigenousEthnicity",
+      "path": "Patient.extension.extension",
+      "sliceName": "indigenousEthnicity",
+      "min": 0,
+      "mustSupport": true
+    },
+    {
+      "id": "Patient.extension:birthCity",
+      "path": "Patient.extension",
+      "sliceName": "birthCity",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMunicipio-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Município de Nascimento"
+    },
+    {
+      "id": "Patient.extension:birthCountry",
+      "path": "Patient.extension",
+      "sliceName": "birthCountry",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPais-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "País de Origem"
+    },
+    {
+      "id": "Patient.extension:Nationality",
+      "path": "Patient.extension",
+      "sliceName": "Nationality",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRNacionalidade"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Patient.extension:protectedPerson",
+      "path": "Patient.extension",
+      "sliceName": "protectedPerson",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuoProtegido-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Indivíduo com Dados Protegidos"
+    },
+    {
+      "id": "Patient.extension:naturalization",
+      "path": "Patient.extension",
+      "sliceName": "naturalization",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRNaturalizacao-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Patient.identifier",
+      "path": "Patient.identifier",
+      "types": [
+        {
+          "code": "Identifier",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRDocumentoIndividuo-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Patient.active",
+      "path": "Patient.active",
+      "min": 1,
+      "mustSupport": true,
+      "short": "Registro em Uso"
+    },
+    {
+      "id": "Patient.name",
+      "path": "Patient.name",
+      "types": [
+        {
+          "code": "HumanName",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRNomeIndividuo-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Patient.telecom",
+      "path": "Patient.telecom",
+      "types": [
+        {
+          "code": "ContactPoint",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMeioContato-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Patient.gender",
+      "path": "Patient.gender",
+      "min": 1,
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRSexo-1.0"
+      },
+      "short": "Sexo"
+    },
+    {
+      "id": "Patient.birthDate",
+      "path": "Patient.birthDate",
+      "min": 1,
+      "mustSupport": true,
+      "short": "Data de Nascimento"
+    },
+    {
+      "id": "Patient.deceased[x]",
+      "path": "Patient.deceased[x]",
+      "mustSupport": true,
+      "short": "Óbito"
+    },
+    {
+      "id": "Patient.address",
+      "path": "Patient.address",
+      "types": [
+        {
+          "code": "Address",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREndereco-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Patient.address.use",
+      "path": "Patient.address.use",
+      "min": 1
+    },
+    {
+      "id": "Patient.address.type",
+      "path": "Patient.address.type",
+      "min": 1
+    },
+    {
+      "id": "Patient.address.line:streetType",
+      "path": "Patient.address.line",
+      "sliceName": "streetType",
+      "min": 1
+    },
+    {
+      "id": "Patient.maritalStatus",
+      "path": "Patient.maritalStatus",
+      "max": "0",
+      "mustSupport": true,
+      "short": "Estado Civil"
+    },
+    {
+      "id": "Patient.maritalStatus.coding",
+      "path": "Patient.maritalStatus.coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Patient.maritalStatus.coding.system",
+      "path": "Patient.maritalStatus.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Patient.maritalStatus.coding.code",
+      "path": "Patient.maritalStatus.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Patient.maritalStatus.coding.display",
+      "path": "Patient.maritalStatus.coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Patient.maritalStatus.coding.userSelected",
+      "path": "Patient.maritalStatus.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Patient.maritalStatus.text",
+      "path": "Patient.maritalStatus.text",
+      "max": "0"
+    },
+    {
+      "id": "Patient.multipleBirth[x]",
+      "path": "Patient.multipleBirth[x]",
+      "max": "0",
+      "short": "Indivíduo Nasceu em Parto Gemelar"
+    },
+    {
+      "id": "Patient.photo",
+      "path": "Patient.photo",
+      "max": "0"
+    },
+    {
+      "id": "Patient.contact",
+      "path": "Patient.contact",
+      "max": "0"
+    },
+    {
+      "id": "Patient.communication",
+      "path": "Patient.communication",
+      "max": "0"
+    },
+    {
+      "id": "Patient.generalPractitioner",
+      "path": "Patient.generalPractitioner",
+      "max": "0"
+    },
+    {
+      "id": "Patient.managingOrganization",
+      "path": "Patient.managingOrganization",
+      "max": "0"
+    },
+    {
+      "id": "Patient.link",
+      "path": "Patient.link",
+      "max": "0"
+    }
+  ]
+}

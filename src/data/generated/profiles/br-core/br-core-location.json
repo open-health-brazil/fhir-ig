@@ -1,0 +1,95 @@
+{
+  "key": "br-core-location",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-location",
+  "version": "1.7.1",
+  "name": "BRCoreLocation",
+  "title": "br-core-location",
+  "status": "active",
+  "kind": "resource",
+  "type": "Location",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Location",
+  "description": "Este perfil restringe o recurso [Location](https://hl7.org/fhir/R4/location.html) que aborda detalhes e informações da posição de um local físico onde os serviços são fornecidos e os recursos e participantes podem ser armazenados, encontrados, contidos ou acomodados",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Location.status",
+      "path": "Location.status",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/location-status|4.0.1"
+      },
+      "short": "Indica se o local ainda está em uso: active | suspended | inactive"
+    },
+    {
+      "id": "Location.name",
+      "path": "Location.name",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Nome do local"
+    },
+    {
+      "id": "Location.type",
+      "path": "Location.type",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRServicoEspecializado"
+      },
+      "short": "Tipo de serviço oferecido"
+    },
+    {
+      "id": "Location.physicalType",
+      "path": "Location.physicalType",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRInstalacoesFisicas"
+      },
+      "short": "Estrutura física do local"
+    },
+    {
+      "id": "Location.partOf",
+      "path": "Location.partOf",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-location"
+          ]
+        }
+      ],
+      "short": "Referência à outro local que esta localidade é parte"
+    }
+  ]
+}

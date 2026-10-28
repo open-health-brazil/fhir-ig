@@ -1,0 +1,44 @@
+{
+  "key": "BRJurisdicaoOrgaoEmissor-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRJurisdicaoOrgaoEmissor-1.0",
+  "version": "1.0",
+  "name": "BRJurisdicaoOrgaoEmissor",
+  "title": "Jurisdição do Órgão Expedidor",
+  "status": "active",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Jurisdição de Órgãos Expedidores",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRJurisdicaoOrgaoEmissor-1.0"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "types": [
+        {
+          "code": "positiveInt"
+        },
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRUnidadeFederativa-1.0"
+      }
+    }
+  ]
+}

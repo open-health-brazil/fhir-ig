@@ -1,0 +1,93 @@
+{
+  "key": "br-core-observationbreastfeedingstatus",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observationbreastfeedingstatus",
+  "version": "1.7.1",
+  "name": "BRCoreObservationBreastfeedingStatus",
+  "title": null,
+  "status": "active",
+  "kind": "resource",
+  "type": "Observation",
+  "baseDefinition": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation",
+  "description": "Esse recurso [br-core-observationbreastfeedingstatus](StructureDefinition-br-core-observationbreastfeedingstatus.html) é uma restrição do perfil Observation para registrar informações sobre o tipo de aleitamento materno do paciente nos seus primeiros anos de vida",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Observation.issued",
+      "path": "Observation.issued",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "instant"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Data/hora em que esta versão foi disponibilizada"
+    },
+    {
+      "id": "Observation.value[x]",
+      "path": "Observation.value[x]",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Quantity"
+        },
+        {
+          "code": "CodeableConcept"
+        },
+        {
+          "code": "string"
+        },
+        {
+          "code": "boolean"
+        },
+        {
+          "code": "integer"
+        },
+        {
+          "code": "Range"
+        },
+        {
+          "code": "Ratio"
+        },
+        {
+          "code": "SampledData"
+        },
+        {
+          "code": "time"
+        },
+        {
+          "code": "dateTime"
+        },
+        {
+          "code": "Period"
+        }
+      ],
+      "sliced": true,
+      "short": "Resultado da observação"
+    },
+    {
+      "id": "Observation.value[x]:valueCodeableConcept",
+      "path": "Observation.value[x]",
+      "sliceName": "valueCodeableConcept",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoAleitamentoMaterno"
+      },
+      "short": "Resultado da observação"
+    }
+  ]
+}

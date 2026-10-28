@@ -1,0 +1,100 @@
+{
+  "key": "br-core-schedule",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-schedule",
+  "version": "1.7.1",
+  "name": "BRCoreSchedule",
+  "title": "br-core-schedule",
+  "status": "active",
+  "kind": "resource",
+  "type": "Schedule",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Schedule",
+  "description": "Perfil brasileiro do recurso FHIR R4 Schedule, utilizado para representar agendas e disponibilidades de profissionais, serviços ou locais de saúde no contexto da RNDS e sistemas de interoperabilidade, incluindo suporte a teleconsultas e telecolposcopia.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Schedule.active",
+      "path": "Schedule.active",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "fixed": {
+        "kind": "pattern",
+        "value": true
+      },
+      "short": "Indica se este Schedule está ativo"
+    },
+    {
+      "id": "Schedule.serviceCategory",
+      "path": "Schedule.serviceCategory",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRModalidadeAssistencial"
+      },
+      "short": "Categoria assistencial de alto nível"
+    },
+    {
+      "id": "Schedule.serviceType",
+      "path": "Schedule.serviceType",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRFormaOrganizacaoTabelaSUS"
+      },
+      "short": "Tipo de serviço"
+    },
+    {
+      "id": "Schedule.specialty",
+      "path": "Schedule.specialty",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BROcupacao-1.0"
+      },
+      "short": "Especialidade clínica"
+    },
+    {
+      "id": "Schedule.actor",
+      "path": "Schedule.actor",
+      "min": 1,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-healthcareservice"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Entidades vinculadas à agenda"
+    }
+  ]
+}

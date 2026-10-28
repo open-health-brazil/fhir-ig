@@ -1,0 +1,127 @@
+{
+  "key": "BRAmostraBiologica-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAmostraBiologica-1.0",
+  "version": "1.0",
+  "name": "BRAmostraBiologica",
+  "title": "Amostra Biológica",
+  "status": "active",
+  "kind": "resource",
+  "type": "Specimen",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Specimen",
+  "description": "Amostra de origem humana/animal usada em investigações biológicas/laboratoriais para fins diagnósticos.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Specimen.identifier",
+      "path": "Specimen.identifier",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.identifier.use",
+      "path": "Specimen.identifier.use",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.accessionIdentifier",
+      "path": "Specimen.accessionIdentifier",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.status",
+      "path": "Specimen.status",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.type",
+      "path": "Specimen.type",
+      "min": 1,
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRTipoAmostra-1.0"
+      },
+      "short": "Tipo da Amostra"
+    },
+    {
+      "id": "Specimen.type.coding",
+      "path": "Specimen.type.coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Specimen.type.coding.system",
+      "path": "Specimen.type.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Specimen.type.coding.code",
+      "path": "Specimen.type.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Specimen.type.coding.display",
+      "path": "Specimen.type.coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.type.coding.userSelected",
+      "path": "Specimen.type.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.type.text",
+      "path": "Specimen.type.text",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.subject",
+      "path": "Specimen.subject",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.receivedTime",
+      "path": "Specimen.receivedTime",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.parent",
+      "path": "Specimen.parent",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.request",
+      "path": "Specimen.request",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.collection",
+      "path": "Specimen.collection",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.processing",
+      "path": "Specimen.processing",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.container",
+      "path": "Specimen.container",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.condition",
+      "path": "Specimen.condition",
+      "max": "0"
+    },
+    {
+      "id": "Specimen.note",
+      "path": "Specimen.note",
+      "max": "0"
+    }
+  ]
+}

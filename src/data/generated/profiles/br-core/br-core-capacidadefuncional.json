@@ -1,0 +1,76 @@
+{
+  "key": "br-core-capacidadefuncional",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-capacidadefuncional",
+  "version": "1.7.1",
+  "name": "BRCoreCapacidadeFuncional",
+  "title": "br-core-capacidadefuncional",
+  "status": "active",
+  "kind": "resource",
+  "type": "Condition",
+  "baseDefinition": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-condition",
+  "description": "Capacidade funcional ou incapacidade do indivíduo (achado funcional), registrada como Condition. Herda do [br-core-condition](StructureDefinition-br-core-condition.html).",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Condition.clinicalStatus",
+      "path": "Condition.clinicalStatus",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/condition-clinical|4.0.1"
+      },
+      "short": "O status clínico da condição ou do diagnóstico"
+    },
+    {
+      "id": "Condition.clinicalStatus.coding.system",
+      "path": "Condition.clinicalStatus.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "short": "Identificador do sistema de terminologia"
+    },
+    {
+      "id": "Condition.clinicalStatus.coding.code",
+      "path": "Condition.clinicalStatus.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "short": "Símbolo na sintaxe definida pelo sistema"
+    },
+    {
+      "id": "Condition.code",
+      "path": "Condition.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRProblemaDiagnostico"
+      },
+      "short": "Achado funcional (capacidade ou incapacidade)"
+    }
+  ]
+}

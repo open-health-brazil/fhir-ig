@@ -1,0 +1,194 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "orteses-proteses-materiais",
+  "meta": {
+    "versionId": "2",
+    "lastUpdated": "2025-12-05T22:24:04.635+00:00"
+  },
+  "language": "pt-BR",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-category",
+      "valueString": "Base.Entities"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status",
+      "valueCode": "trial-use"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm",
+      "valueInteger": 2
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-security-category",
+      "valueCode": "business"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+      "valueCode": "oo"
+    }
+  ],
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROrtesesProtesesMateriais",
+  "version": "1.0.0",
+  "name": "BROrtesesProtesesMateriais",
+  "title": "Órteses, Próteses e Materiais",
+  "status": "active",
+  "date": "2025-09-21T00:00:00-03:00",
+  "publisher": "Ministério da Saúde do Brasil",
+  "contact": [
+    {
+      "name": "COPIS - Coordenação de Padrões e Interoperabilidade em Saúde",
+      "telecom": [
+        {
+          "system": "url",
+          "value": "https://webatendimento.saude.gov.br/faq/rnds"
+        }
+      ]
+    }
+  ],
+  "description": "A type of a manufactured item that is used in the provision of healthcare without being substantially changed through that activity. The device may be a medical or non-medical device.",
+  "purpose": "Allows institutions to track their devices.",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    },
+    {
+      "identity": "w5",
+      "uri": "http://hl7.org/fhir/fivews",
+      "name": "FiveWs Pattern Mapping"
+    },
+    {
+      "identity": "udi",
+      "uri": "http://fda.gov/UDI",
+      "name": "UDI Mapping"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Device",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Device",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Device.identifier",
+        "path": "Device.identifier",
+        "max": "1"
+      },
+      {
+        "id": "Device.identifier.system",
+        "path": "Device.identifier.system",
+        "min": 1,
+        "fixedUri": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS"
+      },
+      {
+        "id": "Device.identifier.value",
+        "path": "Device.identifier.value",
+        "min": 1,
+        "binding": {
+          "strength": "required",
+          "description": "Classificações Nacionais de Procedimentos",
+          "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRProcedimentosNacionais-1.0"
+        }
+      },
+      {
+        "id": "Device.lotNumber",
+        "path": "Device.lotNumber",
+        "min": 1
+      },
+      {
+        "id": "Device.patient",
+        "path": "Device.patient",
+        "min": 1,
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Device.patient.extension",
+        "path": "Device.patient.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Device.patient.extension:unidentifiedPatient",
+        "path": "Device.patient.extension",
+        "sliceName": "unidentifiedPatient",
+        "short": "Dados do Indivíduo Não Identificado",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuoNaoIdentificado-1.0"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Device.patient.extension:unidentifiedPatient.extension",
+        "path": "Device.patient.extension.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 4
+      },
+      {
+        "id": "Device.patient.extension:unidentifiedPatient.extension:gender",
+        "path": "Device.patient.extension.extension",
+        "sliceName": "gender",
+        "mustSupport": true
+      },
+      {
+        "id": "Device.patient.extension:unidentifiedPatient.extension:birthYear",
+        "path": "Device.patient.extension.extension",
+        "sliceName": "birthYear",
+        "mustSupport": true
+      },
+      {
+        "id": "Device.patient.extension:unidentifiedPatient.extension:reason",
+        "path": "Device.patient.extension.extension",
+        "sliceName": "reason",
+        "mustSupport": true
+      },
+      {
+        "id": "Device.subject.extension:unidentifiedPatient.extension:operator",
+        "path": "Device.subject.extension.extension",
+        "sliceName": "operator",
+        "mustSupport": true
+      },
+      {
+        "id": "Device.patient.identifier.system",
+        "path": "Device.patient.identifier.system",
+        "min": 1
+      },
+      {
+        "id": "Device.patient.identifier.value",
+        "path": "Device.patient.identifier.value",
+        "min": 1
+      }
+    ]
+  }
+}

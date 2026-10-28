@@ -1,0 +1,326 @@
+{
+  "key": "BRProblemaDiagnostico",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProblemaDiagnostico",
+  "version": "1.0",
+  "name": "BRProblemaDiagnostico",
+  "title": "ProblemaDiagnóstico",
+  "status": "draft",
+  "kind": "resource",
+  "type": "Condition",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Condition",
+  "description": "Problema e/ou diagnóstico atribuído pelo profissional de saúde ao indivíduo no contato assistencial.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Condition.identifier",
+      "path": "Condition.identifier",
+      "max": "0"
+    },
+    {
+      "id": "Condition.clinicalStatus",
+      "path": "Condition.clinicalStatus",
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BREstadoResolucaoDiagnosticoProblema-1.0"
+      },
+      "short": "Estado da Resolução"
+    },
+    {
+      "id": "Condition.clinicalStatus.coding",
+      "path": "Condition.clinicalStatus.coding",
+      "min": 1,
+      "max": "1",
+      "mustSupport": true
+    },
+    {
+      "id": "Condition.clinicalStatus.coding.system",
+      "path": "Condition.clinicalStatus.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Condition.clinicalStatus.coding.code",
+      "path": "Condition.clinicalStatus.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Condition.clinicalStatus.coding.display",
+      "path": "Condition.clinicalStatus.coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Condition.clinicalStatus.coding.userSelected",
+      "path": "Condition.clinicalStatus.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Condition.clinicalStatus.text",
+      "path": "Condition.clinicalStatus.text",
+      "max": "0"
+    },
+    {
+      "id": "Condition.verificationStatus",
+      "path": "Condition.verificationStatus",
+      "max": "0"
+    },
+    {
+      "id": "Condition.category",
+      "path": "Condition.category",
+      "max": "1",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRCategoriaCondicao"
+      }
+    },
+    {
+      "id": "Condition.severity",
+      "path": "Condition.severity",
+      "max": "0"
+    },
+    {
+      "id": "Condition.code",
+      "path": "Condition.code",
+      "min": 1,
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRProblemaDiagnostico"
+      },
+      "short": "Diagnóstico ou Problema"
+    },
+    {
+      "id": "Condition.code.id",
+      "path": "Condition.code.id",
+      "max": "0"
+    },
+    {
+      "id": "Condition.code.coding",
+      "path": "Condition.code.coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Condition.code.coding.id",
+      "path": "Condition.code.coding.id",
+      "max": "0"
+    },
+    {
+      "id": "Condition.code.coding.system",
+      "path": "Condition.code.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Condition.code.coding.code",
+      "path": "Condition.code.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Condition.code.coding.display",
+      "path": "Condition.code.coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Condition.code.coding.userSelected",
+      "path": "Condition.code.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Condition.bodySite",
+      "path": "Condition.bodySite",
+      "max": "0"
+    },
+    {
+      "id": "Condition.subject",
+      "path": "Condition.subject",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Indivíduo"
+    },
+    {
+      "id": "Condition.subject.extension",
+      "path": "Condition.subject.extension",
+      "sliced": true
+    },
+    {
+      "id": "Condition.subject.extension:unidentifiedPatient",
+      "path": "Condition.subject.extension",
+      "sliceName": "unidentifiedPatient",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuoNaoIdentificado-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Dados do Indivíduo Não Identificado"
+    },
+    {
+      "id": "Condition.subject.extension:unidentifiedPatient.extension",
+      "path": "Condition.subject.extension.extension",
+      "min": 4,
+      "sliced": true
+    },
+    {
+      "id": "Condition.subject.extension:unidentifiedPatient.extension:gender",
+      "path": "Condition.subject.extension.extension",
+      "sliceName": "gender",
+      "mustSupport": true
+    },
+    {
+      "id": "Condition.subject.extension:unidentifiedPatient.extension:birthYear",
+      "path": "Condition.subject.extension.extension",
+      "sliceName": "birthYear",
+      "mustSupport": true
+    },
+    {
+      "id": "Condition.subject.extension:unidentifiedPatient.extension:reason",
+      "path": "Condition.subject.extension.extension",
+      "sliceName": "reason",
+      "mustSupport": true
+    },
+    {
+      "id": "Condition.subject.extension:unidentifiedPatient.extension:operator",
+      "path": "Condition.subject.extension.extension",
+      "sliceName": "operator",
+      "mustSupport": true
+    },
+    {
+      "id": "Condition.subject.extension:unidentifiedPatient.url",
+      "path": "Condition.subject.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuoNaoIdentificado-1.0"
+      }
+    },
+    {
+      "id": "Condition.subject.reference",
+      "path": "Condition.subject.reference",
+      "max": "0"
+    },
+    {
+      "id": "Condition.subject.type",
+      "path": "Condition.subject.type",
+      "max": "0",
+      "fixed": {
+        "kind": "fixed",
+        "value": "Patient"
+      }
+    },
+    {
+      "id": "Condition.subject.identifier",
+      "path": "Condition.subject.identifier",
+      "max": "1"
+    },
+    {
+      "id": "Condition.subject.identifier.use",
+      "path": "Condition.subject.identifier.use",
+      "max": "0"
+    },
+    {
+      "id": "Condition.subject.identifier.type",
+      "path": "Condition.subject.identifier.type",
+      "max": "0"
+    },
+    {
+      "id": "Condition.subject.identifier.system",
+      "path": "Condition.subject.identifier.system",
+      "min": 1
+    },
+    {
+      "id": "Condition.subject.identifier.value",
+      "path": "Condition.subject.identifier.value",
+      "min": 1
+    },
+    {
+      "id": "Condition.subject.identifier.period",
+      "path": "Condition.subject.identifier.period",
+      "max": "0"
+    },
+    {
+      "id": "Condition.subject.identifier.assigner",
+      "path": "Condition.subject.identifier.assigner",
+      "max": "0"
+    },
+    {
+      "id": "Condition.subject.display",
+      "path": "Condition.subject.display",
+      "max": "0"
+    },
+    {
+      "id": "Condition.encounter",
+      "path": "Condition.encounter",
+      "max": "0"
+    },
+    {
+      "id": "Condition.onset[x]",
+      "path": "Condition.onset[x]",
+      "max": "0"
+    },
+    {
+      "id": "Condition.abatement[x]",
+      "path": "Condition.abatement[x]",
+      "max": "0"
+    },
+    {
+      "id": "Condition.recordedDate",
+      "path": "Condition.recordedDate",
+      "max": "0"
+    },
+    {
+      "id": "Condition.recorder",
+      "path": "Condition.recorder",
+      "max": "0"
+    },
+    {
+      "id": "Condition.asserter",
+      "path": "Condition.asserter",
+      "max": "0"
+    },
+    {
+      "id": "Condition.stage",
+      "path": "Condition.stage",
+      "max": "0"
+    },
+    {
+      "id": "Condition.evidence",
+      "path": "Condition.evidence",
+      "max": "0"
+    },
+    {
+      "id": "Condition.note",
+      "path": "Condition.note",
+      "max": "1",
+      "mustSupport": true
+    },
+    {
+      "id": "Condition.note.author[x]",
+      "path": "Condition.note.author[x]",
+      "max": "0"
+    },
+    {
+      "id": "Condition.note.time",
+      "path": "Condition.note.time",
+      "max": "0"
+    },
+    {
+      "id": "Condition.note.text",
+      "path": "Condition.note.text",
+      "mustSupport": true,
+      "short": "Nota"
+    }
+  ]
+}

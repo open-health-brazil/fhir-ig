@@ -1,0 +1,271 @@
+{
+  "key": "BRValorMedicamento",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRValorMedicamento",
+  "version": null,
+  "name": "BRValorMedicamento",
+  "title": "Valor Monetário de Medicamento",
+  "status": "draft",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Extensão destinada a caracterizar o valor monetário pago em medicamentos dispensados pelo Ministério da Saúde do Brasil.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.id",
+      "path": "Extension.id",
+      "max": "0"
+    },
+    {
+      "id": "Extension.extension",
+      "path": "Extension.extension",
+      "min": 0,
+      "sliced": true
+    },
+    {
+      "id": "Extension.extension:productValue",
+      "path": "Extension.extension",
+      "sliceName": "productValue",
+      "min": 0,
+      "max": "1",
+      "short": "Valor em reais da apresentação dispensada."
+    },
+    {
+      "id": "Extension.extension:productValue.id",
+      "path": "Extension.extension.id",
+      "max": "0"
+    },
+    {
+      "id": "Extension.extension:productValue.url",
+      "path": "Extension.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "productValue"
+      }
+    },
+    {
+      "id": "Extension.extension:productValue.value[x]",
+      "path": "Extension.extension.value[x]",
+      "types": [
+        {
+          "code": "Money"
+        }
+      ],
+      "short": "Valor em reais da apresentação dispensada."
+    },
+    {
+      "id": "Extension.extension:productValue.value[x].currency",
+      "path": "Extension.extension.value[x].currency",
+      "fixed": {
+        "kind": "fixed",
+        "value": "BRL"
+      }
+    },
+    {
+      "id": "Extension.extension:productValueMinistryOfHealth",
+      "path": "Extension.extension",
+      "sliceName": "productValueMinistryOfHealth",
+      "min": 0,
+      "max": "1",
+      "short": "Valor pago Ministério da Saúde"
+    },
+    {
+      "id": "Extension.extension:productValueMinistryOfHealth.id",
+      "path": "Extension.extension.id",
+      "max": "0"
+    },
+    {
+      "id": "Extension.extension:productValueMinistryOfHealth.url",
+      "path": "Extension.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "productValueMinistryOfHealth"
+      }
+    },
+    {
+      "id": "Extension.extension:productValueMinistryOfHealth.value[x]",
+      "path": "Extension.extension.value[x]",
+      "types": [
+        {
+          "code": "Money"
+        }
+      ],
+      "short": "Valor pago Ministério da Saúde"
+    },
+    {
+      "id": "Extension.extension:productValueMinistryOfHealth.value[x].currency",
+      "path": "Extension.extension.value[x].currency",
+      "fixed": {
+        "kind": "fixed",
+        "value": "BRL"
+      }
+    },
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRValorMedicamento"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "max": "0",
+      "types": [
+        {
+          "code": "base64Binary"
+        },
+        {
+          "code": "boolean"
+        },
+        {
+          "code": "canonical"
+        },
+        {
+          "code": "code"
+        },
+        {
+          "code": "date"
+        },
+        {
+          "code": "dateTime"
+        },
+        {
+          "code": "decimal"
+        },
+        {
+          "code": "id"
+        },
+        {
+          "code": "instant"
+        },
+        {
+          "code": "integer"
+        },
+        {
+          "code": "markdown"
+        },
+        {
+          "code": "oid"
+        },
+        {
+          "code": "positiveInt"
+        },
+        {
+          "code": "string"
+        },
+        {
+          "code": "time"
+        },
+        {
+          "code": "unsignedInt"
+        },
+        {
+          "code": "uri"
+        },
+        {
+          "code": "url"
+        },
+        {
+          "code": "uuid"
+        },
+        {
+          "code": "Address"
+        },
+        {
+          "code": "Age"
+        },
+        {
+          "code": "Annotation"
+        },
+        {
+          "code": "Attachment"
+        },
+        {
+          "code": "CodeableConcept"
+        },
+        {
+          "code": "Coding"
+        },
+        {
+          "code": "ContactPoint"
+        },
+        {
+          "code": "Count"
+        },
+        {
+          "code": "Distance"
+        },
+        {
+          "code": "Duration"
+        },
+        {
+          "code": "HumanName"
+        },
+        {
+          "code": "Identifier"
+        },
+        {
+          "code": "Money"
+        },
+        {
+          "code": "Period"
+        },
+        {
+          "code": "Quantity"
+        },
+        {
+          "code": "Range"
+        },
+        {
+          "code": "Ratio"
+        },
+        {
+          "code": "Reference"
+        },
+        {
+          "code": "SampledData"
+        },
+        {
+          "code": "Signature"
+        },
+        {
+          "code": "Timing"
+        },
+        {
+          "code": "ContactDetail"
+        },
+        {
+          "code": "Contributor"
+        },
+        {
+          "code": "DataRequirement"
+        },
+        {
+          "code": "Expression"
+        },
+        {
+          "code": "ParameterDefinition"
+        },
+        {
+          "code": "RelatedArtifact"
+        },
+        {
+          "code": "TriggerDefinition"
+        },
+        {
+          "code": "UsageContext"
+        },
+        {
+          "code": "Dosage"
+        }
+      ]
+    }
+  ]
+}

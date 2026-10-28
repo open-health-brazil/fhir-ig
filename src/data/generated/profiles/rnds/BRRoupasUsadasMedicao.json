@@ -1,0 +1,42 @@
+{
+  "key": "BRRoupasUsadasMedicao",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRoupasUsadasMedicao",
+  "version": "01.00",
+  "name": "BRRoupasUsadasMedicao",
+  "title": "Roupas Usadas na Medição",
+  "status": "draft",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Descreve o tipo de roupas usadas durante a medição com base no código LOINC 8352-7.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRoupasUsadasMedicao"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/RoupasUsadasMedicao"
+      },
+      "short": "Código do tipo de roupa usada para medição corpórea"
+    }
+  ]
+}

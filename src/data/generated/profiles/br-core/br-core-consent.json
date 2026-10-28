@@ -1,0 +1,135 @@
+{
+  "key": "br-core-consent",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-consent",
+  "version": "1.7.1",
+  "name": "BRCoreConsent",
+  "title": "br-core-consent",
+  "status": "active",
+  "kind": "resource",
+  "type": "Consent",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Consent",
+  "description": "Este perfil define as características mínimas para o recurso [br-core-consent](StructureDefinition-br-core-consent.html) registrar, pesquisar e buscar consentimentos para tratamento de dados pessoais conforme Lei Geral de Proteção de Dados (LGPD) - Lei nº 13.709/2018. O perfil especifica quais elementos principais, extensões, vocabulários e conjuntos de valores **DEVEM** estar presentes e restringe como os elementos são usados. Além disso, fornece a base para o desenvolvimento de padrões para casos de uso específicos promove a interoperabilidade e a adoção. ",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Consent.extension",
+      "path": "Consent.extension",
+      "min": 1,
+      "max": "*",
+      "types": [
+        {
+          "code": "Extension"
+        }
+      ],
+      "sliced": true,
+      "short": "Extensões adicionais que não fazem parte do modelo base"
+    },
+    {
+      "id": "Consent.extension:baseLegalLGPD",
+      "path": "Consent.extension",
+      "sliceName": "baseLegalLGPD",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-base-legal-lgpd"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Base legal LGPD para tratamento de dados (Art. 7º)"
+    },
+    {
+      "id": "Consent.patient",
+      "path": "Consent.patient",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient"
+          ]
+        }
+      ],
+      "short": "Titular dos dados pessoais"
+    },
+    {
+      "id": "Consent.performer",
+      "path": "Consent.performer",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Quem concedeu o consentimento"
+    },
+    {
+      "id": "Consent.organization",
+      "path": "Consent.organization",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Controlador dos dados (organização responsável)"
+    },
+    {
+      "id": "Consent.verification.verifiedWith",
+      "path": "Consent.verification.verifiedWith",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson"
+          ]
+        }
+      ],
+      "short": "Pessoa que verificou"
+    },
+    {
+      "id": "Consent.provision.actor.reference",
+      "path": "Consent.provision.actor.reference",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson"
+          ]
+        }
+      ],
+      "short": "Recurso para o ator"
+    }
+  ]
+}

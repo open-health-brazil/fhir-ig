@@ -1,0 +1,108 @@
+{
+  "key": "BREstrategiaVacinacaoPesquisa-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstrategiaVacinacaoPesquisa-1.0",
+  "version": "01.11",
+  "name": "BREstrategiaVacinacaoPesquisa",
+  "title": "Estratégia de Vacinação Pesquisa",
+  "status": "active",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Extensão para as informações relacionadas aos dados da pesquisa clínica registrada na ANVISA.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.extension:numeroProtocoloEstudoANVISA",
+      "path": "Extension.extension",
+      "sliceName": "numeroProtocoloEstudoANVISA",
+      "max": "1",
+      "short": "Anvisa Protocolo Estudo"
+    },
+    {
+      "id": "Extension.extension:numeroProtocoloEstudoANVISA.url",
+      "path": "Extension.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "numeroProtocoloEstudoANVISA"
+      }
+    },
+    {
+      "id": "Extension.extension:numeroProtocoloEstudoANVISA.value[x]",
+      "path": "Extension.extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "string"
+        }
+      ]
+    },
+    {
+      "id": "Extension.extension:numeroVersaoProtocoloEstudo",
+      "path": "Extension.extension",
+      "sliceName": "numeroVersaoProtocoloEstudo",
+      "max": "1",
+      "short": "Anvisa Protocolo Versão"
+    },
+    {
+      "id": "Extension.extension:numeroVersaoProtocoloEstudo.url",
+      "path": "Extension.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "numeroVersaoProtocoloEstudo"
+      }
+    },
+    {
+      "id": "Extension.extension:numeroVersaoProtocoloEstudo.value[x]",
+      "path": "Extension.extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "string"
+        }
+      ]
+    },
+    {
+      "id": "Extension.extension:numeroRegistroVacinaAnvisa",
+      "path": "Extension.extension",
+      "sliceName": "numeroRegistroVacinaAnvisa",
+      "max": "1",
+      "short": "Anvisa Num Registro"
+    },
+    {
+      "id": "Extension.extension:numeroRegistroVacinaAnvisa.url",
+      "path": "Extension.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "numeroRegistroVacinaAnvisa"
+      }
+    },
+    {
+      "id": "Extension.extension:numeroRegistroVacinaAnvisa.value[x]",
+      "path": "Extension.extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "string"
+        }
+      ]
+    },
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstrategiaVacinacaoPesquisa-1.0"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "max": "0"
+    }
+  ]
+}

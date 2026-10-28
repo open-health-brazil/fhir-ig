@@ -1,0 +1,96 @@
+{
+  "key": "br-core-observationtobaccouse",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observationtobaccouse",
+  "version": "1.7.1",
+  "name": "BRCoreObservationTobaccoUse",
+  "title": null,
+  "status": "active",
+  "kind": "resource",
+  "type": "Observation",
+  "baseDefinition": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation",
+  "description": "O perfil [br-core-observationtobaccouse](StructureDefinition-br-core-observationtobaccouse.html) herda do recurso FHIR [Observation](https://hl7.org/fhir/R4/observation.html) para representar a avaliação sobre tabagismo em um registro de atendimento clínico ou em um sumário do paciente",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Observation.code.coding.system",
+      "path": "Observation.code.coding.system",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "pattern",
+        "value": "http://loinc.org"
+      },
+      "short": "Identificador da terminologia"
+    },
+    {
+      "id": "Observation.code.coding.code",
+      "path": "Observation.code.coding.code",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "72166-2"
+      },
+      "short": "Código do conceito na sintaxe definida pela terminologia"
+    },
+    {
+      "id": "Observation.code.coding.display",
+      "path": "Observation.code.coding.display",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "fixed": {
+        "kind": "pattern",
+        "value": "Tobacco smoking status"
+      },
+      "short": "Descrição conforme definido pela terminologia"
+    },
+    {
+      "id": "Observation.value[x]",
+      "path": "Observation.value[x]",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/uv/ips/ValueSet/current-smoking-status-uv-ips"
+      },
+      "short": "Situação tabágica"
+    },
+    {
+      "id": "Observation.value[x].coding",
+      "path": "Observation.value[x].coding",
+      "min": 1,
+      "max": "*",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Código definido por uma terminologia"
+    }
+  ]
+}

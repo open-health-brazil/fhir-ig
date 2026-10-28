@@ -1,0 +1,171 @@
+{
+  "key": "BRRacaCorEtnia-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRacaCorEtnia-1.0",
+  "version": "1.0",
+  "name": "BRRacaCorEtnia",
+  "title": "Raça/Cor e Etnina",
+  "status": "active",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Extensão para para representar dados relacionados à raça/cor e etnia de um indivíduo.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.extension",
+      "path": "Extension.extension",
+      "min": 1,
+      "max": "2",
+      "sliced": true
+    },
+    {
+      "id": "Extension.extension:race",
+      "path": "Extension.extension",
+      "sliceName": "race",
+      "min": 1,
+      "max": "1",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRRacaCor-1.0"
+      },
+      "short": "Raça/Cor"
+    },
+    {
+      "id": "Extension.extension:race.url",
+      "path": "Extension.extension.url",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "race"
+      }
+    },
+    {
+      "id": "Extension.extension:race.value[x]",
+      "path": "Extension.extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ]
+    },
+    {
+      "id": "Extension.extension:race.value[x].coding",
+      "path": "Extension.extension.value[x].coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Extension.extension:race.value[x].coding.system",
+      "path": "Extension.extension.value[x].coding.system",
+      "min": 1
+    },
+    {
+      "id": "Extension.extension:race.value[x].coding.code",
+      "path": "Extension.extension.value[x].coding.code",
+      "min": 1
+    },
+    {
+      "id": "Extension.extension:race.value[x].coding.display",
+      "path": "Extension.extension.value[x].coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Extension.extension:race.value[x].coding.userSelected",
+      "path": "Extension.extension.value[x].coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Extension.extension:race.value[x].text",
+      "path": "Extension.extension.value[x].text",
+      "max": "0"
+    },
+    {
+      "id": "Extension.extension:indigenousEthnicity",
+      "path": "Extension.extension",
+      "sliceName": "indigenousEthnicity",
+      "max": "1",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BREtniaIndigena-1.0"
+      },
+      "short": "Etnia Indígena"
+    },
+    {
+      "id": "Extension.extension:indigenousEthnicity.url",
+      "path": "Extension.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "indigenousEthnicity"
+      }
+    },
+    {
+      "id": "Extension.extension:indigenousEthnicity.value[x]",
+      "path": "Extension.extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ]
+    },
+    {
+      "id": "Extension.extension:indigenousEthnicity.value[x].coding",
+      "path": "Extension.extension.value[x].coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Extension.extension:indigenousEthnicity.value[x].coding.system",
+      "path": "Extension.extension.value[x].coding.system",
+      "min": 1
+    },
+    {
+      "id": "Extension.extension:indigenousEthnicity.value[x].coding.code",
+      "path": "Extension.extension.value[x].coding.code",
+      "min": 1
+    },
+    {
+      "id": "Extension.extension:indigenousEthnicity.value[x].coding.display",
+      "path": "Extension.extension.value[x].coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Extension.extension:indigenousEthnicity.value[x].coding.userSelected",
+      "path": "Extension.extension.value[x].coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Extension.extension:indigenousEthnicity.value[x].text",
+      "path": "Extension.extension.value[x].text",
+      "max": "0"
+    },
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRacaCorEtnia-1.0"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "max": "0"
+    }
+  ]
+}

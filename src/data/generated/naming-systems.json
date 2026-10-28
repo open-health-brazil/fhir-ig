@@ -1,0 +1,2748 @@
+[
+  {
+    "id": "BRAlergenosCBARA",
+    "name": "BRAlergenosCBARA",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "BR Alérgenos CBARA",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRAlergenosCBARA",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRAlergenosCBARA"
+    ]
+  },
+  {
+    "id": "BRAtendimentoPrestado",
+    "name": "BRAtendimentoPrestado",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Atendimento Prestado",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRAtendimentoPrestado",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRAtendimentoPrestado"
+    ]
+  },
+  {
+    "id": "BRCBHPMTUSS",
+    "name": "BRCBHPMTUSS",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Classificação Brasileira Hierarquizada de Procedimentos Médicos - CBHPM e da Terminologia Unificada da Saúde Suplementar - TUSS",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBHPMTUSS",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBHPMTUSS"
+    ]
+  },
+  {
+    "id": "BRCBO",
+    "name": "BRCBO",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Classificação Brasileira de Ocupações - CBO",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO"
+    ]
+  },
+  {
+    "id": "BRCIAP2",
+    "name": "BRCIAP2",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Classificação Internacional de Atenção Primária - Segunda Edição - CIAP2",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCIAP2",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCIAP2",
+      "2.16.840.1.113883.6.139",
+      "http://hl7.org/fhir/sid/icpc-2"
+    ]
+  },
+  {
+    "id": "BRCID10",
+    "name": "BRCID10",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Classificação Internacional de Doenças - Décima Revisão - CID-10",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCID10",
+      "2.16.840.1.113883.6.3",
+      "http://hl7.org/fhir/sid/icd-10"
+    ]
+  },
+  {
+    "id": "BRCategoriaDiagnostico",
+    "name": "BRCategoriaDiagnostico",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Categoria do Diagnóstico",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCategoriaDiagnostico",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCategoriaDiagnostico"
+    ]
+  },
+  {
+    "id": "BRCondicaoMaternal",
+    "name": "BRCondicaoMaternal",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Condição  Maternal",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCondicaoMaternal",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCondicaoMaternal"
+    ]
+  },
+  {
+    "id": "BRConselhoProfissional",
+    "name": "BRConselhoProfissional",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Conselhos Regionais de Profissionais da Saude",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRConselhoProfissional",
+    "legacy": []
+  },
+  {
+    "id": "BRDadoAusenteOuDesconhecido",
+    "name": "BRDadoAusenteOuDesconhecido",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Classificação de dados ausentes ou desconhecidos - IPS",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDadoAusenteOuDesconhecido",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRDadoAusenteOuDesconhecido"
+    ]
+  },
+  {
+    "id": "BRDesfechoProcedimento",
+    "name": "BRDesfechoProcedimento",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Desfecho Procedimento",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDesfechoProcedimento",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRDesfechoProcedimento"
+    ]
+  },
+  {
+    "id": "BRDivisaoGeograficaBrasil",
+    "name": "BRDivisaoGeograficaBrasil",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Divisão Geográfica do Brasil",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDivisaoGeograficaBrasil",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRDivisaoGeograficaBrasil"
+    ]
+  },
+  {
+    "id": "BRDose",
+    "name": "BRDose",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Dose de Vacina",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDose",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRDose"
+    ]
+  },
+  {
+    "id": "BRElegibilidadeImunobiologico",
+    "name": "BRElegibilidadeImunobiologico",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "ElegibilidadeImunobiologico",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRElegibilidadeImunobiologico",
+    "legacy": []
+  },
+  {
+    "id": "BREstrategiaVacinacao",
+    "name": "BREstrategiaVacinacao",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Estratégia de Vacinação",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BREstrategiaVacinacao",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BREstrategiaVacinacao"
+    ]
+  },
+  {
+    "id": "BREtniaIndigena",
+    "name": "BREtniaIndigena",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Etnia Indígena",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BREtniaIndigena",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BREtniaIndigena"
+    ]
+  },
+  {
+    "id": "BRFabricantePNI",
+    "name": "BRFabricantePNI",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Fabricante do Imunobiológico",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRFabricantePNI",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRFabricantePNI"
+    ]
+  },
+  {
+    "id": "BRFinanciamento",
+    "name": "BRFinanciamento",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Terminologia que descreve o agente, instituição ou entidade responsável por custear as ações e serviços de saúde.",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRFinanciamento",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRFinanciamento"
+    ]
+  },
+  {
+    "id": "BRFrequenciaUsoSubstancia",
+    "name": "BRFrequenciaUsoSubstancia",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Identifica a frequência de uso da substância conforme declaração do indivíduo, de acordo com o especificado no modelo de informação do Registro de Atendimento Clínico da Resolução CIT nº 33/2018.",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRFrequenciaUsoSubstancia",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRFrequenciaUsoSubstancia"
+    ]
+  },
+  {
+    "id": "BRGrupoAtendimento",
+    "name": "BRGrupoAtendimento",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Domínio que identifica o tipo de grupo de atendimento que o indivíduo apresentou para a vacinação em campanha.",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRGrupoAtendimento",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRGrupoAtendimento"
+    ]
+  },
+  {
+    "id": "BRIBGE",
+    "name": "BRIBGE",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tabelas da Divisão Territorial Brasileira",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRIBGE",
+    "legacy": []
+  },
+  {
+    "id": "BRImunobiologico",
+    "name": "BRImunobiologico",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Imunobiológico",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRImunobiologico",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRImunobiologico"
+    ]
+  },
+  {
+    "id": "BRInstalacoesFisicas",
+    "name": "BRInstalacoesFisicas",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Instalações Físicas",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRInstalacoesFisicas",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRInstalacoesFisicas"
+    ]
+  },
+  {
+    "id": "BRJustificativaIndividuoNaoIdentificado",
+    "name": "BRJustificativaIndividuoNaoIdentificado",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Justificativa da Impossibilidade de Identificação do Indivíduo",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRJustificativaIndividuoNaoIdentificado",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRJustificativaIndividuoNaoIdentificado"
+    ]
+  },
+  {
+    "id": "BRLocalAfericao",
+    "name": "BRLocalAfericao",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Local de Aferição",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRLocalAfericao",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRLocalAfericao"
+    ]
+  },
+  {
+    "id": "BRLocalAplicacao",
+    "name": "BRLocalAplicacao",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Local de Aplicação",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRLocalAplicacao",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRLocalAplicacao"
+    ]
+  },
+  {
+    "id": "BRLocalAtendimento",
+    "name": "BRLocalAtendimento",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Classifica de forma genérica o lugar onde ocorre o atendimento ao indivíduo.",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRLocalAtendimento",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRLocalAtendimento"
+    ]
+  },
+  {
+    "id": "BRMedDRA",
+    "name": "BRMedDRA",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "MedDRA",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMedDRA",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedDRA"
+    ]
+  },
+  {
+    "id": "BRMedicamento",
+    "name": "BRMedicamento",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Medicamento",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMedicamento",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedicamento"
+    ]
+  },
+  {
+    "id": "BRModalidadeAssistencial",
+    "name": "BRModalidadeAssistencial",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Modalidade Assistencial",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRModalidadeAssistencial",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeAssistencial"
+    ]
+  },
+  {
+    "id": "BRModalidadeFinanceira",
+    "name": "BRModalidadeFinanceira",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Modalidade Financeira",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRModalidadeFinanceira",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeFinanceira"
+    ]
+  },
+  {
+    "id": "BRMotivoProcedimentoNaoRealizado",
+    "name": "BRMotivoProcedimentoNaoRealizado",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Motivo Procedimento não Realizado",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMotivoProcedimentoNaoRealizado",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRMotivoProcedimentoNaoRealizado"
+    ]
+  },
+  {
+    "id": "BRNacionalidade",
+    "name": "BRNacionalidade",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Define a nacionalidade de um dado indivíduo.",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRNacionalidade",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRNacionalidade"
+    ]
+  },
+  {
+    "id": "BRNomeExameGAL",
+    "name": "BRNomeExameGAL",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Exames do GAL",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRNomeExameGAL",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRNomeExameGAL"
+    ]
+  },
+  {
+    "id": "BRNomeExameLOINC",
+    "name": "BRNomeExameLOINC",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Exames LOINC",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRNomeExameLOINC",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRNomeExameLOINC",
+      "2.16.840.1.113883.6.1",
+      "http://loinc.org"
+    ]
+  },
+  {
+    "id": "BRObmAMPP",
+    "name": "BRObmAMPP",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Terminologia de Produto Medicinal Comercial com Apresentação (AMPP) na Ontologia Brasileira de Medicamentos (OBM)",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmAMPP",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmAMPP"
+    ]
+  },
+  {
+    "id": "BRObmANVISA",
+    "name": "BRObmANVISA",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Terminologia de Produto Medicinal Comercial com Apresentação (AMPP) na Agência Nacional de Vigilância Sanitária (Anvisa)",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmANVISA",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmANVISA"
+    ]
+  },
+  {
+    "id": "BRObmCATMAT",
+    "name": "BRObmCATMAT",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Terminologia de Produto Medicinal Virtual (VMP) no Catálogo de Materiais (CATMAT)",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmCATMAT",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmCATMAT"
+    ]
+  },
+  {
+    "id": "BRObmEAN",
+    "name": "BRObmEAN",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Terminologia de Produto Medicinal Virtual (VMP) na GS1.org",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmEAN",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmEAN"
+    ]
+  },
+  {
+    "id": "BRObmVMP",
+    "name": "BRObmVMP",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Produtos Medicinais Virtuais (VMPs)",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmVMP",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmVMP"
+    ]
+  },
+  {
+    "id": "BRObmVTM",
+    "name": "BRObmVTM",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Princípios Ativos Virtuais (VTMs)",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmVTM",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmVTM"
+    ]
+  },
+  {
+    "id": "BROrgaoExpedidor",
+    "name": "BROrgaoExpedidor",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Órgão Expedidor",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BROrgaoExpedidor",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BROrgaoExpedidor"
+    ]
+  },
+  {
+    "id": "BROrtesesProtesesImplantaveis",
+    "name": "BROrtesesProtesesImplantaveis",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Órteses e Proteses Implantáveis",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BROrtesesProtesesImplantaveis",
+    "legacy": []
+  },
+  {
+    "id": "BRPais",
+    "name": "BRPais",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Países",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRPais",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRPais"
+    ]
+  },
+  {
+    "id": "BRPapelProblemaDiagnostico",
+    "name": "BRPapelProblemaDiagnostico",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Classificação do papel de um problema/diagnóstico",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRPapelProblemaDiagnostico",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRPapelProblemaDiagnostico"
+    ]
+  },
+  {
+    "id": "BRParentesco",
+    "name": "BRParentesco",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Parentesco",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRParentesco",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRParentesco"
+    ]
+  },
+  {
+    "id": "BRPopulacaoTradicional",
+    "name": "BRPopulacaoTradicional",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Populacao Tradicional",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRPopulacaoTradicional",
+    "legacy": []
+  },
+  {
+    "id": "BRPosicaoIndividuo",
+    "name": "BRPosicaoIndividuo",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Posição do Indivíduo",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRPosicaoIndividuo",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRPosicaoIndividuo"
+    ]
+  },
+  {
+    "id": "BRPovoItinerante",
+    "name": "BRPovoItinerante",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "BRPovoItinerante",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRPovoItinerante",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRPovoItinerante"
+    ]
+  },
+  {
+    "id": "BRPresenteAusente",
+    "name": "BRPresenteAusente",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Code System utilizado para definir o valor atribuído ao nas resposta do questionário dos Marcos do Desenvolvimento da Criança.",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRPresenteAusente",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRPresenteAusente"
+    ]
+  },
+  {
+    "id": "BRProgramaSaude",
+    "name": "BRProgramaSaude",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Programa de Saúde",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRProgramaSaude",
+    "legacy": []
+  },
+  {
+    "id": "BRRacaCor",
+    "name": "BRRacaCor",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Raça/Cor",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRRacaCor",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRRacaCor"
+    ]
+  },
+  {
+    "id": "BRRegistroOrigem",
+    "name": "BRRegistroOrigem",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "BR Registro de Origem",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRRegistroOrigem",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRRegistroOrigem"
+    ]
+  },
+  {
+    "id": "BRResultadoQualitativoExame",
+    "name": "BRResultadoQualitativoExame",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Resultado qualitativo do Exame",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRResultadoQualitativoExame",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRResultadoQualitativoExame"
+    ]
+  },
+  {
+    "id": "BRServicoEspecializado",
+    "name": "BRServicoEspecializado",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Servico Especializado",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRServicoEspecializado",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRServicoEspecializado"
+    ]
+  },
+  {
+    "id": "BRStatusAgendamentoRegulacaoAssistencial",
+    "name": "BRStatusAgendamentoRegulacaoAssistencial",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Status de agendamento de regulação assistencial.",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRStatusAgendamentoRegulacaoAssistencial",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRStatusAgendamentoRegulacaoAssistencial"
+    ]
+  },
+  {
+    "id": "BRStatusRegulacaoAssistencial",
+    "name": "BRStatusRegulacaoAssistencial",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Status da regulação assistencial.",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRStatusRegulacaoAssistencial",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRStatusRegulacaoAssistencial"
+    ]
+  },
+  {
+    "id": "BRSubgrupoTabelaSUS",
+    "name": "BRSubgrupoTabelaSUS",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Subgrupo da Tabela SUS 1.1.0",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRSubgrupoTabelaSUS",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRSubgrupoTabelaSUS"
+    ]
+  },
+  {
+    "id": "BRTabelaSUS",
+    "name": "BRTabelaSUS",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tabela de procedimentos, medicamentos e OPM do SUS",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS"
+    ]
+  },
+  {
+    "id": "BRTerminologiaPatogeno",
+    "name": "BRTerminologiaPatogeno",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Patógeno",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTerminologiaPatogeno",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTerminologiaPatogeno"
+    ]
+  },
+  {
+    "id": "BRTerminologiaSuspeitaDiagnostica",
+    "name": "BRTerminologiaSuspeitaDiagnostica",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Terminologia para indicação de uma Suspeita Diagnóstica.",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTerminologiaSuspeitaDiagnostica",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTerminologiaSuspeitaDiagnostica"
+    ]
+  },
+  {
+    "id": "BRTipoAleitamentoMaterno",
+    "name": "BRTipoAleitamentoMaterno",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo Aleitamento Materno",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoAleitamentoMaterno",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoAleitamentoMaterno"
+    ]
+  },
+  {
+    "id": "BRTipoAmostraGAL",
+    "name": "BRTipoAmostraGAL",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Amostra Biológica",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoAmostraGAL",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoAmostraGAL"
+    ]
+  },
+  {
+    "id": "BRTipoDispensacaoRealizada",
+    "name": "BRTipoDispensacaoRealizada",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Indica o tipo de dispensação que foi realizada",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoDispensacaoRealizada",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDispensacaoRealizada"
+    ]
+  },
+  {
+    "id": "BRTipoDocumento",
+    "name": "BRTipoDocumento",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Documento",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoDocumento",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDocumento"
+    ]
+  },
+  {
+    "id": "BRTipoEstabelecimentoSaude",
+    "name": "BRTipoEstabelecimentoSaude",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Estabelecimento de Saúde",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoEstabelecimentoSaude",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoEstabelecimentoSaude"
+    ]
+  },
+  {
+    "id": "BRTipoIdentificador",
+    "name": "BRTipoIdentificador",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Identificador",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoIdentificador",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoIdentificador"
+    ]
+  },
+  {
+    "id": "BRTipoLogradouro",
+    "name": "BRTipoLogradouro",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Logradouro",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoLogradouro",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoLogradouro"
+    ]
+  },
+  {
+    "id": "BRTipoObservacao",
+    "name": "BRTipoObservacao",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Observação",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoObservacao",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoObservacao"
+    ]
+  },
+  {
+    "id": "BRTipoParticipante",
+    "name": "BRTipoParticipante",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo do Participante",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoParticipante",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoParticipante"
+    ]
+  },
+  {
+    "id": "BRTipoResultadoAVIDEZ",
+    "name": "BRTipoResultadoAVIDEZ",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Resultado AVIDEZ",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoAVIDEZ",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoAVIDEZ"
+    ]
+  },
+  {
+    "id": "BRTipoResultadoDTNT",
+    "name": "BRTipoResultadoDTNT",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Resultado DTNT",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoDTNT",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoDTNT"
+    ]
+  },
+  {
+    "id": "BRTipoResultadoHISPT",
+    "name": "BRTipoResultadoHISPT",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Resultado HISPT",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoHISPT",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoHISPT"
+    ]
+  },
+  {
+    "id": "BRTipoResultadoPRAU",
+    "name": "BRTipoResultadoPRAU",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Resultado PRAU",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoPRAU",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoPRAU"
+    ]
+  },
+  {
+    "id": "BRTipoResultadoPSNG",
+    "name": "BRTipoResultadoPSNG",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Resultado PSNG",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoPSNG",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoPSNG"
+    ]
+  },
+  {
+    "id": "BRTipoResultadoRGNR",
+    "name": "BRTipoResultadoRGNR",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Resultado RGNR",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoRGNR",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoRGNR"
+    ]
+  },
+  {
+    "id": "BRTipoResultadoRSBAC",
+    "name": "BRTipoResultadoRSBAC",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Resultado RSBAC",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoRSBAC",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoRSBAC"
+    ]
+  },
+  {
+    "id": "BRTipoResultadoRSCUL",
+    "name": "BRTipoResultadoRSCUL",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Resultado RSCUL 1.0",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoRSCUL",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoRSCUL"
+    ]
+  },
+  {
+    "id": "BRTipoSubstanciaUso",
+    "name": "BRTipoSubstanciaUso",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Identifica o tipo de substância em uso conforme declaração do indivíduo, de acordo com o especificado no modelo de informação do Registro de Atendimento Clínico da Resolução CIT nº 33/2018.",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoSubstanciaUso",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoSubstanciaUso"
+    ]
+  },
+  {
+    "id": "BRTurno",
+    "name": "BRTurno",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "CodeSystem utilizado para definir o turno de um dia.",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTurno",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTurno"
+    ]
+  },
+  {
+    "id": "BRUnidadeMedida",
+    "name": "BRUnidadeMedida",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Unidade de Medida",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRUnidadeMedida",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida"
+    ]
+  },
+  {
+    "id": "BRUnidadeTempo",
+    "name": "BRUnidadeTempo",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Code System utilizado para definir a classe de unidades de tempo.",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRUnidadeTempo",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeTempo"
+    ]
+  },
+  {
+    "id": "BRViaAdministracao",
+    "name": "BRViaAdministracao",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Via de Administração",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRViaAdministracao",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/BRViaAdministracao"
+    ]
+  },
+  {
+    "id": "TipoConvenio",
+    "name": "TipoConvenio",
+    "kind": "codesystem",
+    "status": "active",
+    "description": "Tipo de Convênio",
+    "preferred": "https://terminologia.saude.gov.br/fhir/CodeSystem/TipoConvenio",
+    "legacy": [
+      "http://www.saude.gov.br/fhir/r4/CodeSystem/TipoConvenio"
+    ]
+  },
+  {
+    "id": "cnes",
+    "name": "NamingSystemCNES",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CADASTRO NACIONAL DE ESTABELECIMENTOS DE SAÚDE",
+    "preferred": "https://saude.gov.br/fhir/sid/cnes",
+    "legacy": [
+      "http://rnds.saude.gov.br/fhir/r4/NamingSystem/cnes"
+    ]
+  },
+  {
+    "id": "cnpj",
+    "name": "NamingSystemCNPJ",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CADASTRO NACIONAL DE PESSOA JURÍDICA",
+    "preferred": "https://saude.gov.br/fhir/sid/cnpj",
+    "legacy": [
+      "http://rnds.saude.gov.br/fhir/r4/NamingSystem/cnpj"
+    ]
+  },
+  {
+    "id": "cns",
+    "name": "NamingSystemCNS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CARTÃO NACIONAL DE SAÚDE",
+    "preferred": "https://saude.gov.br/fhir/sid/cns",
+    "legacy": [
+      "http://rnds.saude.gov.br/fhir/r4/NamingSystem/cns"
+    ]
+  },
+  {
+    "id": "coren-ac",
+    "name": "NamingSystemCORENAC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-ac",
+    "legacy": []
+  },
+  {
+    "id": "coren-al",
+    "name": "NamingSystemCORENAL",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-al",
+    "legacy": []
+  },
+  {
+    "id": "coren-am",
+    "name": "NamingSystemCORENAM",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-am",
+    "legacy": []
+  },
+  {
+    "id": "coren-ap",
+    "name": "NamingSystemCORENAP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-ap",
+    "legacy": []
+  },
+  {
+    "id": "coren-ba",
+    "name": "NamingSystemCORENBA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-ba",
+    "legacy": []
+  },
+  {
+    "id": "coren-ce",
+    "name": "NamingSystemCORENCE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-ce",
+    "legacy": []
+  },
+  {
+    "id": "coren-df",
+    "name": "NamingSystemCORENDF",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-df",
+    "legacy": []
+  },
+  {
+    "id": "coren-es",
+    "name": "NamingSystemCORENES",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-es",
+    "legacy": []
+  },
+  {
+    "id": "coren-go",
+    "name": "NamingSystemCORENGO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-go",
+    "legacy": []
+  },
+  {
+    "id": "coren-ma",
+    "name": "NamingSystemCORENMA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-ma",
+    "legacy": []
+  },
+  {
+    "id": "coren-mg",
+    "name": "NamingSystemCORENMG",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-mg",
+    "legacy": []
+  },
+  {
+    "id": "coren-ms",
+    "name": "NamingSystemCORENMS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-ms",
+    "legacy": []
+  },
+  {
+    "id": "coren-mt",
+    "name": "NamingSystemCORENMT",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-mt",
+    "legacy": []
+  },
+  {
+    "id": "coren-pa",
+    "name": "NamingSystemCORENPA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-pa",
+    "legacy": []
+  },
+  {
+    "id": "coren-pb",
+    "name": "NamingSystemCORENPB",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-pb",
+    "legacy": []
+  },
+  {
+    "id": "coren-pe",
+    "name": "NamingSystemCORENPE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-pe",
+    "legacy": []
+  },
+  {
+    "id": "coren-pi",
+    "name": "NamingSystemCORENPI",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-pi",
+    "legacy": []
+  },
+  {
+    "id": "coren-pr",
+    "name": "NamingSystemCORENPR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-pr",
+    "legacy": []
+  },
+  {
+    "id": "coren-rj",
+    "name": "NamingSystemCORENRJ",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-rj",
+    "legacy": []
+  },
+  {
+    "id": "coren-rn",
+    "name": "NamingSystemCORENRN",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-rn",
+    "legacy": []
+  },
+  {
+    "id": "coren-ro",
+    "name": "NamingSystemCORENRO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-ro",
+    "legacy": []
+  },
+  {
+    "id": "coren-rr",
+    "name": "NamingSystemCORENRR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-rr",
+    "legacy": []
+  },
+  {
+    "id": "coren-rs",
+    "name": "NamingSystemCORENRS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-rs",
+    "legacy": []
+  },
+  {
+    "id": "coren-sc",
+    "name": "NamingSystemCORENSC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-sc",
+    "legacy": []
+  },
+  {
+    "id": "coren-se",
+    "name": "NamingSystemCORENSE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-se",
+    "legacy": []
+  },
+  {
+    "id": "coren-sp",
+    "name": "NamingSystemCORENSP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-sp",
+    "legacy": []
+  },
+  {
+    "id": "coren-to",
+    "name": "NamingSystemCORENTO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ENFERMAGEM",
+    "preferred": "https://saude.gov.br/fhir/sid/coren-to",
+    "legacy": []
+  },
+  {
+    "id": "cpf",
+    "name": "NamingSystemCPF",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CADASTRO DE PESSOA FÍSICA",
+    "preferred": "https://saude.gov.br/fhir/sid/cpf",
+    "legacy": [
+      "http://rnds.saude.gov.br/fhir/r4/NamingSystem/cpf"
+    ]
+  },
+  {
+    "id": "crefito-ba",
+    "name": "NamingSystemCREFITOBA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-ba",
+    "legacy": []
+  },
+  {
+    "id": "crefito-ce",
+    "name": "NamingSystemCREFITOCE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-ce",
+    "legacy": []
+  },
+  {
+    "id": "crefito-es",
+    "name": "NamingSystemCREFITOES",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-es",
+    "legacy": []
+  },
+  {
+    "id": "crefito-go-df",
+    "name": "NamingSystemCREFITOGODF",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-go-df",
+    "legacy": []
+  },
+  {
+    "id": "crefito-ma",
+    "name": "NamingSystemCREFITOMA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-ma",
+    "legacy": []
+  },
+  {
+    "id": "crefito-mg",
+    "name": "NamingSystemCREFITOMG",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-mg",
+    "legacy": []
+  },
+  {
+    "id": "crefito-ms",
+    "name": "NamingSystemCREFITOMS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-ms",
+    "legacy": []
+  },
+  {
+    "id": "crefito-mt",
+    "name": "NamingSystemCREFITOMT",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-mt",
+    "legacy": []
+  },
+  {
+    "id": "crefito-pa-am-to-rr-ap",
+    "name": "NamingSystemCREFITOPAAMTORRAP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-pa-am-to-rr-ap",
+    "legacy": []
+  },
+  {
+    "id": "crefito-pe-pb-al-rn",
+    "name": "NamingSystemCREFITOPEPBALRN",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-pe-pb-al-rn",
+    "legacy": []
+  },
+  {
+    "id": "crefito-pi",
+    "name": "NamingSystemCREFITOPI",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-pi",
+    "legacy": []
+  },
+  {
+    "id": "crefito-pr",
+    "name": "NamingSystemCREFITOPR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-pr",
+    "legacy": []
+  },
+  {
+    "id": "crefito-rj",
+    "name": "NamingSystemCREFITORJ",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-rj",
+    "legacy": []
+  },
+  {
+    "id": "crefito-ro-ac",
+    "name": "NamingSystemCREFITOROAC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-ro-ac",
+    "legacy": []
+  },
+  {
+    "id": "crefito-rs",
+    "name": "NamingSystemCREFITORS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-rs",
+    "legacy": []
+  },
+  {
+    "id": "crefito-sc",
+    "name": "NamingSystemCREFITOSC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-sc",
+    "legacy": []
+  },
+  {
+    "id": "crefito-se",
+    "name": "NamingSystemCREFITOSE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-se",
+    "legacy": []
+  },
+  {
+    "id": "crefito-sp",
+    "name": "NamingSystemCREFITOSP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAS DE FISIOTERAPIA E TERAPIA OCUPACIONAL",
+    "preferred": "https://saude.gov.br/fhir/sid/crefito-sp",
+    "legacy": []
+  },
+  {
+    "id": "crefono-am-ac-ap-pa-ro-rr",
+    "name": "NamingSystemCREFONOAMACAPPARORR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Fonoaudiologia 9ª Região (AC, AM, AP, PA, RO e RR)",
+    "preferred": "https://saude.gov.br/fhir/sid/crefono-am-ac-ap-pa-ro-rr",
+    "legacy": []
+  },
+  {
+    "id": "crefono-ce-ma-pi-rn",
+    "name": "NamingSystemCREFONOCEMAPIRN",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Fonoaudiologia 8ª Região (CE, MA, PI e RN)",
+    "preferred": "https://saude.gov.br/fhir/sid/crefono-ce-ma-pi-rn",
+    "legacy": []
+  },
+  {
+    "id": "crefono-go-df-ms-mt-to",
+    "name": "NamingSystemCREFONOGODFMSMTTO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Fonoaudiologia 5ª Região (DF, GO, MS, MT, e TO)",
+    "preferred": "https://saude.gov.br/fhir/sid/crefono-go-df-ms-mt-to",
+    "legacy": []
+  },
+  {
+    "id": "crefono-mg-es",
+    "name": "NamingSystemCREFONOMGES",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Fonoaudiologia 6ª Região (ES e MG)",
+    "preferred": "https://saude.gov.br/fhir/sid/crefono-mg-es",
+    "legacy": []
+  },
+  {
+    "id": "crefono-pe-al-ba-pb-se",
+    "name": "NamingSystemCREFONOPEALBAPBSE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Fonoaudiologia 4ª Região (AL, BA, PB, PE e SE)",
+    "preferred": "https://saude.gov.br/fhir/sid/crefono-pe-al-ba-pb-se",
+    "legacy": []
+  },
+  {
+    "id": "crefono-pr-sc",
+    "name": "NamingSystemCREFONOPRSC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Fonoaudiologia 3ª Região (PR e SC)",
+    "preferred": "https://saude.gov.br/fhir/sid/crefono-pr-sc",
+    "legacy": []
+  },
+  {
+    "id": "crefono-rj",
+    "name": "NamingSystemCREFONORJ",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Fonoaudiologia 1ª Região (RJ)",
+    "preferred": "https://saude.gov.br/fhir/sid/crefono-rj",
+    "legacy": []
+  },
+  {
+    "id": "crefono-rs",
+    "name": "NamingSystemCREFONORS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Fonoaudiologia 7ª Região (RS)",
+    "preferred": "https://saude.gov.br/fhir/sid/crefono-rs",
+    "legacy": []
+  },
+  {
+    "id": "crefono-sp",
+    "name": "NamingSystemCREFONOSP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Fonoaudiologia 2ª Região (SP)",
+    "preferred": "https://saude.gov.br/fhir/sid/crefono-sp",
+    "legacy": []
+  },
+  {
+    "id": "cress-ac",
+    "name": "NamingSystemCRESSAC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social – 26ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-ac",
+    "legacy": []
+  },
+  {
+    "id": "cress-al",
+    "name": "NamingSystemCRESSAL",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 16ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-al",
+    "legacy": []
+  },
+  {
+    "id": "cress-am",
+    "name": "NamingSystemCRESSAM",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 15ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-am",
+    "legacy": []
+  },
+  {
+    "id": "cress-ap",
+    "name": "NamingSystemCRESSAP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 24ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-ap",
+    "legacy": []
+  },
+  {
+    "id": "cress-ba",
+    "name": "NamingSystemCRESSBA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 5ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-ba",
+    "legacy": []
+  },
+  {
+    "id": "cress-ce",
+    "name": "NamingSystemCRESSCE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 3ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-ce",
+    "legacy": []
+  },
+  {
+    "id": "cress-df",
+    "name": "NamingSystemCRESSDF",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 8ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-df",
+    "legacy": []
+  },
+  {
+    "id": "cress-es",
+    "name": "NamingSystemCRESSES",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 17ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-es",
+    "legacy": []
+  },
+  {
+    "id": "cress-go",
+    "name": "NamingSystemCRESSGO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 19ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-go",
+    "legacy": []
+  },
+  {
+    "id": "cress-ma",
+    "name": "NamingSystemCRESSMA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 2ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-ma",
+    "legacy": []
+  },
+  {
+    "id": "cress-mg",
+    "name": "NamingSystemCRESSMG",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 6ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-mg",
+    "legacy": []
+  },
+  {
+    "id": "cress-ms",
+    "name": "NamingSystemCRESSMS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 21ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-ms",
+    "legacy": []
+  },
+  {
+    "id": "cress-mt",
+    "name": "NamingSystemCRESSMT",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 20ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-mt",
+    "legacy": []
+  },
+  {
+    "id": "cress-pa",
+    "name": "NamingSystemCRESSPA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 1ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-pa",
+    "legacy": []
+  },
+  {
+    "id": "cress-pb",
+    "name": "NamingSystemCRESSPB",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 13ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-pb",
+    "legacy": []
+  },
+  {
+    "id": "cress-pe",
+    "name": "NamingSystemCRESSPE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 4ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-pe",
+    "legacy": []
+  },
+  {
+    "id": "cress-pi",
+    "name": "NamingSystemCRESSPI",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 22ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-pi",
+    "legacy": []
+  },
+  {
+    "id": "cress-pr",
+    "name": "NamingSystemCRESSPR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 11ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-pr",
+    "legacy": []
+  },
+  {
+    "id": "cress-rj",
+    "name": "NamingSystemCRESSRJ",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 7ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-rj",
+    "legacy": []
+  },
+  {
+    "id": "cress-rn",
+    "name": "NamingSystemCRESSRN",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 14ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-rn",
+    "legacy": []
+  },
+  {
+    "id": "cress-ro",
+    "name": "NamingSystemCRESSRO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 23ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-ro",
+    "legacy": []
+  },
+  {
+    "id": "cress-rr",
+    "name": "NamingSystemCRESSRR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social – 27ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-rr",
+    "legacy": []
+  },
+  {
+    "id": "cress-rs",
+    "name": "NamingSystemCRESSRS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 10ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-rs",
+    "legacy": []
+  },
+  {
+    "id": "cress-sc",
+    "name": "NamingSystemCRESSSC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 12ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-sc",
+    "legacy": []
+  },
+  {
+    "id": "cress-se",
+    "name": "NamingSystemCRESSSE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 18ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-se",
+    "legacy": []
+  },
+  {
+    "id": "cress-sp",
+    "name": "NamingSystemCRESSSP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 9ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-sp",
+    "legacy": []
+  },
+  {
+    "id": "cress-to",
+    "name": "NamingSystemCRESSTO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "Conselho Regional de Serviço Social 25ª Região",
+    "preferred": "https://saude.gov.br/fhir/sid/cress-to",
+    "legacy": []
+  },
+  {
+    "id": "crf-ac",
+    "name": "NamingSystemCRFAC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-ac",
+    "legacy": []
+  },
+  {
+    "id": "crf-al",
+    "name": "NamingSystemCRFAL",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-al",
+    "legacy": []
+  },
+  {
+    "id": "crf-am",
+    "name": "NamingSystemCRFAM",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-am",
+    "legacy": []
+  },
+  {
+    "id": "crf-ap",
+    "name": "NamingSystemCRFAP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-ap",
+    "legacy": []
+  },
+  {
+    "id": "crf-ba",
+    "name": "NamingSystemCRFBA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-ba",
+    "legacy": []
+  },
+  {
+    "id": "crf-ce",
+    "name": "NamingSystemCRFCE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-ce",
+    "legacy": []
+  },
+  {
+    "id": "crf-df",
+    "name": "NamingSystemCRFDF",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-df",
+    "legacy": []
+  },
+  {
+    "id": "crf-es",
+    "name": "NamingSystemCRFES",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-es",
+    "legacy": []
+  },
+  {
+    "id": "crf-go",
+    "name": "NamingSystemCRFGO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-go",
+    "legacy": []
+  },
+  {
+    "id": "crf-ma",
+    "name": "NamingSystemCRFMA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-ma",
+    "legacy": []
+  },
+  {
+    "id": "crf-mg",
+    "name": "NamingSystemCRFMG",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-mg",
+    "legacy": []
+  },
+  {
+    "id": "crf-ms",
+    "name": "NamingSystemCRFMS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-ms",
+    "legacy": []
+  },
+  {
+    "id": "crf-mt",
+    "name": "NamingSystemCRFMT",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-mt",
+    "legacy": []
+  },
+  {
+    "id": "crf-pa",
+    "name": "NamingSystemCRFPA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-pa",
+    "legacy": []
+  },
+  {
+    "id": "crf-pb",
+    "name": "NamingSystemCRFPB",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-pb",
+    "legacy": []
+  },
+  {
+    "id": "crf-pe",
+    "name": "NamingSystemCRFPE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-pe",
+    "legacy": []
+  },
+  {
+    "id": "crf-pi",
+    "name": "NamingSystemCRFPI",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-pi",
+    "legacy": []
+  },
+  {
+    "id": "crf-pr",
+    "name": "NamingSystemCRFPR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-pr",
+    "legacy": []
+  },
+  {
+    "id": "crf-rj",
+    "name": "NamingSystemCRFRJ",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-rj",
+    "legacy": []
+  },
+  {
+    "id": "crf-rn",
+    "name": "NamingSystemCRFRN",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-rn",
+    "legacy": []
+  },
+  {
+    "id": "crf-ro",
+    "name": "NamingSystemCRFRO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-ro",
+    "legacy": []
+  },
+  {
+    "id": "crf-rr",
+    "name": "NamingSystemCRFRR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-rr",
+    "legacy": []
+  },
+  {
+    "id": "crf-rs",
+    "name": "NamingSystemCRFRS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-rs",
+    "legacy": []
+  },
+  {
+    "id": "crf-sc",
+    "name": "NamingSystemCRFSC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-sc",
+    "legacy": []
+  },
+  {
+    "id": "crf-se",
+    "name": "NamingSystemCRFSE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-se",
+    "legacy": []
+  },
+  {
+    "id": "crf-sp",
+    "name": "NamingSystemCRFSP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-sp",
+    "legacy": []
+  },
+  {
+    "id": "crf-to",
+    "name": "NamingSystemCRFTO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE FARMÁCIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crf-to",
+    "legacy": []
+  },
+  {
+    "id": "crm-ac",
+    "name": "NamingSystemCRMAC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-ac",
+    "legacy": []
+  },
+  {
+    "id": "crm-al",
+    "name": "NamingSystemCRMAL",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-al",
+    "legacy": []
+  },
+  {
+    "id": "crm-am",
+    "name": "NamingSystemCRMAM",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-am",
+    "legacy": []
+  },
+  {
+    "id": "crm-ap",
+    "name": "NamingSystemCRMAP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-ap",
+    "legacy": []
+  },
+  {
+    "id": "crm-ba",
+    "name": "NamingSystemCRMBA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-ba",
+    "legacy": []
+  },
+  {
+    "id": "crm-ce",
+    "name": "NamingSystemCRMCE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-ce",
+    "legacy": []
+  },
+  {
+    "id": "crm-df",
+    "name": "NamingSystemCRMDF",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-df",
+    "legacy": []
+  },
+  {
+    "id": "crm-es",
+    "name": "NamingSystemCRMES",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-es",
+    "legacy": []
+  },
+  {
+    "id": "crm-go",
+    "name": "NamingSystemCRMGO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-go",
+    "legacy": []
+  },
+  {
+    "id": "crm-ma",
+    "name": "NamingSystemCRMMA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-ma",
+    "legacy": []
+  },
+  {
+    "id": "crm-mg",
+    "name": "NamingSystemCRMMG",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-mg",
+    "legacy": []
+  },
+  {
+    "id": "crm-ms",
+    "name": "NamingSystemCRMMS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-ms",
+    "legacy": []
+  },
+  {
+    "id": "crm-mt",
+    "name": "NamingSystemCRMMT",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-mt",
+    "legacy": []
+  },
+  {
+    "id": "crm-pa",
+    "name": "NamingSystemCRMPA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-pa",
+    "legacy": []
+  },
+  {
+    "id": "crm-pb",
+    "name": "NamingSystemCRMPB",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-pb",
+    "legacy": []
+  },
+  {
+    "id": "crm-pe",
+    "name": "NamingSystemCRMPE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-pe",
+    "legacy": []
+  },
+  {
+    "id": "crm-pi",
+    "name": "NamingSystemCRMPI",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-pi",
+    "legacy": []
+  },
+  {
+    "id": "crm-pr",
+    "name": "NamingSystemCRMPR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-pr",
+    "legacy": []
+  },
+  {
+    "id": "crm-rj",
+    "name": "NamingSystemCRMRJ",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-rj",
+    "legacy": []
+  },
+  {
+    "id": "crm-rn",
+    "name": "NamingSystemCRMRN",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-rn",
+    "legacy": []
+  },
+  {
+    "id": "crm-ro",
+    "name": "NamingSystemCRMRO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-ro",
+    "legacy": []
+  },
+  {
+    "id": "crm-rr",
+    "name": "NamingSystemCRMRR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-rr",
+    "legacy": []
+  },
+  {
+    "id": "crm-rs",
+    "name": "NamingSystemCRMRS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-rs",
+    "legacy": []
+  },
+  {
+    "id": "crm-sc",
+    "name": "NamingSystemCRMSC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-sc",
+    "legacy": []
+  },
+  {
+    "id": "crm-se",
+    "name": "NamingSystemCRMSE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-se",
+    "legacy": []
+  },
+  {
+    "id": "crm-sp",
+    "name": "NamingSystemCRMSP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-sp",
+    "legacy": []
+  },
+  {
+    "id": "crm-to",
+    "name": "NamingSystemCRMTO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE MEDICINA",
+    "preferred": "https://saude.gov.br/fhir/sid/crm-to",
+    "legacy": []
+  },
+  {
+    "id": "crn-al",
+    "name": "NamingSystemCRNAL",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE NUTRICIONISTA",
+    "preferred": "https://saude.gov.br/fhir/sid/crn-al",
+    "legacy": []
+  },
+  {
+    "id": "crn-ba-se",
+    "name": "NamingSystemCRNBASE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE NUTRICIONISTA",
+    "preferred": "https://saude.gov.br/fhir/sid/crn-ba-se",
+    "legacy": []
+  },
+  {
+    "id": "crn-ce-ma-pi",
+    "name": "NamingSystemCRNCEMAPI",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE NUTRICIONISTA",
+    "preferred": "https://saude.gov.br/fhir/sid/crn-ce-ma-pi",
+    "legacy": []
+  },
+  {
+    "id": "crn-df-go-mt-to",
+    "name": "NamingSystemCRNDFGOMTTO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE NUTRICIONISTA",
+    "preferred": "https://saude.gov.br/fhir/sid/crn-df-go-mt-to",
+    "legacy": []
+  },
+  {
+    "id": "crn-pa-ac-am-ap-ro-rr",
+    "name": "NamingSystemCRNPAACAMAPRORR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE NUTRICIONISTA",
+    "preferred": "https://saude.gov.br/fhir/sid/crn-pa-ac-am-ap-ro-rr",
+    "legacy": []
+  },
+  {
+    "id": "crn-pe-al-pb-rn",
+    "name": "NamingSystemCRNPEALPBRN",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE NUTRICIONISTA",
+    "preferred": "https://saude.gov.br/fhir/sid/crn-pe-al-pb-rn",
+    "legacy": []
+  },
+  {
+    "id": "crn-pr",
+    "name": "NamingSystemCRNPR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE NUTRICIONISTA",
+    "preferred": "https://saude.gov.br/fhir/sid/crn-pr",
+    "legacy": []
+  },
+  {
+    "id": "crn-rj-es",
+    "name": "NamingSystemCRNRJES",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE NUTRICIONISTA",
+    "preferred": "https://saude.gov.br/fhir/sid/crn-rj-es",
+    "legacy": []
+  },
+  {
+    "id": "crn-rs",
+    "name": "NamingSystemCRNRS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE NUTRICIONISTA",
+    "preferred": "https://saude.gov.br/fhir/sid/crn-rs",
+    "legacy": []
+  },
+  {
+    "id": "crn-sc",
+    "name": "NamingSystemCRNSC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE NUTRICIONISTA",
+    "preferred": "https://saude.gov.br/fhir/sid/crn-sc",
+    "legacy": []
+  },
+  {
+    "id": "crn-sp-ms",
+    "name": "NamingSystemCRNSPMS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE NUTRICIONISTA",
+    "preferred": "https://saude.gov.br/fhir/sid/crn-sp-ms",
+    "legacy": []
+  },
+  {
+    "id": "cro-ac",
+    "name": "NamingSystemCROAC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-ac",
+    "legacy": []
+  },
+  {
+    "id": "cro-al",
+    "name": "NamingSystemCROAL",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-al",
+    "legacy": []
+  },
+  {
+    "id": "cro-am",
+    "name": "NamingSystemCROAM",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-am",
+    "legacy": []
+  },
+  {
+    "id": "cro-ap",
+    "name": "NamingSystemCROAP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-ap",
+    "legacy": []
+  },
+  {
+    "id": "cro-ba",
+    "name": "NamingSystemCROBA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-ba",
+    "legacy": []
+  },
+  {
+    "id": "cro-ce",
+    "name": "NamingSystemCROCE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-ce",
+    "legacy": []
+  },
+  {
+    "id": "cro-df",
+    "name": "NamingSystemCRODF",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-df",
+    "legacy": []
+  },
+  {
+    "id": "cro-es",
+    "name": "NamingSystemCROES",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-es",
+    "legacy": []
+  },
+  {
+    "id": "cro-go",
+    "name": "NamingSystemCROGO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-go",
+    "legacy": []
+  },
+  {
+    "id": "cro-ma",
+    "name": "NamingSystemCROMA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-ma",
+    "legacy": []
+  },
+  {
+    "id": "cro-mg",
+    "name": "NamingSystemCROMG",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-mg",
+    "legacy": []
+  },
+  {
+    "id": "cro-ms",
+    "name": "NamingSystemCROMS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-ms",
+    "legacy": []
+  },
+  {
+    "id": "cro-mt",
+    "name": "NamingSystemCROMT",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-mt",
+    "legacy": []
+  },
+  {
+    "id": "cro-pa",
+    "name": "NamingSystemCROPA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-pa",
+    "legacy": []
+  },
+  {
+    "id": "cro-pb",
+    "name": "NamingSystemCROPB",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-pb",
+    "legacy": []
+  },
+  {
+    "id": "cro-pe",
+    "name": "NamingSystemCROPE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-pe",
+    "legacy": []
+  },
+  {
+    "id": "cro-pi",
+    "name": "NamingSystemCROPI",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-pi",
+    "legacy": []
+  },
+  {
+    "id": "cro-pr",
+    "name": "NamingSystemCROPR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-pr",
+    "legacy": []
+  },
+  {
+    "id": "cro-rj",
+    "name": "NamingSystemCRORJ",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-rj",
+    "legacy": []
+  },
+  {
+    "id": "cro-rn",
+    "name": "NamingSystemCRORN",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-rn",
+    "legacy": []
+  },
+  {
+    "id": "cro-ro",
+    "name": "NamingSystemCRORO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-ro",
+    "legacy": []
+  },
+  {
+    "id": "cro-rr",
+    "name": "NamingSystemCRORR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-rr",
+    "legacy": []
+  },
+  {
+    "id": "cro-rs",
+    "name": "NamingSystemCRORS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-rs",
+    "legacy": []
+  },
+  {
+    "id": "cro-sc",
+    "name": "NamingSystemCROSC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-sc",
+    "legacy": []
+  },
+  {
+    "id": "cro-se",
+    "name": "NamingSystemCROSE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-se",
+    "legacy": []
+  },
+  {
+    "id": "cro-sp",
+    "name": "NamingSystemCROSP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-sp",
+    "legacy": []
+  },
+  {
+    "id": "cro-to",
+    "name": "NamingSystemCROTO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE ODONTOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/cro-to",
+    "legacy": []
+  },
+  {
+    "id": "crp-ac-ro",
+    "name": "NamingSystemCRPACRO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-ac-ro",
+    "legacy": []
+  },
+  {
+    "id": "crp-al",
+    "name": "NamingSystemCRPAL",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-al",
+    "legacy": []
+  },
+  {
+    "id": "crp-am-rr",
+    "name": "NamingSystemCRPAMRR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-am-rr",
+    "legacy": []
+  },
+  {
+    "id": "crp-ba",
+    "name": "NamingSystemCRPBA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-ba",
+    "legacy": []
+  },
+  {
+    "id": "crp-ce",
+    "name": "NamingSystemCRPCE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-ce",
+    "legacy": []
+  },
+  {
+    "id": "crp-df",
+    "name": "NamingSystemCRPDF",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-df",
+    "legacy": []
+  },
+  {
+    "id": "crp-es",
+    "name": "NamingSystemCRPES",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-es",
+    "legacy": []
+  },
+  {
+    "id": "crp-go",
+    "name": "NamingSystemCRPGO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-go",
+    "legacy": []
+  },
+  {
+    "id": "crp-ma",
+    "name": "NamingSystemCRPMA",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-ma",
+    "legacy": []
+  },
+  {
+    "id": "crp-mg",
+    "name": "NamingSystemCRPMG",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-mg",
+    "legacy": []
+  },
+  {
+    "id": "crp-ms",
+    "name": "NamingSystemCRPMS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-ms",
+    "legacy": []
+  },
+  {
+    "id": "crp-mt",
+    "name": "NamingSystemCRPMT",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-mt",
+    "legacy": []
+  },
+  {
+    "id": "crp-pa-ap",
+    "name": "NamingSystemCRPPAAP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-pa-ap",
+    "legacy": []
+  },
+  {
+    "id": "crp-pb",
+    "name": "NamingSystemCRPPB",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-pb",
+    "legacy": []
+  },
+  {
+    "id": "crp-pe",
+    "name": "NamingSystemCRPPE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-pe",
+    "legacy": []
+  },
+  {
+    "id": "crp-pi",
+    "name": "NamingSystemCRPPI",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-pi",
+    "legacy": []
+  },
+  {
+    "id": "crp-pr",
+    "name": "NamingSystemCRPPR",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-pr",
+    "legacy": []
+  },
+  {
+    "id": "crp-rj",
+    "name": "NamingSystemCRPRJ",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-rj",
+    "legacy": []
+  },
+  {
+    "id": "crp-rn",
+    "name": "NamingSystemCRPRN",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-rn",
+    "legacy": []
+  },
+  {
+    "id": "crp-rs",
+    "name": "NamingSystemCRPRS",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-rs",
+    "legacy": []
+  },
+  {
+    "id": "crp-sc",
+    "name": "NamingSystemCRPSC",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-sc",
+    "legacy": []
+  },
+  {
+    "id": "crp-se",
+    "name": "NamingSystemCRPSE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-se",
+    "legacy": []
+  },
+  {
+    "id": "crp-sp",
+    "name": "NamingSystemCRPSP",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-sp",
+    "legacy": []
+  },
+  {
+    "id": "crp-to",
+    "name": "NamingSystemCRPTO",
+    "kind": "identifier",
+    "status": "active",
+    "description": "CONSELHO REGIONAL DE PSICOLOGIA",
+    "preferred": "https://saude.gov.br/fhir/sid/crp-to",
+    "legacy": []
+  },
+  {
+    "id": "rne",
+    "name": "NamingSystemRNE",
+    "kind": "identifier",
+    "status": "active",
+    "description": "REGISTRO NACIONAL DE ESTRANGEIRO",
+    "preferred": "https://saude.gov.br/fhir/sid/rne",
+    "legacy": [
+      "http://rnds.saude.gov.br/fhir/r4/NamingSystem/rne"
+    ]
+  }
+]

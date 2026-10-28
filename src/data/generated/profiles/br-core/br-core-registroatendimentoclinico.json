@@ -1,0 +1,590 @@
+{
+  "key": "br-core-registroatendimentoclinico",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-registroatendimentoclinico",
+  "version": "1.7.1",
+  "name": "BRCoreRegistroAtendimentoClinico",
+  "title": "br-core-registroatendimentoclinico",
+  "status": "active",
+  "kind": "resource",
+  "type": "Composition",
+  "baseDefinition": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-composition",
+  "description": "Esse perfil restringe o perfil [br-core-composition](https://br-core/saude.gov.br/fhir/StructureDefinition/br-core-composition.html) para especificar um documento clínico, o registro de atendimento clínico, definido pela [PORTARIA Nº 234, DE 18 DE JULHO DE 2022](https://www.cosemssp.org.br/wp-content/uploads/2022/07/PORTARIA-No-234-DE-18-DE-JULHO-DE-2022-PORTARIA-No-234-DE-18-DE-JULHO-DE-2022-DOU-Imprensa-Nacional.pdf), que institui o Modelo de Informação (MI) Registro de Atendimento Clínico (RAC). Este modelo compreende um conjunto essencial de elementos e dados administrativos e clínicos que fornecem um instantâneo (snapshot) das informações de uma consulta realizada a um indivíduo no âmbito da atenção básica, especializada ou domiciliar (atendimento diário). Apresenta informações relacionadas ao acompanhamento do indivíduo como medições, observações, diagnósticos e/ou problemas, exames, procedimentos, pequenas cirurgias e desfecho",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Composition.section",
+      "path": "Composition.section",
+      "min": 1,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "sliced": true,
+      "short": "Seções do sumário de alta"
+    },
+    {
+      "id": "Composition.section:diagnosticosAvaliados",
+      "path": "Composition.section",
+      "sliceName": "diagnosticosAvaliados",
+      "min": 1,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seção de Resumo de Diagnósticos Avaliados"
+    },
+    {
+      "id": "Composition.section:diagnosticosAvaliados.code",
+      "path": "Composition.section.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "11450-4"
+            }
+          ]
+        }
+      },
+      "short": "Classificação da seção da Composition/Document"
+    },
+    {
+      "id": "Composition.section:diagnosticosAvaliados.entry",
+      "path": "Composition.section.entry",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-condition"
+          ]
+        }
+      ],
+      "short": "Diagnósticos avaliados relevantes para o sumário internacional do paciente"
+    },
+    {
+      "id": "Composition.section:procedimentosRealizados",
+      "path": "Composition.section",
+      "sliceName": "procedimentosRealizados",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seção de Resumo de Procedimentos Realizados"
+    },
+    {
+      "id": "Composition.section:procedimentosRealizados.code",
+      "path": "Composition.section.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "47519-4"
+            }
+          ]
+        }
+      },
+      "short": "Classificação da seção da Composition/Document"
+    },
+    {
+      "id": "Composition.section:procedimentosRealizados.entry",
+      "path": "Composition.section.entry",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-procedure"
+          ]
+        }
+      ],
+      "short": "Procedimentos realizados relevantes para o sumário internacional do paciente"
+    },
+    {
+      "id": "Composition.section:sinaisVitais",
+      "path": "Composition.section",
+      "sliceName": "sinaisVitais",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seção de Resumo de Sinais Vitais"
+    },
+    {
+      "id": "Composition.section:sinaisVitais.code",
+      "path": "Composition.section.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "8716-3"
+            }
+          ]
+        }
+      },
+      "short": "Classificação da seção da Composition/Document"
+    },
+    {
+      "id": "Composition.section:sinaisVitais.entry",
+      "path": "Composition.section.entry",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-vitalsigns"
+          ]
+        }
+      ],
+      "short": "Sinais vitais relevantes para o sumário internacional do paciente"
+    },
+    {
+      "id": "Composition.section:historiaObstetrica",
+      "path": "Composition.section",
+      "sliceName": "historiaObstetrica",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seção de Resumo de História obstétrica"
+    },
+    {
+      "id": "Composition.section:historiaObstetrica.code",
+      "path": "Composition.section.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "10162-6"
+            }
+          ]
+        }
+      },
+      "short": "Classificação da seção da Composition/Document"
+    },
+    {
+      "id": "Composition.section:historiaObstetrica.entry",
+      "path": "Composition.section.entry",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observationpregnancystatus",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observationpregnancyoutcome"
+          ]
+        }
+      ],
+      "short": "História obstétrica relevantes para o sumário internacional do paciente"
+    },
+    {
+      "id": "Composition.section:aleitamentoMaterno",
+      "path": "Composition.section",
+      "sliceName": "aleitamentoMaterno",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seção de Resumo de Aleitamento Materno"
+    },
+    {
+      "id": "Composition.section:aleitamentoMaterno.code",
+      "path": "Composition.section.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "63895-7"
+            }
+          ]
+        }
+      },
+      "short": "Classificação da seção da Composition/Document"
+    },
+    {
+      "id": "Composition.section:aleitamentoMaterno.entry",
+      "path": "Composition.section.entry",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observationbreastfeedingstatus"
+          ]
+        }
+      ],
+      "short": "Aleitamento materno para o sumário internacional do paciente"
+    },
+    {
+      "id": "Composition.section:historiaSocial",
+      "path": "Composition.section",
+      "sliceName": "historiaSocial",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seção de Resumo de História Social"
+    },
+    {
+      "id": "Composition.section:historiaSocial.code",
+      "path": "Composition.section.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "29762-2"
+            }
+          ]
+        }
+      },
+      "short": "Classificação da seção da Composition/Document"
+    },
+    {
+      "id": "Composition.section:historiaSocial.entry",
+      "path": "Composition.section.entry",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observationalcoholuse",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observationtobaccouse",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observationsubstanceuse"
+          ]
+        }
+      ],
+      "short": "História social relevantes para o sumário internacional do paciente"
+    },
+    {
+      "id": "Composition.section:alergiasIntolerancias",
+      "path": "Composition.section",
+      "sliceName": "alergiasIntolerancias",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seção de Resumo de Alergias e Intolerâncias"
+    },
+    {
+      "id": "Composition.section:alergiasIntolerancias.code",
+      "path": "Composition.section.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "48765-2"
+            }
+          ]
+        }
+      },
+      "short": "Classificação da seção da Composition/Document"
+    },
+    {
+      "id": "Composition.section:alergiasIntolerancias.entry",
+      "path": "Composition.section.entry",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-allergyintolerance"
+          ]
+        }
+      ],
+      "short": "Alergias e intolerâncias relevantes para o sumário internacional do paciente"
+    },
+    {
+      "id": "Composition.section:medicamentos",
+      "path": "Composition.section",
+      "sliceName": "medicamentos",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seção de Resumo de Medicamentos"
+    },
+    {
+      "id": "Composition.section:medicamentos.code",
+      "path": "Composition.section.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "10160-0"
+            }
+          ]
+        }
+      },
+      "short": "Classificação da seção da Composition/Document"
+    },
+    {
+      "id": "Composition.section:medicamentos.entry",
+      "path": "Composition.section.entry",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationstatement",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationrequest",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationadministration",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationdispense",
+            "http://hl7.org/fhir/StructureDefinition/DocumentReference"
+          ]
+        }
+      ],
+      "short": "Medicamentos relevantes para o sumário internacional do paciente"
+    },
+    {
+      "id": "Composition.section:planoCuidados",
+      "path": "Composition.section",
+      "sliceName": "planoCuidados",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seção de Resumo de Planos de Cuidado"
+    },
+    {
+      "id": "Composition.section:planoCuidados.code",
+      "path": "Composition.section.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "18776-5"
+            }
+          ]
+        }
+      },
+      "short": "Classificação da seção da Composition/Document"
+    },
+    {
+      "id": "Composition.section:planoCuidados.entry",
+      "path": "Composition.section.entry",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-careplan"
+          ]
+        }
+      ],
+      "short": "Planos de cuidado relevantes para o sumário internacional do paciente"
+    },
+    {
+      "id": "Composition.section:capacidadeFuncional",
+      "path": "Composition.section",
+      "sliceName": "capacidadeFuncional",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seção de Resumo de Capacidade Funcional"
+    },
+    {
+      "id": "Composition.section:capacidadeFuncional.code",
+      "path": "Composition.section.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "47420-5"
+            }
+          ]
+        }
+      },
+      "short": "Classificação da seção da Composition/Document"
+    },
+    {
+      "id": "Composition.section:capacidadeFuncional.entry",
+      "path": "Composition.section.entry",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-capacidadefuncional"
+          ]
+        }
+      ],
+      "short": "Capacidade funcional para o sumário internacional do paciente"
+    }
+  ]
+}

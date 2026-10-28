@@ -1,0 +1,180 @@
+{
+  "key": "br-core-diagnosticreport",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-diagnosticreport",
+  "version": "1.7.1",
+  "name": "BRCoreDiagnosticReport",
+  "title": null,
+  "status": "active",
+  "kind": "resource",
+  "type": "DiagnosticReport",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/DiagnosticReport",
+  "description": "Este perfil restringe o recurso [DiagnosticReport](https://hl7.org/fhir/R4/diagnosticreport.html) que representa as descobertas e a interpretação de testes diagnósticos realizados em pacientes, grupos de pacientes, dispositivos e locais, e/ou espécimes derivados destes. O relatório inclui contexto clínico, como solicitação e informações do provedor, e alguma mistura de resultados atômicos, imagens, interpretações textuais e codificadas, e representação formatada de relatórios diagnósticos",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "DiagnosticReport.extension",
+      "path": "DiagnosticReport.extension",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Extension"
+        }
+      ],
+      "sliced": true,
+      "short": "Extensões adicionais que não fazem parte do modelo base"
+    },
+    {
+      "id": "DiagnosticReport.extension:conduta",
+      "path": "DiagnosticReport.extension",
+      "sliceName": "conduta",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-diagnosticreport-conduta"
+          ]
+        }
+      ],
+      "short": "Conduta associada ao laudo"
+    },
+    {
+      "id": "DiagnosticReport.basedOn",
+      "path": "DiagnosticReport.basedOn",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-careplan",
+            "http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationrequest",
+            "http://hl7.org/fhir/StructureDefinition/NutritionOrder",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-servicerequest"
+          ]
+        }
+      ],
+      "short": "O que foi solicitado"
+    },
+    {
+      "id": "DiagnosticReport.category",
+      "path": "DiagnosticReport.category",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRServicoEspecializado"
+      },
+      "short": "Categoria do serviço"
+    },
+    {
+      "id": "DiagnosticReport.subject",
+      "path": "DiagnosticReport.subject",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient"
+          ]
+        }
+      ],
+      "short": "O indivíduo do relatório - geralmente, mas nem sempre, o paciente"
+    },
+    {
+      "id": "DiagnosticReport.encounter",
+      "path": "DiagnosticReport.encounter",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-encounter"
+          ]
+        }
+      ],
+      "short": "Evento de assistência médica quando o teste foi solicitado"
+    },
+    {
+      "id": "DiagnosticReport.performer",
+      "path": "DiagnosticReport.performer",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization",
+            "http://hl7.org/fhir/StructureDefinition/CareTeam"
+          ]
+        }
+      ],
+      "short": "Serviço de diagnóstico (SADT) responsável"
+    },
+    {
+      "id": "DiagnosticReport.resultsInterpreter",
+      "path": "DiagnosticReport.resultsInterpreter",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization",
+            "http://hl7.org/fhir/StructureDefinition/CareTeam"
+          ]
+        }
+      ],
+      "short": "Intérprete de resultado"
+    },
+    {
+      "id": "DiagnosticReport.specimen",
+      "path": "DiagnosticReport.specimen",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-specimen"
+          ]
+        }
+      ],
+      "short": "Amostras deste relatório"
+    },
+    {
+      "id": "DiagnosticReport.result",
+      "path": "DiagnosticReport.result",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation"
+          ]
+        }
+      ],
+      "short": "Observations"
+    }
+  ]
+}

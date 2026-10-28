@@ -1,0 +1,561 @@
+{
+  "key": "BRRestricaoFuncionalIncapacidadeSaude-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRestricaoFuncionalIncapacidadeSaude-1.0",
+  "version": "1.0",
+  "name": "BRRestricaoFuncionalIncapacidadeSaude",
+  "title": "Restrições Funcionais e Incapacidades em Saúde",
+  "status": "draft",
+  "kind": "resource",
+  "type": "Condition",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Condition",
+  "description": "Registra restrições funcionais ou incapacidades em saúde observadas no indivíduo.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Condition.identifier",
+      "path": "Condition.identifier",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "External Ids for this condition"
+    },
+    {
+      "id": "Condition.clinicalStatus",
+      "path": "Condition.clinicalStatus",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BREstadoRestricaoFuncionalIncapacidadeSaude-1.0"
+      },
+      "short": "Status da Restrição Funcional ou Incapacidade"
+    },
+    {
+      "id": "Condition.clinicalStatus.coding",
+      "path": "Condition.clinicalStatus.coding",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Code defined by a terminology system"
+    },
+    {
+      "id": "Condition.clinicalStatus.coding.system",
+      "path": "Condition.clinicalStatus.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "short": "Identity of the terminology system"
+    },
+    {
+      "id": "Condition.clinicalStatus.coding.version",
+      "path": "Condition.clinicalStatus.coding.version",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Version of the system - if relevant"
+    },
+    {
+      "id": "Condition.clinicalStatus.coding.code",
+      "path": "Condition.clinicalStatus.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "short": "Symbol in syntax defined by the system"
+    },
+    {
+      "id": "Condition.clinicalStatus.coding.userSelected",
+      "path": "Condition.clinicalStatus.coding.userSelected",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "If this coding was chosen directly by the user"
+    },
+    {
+      "id": "Condition.clinicalStatus.text",
+      "path": "Condition.clinicalStatus.text",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Plain text representation of the concept"
+    },
+    {
+      "id": "Condition.verificationStatus",
+      "path": "Condition.verificationStatus",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/condition-ver-status|4.0.1"
+      },
+      "short": "unconfirmed | provisional | differential | confirmed | refuted | entered-in-error"
+    },
+    {
+      "id": "Condition.category",
+      "path": "Condition.category",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/condition-category"
+      },
+      "short": "problem-list-item | encounter-diagnosis"
+    },
+    {
+      "id": "Condition.severity",
+      "path": "Condition.severity",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/condition-severity"
+      },
+      "short": "Subjective severity of condition"
+    },
+    {
+      "id": "Condition.code",
+      "path": "Condition.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "mustSupport": true,
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/condition-code"
+      },
+      "short": "Restrição Funcional ou Incapacidade"
+    },
+    {
+      "id": "Condition.code.coding",
+      "path": "Condition.code.coding",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Code defined by a terminology system"
+    },
+    {
+      "id": "Condition.code.coding.display",
+      "path": "Condition.code.coding.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Representation defined by the system"
+    },
+    {
+      "id": "Condition.code.coding.userSelected",
+      "path": "Condition.code.coding.userSelected",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "If this coding was chosen directly by the user"
+    },
+    {
+      "id": "Condition.code.text",
+      "path": "Condition.code.text",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Representação em Texto Livre do Conceito"
+    },
+    {
+      "id": "Condition.bodySite",
+      "path": "Condition.bodySite",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+      },
+      "short": "Anatomical location, if relevant"
+    },
+    {
+      "id": "Condition.subject",
+      "path": "Condition.subject",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Indivíduo com a restrição funcional e/ou incapacidade em saúde"
+    },
+    {
+      "id": "Condition.subject.id",
+      "path": "Condition.subject.id",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "http://hl7.org/fhirpath/System.String"
+        }
+      ],
+      "short": "Unique id for inter-element referencing"
+    },
+    {
+      "id": "Condition.subject.reference",
+      "path": "Condition.subject.reference",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Literal reference, Relative, internal or absolute URL"
+    },
+    {
+      "id": "Condition.subject.type",
+      "path": "Condition.subject.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+      },
+      "short": "Type the reference refers to (e.g. \"Patient\")"
+    },
+    {
+      "id": "Condition.subject.identifier",
+      "path": "Condition.subject.identifier",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Logical reference, when literal reference is not known"
+    },
+    {
+      "id": "Condition.subject.identifier.use",
+      "path": "Condition.subject.identifier.use",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "short": "usual | official | temp | secondary | old (If known)"
+    },
+    {
+      "id": "Condition.subject.identifier.type",
+      "path": "Condition.subject.identifier.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-type"
+      },
+      "short": "Description of identifier"
+    },
+    {
+      "id": "Condition.subject.identifier.system",
+      "path": "Condition.subject.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "mustSupport": true,
+      "short": "The namespace for the identifier value"
+    },
+    {
+      "id": "Condition.subject.identifier.value",
+      "path": "Condition.subject.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "mustSupport": true,
+      "short": "The value that is unique"
+    },
+    {
+      "id": "Condition.subject.identifier.period",
+      "path": "Condition.subject.identifier.period",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Period"
+        }
+      ],
+      "short": "Time period when id is/was valid for use"
+    },
+    {
+      "id": "Condition.subject.identifier.assigner",
+      "path": "Condition.subject.identifier.assigner",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Organization that issued id (may be just text)"
+    },
+    {
+      "id": "Condition.subject.display",
+      "path": "Condition.subject.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Text alternative for the resource"
+    },
+    {
+      "id": "Condition.encounter",
+      "path": "Condition.encounter",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Encounter"
+          ]
+        }
+      ],
+      "short": "Encounter created as part of"
+    },
+    {
+      "id": "Condition.onset[x]",
+      "path": "Condition.onset[x]",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "dateTime"
+        },
+        {
+          "code": "Age"
+        },
+        {
+          "code": "Period"
+        },
+        {
+          "code": "Range"
+        },
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Estimated or actual date,  date-time, or age"
+    },
+    {
+      "id": "Condition.abatement[x]",
+      "path": "Condition.abatement[x]",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "dateTime"
+        },
+        {
+          "code": "Age"
+        },
+        {
+          "code": "Period"
+        },
+        {
+          "code": "Range"
+        },
+        {
+          "code": "string"
+        }
+      ],
+      "short": "When in resolution/remission"
+    },
+    {
+      "id": "Condition.recordedDate",
+      "path": "Condition.recordedDate",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "Date record was first recorded"
+    },
+    {
+      "id": "Condition.recorder",
+      "path": "Condition.recorder",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
+            "http://hl7.org/fhir/StructureDefinition/PractitionerRole",
+            "http://hl7.org/fhir/StructureDefinition/Patient",
+            "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+          ]
+        }
+      ],
+      "short": "Who recorded the condition"
+    },
+    {
+      "id": "Condition.asserter",
+      "path": "Condition.asserter",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
+            "http://hl7.org/fhir/StructureDefinition/PractitionerRole",
+            "http://hl7.org/fhir/StructureDefinition/Patient",
+            "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+          ]
+        }
+      ],
+      "short": "Person who asserts this condition"
+    },
+    {
+      "id": "Condition.stage",
+      "path": "Condition.stage",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Stage/grade, usually assessed formally"
+    },
+    {
+      "id": "Condition.evidence",
+      "path": "Condition.evidence",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Supporting evidence"
+    },
+    {
+      "id": "Condition.note",
+      "path": "Condition.note",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Annotation"
+        }
+      ],
+      "short": "Additional information about the Condition"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "key": "BROutrasInformacoes",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROutrasInformacoes",
+  "version": null,
+  "name": "BROutrasInformacoes",
+  "title": "Outras Informações",
+  "status": "draft",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Representa quaisquer outras informações acerca dos dados de desfecho do atendimento registrad.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROutrasInformacoes"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "types": [
+        {
+          "code": "Annotation"
+        }
+      ]
+    }
+  ]
+}

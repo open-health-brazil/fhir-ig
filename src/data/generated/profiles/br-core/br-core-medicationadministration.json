@@ -1,0 +1,181 @@
+{
+  "key": "br-core-medicationadministration",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationadministration",
+  "version": "1.7.1",
+  "name": "BRCoreMedicationAdministration",
+  "title": "br-core-medicationadministration",
+  "status": "active",
+  "kind": "resource",
+  "type": "MedicationAdministration",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/MedicationAdministration",
+  "description": "Descreve o evento de um paciente consumindo ou de algum medicamento sendo administrado a um paciente. Isso pode ser tão simples quanto engolir um comprimido ou pode ser uma infusão de longa duração. Recursos relacionados vinculam esse evento à prescrição de autorização e ao atendimento specífco entre o paciente e o profissional de saúde",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "MedicationAdministration.partOf",
+      "path": "MedicationAdministration.partOf",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationadministration",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-procedure"
+          ]
+        }
+      ],
+      "short": "Parte do evento referenciado"
+    },
+    {
+      "id": "MedicationAdministration.statusReason",
+      "path": "MedicationAdministration.statusReason",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/reason-medication-not-given-codes"
+      },
+      "short": "Motivo da não realização da administração"
+    },
+    {
+      "id": "MedicationAdministration.subject",
+      "path": "MedicationAdministration.subject",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient"
+          ]
+        }
+      ],
+      "short": "Referência ao paciente que recebeu o medicamento"
+    },
+    {
+      "id": "MedicationAdministration.context",
+      "path": "MedicationAdministration.context",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-encounter"
+          ]
+        }
+      ],
+      "short": "Referência ao atendimento que administrou o medicamento"
+    },
+    {
+      "id": "MedicationAdministration.performer.function",
+      "path": "MedicationAdministration.performer.function",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/med-admin-perform-function"
+      },
+      "short": "Função do profissional que administrou o medicamento"
+    },
+    {
+      "id": "MedicationAdministration.performer.actor",
+      "path": "MedicationAdministration.performer.actor",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson",
+            "http://hl7.org/fhir/StructureDefinition/Device"
+          ]
+        }
+      ],
+      "short": "Referência ao profissional que realizou a administraçãoexampleamento"
+    },
+    {
+      "id": "MedicationAdministration.reasonReference",
+      "path": "MedicationAdministration.reasonReference",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-condition",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-diagnosticreport"
+          ]
+        }
+      ],
+      "short": "Referência à condição ou observação que é o motivo da administração do medicamento"
+    },
+    {
+      "id": "MedicationAdministration.request",
+      "path": "MedicationAdministration.request",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationrequest"
+          ]
+        }
+      ],
+      "short": "Referência à solicitação do medicamento"
+    },
+    {
+      "id": "MedicationAdministration.dosage.site",
+      "path": "MedicationAdministration.dosage.site",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+      },
+      "short": "Local do corpo que o corpo foi administrado"
+    },
+    {
+      "id": "MedicationAdministration.dosage.route",
+      "path": "MedicationAdministration.dosage.route",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/uv/ips/ValueSet/medicine-route-of-administration"
+      },
+      "short": "Via de administração do medicamento"
+    }
+  ]
+}

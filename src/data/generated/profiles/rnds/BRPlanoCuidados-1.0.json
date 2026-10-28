@@ -1,0 +1,209 @@
+{
+  "key": "BRPlanoCuidados-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPlanoCuidados-1.0",
+  "version": "1.0",
+  "name": "BRPlanoCuidados",
+  "title": "Plano de Cuidados",
+  "status": "draft",
+  "kind": "resource",
+  "type": "CarePlan",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/CarePlan",
+  "description": "Descreve o plano de cuidados, instruções e recomendações.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "CarePlan.identifier",
+      "path": "CarePlan.identifier",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.instantiatesCanonical",
+      "path": "CarePlan.instantiatesCanonical",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.instantiatesUri",
+      "path": "CarePlan.instantiatesUri",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.basedOn",
+      "path": "CarePlan.basedOn",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.replaces",
+      "path": "CarePlan.replaces",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.partOf",
+      "path": "CarePlan.partOf",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.status",
+      "path": "CarePlan.status",
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BREstadoSolicitacao-1.0"
+      },
+      "short": "Estado do Plano de Cuidados"
+    },
+    {
+      "id": "CarePlan.intent",
+      "path": "CarePlan.intent",
+      "mustSupport": true,
+      "binding": {
+        "strength": "required"
+      },
+      "fixed": {
+        "kind": "fixed",
+        "value": "plan"
+      },
+      "short": "Intenção do Plano de Cuidados"
+    },
+    {
+      "id": "CarePlan.category",
+      "path": "CarePlan.category",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.title",
+      "path": "CarePlan.title",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.description",
+      "path": "CarePlan.description",
+      "min": 1,
+      "mustSupport": true,
+      "short": "Descrição do Plano de Cuidados, Instruções e Recomendações"
+    },
+    {
+      "id": "CarePlan.subject",
+      "path": "CarePlan.subject",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Indivíduo do Plano de Cuidados"
+    },
+    {
+      "id": "CarePlan.subject.reference",
+      "path": "CarePlan.subject.reference",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.subject.type",
+      "path": "CarePlan.subject.type",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.subject.identifier",
+      "path": "CarePlan.subject.identifier",
+      "min": 1
+    },
+    {
+      "id": "CarePlan.subject.identifier.use",
+      "path": "CarePlan.subject.identifier.use",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.subject.identifier.type",
+      "path": "CarePlan.subject.identifier.type",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.subject.identifier.system",
+      "path": "CarePlan.subject.identifier.system",
+      "min": 1
+    },
+    {
+      "id": "CarePlan.subject.identifier.value",
+      "path": "CarePlan.subject.identifier.value",
+      "min": 1
+    },
+    {
+      "id": "CarePlan.subject.identifier.period",
+      "path": "CarePlan.subject.identifier.period",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.subject.identifier.assigner",
+      "path": "CarePlan.subject.identifier.assigner",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.subject.display",
+      "path": "CarePlan.subject.display",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.encounter",
+      "path": "CarePlan.encounter",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.period",
+      "path": "CarePlan.period",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.created",
+      "path": "CarePlan.created",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.author",
+      "path": "CarePlan.author",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.contributor",
+      "path": "CarePlan.contributor",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.careTeam",
+      "path": "CarePlan.careTeam",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.addresses",
+      "path": "CarePlan.addresses",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.supportingInfo",
+      "path": "CarePlan.supportingInfo",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.goal",
+      "path": "CarePlan.goal",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.activity",
+      "path": "CarePlan.activity",
+      "max": "0"
+    },
+    {
+      "id": "CarePlan.note",
+      "path": "CarePlan.note",
+      "max": "0"
+    }
+  ]
+}

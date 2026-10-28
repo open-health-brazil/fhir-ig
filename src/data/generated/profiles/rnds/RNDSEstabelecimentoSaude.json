@@ -1,0 +1,187 @@
+{
+  "key": "RNDSEstabelecimentoSaude",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSEstabelecimentoSaude",
+  "version": "1.0.0",
+  "name": "RNDSEstabelecimentoSaude",
+  "title": "Estabelecimento de Saúde RNDS",
+  "status": "active",
+  "kind": "resource",
+  "type": "Organization",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Organization",
+  "description": "Este perfil representa um agrupamento formal ou informal reconhecido de pessoas ou organizações com o propósito de alcançar alguma forma de ação coletiva. Inclui estabelecimentos de saúde, empresas, instituições, corporações, departamentos, grupos comunitários, grupos de práticas de saúde, planos de saúde, empresas fabricantes de produtos medicinais, entre outros.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Organization.id",
+      "path": "Organization.id",
+      "min": 1,
+      "short": "ID lógico deste artefato"
+    },
+    {
+      "id": "Organization.identifier",
+      "path": "Organization.identifier",
+      "min": 1,
+      "sliced": true,
+      "short": "Nome da organização nacional"
+    },
+    {
+      "id": "Organization.identifier:cnes",
+      "path": "Organization.identifier",
+      "sliceName": "cnes",
+      "min": 1,
+      "max": "1",
+      "short": "Identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnes.use",
+      "path": "Organization.identifier.use",
+      "fixed": {
+        "kind": "fixed",
+        "value": "official"
+      },
+      "short": "Uso do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnes.type.coding",
+      "path": "Organization.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "short": "Codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnes.type.coding.system",
+      "path": "Organization.identifier.type.coding.system",
+      "min": 1,
+      "short": "Sistema da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnes.type.coding.code",
+      "path": "Organization.identifier.type.coding.code",
+      "min": 1,
+      "short": "Código da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnes.system",
+      "path": "Organization.identifier.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/sid/cnes"
+      },
+      "short": "Sistema do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnes.value",
+      "path": "Organization.identifier.value",
+      "min": 1,
+      "short": "Valor do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf",
+      "path": "Organization.identifier",
+      "sliceName": "cpf",
+      "max": "1",
+      "short": "Identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf.use",
+      "path": "Organization.identifier.use",
+      "fixed": {
+        "kind": "fixed",
+        "value": "official"
+      },
+      "short": "Uso do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf.type.coding",
+      "path": "Organization.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "short": "Codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf.type.coding.system",
+      "path": "Organization.identifier.type.coding.system",
+      "min": 1,
+      "short": "Sistema da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf.type.coding.code",
+      "path": "Organization.identifier.type.coding.code",
+      "min": 1,
+      "short": "Código da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf.system",
+      "path": "Organization.identifier.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/sid/cpf"
+      },
+      "short": "Sistema do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf.value",
+      "path": "Organization.identifier.value",
+      "min": 1,
+      "short": "Valor do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj",
+      "path": "Organization.identifier",
+      "sliceName": "cnpj",
+      "max": "1",
+      "short": "Identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj.use",
+      "path": "Organization.identifier.use",
+      "fixed": {
+        "kind": "fixed",
+        "value": "official"
+      },
+      "short": "Uso do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj.type.coding",
+      "path": "Organization.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "short": "Codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj.type.coding.system",
+      "path": "Organization.identifier.type.coding.system",
+      "min": 1,
+      "short": "Sistema da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj.type.coding.code",
+      "path": "Organization.identifier.type.coding.code",
+      "min": 1,
+      "short": "Código da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj.system",
+      "path": "Organization.identifier.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/sid/cnpj"
+      },
+      "short": "Sistema do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj.value",
+      "path": "Organization.identifier.value",
+      "min": 1,
+      "short": "Valor do identificador do estabelecimento"
+    }
+  ]
+}

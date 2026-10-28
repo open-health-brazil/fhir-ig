@@ -1,0 +1,234 @@
+{
+  "key": "br-core-careplan",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-careplan",
+  "version": "1.7.1",
+  "name": "BRCoreCarePlan",
+  "title": null,
+  "status": "active",
+  "kind": "resource",
+  "type": "CarePlan",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/CarePlan",
+  "description": "Este perfil restringe o recurso [CarePlan](https://hl7.org/fhir/R4/careplan.html) que descreve a intenção de como um ou mais profissionais pretendem prestar cuidados a um determinado paciente, grupo ou comunidade por um período de tempo, possivelmente limitado ao cuidado de uma condição específica ou conjunto de condições",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "CarePlan.basedOn",
+      "path": "CarePlan.basedOn",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-careplan"
+          ]
+        }
+      ],
+      "short": "De acordo com o Plano de Cuidado"
+    },
+    {
+      "id": "CarePlan.replaces",
+      "path": "CarePlan.replaces",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-careplan"
+          ]
+        }
+      ],
+      "short": "Plano de Cuidado substituído por este Plano de Cuidado"
+    },
+    {
+      "id": "CarePlan.partOf",
+      "path": "CarePlan.partOf",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-careplan"
+          ]
+        }
+      ],
+      "short": "Parte do Plano de Cuidado referenciado"
+    },
+    {
+      "id": "CarePlan.description",
+      "path": "CarePlan.description",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Descrição do Plano de Cuidado"
+    },
+    {
+      "id": "CarePlan.subject",
+      "path": "CarePlan.subject",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient"
+          ]
+        }
+      ],
+      "short": "Paciente referenciado pelo Plano de Cuidado"
+    },
+    {
+      "id": "CarePlan.encounter",
+      "path": "CarePlan.encounter",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-encounter"
+          ]
+        }
+      ],
+      "short": "Atendimento referenciado pelo Plano de Cuidado"
+    },
+    {
+      "id": "CarePlan.author",
+      "path": "CarePlan.author",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson",
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "http://hl7.org/fhir/StructureDefinition/CareTeam"
+          ]
+        }
+      ],
+      "short": "Autoria do Plano de Cuidado"
+    },
+    {
+      "id": "CarePlan.contributor",
+      "path": "CarePlan.contributor",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson",
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "http://hl7.org/fhir/StructureDefinition/CareTeam"
+          ]
+        }
+      ],
+      "short": "Colaboradores na definição do Plano de Cuidado"
+    },
+    {
+      "id": "CarePlan.addresses",
+      "path": "CarePlan.addresses",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-condition"
+          ]
+        }
+      ],
+      "short": "Problemas de saúde referenciado neste Plano de Cuidado"
+    },
+    {
+      "id": "CarePlan.activity",
+      "path": "CarePlan.activity",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Atividade parte do Plano de Cuidado"
+    },
+    {
+      "id": "CarePlan.activity.detail",
+      "path": "CarePlan.activity.detail",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Definição da atividade"
+    },
+    {
+      "id": "CarePlan.activity.detail.code",
+      "path": "CarePlan.activity.detail.code",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRSubgrupoTabelaSUS"
+      },
+      "short": "Código da atividade"
+    },
+    {
+      "id": "CarePlan.activity.detail.scheduled[x]",
+      "path": "CarePlan.activity.detail.scheduled[x]",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Timing"
+        },
+        {
+          "code": "Period"
+        },
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Quando a atividade deve ocorrer"
+    },
+    {
+      "id": "CarePlan.activity.detail.description",
+      "path": "CarePlan.activity.detail.description",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Descrição da atividade a ser realizada"
+    }
+  ]
+}

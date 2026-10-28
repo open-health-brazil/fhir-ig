@@ -1,0 +1,101 @@
+{
+  "key": "RNDSMedicamento",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSMedicamento",
+  "version": "1.0.0",
+  "name": "RNDSMedicamento",
+  "title": "Medicamento",
+  "status": "active",
+  "kind": "resource",
+  "type": "Medication",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Medication",
+  "description": "Este recurso é utilizado principalmente para a identificação e definição de um medicamento para fins de prescrição, dispensação e administração, bem como para fazer declarações sobre o uso de medicamentos.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Medication.extension",
+      "path": "Medication.extension",
+      "max": "1",
+      "short": "Extensões adicionais"
+    },
+    {
+      "id": "Medication.code",
+      "path": "Medication.code",
+      "min": 1,
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRTerminologiaMedicamento"
+      }
+    },
+    {
+      "id": "Medication.code.coding",
+      "path": "Medication.code.coding",
+      "min": 1
+    },
+    {
+      "id": "Medication.code.coding.system",
+      "path": "Medication.code.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Medication.code.coding.code",
+      "path": "Medication.code.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Medication.status",
+      "path": "Medication.status",
+      "mustSupport": true,
+      "short": "ativo| inativo| entrado com erro"
+    },
+    {
+      "id": "Medication.manufacturer",
+      "path": "Medication.manufacturer",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPessoaJuridicaProfissionalLiberal-1.0"
+          ]
+        }
+      ],
+      "short": "Organização Fabricante"
+    },
+    {
+      "id": "Medication.form",
+      "path": "Medication.form",
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRUnidadeMedidaMedicamento"
+      },
+      "short": "Unidade de medida do medicamento"
+    },
+    {
+      "id": "Medication.form.coding",
+      "path": "Medication.form.coding",
+      "min": 1
+    },
+    {
+      "id": "Medication.form.coding.system",
+      "path": "Medication.form.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Medication.form.coding.code",
+      "path": "Medication.form.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Medication.batch",
+      "path": "Medication.batch",
+      "mustSupport": true,
+      "short": "Detalhes sobre o medicamento."
+    }
+  ]
+}

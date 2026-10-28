@@ -1,0 +1,47 @@
+{
+  "key": "BROrigemMedida",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROrigemMedida",
+  "version": "01.00",
+  "name": "BROrigemMedida",
+  "title": "Origem da Medição",
+  "status": "draft",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Extensão para incluir a origem da medição corpórea (altura e peso).",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROrigemMedida"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BROrigemMedida"
+      },
+      "short": "Código da Medição Corpórea"
+    },
+    {
+      "id": "Extension.value[x].coding",
+      "path": "Extension.value[x].coding",
+      "max": "1"
+    }
+  ]
+}

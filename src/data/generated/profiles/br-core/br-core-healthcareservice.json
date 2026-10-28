@@ -1,0 +1,100 @@
+{
+  "key": "br-core-healthcareservice",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-healthcareservice",
+  "version": "1.7.1",
+  "name": "BRCoreHealthcareService",
+  "title": "br-core-healthcareservice",
+  "status": "active",
+  "kind": "resource",
+  "type": "HealthcareService",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/HealthcareService",
+  "description": "Este perfil restringe o recurso [HealthcareService](https://hl7.org/fhir/R4/healthcareservice.html) que representa os detalhes de um serviço de saúde disponível em um local",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "HealthcareService.category",
+      "path": "HealthcareService.category",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoEstabelecimentoSaude"
+      },
+      "short": "Categoria de serviço"
+    },
+    {
+      "id": "HealthcareService.type",
+      "path": "HealthcareService.type",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRServicoEspecializado"
+      },
+      "short": "Tipo de serviço"
+    },
+    {
+      "id": "HealthcareService.specialty",
+      "path": "HealthcareService.specialty",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BROcupacao"
+      },
+      "short": "Especialidades atendidas"
+    },
+    {
+      "id": "HealthcareService.serviceProvisionCode",
+      "path": "HealthcareService.serviceProvisionCode",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/TipoConvenio"
+      },
+      "short": "Condições sob as quais o serviço está disponível/oferecido"
+    },
+    {
+      "id": "HealthcareService.program",
+      "path": "HealthcareService.program",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRProgramaSaude"
+      },
+      "short": "Programas que este serviço atende"
+    }
+  ]
+}

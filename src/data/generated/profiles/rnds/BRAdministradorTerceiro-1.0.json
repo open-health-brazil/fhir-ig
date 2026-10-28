@@ -1,0 +1,61 @@
+{
+  "key": "BRAdministradorTerceiro-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAdministradorTerceiro-1.0",
+  "version": "1.0",
+  "name": "BRAdministradorTerceiro",
+  "title": "Gerente/Administrador (Terceiro) ou Interveniente",
+  "status": "active",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Identifica organizações que são gerentes/administradoras (terceiras) ou intervenientes de outras.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAdministradorTerceiro-1.0"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPessoaJuridicaProfissionalLiberal-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Extension.value[x].reference",
+      "path": "Extension.value[x].reference",
+      "min": 1
+    },
+    {
+      "id": "Extension.value[x].type",
+      "path": "Extension.value[x].type",
+      "max": "0"
+    },
+    {
+      "id": "Extension.value[x].identifier",
+      "path": "Extension.value[x].identifier",
+      "max": "0"
+    },
+    {
+      "id": "Extension.value[x].display",
+      "path": "Extension.value[x].display",
+      "max": "0"
+    }
+  ]
+}

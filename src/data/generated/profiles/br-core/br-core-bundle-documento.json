@@ -1,0 +1,248 @@
+{
+  "key": "br-core-bundle-documento",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-bundle-documento",
+  "version": "1.7.1",
+  "name": "BRCoreBundleDocumento",
+  "title": "br-core-bundle-documento",
+  "status": "draft",
+  "kind": "resource",
+  "type": "Bundle",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Bundle",
+  "description": "Documento clínico FHIR: Bundle do tipo document cuja primeira entrada é uma br-core-composition (ou perfil derivado, como o br-core-sumarioalta), seguida dos recursos que ela referencia. Segue as regras do clinical-document-bundle do FHIR Clinical Documents (HL7, STU1 1.0.1): identificador persistente, timestamp e Composition como primeira entrada.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Bundle.identifier",
+      "path": "Bundle.identifier",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Identificador persistente do documento"
+    },
+    {
+      "id": "Bundle.identifier.system",
+      "path": "Bundle.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "mustSupport": true,
+      "short": "The namespace for the identifier value"
+    },
+    {
+      "id": "Bundle.identifier.value",
+      "path": "Bundle.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "mustSupport": true,
+      "short": "The value that is unique"
+    },
+    {
+      "id": "Bundle.type",
+      "path": "Bundle.type",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/bundle-type|4.0.1"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": "document"
+      },
+      "short": "document"
+    },
+    {
+      "id": "Bundle.timestamp",
+      "path": "Bundle.timestamp",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "instant"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Data e hora de montagem do documento"
+    },
+    {
+      "id": "Bundle.entry",
+      "path": "Bundle.entry",
+      "min": 1,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "mustSupport": true,
+      "sliced": true,
+      "short": "Entradas do documento"
+    },
+    {
+      "id": "Bundle.entry.fullUrl",
+      "path": "Bundle.entry.fullUrl",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "mustSupport": true,
+      "short": "URI for resource (Absolute URL server address or URI for UUID/OID)"
+    },
+    {
+      "id": "Bundle.entry.resource",
+      "path": "Bundle.entry.resource",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Resource"
+        }
+      ],
+      "mustSupport": true,
+      "short": "A resource in the bundle"
+    },
+    {
+      "id": "Bundle.entry.search",
+      "path": "Bundle.entry.search",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Search related information"
+    },
+    {
+      "id": "Bundle.entry.request",
+      "path": "Bundle.entry.request",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Additional execution information (transaction/batch/history)"
+    },
+    {
+      "id": "Bundle.entry.response",
+      "path": "Bundle.entry.response",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Results of execution (transaction/batch/history)"
+    },
+    {
+      "id": "Bundle.entry:composicao",
+      "path": "Bundle.entry",
+      "sliceName": "composicao",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Composition do documento (primeira entrada)"
+    },
+    {
+      "id": "Bundle.entry:composicao.resource",
+      "path": "Bundle.entry.resource",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Composition",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-composition"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "A set of resources composed into a single coherent clinical statement with clinical attestation"
+    },
+    {
+      "id": "Bundle.entry:composicao.search",
+      "path": "Bundle.entry.search",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Search related information"
+    },
+    {
+      "id": "Bundle.entry:composicao.request",
+      "path": "Bundle.entry.request",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Additional execution information (transaction/batch/history)"
+    },
+    {
+      "id": "Bundle.entry:composicao.response",
+      "path": "Bundle.entry.response",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Results of execution (transaction/batch/history)"
+    },
+    {
+      "id": "Bundle.signature",
+      "path": "Bundle.signature",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Signature"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Assinatura digital do documento"
+    }
+  ]
+}

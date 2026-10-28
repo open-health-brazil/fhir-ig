@@ -1,0 +1,84 @@
+{
+  "key": "BRValueSetQuestionario",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRValueSetQuestionario",
+  "version": "1.0.0",
+  "name": "BRValueSetQuestionario",
+  "title": "ValueSet de Questionários da RNDS",
+  "status": "active",
+  "kind": "resource",
+  "type": "ValueSet",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/ValueSet",
+  "description": "Perfil destinado a modelar dados essenciais de respostas codificadas de um Questionário da RNDS.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "ValueSet.url",
+      "path": "ValueSet.url",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Canonical identifier for this value set, represented as a URI (globally unique)"
+    },
+    {
+      "id": "ValueSet.immutable",
+      "path": "ValueSet.immutable",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "Indicates whether or not any change to the content logical definition may occur"
+    },
+    {
+      "id": "ValueSet.compose",
+      "path": "ValueSet.compose",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Content logical definition of the value set (CLD)"
+    },
+    {
+      "id": "ValueSet.compose.include.system",
+      "path": "ValueSet.compose.include.system",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "mustSupport": true,
+      "short": "The system the codes come from"
+    },
+    {
+      "id": "ValueSet.compose.include.concept",
+      "path": "ValueSet.compose.include.concept",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "mustSupport": true,
+      "short": "A concept defined in the system"
+    }
+  ]
+}

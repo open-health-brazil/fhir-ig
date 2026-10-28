@@ -1,0 +1,207 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "rnds-medicamento",
+  "meta": {
+    "versionId": "1",
+    "lastUpdated": "2026-08-07T14:22:32.428+00:00"
+  },
+  "language": "pt-BR",
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSMedicamento",
+  "version": "1.0.0",
+  "name": "RNDSMedicamento",
+  "title": "Medicamento",
+  "status": "active",
+  "date": "2024-12-10",
+  "publisher": "Ministério da Saúde do Brasil",
+  "contact": [
+    {
+      "name": "COPIS - Coordenação de Padrões de Informática em Saúde",
+      "telecom": [
+        {
+          "system": "url",
+          "value": "https://webatendimento.saude.gov.br/faq/rnds"
+        }
+      ]
+    }
+  ],
+  "description": "Este recurso é utilizado principalmente para a identificação e definição de um medicamento para fins de prescrição, dispensação e administração, bem como para fazer declarações sobre o uso de medicamentos.",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "BR",
+          "display": "Brazil"
+        }
+      ]
+    }
+  ],
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Medication",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Medication",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Medication",
+        "path": "Medication",
+        "short": "Definição de um medicamento",
+        "definition": "Este recurso é utilizado principalmente para a identificação e definição de um medicamento para fins de prescrição, dispensação e administração, bem como para fazer declarações sobre o uso de medicamentos.",
+        "constraint": [
+          {
+            "key": "obm-1",
+            "severity": "error",
+            "human": "A unidade de medida (Medication.form.coding.code) deve ser preenchida, exceto se o código do medicamento for um VMPP ou um AMPP, neste caso a unidade de medida não deve ser preenchida.",
+            "expression": "form.exists() xor (code.coding.system.contains('AMPP') or code.coding.system.contains('VMPP'))"
+          }
+        ]
+      },
+      {
+        "id": "Medication.id",
+        "path": "Medication.id",
+        "short": "ID lógico deste artefato"
+      },
+      {
+        "id": "Medication.meta",
+        "path": "Medication.meta",
+        "short": "Metadados sobre o recurso"
+      },
+      {
+        "id": "Medication.implicitRules",
+        "path": "Medication.implicitRules",
+        "short": "Um conjunto de regras sob as quais este conteúdo foi criado"
+      },
+      {
+        "id": "Medication.language",
+        "path": "Medication.language",
+        "short": "Linguagem do recurso"
+      },
+      {
+        "id": "Medication.text",
+        "path": "Medication.text",
+        "short": "Resumo de texto para o recurso, para interpretação humana"
+      },
+      {
+        "id": "Medication.contained",
+        "path": "Medication.contained",
+        "short": "Recursos contidos"
+      },
+      {
+        "id": "Medication.extension",
+        "path": "Medication.extension",
+        "short": "Extensões adicionais",
+        "max": "1"
+      },
+      {
+        "id": "Medication.modifierExtension",
+        "path": "Medication.modifierExtension",
+        "short": "Extensões que não podem ser ignoradas"
+      },
+      {
+        "id": "Medication.identifier",
+        "path": "Medication.identifier",
+        "short": "Identificador de negócios para este medicamento",
+        "definition": "Identificador de negócios para este medicamento"
+      },
+      {
+        "id": "Medication.code",
+        "path": "Medication.code",
+        "min": 1,
+        "mustSupport": true,
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRTerminologiaMedicamento"
+        }
+      },
+      {
+        "id": "Medication.code.coding",
+        "path": "Medication.code.coding",
+        "min": 1
+      },
+      {
+        "id": "Medication.code.coding.system",
+        "path": "Medication.code.coding.system",
+        "min": 1
+      },
+      {
+        "id": "Medication.code.coding.code",
+        "path": "Medication.code.coding.code",
+        "min": 1
+      },
+      {
+        "id": "Medication.status",
+        "path": "Medication.status",
+        "short": "ativo| inativo| entrado com erro",
+        "mustSupport": true
+      },
+      {
+        "id": "Medication.manufacturer",
+        "path": "Medication.manufacturer",
+        "short": "Organização Fabricante",
+        "definition": "Fabricante do item",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPessoaJuridicaProfissionalLiberal-1.0"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Medication.form",
+        "path": "Medication.form",
+        "short": "Unidade de medida do medicamento",
+        "mustSupport": true,
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRUnidadeMedidaMedicamento"
+        }
+      },
+      {
+        "id": "Medication.form.coding",
+        "path": "Medication.form.coding",
+        "min": 1
+      },
+      {
+        "id": "Medication.form.coding.system",
+        "path": "Medication.form.coding.system",
+        "min": 1
+      },
+      {
+        "id": "Medication.form.coding.code",
+        "path": "Medication.form.coding.code",
+        "min": 1
+      },
+      {
+        "id": "Medication.amount",
+        "path": "Medication.amount",
+        "short": "Quantidade de medicamento na embalagem"
+      },
+      {
+        "id": "Medication.ingredient",
+        "path": "Medication.ingredient",
+        "short": "Ingrediente ativo ou inativo"
+      },
+      {
+        "id": "Medication.batch",
+        "path": "Medication.batch",
+        "short": "Detalhes sobre o medicamento.",
+        "definition": "Informação sobre lote e validade do medicamento.",
+        "mustSupport": true
+      },
+      {
+        "id": "Medication.batch.lotNumber",
+        "path": "Medication.batch.lotNumber",
+        "short": "Lote de medicamento."
+      },
+      {
+        "id": "Medication.batch.expirationDate",
+        "path": "Medication.batch.expirationDate",
+        "short": "Data de validade do medicamento."
+      }
+    ]
+  }
+}

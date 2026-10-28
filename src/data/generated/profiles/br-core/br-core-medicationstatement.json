@@ -1,0 +1,236 @@
+{
+  "key": "br-core-medicationstatement",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationstatement",
+  "version": "1.7.1",
+  "name": "BRMedicationStatement",
+  "title": "br-core-medicationstatement",
+  "status": "active",
+  "kind": "resource",
+  "type": "MedicationStatement",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/MedicationStatement",
+  "description": "Um registro de um medicamento que está sendo consumido por um paciente. Um recurso [br-core-medicationstatement](https://saude.gov.br/fhir/StructureDefiniton/medicationstatement.html) indica  que o paciente pode estar tomando o medicamento agora ou tomou o medicamento no passado ou tomará o medicamento no futuro. A fonte dessas informações pode ser o paciente, outra pessoa significativa (como um membro da família ou cônjuge) ou um clínico. Um cenário comum em que essas informações são capturadas é durante o processo de obtenção do histórico durante uma visita ou internação do paciente. As informações sobre medicamentos podem vir de fontes como a memória do paciente, de um frasco de prescrição ou de uma lista de medicamentos que o paciente, o clínico ou outra parte mantém.\r\n\r\nA principal diferença entre um recurso [br-core-medicationstatement](https://saude.gov.br/fhir/StructureDefiniton/medicationstatement.html) e um [br-core-medicationadministration](https://saude.gov.br/fhir/StructureDefiniton/medicationadministration.html) é que o último  contém informações completas sobre a administração e é baseada em informações reais sobre a administração e da pessoa que administrou o medicamento.  Um [br-core-medicationstatement](https://saude.gov.br/fhir/StructureDefiniton/medicationstatement.html#MedicationStatement) é frequentemente, se não sempre, menos específico. Não há data/hora obrigatória em que o medicamento foi administrado; na verdade, sabe-se apenas que uma fonte relatou que o paciente está tomando esse medicamento, onde detalhes como hora, quantidade ou taxa ou mesmo o produto do medicamento podem estar incompletos, ausentes ou menos precisos. Conforme dito anteriormente, as informações do [br-core-medicationstatement](https://saude.gov.br/fhir/StructureDefiniton/medicationstatement.html#MedicationStatement) podem vir da memória do paciente, de um frasco de prescrição ou de uma lista de medicamentos que o paciente, o clínico ou outra parte mantém. A administração de medicamentos é mais formal e não deixa de ter informações detalhadas.\r\n",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "MedicationStatement.basedOn",
+      "path": "MedicationStatement.basedOn",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationrequest",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-careplan",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-servicerequest"
+          ]
+        }
+      ],
+      "short": "Referência ao pedido ou ao plano de tratamento que gerou este recurso"
+    },
+    {
+      "id": "MedicationStatement.partOf",
+      "path": "MedicationStatement.partOf",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationadministration",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationdispense",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationstatement",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-procedure",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation"
+          ]
+        }
+      ],
+      "short": "Referência ao evento do qual este recurso faz parte"
+    },
+    {
+      "id": "MedicationStatement.medication[x]",
+      "path": "MedicationStatement.medication[x]",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        },
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Medication|4.0.1"
+          ]
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medication-codes|4.0.1"
+      },
+      "sliced": true,
+      "short": "Qual medicamento foi tomado"
+    },
+    {
+      "id": "MedicationStatement.medication[x]:medicationReference",
+      "path": "MedicationStatement.medication[x]",
+      "sliceName": "medicationReference",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medication"
+          ]
+        }
+      ],
+      "short": "Referência ao medicamento"
+    },
+    {
+      "id": "MedicationStatement.subject",
+      "path": "MedicationStatement.subject",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient"
+          ]
+        }
+      ],
+      "short": "Referência que utiliza o medicamento"
+    },
+    {
+      "id": "MedicationStatement.context",
+      "path": "MedicationStatement.context",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-encounter",
+            "http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"
+          ]
+        }
+      ],
+      "short": "Referência ao atendimento ou ao cuidado de associado a este recurso"
+    },
+    {
+      "id": "MedicationStatement.effective[x]",
+      "path": "MedicationStatement.effective[x]",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "dateTime"
+        },
+        {
+          "code": "Period"
+        }
+      ],
+      "sliced": true,
+      "short": "Data ou intervalo de tempo na qual o medicamento foi ou será administrado"
+    },
+    {
+      "id": "MedicationStatement.effective[x]:effectiveDateTime",
+      "path": "MedicationStatement.effective[x]",
+      "sliceName": "effectiveDateTime",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "Data na qual o medicamento foi ou será administrado"
+    },
+    {
+      "id": "MedicationStatement.effective[x]:effectivePeriod",
+      "path": "MedicationStatement.effective[x]",
+      "sliceName": "effectivePeriod",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Period"
+        }
+      ],
+      "short": "Intervalo de tempo no qual o medicamento foi ou será administrado"
+    },
+    {
+      "id": "MedicationStatement.informationSource",
+      "path": "MedicationStatement.informationSource",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Referência à pessoa ou organização que forneceu as informações sobre este recurso"
+    },
+    {
+      "id": "MedicationStatement.reasonReference",
+      "path": "MedicationStatement.reasonReference",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-condition",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-diagnosticreport"
+          ]
+        }
+      ],
+      "short": "Referência à condição ou observação associado a este recurso"
+    },
+    {
+      "id": "MedicationStatement.dosage.site",
+      "path": "MedicationStatement.dosage.site",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+      },
+      "short": "Local no corpo onde deve ser administrado o medicamento"
+    },
+    {
+      "id": "MedicationStatement.dosage.route",
+      "path": "MedicationStatement.dosage.route",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/uv/ips/ValueSet/medicine-route-of-administration"
+      },
+      "short": "Via de administração"
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "key": "br-core-vitalsigns",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-vitalsigns",
+  "version": "1.7.1",
+  "name": "BRCoreVitalSigns",
+  "title": null,
+  "status": "active",
+  "kind": "resource",
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/vitalsigns",
+  "description": "Este perfil é baseado no perfil [VitalSigns](http://hl7.org/fhir/R4/observation-vitalsigns.html) e define restrições adicionais no recurso Observation para representar Observation de sinais vitais. Ele especifica quais elementos principais, extensões, vocabulários e conjuntos de valores **DEVEM** estar presentes no recurso e restringe como os elementos são usados. ",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Observation.basedOn",
+      "path": "Observation.basedOn",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-careplan",
+            "http://hl7.org/fhir/StructureDefinition/DeviceRequest",
+            "http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationrequest",
+            "http://hl7.org/fhir/StructureDefinition/NutritionOrder",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-servicerequest"
+          ]
+        }
+      ],
+      "short": "Referência ao pedido ou ao plano de tratamento que gerou este recurso"
+    },
+    {
+      "id": "Observation.partOf",
+      "path": "Observation.partOf",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationadministration",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationdispense",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationstatement",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-procedure",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-immunization",
+            "http://hl7.org/fhir/StructureDefinition/ImagingStudy"
+          ]
+        }
+      ],
+      "short": "Referência ao evento do qual este recurso faz parte"
+    },
+    {
+      "id": "Observation.category:VSCat",
+      "path": "Observation.category",
+      "sliceName": "VSCat",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "mustSupport": true,
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/observation-category|4.0.1"
+      },
+      "short": "Classificação do tipo de observação"
+    },
+    {
+      "id": "Observation.code",
+      "path": "Observation.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRSinaisVitais"
+      },
+      "short": "Código definido pela sintaxe do sistema de terminologia"
+    },
+    {
+      "id": "Observation.subject",
+      "path": "Observation.subject",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Referência ao paciente desta observação"
+    },
+    {
+      "id": "Observation.encounter",
+      "path": "Observation.encounter",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-encounter"
+          ]
+        }
+      ],
+      "short": "Referência ao atendimento desta observação"
+    },
+    {
+      "id": "Observation.issued",
+      "path": "Observation.issued",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "instant"
+        }
+      ],
+      "short": "Data ou hora em que esta versão da observação ficou disponível"
+    },
+    {
+      "id": "Observation.performer",
+      "path": "Observation.performer",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization",
+            "http://hl7.org/fhir/StructureDefinition/CareTeam",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson"
+          ]
+        }
+      ],
+      "short": "O responsável pela captura da observação"
+    },
+    {
+      "id": "Observation.value[x]",
+      "path": "Observation.value[x]",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Quantity"
+        },
+        {
+          "code": "CodeableConcept"
+        },
+        {
+          "code": "string"
+        },
+        {
+          "code": "boolean"
+        },
+        {
+          "code": "integer"
+        },
+        {
+          "code": "Range"
+        },
+        {
+          "code": "Ratio"
+        },
+        {
+          "code": "SampledData"
+        },
+        {
+          "code": "time"
+        },
+        {
+          "code": "dateTime"
+        },
+        {
+          "code": "Period"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Valor dos sinais vitais"
+    },
+    {
+      "id": "Observation.bodySite",
+      "path": "Observation.bodySite",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+      },
+      "short": "Local anatômico associado ao procedimento"
+    },
+    {
+      "id": "Observation.specimen",
+      "path": "Observation.specimen",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-specimen"
+          ]
+        }
+      ],
+      "short": "Referência à amostra associada nesta observação"
+    },
+    {
+      "id": "Observation.hasMember",
+      "path": "Observation.hasMember",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+            "http://hl7.org/fhir/StructureDefinition/MolecularSequence"
+          ]
+        }
+      ],
+      "short": "Referências utilizadas para relatar componentes do painel de sinais vitais"
+    },
+    {
+      "id": "Observation.derivedFrom",
+      "path": "Observation.derivedFrom",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/DocumentReference",
+            "http://hl7.org/fhir/StructureDefinition/ImagingStudy",
+            "http://hl7.org/fhir/StructureDefinition/Media",
+            "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-vitalsigns",
+            "http://hl7.org/fhir/StructureDefinition/MolecularSequence"
+          ]
+        }
+      ],
+      "short": "Referência à medições relacionadas a partir das quais esta observação foi realizada"
+    }
+  ]
+}

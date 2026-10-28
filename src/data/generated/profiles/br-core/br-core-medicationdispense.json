@@ -1,0 +1,241 @@
+{
+  "key": "br-core-medicationdispense",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationdispense",
+  "version": "1.7.1",
+  "name": "BRCoreMedicationDispense",
+  "title": "br-core-medicationdispense",
+  "status": "active",
+  "kind": "resource",
+  "type": "MedicationDispense",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/MedicationDispense",
+  "description": "Este recurso Indica que um medicamento deve ser ou foi dispensado para uma pessoa/paciente. O recurso inclui a descrição do medicamento (suprimento) fornecido bem como as instruções para a sua administração. A dispensação do medicamento é o resultado de um  pedido de medicamentos feito por um sistema de informações",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "MedicationDispense.category",
+      "path": "MedicationDispense.category",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medicationdispense-category|4.0.1"
+      },
+      "short": "Tipo de dispensação de medicamentos"
+    },
+    {
+      "id": "MedicationDispense.medication[x]",
+      "path": "MedicationDispense.medication[x]",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        },
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Medication|4.0.1"
+          ]
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/medication-codes|4.0.1"
+      },
+      "sliced": true,
+      "short": "Que medicamento foi fornecido"
+    },
+    {
+      "id": "MedicationDispense.medication[x]:medicationReference",
+      "path": "MedicationDispense.medication[x]",
+      "sliceName": "medicationReference",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medication"
+          ]
+        }
+      ],
+      "short": "Referência ao medicamento dispensado"
+    },
+    {
+      "id": "MedicationDispense.subject",
+      "path": "MedicationDispense.subject",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient"
+          ]
+        }
+      ],
+      "short": "Referência ao paciente para quem o medicamento foi dispensado"
+    },
+    {
+      "id": "MedicationDispense.context",
+      "path": "MedicationDispense.context",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-encounter"
+          ]
+        }
+      ],
+      "short": "Referência ao atendimento o qual o medicamento foi dispensado"
+    },
+    {
+      "id": "MedicationDispense.performer",
+      "path": "MedicationDispense.performer",
+      "min": 1,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Quem realizou a dispensação do medicamento"
+    },
+    {
+      "id": "MedicationDispense.performer.actor",
+      "path": "MedicationDispense.performer.actor",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson",
+            "http://hl7.org/fhir/StructureDefinition/Device"
+          ]
+        }
+      ],
+      "short": "Referência ao profissional/organização/dispositivo/pessoa/paciente que realizou a dispensação do medicamento"
+    },
+    {
+      "id": "MedicationDispense.location",
+      "path": "MedicationDispense.location",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-location"
+          ]
+        }
+      ],
+      "short": "Referência ao local de dispensação do medicamento"
+    },
+    {
+      "id": "MedicationDispense.authorizingPrescription",
+      "path": "MedicationDispense.authorizingPrescription",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationrequest"
+          ]
+        }
+      ],
+      "short": "Referência à solicitação da dispensação do medicamento"
+    },
+    {
+      "id": "MedicationDispense.quantity",
+      "path": "MedicationDispense.quantity",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Quantity",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/SimpleQuantity|4.0.1"
+          ]
+        }
+      ],
+      "short": "Quantidade de medicamento dispensada"
+    },
+    {
+      "id": "MedicationDispense.whenHandedOver",
+      "path": "MedicationDispense.whenHandedOver",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "Quando o produto foi distribuído"
+    },
+    {
+      "id": "MedicationDispense.destination",
+      "path": "MedicationDispense.destination",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-location"
+          ]
+        }
+      ],
+      "short": "Para onde o medicamento foi enviado"
+    },
+    {
+      "id": "MedicationDispense.receiver",
+      "path": "MedicationDispense.receiver",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient"
+          ]
+        }
+      ],
+      "short": "Referência ao profissional ou ao paciente que recebeu o medicamento"
+    },
+    {
+      "id": "MedicationDispense.substitution.responsibleParty",
+      "path": "MedicationDispense.substitution.responsibleParty",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole"
+          ]
+        }
+      ],
+      "short": "Referência ao profissional responsável pela substituição do medicamento"
+    }
+  ]
+}

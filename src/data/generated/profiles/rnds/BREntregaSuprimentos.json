@@ -1,0 +1,169 @@
+{
+  "key": "BREntregaSuprimentos",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREntregaSuprimentos",
+  "version": "1.0.0",
+  "name": "BREntregaSuprimentos",
+  "title": "Entrega de Suprimentos",
+  "status": "active",
+  "kind": "resource",
+  "type": "SupplyDelivery",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/SupplyDelivery",
+  "description": "Record of delivery of what is supplied.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "SupplyDelivery.identifier",
+      "path": "SupplyDelivery.identifier",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "SupplyDelivery.identifier.system",
+      "path": "SupplyDelivery.identifier.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/NamingSystem/BRNotaFiscal"
+      }
+    },
+    {
+      "id": "SupplyDelivery.identifier.value",
+      "path": "SupplyDelivery.identifier.value",
+      "min": 1
+    },
+    {
+      "id": "SupplyDelivery.patient",
+      "path": "SupplyDelivery.patient",
+      "min": 1,
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true
+    },
+    {
+      "id": "SupplyDelivery.patient.extension",
+      "path": "SupplyDelivery.patient.extension",
+      "sliced": true
+    },
+    {
+      "id": "SupplyDelivery.patient.extension:unidentifiedPatient",
+      "path": "SupplyDelivery.patient.extension",
+      "sliceName": "unidentifiedPatient",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuoNaoIdentificado-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Dados do Indivíduo Não Identificado"
+    },
+    {
+      "id": "SupplyDelivery.patient.extension:unidentifiedPatient.extension",
+      "path": "SupplyDelivery.patient.extension.extension",
+      "min": 4,
+      "sliced": true
+    },
+    {
+      "id": "SupplyDelivery.patient.extension:unidentifiedPatient.extension:gender",
+      "path": "SupplyDelivery.patient.extension.extension",
+      "sliceName": "gender",
+      "mustSupport": true
+    },
+    {
+      "id": "SupplyDelivery.patient.extension:unidentifiedPatient.extension:birthYear",
+      "path": "SupplyDelivery.patient.extension.extension",
+      "sliceName": "birthYear",
+      "mustSupport": true
+    },
+    {
+      "id": "SupplyDelivery.patient.extension:unidentifiedPatient.extension:reason",
+      "path": "SupplyDelivery.patient.extension.extension",
+      "sliceName": "reason",
+      "mustSupport": true
+    },
+    {
+      "id": "SupplyDelivery.subject.extension:unidentifiedPatient.extension:operator",
+      "path": "SupplyDelivery.subject.extension.extension",
+      "sliceName": "operator",
+      "mustSupport": true
+    },
+    {
+      "id": "SupplyDelivery.patient.identifier.system",
+      "path": "SupplyDelivery.patient.identifier.system",
+      "min": 1
+    },
+    {
+      "id": "SupplyDelivery.patient.identifier.value",
+      "path": "SupplyDelivery.patient.identifier.value",
+      "min": 1
+    },
+    {
+      "id": "SupplyDelivery.suppliedItem",
+      "path": "SupplyDelivery.suppliedItem",
+      "min": 1
+    },
+    {
+      "id": "SupplyDelivery.suppliedItem.item[x]",
+      "path": "SupplyDelivery.suppliedItem.item[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROrtesesProtesesMateriais"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SupplyDelivery.supplier",
+      "path": "SupplyDelivery.supplier",
+      "min": 1,
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPessoaJuridicaProfissionalLiberal-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SupplyDelivery.supplier.identifier",
+      "path": "SupplyDelivery.supplier.identifier",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "SupplyDelivery.supplier.identifier.system",
+      "path": "SupplyDelivery.supplier.identifier.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/fhir/sid/cnpj"
+      }
+    },
+    {
+      "id": "SupplyDelivery.supplier.identifier.value",
+      "path": "SupplyDelivery.supplier.identifier.value",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/FornecedoresOPM"
+      }
+    }
+  ]
+}

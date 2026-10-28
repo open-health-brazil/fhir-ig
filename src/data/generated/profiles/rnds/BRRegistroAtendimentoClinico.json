@@ -1,0 +1,1187 @@
+{
+  "key": "BRRegistroAtendimentoClinico",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroAtendimentoClinico",
+  "version": "2.1",
+  "name": "BRRegistroAtendimentoClinico",
+  "title": "Registro de Atendimento Clínico",
+  "status": "draft",
+  "kind": "resource",
+  "type": "Composition",
+  "baseDefinition": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRConjuntoMinimoDados-1.1",
+  "description": "Documento destinado a modelar dados essenciais de uma consulta realizada a um indivíduo no âmbito da atenção básica, especializada ou domiciliar.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Composition.type.coding.code",
+      "path": "Composition.type.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "RAC"
+      },
+      "short": "Symbol in syntax defined by the system"
+    },
+    {
+      "id": "Composition.section:problemasDiagnosticosAvaliados",
+      "path": "Composition.section",
+      "sliceName": "problemasDiagnosticosAvaliados",
+      "min": 1,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Problema(s)/Diagnóstico(s) Avaliado(s)"
+    },
+    {
+      "id": "Composition.section:observacoes",
+      "path": "Composition.section",
+      "sliceName": "observacoes",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seções do documento"
+    },
+    {
+      "id": "Composition.section:observacoes.title",
+      "path": "Composition.section.title",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Label for section (e.g. for ToC)"
+    },
+    {
+      "id": "Composition.section:observacoes.code",
+      "path": "Composition.section.code",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "short": "Classification of section (recommended)"
+    },
+    {
+      "id": "Composition.section:observacoes.author",
+      "path": "Composition.section.author",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
+            "http://hl7.org/fhir/StructureDefinition/PractitionerRole",
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "http://hl7.org/fhir/StructureDefinition/Patient",
+            "http://hl7.org/fhir/StructureDefinition/RelatedPerson",
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Who and/or what authored the section"
+    },
+    {
+      "id": "Composition.section:observacoes.focus",
+      "path": "Composition.section.focus",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Resource"
+          ]
+        }
+      ],
+      "short": "Who/what the section is about, when it is not about the subject of composition"
+    },
+    {
+      "id": "Composition.section:observacoes.text",
+      "path": "Composition.section.text",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Narrative"
+        }
+      ],
+      "short": "Text summary of the section, for human interpretation"
+    },
+    {
+      "id": "Composition.section:observacoes.mode",
+      "path": "Composition.section.mode",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-mode|4.0.1"
+      },
+      "short": "working | snapshot | changes"
+    },
+    {
+      "id": "Composition.section:observacoes.orderedBy",
+      "path": "Composition.section.orderedBy",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-order"
+      },
+      "short": "Order of section entries"
+    },
+    {
+      "id": "Composition.section:observacoes.entry",
+      "path": "Composition.section.entry",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedidaObservada"
+          ]
+        }
+      ],
+      "short": "A reference to data that supports this section"
+    },
+    {
+      "id": "Composition.section:observacoes.entry.reference",
+      "path": "Composition.section.entry.reference",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Literal reference, Relative, internal or absolute URL"
+    },
+    {
+      "id": "Composition.section:observacoes.entry.type",
+      "path": "Composition.section.entry.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+      },
+      "short": "Type the reference refers to (e.g. \"Patient\")"
+    },
+    {
+      "id": "Composition.section:observacoes.entry.identifier",
+      "path": "Composition.section.entry.identifier",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Logical reference, when literal reference is not known"
+    },
+    {
+      "id": "Composition.section:observacoes.entry.display",
+      "path": "Composition.section.entry.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Text alternative for the resource"
+    },
+    {
+      "id": "Composition.section:observacoes.emptyReason",
+      "path": "Composition.section.emptyReason",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-empty-reason"
+      },
+      "short": "Why the section is empty"
+    },
+    {
+      "id": "Composition.section:observacoes.section",
+      "path": "Composition.section.section",
+      "min": 0,
+      "max": "0",
+      "short": "Nested Section"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa",
+      "path": "Composition.section",
+      "sliceName": "alergiaReacaoAdversa",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seções do documento"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa.title",
+      "path": "Composition.section.title",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Label for section (e.g. for ToC)"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa.code",
+      "path": "Composition.section.code",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "short": "Classification of section (recommended)"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa.author",
+      "path": "Composition.section.author",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
+            "http://hl7.org/fhir/StructureDefinition/PractitionerRole",
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "http://hl7.org/fhir/StructureDefinition/Patient",
+            "http://hl7.org/fhir/StructureDefinition/RelatedPerson",
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Who and/or what authored the section"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa.focus",
+      "path": "Composition.section.focus",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Resource"
+          ]
+        }
+      ],
+      "short": "Who/what the section is about, when it is not about the subject of composition"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa.text",
+      "path": "Composition.section.text",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Narrative"
+        }
+      ],
+      "short": "Text summary of the section, for human interpretation"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa.mode",
+      "path": "Composition.section.mode",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-mode|4.0.1"
+      },
+      "short": "working | snapshot | changes"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa.orderedBy",
+      "path": "Composition.section.orderedBy",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-order"
+      },
+      "short": "Order of section entries"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa.entry",
+      "path": "Composition.section.entry",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAlergiaReacaoAdversa-1.0"
+          ]
+        }
+      ],
+      "short": "A reference to data that supports this section"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa.entry.reference",
+      "path": "Composition.section.entry.reference",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Literal reference, Relative, internal or absolute URL"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa.entry.type",
+      "path": "Composition.section.entry.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+      },
+      "short": "Type the reference refers to (e.g. \"Patient\")"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa.entry.identifier",
+      "path": "Composition.section.entry.identifier",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Logical reference, when literal reference is not known"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa.entry.display",
+      "path": "Composition.section.entry.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Text alternative for the resource"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa.emptyReason",
+      "path": "Composition.section.emptyReason",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-empty-reason"
+      },
+      "short": "Why the section is empty"
+    },
+    {
+      "id": "Composition.section:alergiaReacaoAdversa.section",
+      "path": "Composition.section.section",
+      "min": 0,
+      "max": "0",
+      "short": "Nested Section"
+    },
+    {
+      "id": "Composition.section:prescricao",
+      "path": "Composition.section",
+      "sliceName": "prescricao",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seções do documento"
+    },
+    {
+      "id": "Composition.section:prescricao.title",
+      "path": "Composition.section.title",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Label for section (e.g. for ToC)"
+    },
+    {
+      "id": "Composition.section:prescricao.code",
+      "path": "Composition.section.code",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "short": "Classification of section (recommended)"
+    },
+    {
+      "id": "Composition.section:prescricao.author",
+      "path": "Composition.section.author",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
+            "http://hl7.org/fhir/StructureDefinition/PractitionerRole",
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "http://hl7.org/fhir/StructureDefinition/Patient",
+            "http://hl7.org/fhir/StructureDefinition/RelatedPerson",
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Who and/or what authored the section"
+    },
+    {
+      "id": "Composition.section:prescricao.focus",
+      "path": "Composition.section.focus",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Resource"
+          ]
+        }
+      ],
+      "short": "Who/what the section is about, when it is not about the subject of composition"
+    },
+    {
+      "id": "Composition.section:prescricao.text",
+      "path": "Composition.section.text",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Narrative"
+        }
+      ],
+      "short": "Text summary of the section, for human interpretation"
+    },
+    {
+      "id": "Composition.section:prescricao.mode",
+      "path": "Composition.section.mode",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-mode|4.0.1"
+      },
+      "short": "working | snapshot | changes"
+    },
+    {
+      "id": "Composition.section:prescricao.orderedBy",
+      "path": "Composition.section.orderedBy",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-order"
+      },
+      "short": "Order of section entries"
+    },
+    {
+      "id": "Composition.section:prescricao.entry",
+      "path": "Composition.section.entry",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroPrescricaoMedicamento"
+          ]
+        }
+      ],
+      "short": "A reference to data that supports this section"
+    },
+    {
+      "id": "Composition.section:prescricao.entry.type",
+      "path": "Composition.section.entry.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+      },
+      "short": "Type the reference refers to (e.g. \"Patient\")"
+    },
+    {
+      "id": "Composition.section:prescricao.entry.identifier.use",
+      "path": "Composition.section.entry.identifier.use",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "short": "usual | official | temp | secondary | old (If known)"
+    },
+    {
+      "id": "Composition.section:prescricao.entry.identifier.type",
+      "path": "Composition.section.entry.identifier.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-type"
+      },
+      "short": "Description of identifier"
+    },
+    {
+      "id": "Composition.section:prescricao.entry.identifier.system",
+      "path": "Composition.section.entry.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "short": "The namespace for the identifier value"
+    },
+    {
+      "id": "Composition.section:prescricao.entry.identifier.value",
+      "path": "Composition.section.entry.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "The value that is unique"
+    },
+    {
+      "id": "Composition.section:prescricao.entry.identifier.period",
+      "path": "Composition.section.entry.identifier.period",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Period"
+        }
+      ],
+      "short": "Time period when id is/was valid for use"
+    },
+    {
+      "id": "Composition.section:prescricao.entry.identifier.assigner",
+      "path": "Composition.section.entry.identifier.assigner",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Organization that issued id (may be just text)"
+    },
+    {
+      "id": "Composition.section:prescricao.entry.display",
+      "path": "Composition.section.entry.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Text alternative for the resource"
+    },
+    {
+      "id": "Composition.section:prescricao.emptyReason",
+      "path": "Composition.section.emptyReason",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-empty-reason"
+      },
+      "short": "Why the section is empty"
+    },
+    {
+      "id": "Composition.section:prescricao.section",
+      "path": "Composition.section.section",
+      "min": 0,
+      "max": "0",
+      "short": "Nested Section"
+    },
+    {
+      "id": "Composition.section:planoCuidados",
+      "path": "Composition.section",
+      "sliceName": "planoCuidados",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seções do documento"
+    },
+    {
+      "id": "Composition.section:planoCuidados.title",
+      "path": "Composition.section.title",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Label for section (e.g. for ToC)"
+    },
+    {
+      "id": "Composition.section:planoCuidados.code",
+      "path": "Composition.section.code",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "short": "Classification of section (recommended)"
+    },
+    {
+      "id": "Composition.section:planoCuidados.author",
+      "path": "Composition.section.author",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
+            "http://hl7.org/fhir/StructureDefinition/PractitionerRole",
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "http://hl7.org/fhir/StructureDefinition/Patient",
+            "http://hl7.org/fhir/StructureDefinition/RelatedPerson",
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Who and/or what authored the section"
+    },
+    {
+      "id": "Composition.section:planoCuidados.focus",
+      "path": "Composition.section.focus",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Resource"
+          ]
+        }
+      ],
+      "short": "Who/what the section is about, when it is not about the subject of composition"
+    },
+    {
+      "id": "Composition.section:planoCuidados.text",
+      "path": "Composition.section.text",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Narrative"
+        }
+      ],
+      "short": "Text summary of the section, for human interpretation"
+    },
+    {
+      "id": "Composition.section:planoCuidados.mode",
+      "path": "Composition.section.mode",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-mode|4.0.1"
+      },
+      "short": "working | snapshot | changes"
+    },
+    {
+      "id": "Composition.section:planoCuidados.orderedBy",
+      "path": "Composition.section.orderedBy",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-order"
+      },
+      "short": "Order of section entries"
+    },
+    {
+      "id": "Composition.section:planoCuidados.entry",
+      "path": "Composition.section.entry",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPlanoCuidados-1.0"
+          ]
+        }
+      ],
+      "short": "A reference to data that supports this section"
+    },
+    {
+      "id": "Composition.section:planoCuidados.entry.reference",
+      "path": "Composition.section.entry.reference",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Literal reference, Relative, internal or absolute URL"
+    },
+    {
+      "id": "Composition.section:planoCuidados.entry.type",
+      "path": "Composition.section.entry.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+      },
+      "short": "Type the reference refers to (e.g. \"Patient\")"
+    },
+    {
+      "id": "Composition.section:planoCuidados.entry.identifier",
+      "path": "Composition.section.entry.identifier",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Logical reference, when literal reference is not known"
+    },
+    {
+      "id": "Composition.section:planoCuidados.entry.display",
+      "path": "Composition.section.entry.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Text alternative for the resource"
+    },
+    {
+      "id": "Composition.section:planoCuidados.emptyReason",
+      "path": "Composition.section.emptyReason",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-empty-reason"
+      },
+      "short": "Why the section is empty"
+    },
+    {
+      "id": "Composition.section:planoCuidados.section",
+      "path": "Composition.section.section",
+      "min": 0,
+      "max": "0",
+      "short": "Nested Section"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico",
+      "path": "Composition.section",
+      "sliceName": "atestadoMedicoOdontologico",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Seções do documento"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico.title",
+      "path": "Composition.section.title",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Label for section (e.g. for ToC)"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico.code",
+      "path": "Composition.section.code",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/doc-section-codes"
+      },
+      "short": "Classification of section (recommended)"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico.author",
+      "path": "Composition.section.author",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
+            "http://hl7.org/fhir/StructureDefinition/PractitionerRole",
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "http://hl7.org/fhir/StructureDefinition/Patient",
+            "http://hl7.org/fhir/StructureDefinition/RelatedPerson",
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Who and/or what authored the section"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico.focus",
+      "path": "Composition.section.focus",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Resource"
+          ]
+        }
+      ],
+      "short": "Who/what the section is about, when it is not about the subject of composition"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico.text",
+      "path": "Composition.section.text",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Narrative"
+        }
+      ],
+      "short": "Text summary of the section, for human interpretation"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico.mode",
+      "path": "Composition.section.mode",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-mode|4.0.1"
+      },
+      "short": "working | snapshot | changes"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico.orderedBy",
+      "path": "Composition.section.orderedBy",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-order"
+      },
+      "short": "Order of section entries"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico.entry",
+      "path": "Composition.section.entry",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAtestado"
+          ]
+        }
+      ],
+      "short": "A reference to data that supports this section"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico.entry.reference",
+      "path": "Composition.section.entry.reference",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Literal reference, Relative, internal or absolute URL"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico.entry.type",
+      "path": "Composition.section.entry.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+      },
+      "short": "Type the reference refers to (e.g. \"Patient\")"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico.entry.identifier",
+      "path": "Composition.section.entry.identifier",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Logical reference, when literal reference is not known"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico.entry.display",
+      "path": "Composition.section.entry.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Text alternative for the resource"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico.emptyReason",
+      "path": "Composition.section.emptyReason",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/list-empty-reason"
+      },
+      "short": "Why the section is empty"
+    },
+    {
+      "id": "Composition.section:atestadoMedicoOdontologico.section",
+      "path": "Composition.section.section",
+      "min": 0,
+      "max": "0",
+      "short": "Nested Section"
+    },
+    {
+      "id": "Composition.section:marcosDesenvolvimento",
+      "path": "Composition.section",
+      "sliceName": "marcosDesenvolvimento",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Marcos do Desenvolvimento"
+    },
+    {
+      "id": "Composition.section:marcosDesenvolvimento.entry",
+      "path": "Composition.section.entry",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRQuestionarioResposta"
+          ]
+        }
+      ],
+      "short": "A reference to data that supports this section"
+    }
+  ]
+}

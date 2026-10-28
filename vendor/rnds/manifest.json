@@ -1,0 +1,943 @@
+{
+  "source": "https://fhir.simplifier.net/RedeNacionaldeDadosemSaude",
+  "capturedAt": "2026-10-28",
+  "count": 104,
+  "resources": [
+    {
+      "id": "0352901b-5a54-4b71-b680-2d8d53de64d3",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRNomeIndividuo-1.0",
+      "version": "1.0",
+      "name": "BRNomeIndividuo",
+      "status": "active",
+      "type": "HumanName",
+      "kind": "complex-type"
+    },
+    {
+      "id": "10adbc3a-b1e9-4620-8c02-6f530e2caae0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRDiagnosticoLaboratorioClinico-3.2.1",
+      "version": "3.2.1",
+      "name": "BRDiagnosticoLaboratorioClinico",
+      "status": "active",
+      "type": "Observation",
+      "kind": "resource"
+    },
+    {
+      "id": "16d06d29-62e7-4a74-a8d7-58106c68ed7a",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRResultadoExameLaboratorial-3.2.1",
+      "version": "3.2.1",
+      "name": "BRResultadoExameLaboratorial",
+      "status": "active",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "19b7ffe6-5ebe-4bf5-bed7-8ee41dfc64fd",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRDiagnosticoCOVID19-TesteRapido-01.01",
+      "version": "01.01",
+      "name": "BRDiagnosticoCOVID19TesteRapido",
+      "status": "active",
+      "type": "Observation",
+      "kind": "resource"
+    },
+    {
+      "id": "1e2737e2-6d14-448a-b30a-c567b4dc6e3f",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRResultadoExameLaboratorial-TesteRapido-01.01",
+      "version": "01.01",
+      "name": "BRResultadoExameLaboratorialTesteRapido",
+      "status": "active",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "1e8889a9-af4a-41af-a2f8-9f0c340298b4",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroImunobiologicoAdministradoRotina-1.0",
+      "version": "1.0",
+      "name": "BRRegistroImunobiologicoAdministradoRotina",
+      "status": "active",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "28aaba03-91c4-49c1-a69a-1538683bdd3b",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProblemaDiagnostico",
+      "version": "1.0",
+      "name": "BRProblemaDiagnostico",
+      "status": "draft",
+      "type": "Condition",
+      "kind": "resource"
+    },
+    {
+      "id": "29d206d7-7107-457f-9164-9c2aa26417ab",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAmostraBiologica-1.0",
+      "version": "1.0",
+      "name": "BRAmostraBiologica",
+      "status": "active",
+      "type": "Specimen",
+      "kind": "resource"
+    },
+    {
+      "id": "2c4db14b-038f-4ec5-9a76-720f90c8d1e2",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRConjuntoMinimoDadosANS-1.0.0",
+      "version": "2.0.0",
+      "name": "BRConjuntoMinimoDadosANS",
+      "status": "active",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "337d62d3-757e-4955-861e-51194bab4dd0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPrescricaoMedicamento",
+      "version": "1.1.1",
+      "name": "BRPrescricaoMedicamento",
+      "status": "draft",
+      "type": "MedicationRequest",
+      "kind": "resource"
+    },
+    {
+      "id": "33f94efe-eda9-4cdf-b3a1-4b2e0d5dfba9",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProcedimentoRealizado-1.0",
+      "version": "1.1.0",
+      "name": "BRProcedimentoRealizado",
+      "status": "active",
+      "type": "Procedure",
+      "kind": "resource"
+    },
+    {
+      "id": "3a0f9e92-588b-483e-9216-2780d4125fb7",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRDispensacaoMedicamento",
+      "version": "01.00",
+      "name": "BRDispensacaoMedicamento",
+      "status": "draft",
+      "type": "MedicationDispense",
+      "kind": "resource"
+    },
+    {
+      "id": "3b620eab-7170-4e23-a97d-a3e9efcf25e8",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProfissional-1.0",
+      "version": "1.0",
+      "name": "BRProfissional",
+      "status": "active",
+      "type": "Practitioner",
+      "kind": "resource"
+    },
+    {
+      "id": "49056abe-68dc-41e2-b49b-af719787d0ea",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAtestado",
+      "version": "1.0.1",
+      "name": "BRAtestado",
+      "status": "active",
+      "type": "CarePlan",
+      "kind": "resource"
+    },
+    {
+      "id": "4a403847-9bc5-4baa-b9c3-c2b36c70f507",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroImunobiologicoAdministradoCarga-2.0",
+      "version": "02.00",
+      "name": "BRRegistroImunobiologicoAdministradoCarga",
+      "status": "active",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "515b8b35-5613-48b8-930a-7552a73b7089",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAgendamentoRegulacaoAssistencial",
+      "version": "1.0",
+      "name": "BRAgendamentoRegulacaoAssistencial",
+      "status": "active",
+      "type": "Appointment",
+      "kind": "resource"
+    },
+    {
+      "id": "521287f6-fd07-498d-aec2-1dff41af31ba",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRConjuntoMinimoDados-1.1",
+      "version": "2.0",
+      "name": "BRConjuntoMinimoDados",
+      "status": "draft",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "6c1f516a-3eac-41f8-9175-26c7cf5fa5ce",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedidaObservada",
+      "version": "1.1.0",
+      "name": "BRMedidaObservada",
+      "status": "draft",
+      "type": "Observation",
+      "kind": "resource"
+    },
+    {
+      "id": "77e8968c-b1c6-4d72-a366-de844e3a1b7c",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProcedimentoRealizadoANS-1.0.0",
+      "version": "1.0.0",
+      "name": "BRProcedimentoRealizadoANS",
+      "status": "draft",
+      "type": "Procedure",
+      "kind": "resource"
+    },
+    {
+      "id": "7ba7dc20-9251-417f-bc02-0a08c2986710",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+      "version": "01.10",
+      "name": "BRIndividuo",
+      "status": "active",
+      "type": "Patient",
+      "kind": "resource"
+    },
+    {
+      "id": "85b688af-1823-4e7e-a09e-fd63ecea913f",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRResumoEvolucaoClinica",
+      "version": "1.0.0",
+      "name": "BRResumoEvolucaoClinica",
+      "status": "draft",
+      "type": "ClinicalImpression",
+      "kind": "resource"
+    },
+    {
+      "id": "8d8c0123-51f6-4908-a505-44f3d3dd96af",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRImunobiologicoAdministrado-2.0",
+      "version": "02.11",
+      "name": "BRImunobiologicoAdministrado",
+      "status": "active",
+      "type": "Immunization",
+      "kind": "resource"
+    },
+    {
+      "id": "8e81a097-e1cb-422f-8262-014d7ca329b2",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRCIAP2Avaliado-1.0",
+      "version": "1.0",
+      "name": "BRCIAP2Avaliado",
+      "status": "draft",
+      "type": "Condition",
+      "kind": "resource"
+    },
+    {
+      "id": "8f65bac6-bfb7-41e2-ba36-c81dd2fb1c35",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroPrescricaoMedicamento",
+      "version": "01.00",
+      "name": "BRRegistroPrescricaoMedicamento",
+      "status": "draft",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "93e1922b-1e3e-47d6-b5c5-860d5730c7ef",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRestricaoFuncionalIncapacidadeSaude-1.0",
+      "version": "1.0",
+      "name": "BRRestricaoFuncionalIncapacidadeSaude",
+      "status": "draft",
+      "type": "Condition",
+      "kind": "resource"
+    },
+    {
+      "id": "9709352c-113c-4b75-b91f-247790032de6",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLocalAtendimento-1.0",
+      "version": "1.0",
+      "name": "BRLocalAtendimento",
+      "status": "draft",
+      "type": "Location",
+      "kind": "resource"
+    },
+    {
+      "id": "a3bc0180-3d3d-469f-af04-7117f87db5be",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+      "version": "1.0",
+      "name": "BREstabelecimentoSaude",
+      "status": "active",
+      "type": "Organization",
+      "kind": "resource"
+    },
+    {
+      "id": "abe19423-94f2-490a-911e-a82ff5665164",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+      "version": "1.0",
+      "name": "BRLotacaoProfissional",
+      "status": "active",
+      "type": "PractitionerRole",
+      "kind": "resource"
+    },
+    {
+      "id": "ad169cce-0e5e-40f3-b21b-87f56d289d83",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRSumarioAlta",
+      "version": "1.0.0",
+      "name": "BRSumarioAlta",
+      "status": "draft",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "ae181b1b-f8c4-4925-a328-2f0ceb9d759b",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRDocumentoIndividuo-1.0",
+      "version": null,
+      "name": "BRDocumentoIndividuo",
+      "status": "active",
+      "type": "Identifier",
+      "kind": "complex-type"
+    },
+    {
+      "id": "b11598c4-c7dc-4264-9f47-689a5827e35b",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroDispensacaoMedicamento",
+      "version": "01.00",
+      "name": "BRRegistroDispensacaoMedicamento",
+      "status": "draft",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "BRAdministradorTerceiro-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAdministradorTerceiro-1.0",
+      "version": "1.0",
+      "name": "BRAdministradorTerceiro",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRAtendeSUS-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAtendeSUS-1.0",
+      "version": "1.0",
+      "name": "BRAtendeSUS",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRCodigoSerialMedicamento",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRCodigoSerialMedicamento",
+      "version": null,
+      "name": "BRCodigoSerialMedicamento",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRCondicaoMaternal",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRCondicaoMaternal",
+      "version": "1.0",
+      "name": "BRCondicaoMaternal",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRContatoAssistencial-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRContatoAssistencial-1.0",
+      "version": "2.1.0",
+      "name": "BRContatoAssistencial",
+      "status": "active",
+      "type": "Encounter",
+      "kind": "resource"
+    },
+    {
+      "id": "BRContatoHanseniase",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRContatoHanseniase",
+      "version": "1.0",
+      "name": "BRContatoHanseniase",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRDataPrescricao",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRDataPrescricao",
+      "version": null,
+      "name": "BRDataPrescricao",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BREstadoResolucaoDiagnosticoProblema-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstadoResolucaoDiagnosticoProblema-1.0",
+      "version": "1.0",
+      "name": "BREstadoResolucaoDiagnosticoProblema",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BREstrategiaVacinacao-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstrategiaVacinacao-1.0",
+      "version": "1.0",
+      "name": "BREstrategiaVacinacao",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BREstrategiaVacinacaoPesquisa-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstrategiaVacinacaoPesquisa-1.0",
+      "version": "01.11",
+      "name": "BREstrategiaVacinacaoPesquisa",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRFinanciamento-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRFinanciamento-1.0",
+      "version": "1.0",
+      "name": "BRFinanciamento",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRGrupoAtendimento",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRGrupoAtendimento",
+      "version": "1.0",
+      "name": "BRGrupoAtendimento",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRIdentificacaoEquipe-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIdentificacaoEquipe-1.0",
+      "version": "1.0",
+      "name": "BRIdentificacaoEquipe",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRImunobiologicoAdministrado-3.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRImunobiologicoAdministrado-3.0",
+      "version": "3.0",
+      "name": "BRImunobiologicoAdministrado",
+      "status": "active",
+      "type": "Immunization",
+      "kind": "resource"
+    },
+    {
+      "id": "BRImunobiologicoAdministradoCampanha-2.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRImunobiologicoAdministradoCampanha-2.0",
+      "version": "2.0",
+      "name": "BRImunobiologicoAdministradoCampanha",
+      "status": "active",
+      "type": "Immunization",
+      "kind": "resource"
+    },
+    {
+      "id": "BRIndicadorPresencaAdmissao-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndicadorPresencaAdmissao-1.0",
+      "version": "1.0",
+      "name": "BRIndicadorPresencaAdmissao",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRIndividuoNaoIdentificado-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuoNaoIdentificado-1.0",
+      "version": "1.0.0",
+      "name": "BRIndividuoNaoIdentificado",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRIndividuoNaoIdentificadoANS-1.0.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuoNaoIdentificadoANS-1.0.0",
+      "version": "1.0.0",
+      "name": "BRIndividuoNaoIdentificadoANS",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRIndividuoProtegido-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuoProtegido-1.0",
+      "version": "1.0",
+      "name": "BRIndividuoProtegido",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRIntervaloDoses",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIntervaloDoses",
+      "version": "1.0",
+      "name": "BRIntervaloDoses",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRJurisdicaoOrgaoEmissor-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRJurisdicaoOrgaoEmissor-1.0",
+      "version": "1.0",
+      "name": "BRJurisdicaoOrgaoEmissor",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRMunicipio-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMunicipio-1.0",
+      "version": "1.0",
+      "name": "BRMunicipio",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRNacionalidade",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRNacionalidade",
+      "version": "1.0",
+      "name": "BRNacionalidade",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRNaturalizacao-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRNaturalizacao-1.0",
+      "version": "1.0",
+      "name": "BRNaturalizacao",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BROcupacao-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROcupacao-1.0",
+      "version": "1.0",
+      "name": "BROcupacao",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BROrigemMedida",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROrigemMedida",
+      "version": "01.00",
+      "name": "BROrigemMedida",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BROutrasInformacoes",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROutrasInformacoes",
+      "version": null,
+      "name": "BROutrasInformacoes",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRPais-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPais-1.0",
+      "version": "1.0",
+      "name": "BRPais",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRParentesIndividuo-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRParentesIndividuo-1.0",
+      "version": "1.0",
+      "name": "BRParentesIndividuo",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRPatogeno",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPatogeno",
+      "version": "1.0",
+      "name": "BRPatogeno",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRQualidadeCadastroIndividuo-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRQualidadeCadastroIndividuo-1.0",
+      "version": "1.0",
+      "name": "BRQualidadeCadastroIndividuo",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRQuantidade-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRQuantidade-1.0",
+      "version": "1.0",
+      "name": "BRQuantidade",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRRacaCorEtnia-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRacaCorEtnia-1.0",
+      "version": "1.0",
+      "name": "BRRacaCorEtnia",
+      "status": "active",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRRegistroAtendimentoClinico",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroAtendimentoClinico",
+      "version": "2.1",
+      "name": "BRRegistroAtendimentoClinico",
+      "status": "draft",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "BRRegistroImunobiologicoAdministradoCampanha-2.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroImunobiologicoAdministradoCampanha-2.0",
+      "version": "2.0",
+      "name": "BRRegistroImunobiologicoAdministradoCampanha",
+      "status": "active",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "BRRegistroImunobiologicoAdministradoRotina-2.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroImunobiologicoAdministradoRotina-2.0",
+      "version": "2.0",
+      "name": "BRRegistroImunobiologicoAdministradoRotina",
+      "status": "active",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "BRRegulacaoAssistencial",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegulacaoAssistencial",
+      "version": "1.0",
+      "name": "BRRegulacaoAssistencial",
+      "status": "active",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "BRResponsavelAtendimento",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRResponsavelAtendimento",
+      "version": "01.00",
+      "name": "BRResponsavelAtendimento",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRResultadoExameLaboratorial-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRResultadoExameLaboratorial-1.0",
+      "version": "1.0",
+      "name": "BRResultadoExameLaboratorial-1.0",
+      "status": "retired",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "BRResultadoExameLaboratorial-1.1",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRResultadoExameLaboratorial-1.1",
+      "version": "1.1",
+      "name": "BRResultadoExameLaboratorial-1.1",
+      "status": "retired",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "BRResultadoExameLaboratorial-2.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRResultadoExameLaboratorial-2.0",
+      "version": "2.0",
+      "name": "BRResultadoExameLaboratorial-2.0",
+      "status": "retired",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "BRResultadoExameLaboratorial-TesteRapido-1.0",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRResultadoExameLaboratorial-TesteRapido-1.0",
+      "version": "1.0",
+      "name": "BRResultadoExameLaboratorialTesteRapido-1.0",
+      "status": "retired",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "BRRoupasUsadasMedicao",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRoupasUsadasMedicao",
+      "version": "01.00",
+      "name": "BRRoupasUsadasMedicao",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRTurno",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRTurno",
+      "version": "1.0",
+      "name": "BRTurno",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "BRValorMedicamento",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRValorMedicamento",
+      "version": null,
+      "name": "BRValorMedicamento",
+      "status": "draft",
+      "type": "Extension",
+      "kind": "complex-type"
+    },
+    {
+      "id": "cc23cb24-5487-4869-8130-b3528ff9c6e7",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAlergiaReacaoAdversa-1.0",
+      "version": "01.10",
+      "name": "BRAlergiaReacaoAdversa",
+      "status": "draft",
+      "type": "AllergyIntolerance",
+      "kind": "resource"
+    },
+    {
+      "id": "d3d10a8f-46bc-4d9d-850f-b8ab5b778709",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRCID10Avaliado-1.0",
+      "version": "1.1.0",
+      "name": "BRCID10Avaliado",
+      "status": "draft",
+      "type": "Condition",
+      "kind": "resource"
+    },
+    {
+      "id": "d4b93cd7-63d2-4721-9d55-3debf159e1ff",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedicamento",
+      "version": "1.0",
+      "name": "BRMedicamento",
+      "status": "draft",
+      "type": "Medication",
+      "kind": "resource"
+    },
+    {
+      "id": "d8de8b30-0af3-4350-a8cb-cf21cf451da3",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREndereco-1.0",
+      "version": "1.0",
+      "name": "BREndereco",
+      "status": "active",
+      "type": "Address",
+      "kind": "complex-type"
+    },
+    {
+      "id": "deb1e207-3fa8-42a2-8e2b-7d926de1d5bf",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRImunobiologicoAdministradoCarga-2.0",
+      "version": "02.10",
+      "name": "BRImunobiologicoAdministradoCarga",
+      "status": "active",
+      "type": "Immunization",
+      "kind": "resource"
+    },
+    {
+      "id": "e448dddb-4b3e-4e33-ab75-d926fbc9f14d",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPlanoCuidados-1.0",
+      "version": "1.0",
+      "name": "BRPlanoCuidados",
+      "status": "draft",
+      "type": "CarePlan",
+      "kind": "resource"
+    },
+    {
+      "id": "entrega-suprimentos",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREntregaSuprimentos",
+      "version": "1.0.0",
+      "name": "BREntregaSuprimentos",
+      "status": "active",
+      "type": "SupplyDelivery",
+      "kind": "resource"
+    },
+    {
+      "id": "f0324adb-87d9-4a51-892c-fca4c507c57a",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProblemaDiagnosticoANS",
+      "version": "1.0",
+      "name": "BRProblemaDiagnosticoANS",
+      "status": "draft",
+      "type": "Condition",
+      "kind": "resource"
+    },
+    {
+      "id": "f0507f62-aa39-4f23-9ec9-ed12007a37e8",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRContatoAssistencialANS-1.0.0",
+      "version": "2.0.0",
+      "name": "BRContatoAssistencialANS",
+      "status": "active",
+      "type": "Encounter",
+      "kind": "resource"
+    },
+    {
+      "id": "f0d41273-772c-425f-bb60-2507efddff01",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRObservacaoDescritiva-1.0",
+      "version": "1.1.0",
+      "name": "BRObservacaoDescritiva",
+      "status": "draft",
+      "type": "Observation",
+      "kind": "resource"
+    },
+    {
+      "id": "f532691d-d193-462d-b587-50d597e34b46",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRequisicaoRegulacaoAssistencial",
+      "version": "1.0",
+      "name": "BRRequisicaoRegulacaoAssistencial",
+      "status": "active",
+      "type": "ServiceRequest",
+      "kind": "resource"
+    },
+    {
+      "id": "f8d7064e-e60b-48c4-9073-1debeddfaf0b",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMeioContato-1.0",
+      "version": "1.0",
+      "name": "BRMeioContato",
+      "status": "active",
+      "type": "ContactPoint",
+      "kind": "complex-type"
+    },
+    {
+      "id": "fa17dbed-8b44-4c91-94bc-c756d3818c21",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRCondicaoSaude",
+      "version": "1.0",
+      "name": "BRCondicaoSaude",
+      "status": "active",
+      "type": "Condition",
+      "kind": "resource"
+    },
+    {
+      "id": "fe2766fa-495b-448a-9e91-b66912e143cd",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPessoaJuridicaProfissionalLiberal-1.0",
+      "version": "1.0",
+      "name": "BRPessoaJuridicaProfissionalLiberal",
+      "status": "active",
+      "type": "Organization",
+      "kind": "resource"
+    },
+    {
+      "id": "orteses-proteses-materiais",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROrtesesProtesesMateriais",
+      "version": "1.0.0",
+      "name": "BROrtesesProtesesMateriais",
+      "status": "active",
+      "type": "Device",
+      "kind": "resource"
+    },
+    {
+      "id": "profile-brcodesystemquestionario",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRCodeSystemQuestionario",
+      "version": "1.0.0",
+      "name": "BRCodeSystemQuestionario",
+      "status": "active",
+      "type": "CodeSystem",
+      "kind": "resource"
+    },
+    {
+      "id": "profile-brquestionariobase",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRQuestionarioBase",
+      "version": "1.0.0",
+      "name": "BRQuestionarioBase",
+      "status": "draft",
+      "type": "Questionnaire",
+      "kind": "resource"
+    },
+    {
+      "id": "profile-brquestionarioresposta",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRQuestionarioResposta",
+      "version": "1.0.0",
+      "name": "BRQuestionarioResposta",
+      "status": "active",
+      "type": "QuestionnaireResponse",
+      "kind": "resource"
+    },
+    {
+      "id": "profile-brvaluesetquestionario",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRValueSetQuestionario",
+      "version": "1.0.0",
+      "name": "BRValueSetQuestionario",
+      "status": "active",
+      "type": "ValueSet",
+      "kind": "resource"
+    },
+    {
+      "id": "rnds-estabelecimento-saude",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSEstabelecimentoSaude",
+      "version": "1.0.0",
+      "name": "RNDSEstabelecimentoSaude",
+      "status": "active",
+      "type": "Organization",
+      "kind": "resource"
+    },
+    {
+      "id": "rnds-lotacao-profissional",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSLotacaoProfissional",
+      "version": "1.0.1",
+      "name": "RNDSLotacaoProfissional",
+      "status": "active",
+      "type": "PractitionerRole",
+      "kind": "resource"
+    },
+    {
+      "id": "rnds-medicamento",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSMedicamento",
+      "version": "1.0.0",
+      "name": "RNDSMedicamento",
+      "status": "active",
+      "type": "Medication",
+      "kind": "resource"
+    },
+    {
+      "id": "rnds-medicamento-dispensado-fornecido",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSDispensacaoMedicamento",
+      "version": "2.0.0",
+      "name": "RNDSDispensacaoMedicamento",
+      "status": "active",
+      "type": "MedicationDispense",
+      "kind": "resource"
+    },
+    {
+      "id": "rnds-paciente",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSPaciente",
+      "version": null,
+      "name": "RNDSPaciente",
+      "status": "draft",
+      "type": "Patient",
+      "kind": "resource"
+    },
+    {
+      "id": "rnds-prescricao-medicamento",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSPrescricaoMedicamento",
+      "version": "2.0.0",
+      "name": "RNDSPrescricaoMedicamento",
+      "status": "active",
+      "type": "MedicationRequest",
+      "kind": "resource"
+    },
+    {
+      "id": "rnds-profissional",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSProfissional",
+      "version": "1.0.0",
+      "name": "RNDSProfissional",
+      "status": "active",
+      "type": "Practitioner",
+      "kind": "resource"
+    },
+    {
+      "id": "rnds-redfm",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSRegistroEletronicoDispensacaoFornecimentoMedicamentos",
+      "version": "2.0.0",
+      "name": "RNDSRegistroEletronicoDispensacaoFornecimentoMedicamentos",
+      "status": "active",
+      "type": "Composition",
+      "kind": "resource"
+    },
+    {
+      "id": "rnds-repm",
+      "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSRegistroEletronicoPrescricaoMedicamentos",
+      "version": "2.0.0",
+      "name": "RNDSRegistroEletronicoPrescricaoMedicamentos",
+      "status": "active",
+      "type": "Composition",
+      "kind": "resource"
+    }
+  ]
+}

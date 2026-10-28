@@ -1,0 +1,88 @@
+{
+  "key": "br-core-medication",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medication",
+  "version": "1.7.1",
+  "name": "BRCoreMedication",
+  "title": "br-core-medication",
+  "status": "active",
+  "kind": "resource",
+  "type": "Medication",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Medication",
+  "description": "Este recurso é uma especialização do recurso FHIR R4 [Medication](https://hl7.org/fhir/R4/medication.html) usado principalmente para a identificação e definição de um medicamento para fins de prescrição, dispensação e administração de um medicamento, bem como para fazer declarações sobre medicamentos no Brasil",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Medication.manufacturer",
+      "path": "Medication.manufacturer",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Referência ao fabricante do medicamento"
+    },
+    {
+      "id": "Medication.form",
+      "path": "Medication.form",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/uv/ips/ValueSet/medicine-doseform"
+      },
+      "short": "Forma famacêutica do medicamento"
+    },
+    {
+      "id": "Medication.ingredient.item[x]",
+      "path": "Medication.ingredient.item[x]",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        },
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Substance|4.0.1",
+            "http://hl7.org/fhir/StructureDefinition/Medication|4.0.1"
+          ]
+        }
+      ],
+      "sliced": true,
+      "short": "Ingrediente"
+    },
+    {
+      "id": "Medication.ingredient.item[x]:itemReference",
+      "path": "Medication.ingredient.item[x]",
+      "sliceName": "itemReference",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Substance",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medication"
+          ]
+        }
+      ],
+      "short": "Referência à Substance ou br-core-medication"
+    }
+  ]
+}

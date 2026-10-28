@@ -1,0 +1,277 @@
+{
+  "key": "BRMedidaObservada",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMedidaObservada",
+  "version": "1.1.0",
+  "name": "BRMedidaObservada",
+  "title": "Medida Observada",
+  "status": "draft",
+  "kind": "resource",
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "description": "Registra as informações relacionadas a um tipo de observação.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Observation.extension:measurementOrigin",
+      "path": "Observation.extension",
+      "sliceName": "measurementOrigin",
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROrigemMedida"
+          ]
+        }
+      ],
+      "short": "Origem da Medição Corpórea"
+    },
+    {
+      "id": "Observation.extension:measurementOrigin.url",
+      "path": "Observation.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROrigemMedida"
+      }
+    },
+    {
+      "id": "Observation.extension:usedClothes",
+      "path": "Observation.extension",
+      "sliceName": "usedClothes",
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRoupasUsadasMedicao"
+          ]
+        }
+      ],
+      "short": "Roupas Usadas na Medição"
+    },
+    {
+      "id": "Observation.extension:usedClothes.url",
+      "path": "Observation.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRoupasUsadasMedicao"
+      }
+    },
+    {
+      "id": "Observation.identifier",
+      "path": "Observation.identifier",
+      "max": "0"
+    },
+    {
+      "id": "Observation.basedOn",
+      "path": "Observation.basedOn",
+      "max": "0"
+    },
+    {
+      "id": "Observation.partOf",
+      "path": "Observation.partOf",
+      "max": "0"
+    },
+    {
+      "id": "Observation.status",
+      "path": "Observation.status",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BREstadoObservacao-1.0"
+      },
+      "short": "final | entered-in-error"
+    },
+    {
+      "id": "Observation.category",
+      "path": "Observation.category",
+      "max": "0"
+    },
+    {
+      "id": "Observation.code",
+      "path": "Observation.code",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRTipoObservacao-1.0"
+      },
+      "short": "Tipo de Observação"
+    },
+    {
+      "id": "Observation.code.coding",
+      "path": "Observation.code.coding",
+      "max": "1"
+    },
+    {
+      "id": "Observation.subject",
+      "path": "Observation.subject",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Observation.subject.reference",
+      "path": "Observation.subject.reference",
+      "max": "0"
+    },
+    {
+      "id": "Observation.subject.type",
+      "path": "Observation.subject.type",
+      "max": "0"
+    },
+    {
+      "id": "Observation.subject.identifier.use",
+      "path": "Observation.subject.identifier.use",
+      "max": "0"
+    },
+    {
+      "id": "Observation.subject.identifier.value",
+      "path": "Observation.subject.identifier.value",
+      "min": 1
+    },
+    {
+      "id": "Observation.subject.identifier.period",
+      "path": "Observation.subject.identifier.period",
+      "max": "0"
+    },
+    {
+      "id": "Observation.subject.identifier.assigner",
+      "path": "Observation.subject.identifier.assigner",
+      "max": "0"
+    },
+    {
+      "id": "Observation.subject.display",
+      "path": "Observation.subject.display",
+      "max": "0"
+    },
+    {
+      "id": "Observation.focus",
+      "path": "Observation.focus",
+      "max": "0"
+    },
+    {
+      "id": "Observation.encounter",
+      "path": "Observation.encounter",
+      "max": "0"
+    },
+    {
+      "id": "Observation.effective[x]",
+      "path": "Observation.effective[x]",
+      "types": [
+        {
+          "code": "Timing"
+        }
+      ]
+    },
+    {
+      "id": "Observation.effective[x].code",
+      "path": "Observation.effective[x].code",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRFrequenciaUsoSubstancia"
+      }
+    },
+    {
+      "id": "Observation.issued",
+      "path": "Observation.issued",
+      "max": "0"
+    },
+    {
+      "id": "Observation.performer",
+      "path": "Observation.performer",
+      "max": "0"
+    },
+    {
+      "id": "Observation.value[x]",
+      "path": "Observation.value[x]",
+      "types": [
+        {
+          "code": "Quantity"
+        },
+        {
+          "code": "CodeableConcept"
+        },
+        {
+          "code": "string"
+        },
+        {
+          "code": "dateTime"
+        }
+      ]
+    },
+    {
+      "id": "Observation.dataAbsentReason",
+      "path": "Observation.dataAbsentReason",
+      "max": "0"
+    },
+    {
+      "id": "Observation.interpretation",
+      "path": "Observation.interpretation",
+      "max": "0"
+    },
+    {
+      "id": "Observation.note",
+      "path": "Observation.note",
+      "max": "1"
+    },
+    {
+      "id": "Observation.bodySite",
+      "path": "Observation.bodySite",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRLocalAfericao-1.0"
+      }
+    },
+    {
+      "id": "Observation.method",
+      "path": "Observation.method",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRPosicaoIndividuo"
+      }
+    },
+    {
+      "id": "Observation.method.coding",
+      "path": "Observation.method.coding",
+      "max": "1"
+    },
+    {
+      "id": "Observation.specimen",
+      "path": "Observation.specimen",
+      "max": "0"
+    },
+    {
+      "id": "Observation.device",
+      "path": "Observation.device",
+      "max": "0"
+    },
+    {
+      "id": "Observation.referenceRange",
+      "path": "Observation.referenceRange",
+      "max": "0"
+    },
+    {
+      "id": "Observation.hasMember",
+      "path": "Observation.hasMember",
+      "max": "0"
+    },
+    {
+      "id": "Observation.derivedFrom",
+      "path": "Observation.derivedFrom",
+      "max": "0"
+    },
+    {
+      "id": "Observation.component",
+      "path": "Observation.component",
+      "max": "1"
+    }
+  ]
+}

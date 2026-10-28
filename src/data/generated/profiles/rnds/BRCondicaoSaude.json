@@ -1,0 +1,147 @@
+{
+  "key": "BRCondicaoSaude",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRCondicaoSaude",
+  "version": "1.0",
+  "name": "BRCondicaoSaude",
+  "title": "Condição de Saúde",
+  "status": "active",
+  "kind": "resource",
+  "type": "Condition",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Condition",
+  "description": "Contém os dados relacionados à condição de saúde ou condição alvo do paciente avaliado.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Condition.identifier",
+      "path": "Condition.identifier",
+      "max": "0"
+    },
+    {
+      "id": "Condition.clinicalStatus",
+      "path": "Condition.clinicalStatus",
+      "max": "0"
+    },
+    {
+      "id": "Condition.category",
+      "path": "Condition.category",
+      "max": "0"
+    },
+    {
+      "id": "Condition.severity",
+      "path": "Condition.severity",
+      "max": "0"
+    },
+    {
+      "id": "Condition.code",
+      "path": "Condition.code",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRTerminologiaSuspeitaDiagnostica"
+      },
+      "short": "Suspeita Diagnóstica"
+    },
+    {
+      "id": "Condition.bodySite",
+      "path": "Condition.bodySite",
+      "max": "0"
+    },
+    {
+      "id": "Condition.subject",
+      "path": "Condition.subject",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+          ]
+        }
+      ],
+      "short": "Indivíduo com a Condição de Saúde avaliada"
+    },
+    {
+      "id": "Condition.subject.identifier",
+      "path": "Condition.subject.identifier",
+      "min": 1
+    },
+    {
+      "id": "Condition.subject.identifier.system",
+      "path": "Condition.subject.identifier.system",
+      "min": 1
+    },
+    {
+      "id": "Condition.subject.identifier.value",
+      "path": "Condition.subject.identifier.value",
+      "min": 1
+    },
+    {
+      "id": "Condition.encounter",
+      "path": "Condition.encounter",
+      "max": "0"
+    },
+    {
+      "id": "Condition.onset[x]",
+      "path": "Condition.onset[x]",
+      "max": "0"
+    },
+    {
+      "id": "Condition.abatement[x]",
+      "path": "Condition.abatement[x]",
+      "max": "0"
+    },
+    {
+      "id": "Condition.recordedDate",
+      "path": "Condition.recordedDate",
+      "max": "0"
+    },
+    {
+      "id": "Condition.recorder",
+      "path": "Condition.recorder",
+      "max": "0"
+    },
+    {
+      "id": "Condition.asserter",
+      "path": "Condition.asserter",
+      "max": "0"
+    },
+    {
+      "id": "Condition.stage",
+      "path": "Condition.stage",
+      "min": 1
+    },
+    {
+      "id": "Condition.stage.assessment",
+      "path": "Condition.stage.assessment",
+      "min": 1,
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRDiagnosticoLaboratorioClinico-3.2.1"
+          ]
+        }
+      ],
+      "short": "Diagnóstico de Laboratório Clínico"
+    },
+    {
+      "id": "Condition.stage.assessment.reference",
+      "path": "Condition.stage.assessment.reference",
+      "min": 1
+    },
+    {
+      "id": "Condition.evidence",
+      "path": "Condition.evidence",
+      "max": "0"
+    },
+    {
+      "id": "Condition.note",
+      "path": "Condition.note",
+      "max": "0"
+    }
+  ]
+}

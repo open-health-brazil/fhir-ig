@@ -1,0 +1,660 @@
+{
+  "key": "BRProcedimentoRealizadoANS-1.0.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProcedimentoRealizadoANS-1.0.0",
+  "version": "1.0.0",
+  "name": "BRProcedimentoRealizadoANS",
+  "title": "Procedimento Realizado ANS",
+  "status": "draft",
+  "kind": "resource",
+  "type": "Procedure",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Procedure",
+  "description": "Procedimento realizado em um indivíduo (ANS).",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Procedure.extension",
+      "path": "Procedure.extension",
+      "min": 1
+    },
+    {
+      "id": "Procedure.extension:quantity",
+      "path": "Procedure.extension",
+      "sliceName": "quantity",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRQuantidade-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Procedure.extension:quantity.value[x]",
+      "path": "Procedure.extension.value[x]",
+      "types": [
+        {
+          "code": "decimal"
+        },
+        {
+          "code": "positiveInt"
+        }
+      ]
+    },
+    {
+      "id": "Procedure.identifier",
+      "path": "Procedure.identifier",
+      "max": "1",
+      "mustSupport": true
+    },
+    {
+      "id": "Procedure.identifier.use",
+      "path": "Procedure.identifier.use",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.identifier.type",
+      "path": "Procedure.identifier.type",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRTipoIdentificadorProcedimento-1.0"
+      },
+      "fixed": {
+        "kind": "fixed",
+        "value": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoIdentificador",
+              "code": "AUTH"
+            }
+          ]
+        }
+      },
+      "short": "Tipo de Identificador"
+    },
+    {
+      "id": "Procedure.identifier.type.coding",
+      "path": "Procedure.identifier.type.coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Procedure.identifier.type.coding.system",
+      "path": "Procedure.identifier.type.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Procedure.identifier.type.coding.code",
+      "path": "Procedure.identifier.type.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Procedure.identifier.type.coding.display",
+      "path": "Procedure.identifier.type.coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.identifier.type.coding.userSelected",
+      "path": "Procedure.identifier.type.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.identifier.type.text",
+      "path": "Procedure.identifier.type.text",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.identifier.system",
+      "path": "Procedure.identifier.system",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.identifier.value",
+      "path": "Procedure.identifier.value",
+      "min": 1,
+      "short": "Código de Autorização"
+    },
+    {
+      "id": "Procedure.identifier.period",
+      "path": "Procedure.identifier.period",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.identifier.assigner",
+      "path": "Procedure.identifier.assigner",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.instantiatesCanonical",
+      "path": "Procedure.instantiatesCanonical",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.instantiatesUri",
+      "path": "Procedure.instantiatesUri",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.basedOn",
+      "path": "Procedure.basedOn",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.partOf",
+      "path": "Procedure.partOf",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.status",
+      "path": "Procedure.status",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BREstadoEvento-1.0"
+      },
+      "short": "Estado do Procedimento"
+    },
+    {
+      "id": "Procedure.statusReason",
+      "path": "Procedure.statusReason",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.category",
+      "path": "Procedure.category",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.code",
+      "path": "Procedure.code",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRProcedimentosANSeCarga"
+      },
+      "short": "Procedimento Realizado"
+    },
+    {
+      "id": "Procedure.code.coding",
+      "path": "Procedure.code.coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Procedure.code.coding.system",
+      "path": "Procedure.code.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Procedure.code.coding.code",
+      "path": "Procedure.code.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Procedure.code.coding.display",
+      "path": "Procedure.code.coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.code.coding.userSelected",
+      "path": "Procedure.code.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.code.text",
+      "path": "Procedure.code.text",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.subject",
+      "path": "Procedure.subject",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+          ]
+        }
+      ],
+      "short": "Indivíduo"
+    },
+    {
+      "id": "Procedure.subject.extension:unidentifiedPatient",
+      "path": "Procedure.subject.extension",
+      "sliceName": "unidentifiedPatient",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuoNaoIdentificadoANS-1.0.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Dados do Indivíduo Não Identificado"
+    },
+    {
+      "id": "Procedure.subject.extension:unidentifiedPatient.extension:gender",
+      "path": "Procedure.subject.extension.extension",
+      "sliceName": "gender",
+      "mustSupport": true
+    },
+    {
+      "id": "Procedure.subject.extension:unidentifiedPatient.extension:birthYear",
+      "path": "Procedure.subject.extension.extension",
+      "sliceName": "birthYear",
+      "mustSupport": true
+    },
+    {
+      "id": "Procedure.subject.extension:unidentifiedPatient.extension:reason",
+      "path": "Procedure.subject.extension.extension",
+      "sliceName": "reason",
+      "mustSupport": true
+    },
+    {
+      "id": "Procedure.subject.reference",
+      "path": "Procedure.subject.reference",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.subject.type",
+      "path": "Procedure.subject.type",
+      "max": "0",
+      "short": "Recurso do sujeito"
+    },
+    {
+      "id": "Procedure.subject.identifier.use",
+      "path": "Procedure.subject.identifier.use",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.subject.identifier.type",
+      "path": "Procedure.subject.identifier.type",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.subject.identifier.system",
+      "path": "Procedure.subject.identifier.system",
+      "min": 1
+    },
+    {
+      "id": "Procedure.subject.identifier.value",
+      "path": "Procedure.subject.identifier.value",
+      "min": 1
+    },
+    {
+      "id": "Procedure.subject.identifier.period",
+      "path": "Procedure.subject.identifier.period",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.subject.identifier.assigner",
+      "path": "Procedure.subject.identifier.assigner",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.subject.display",
+      "path": "Procedure.subject.display",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.encounter",
+      "path": "Procedure.encounter",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performed[x]",
+      "path": "Procedure.performed[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "Momento da Realização do Procedimento"
+    },
+    {
+      "id": "Procedure.recorder",
+      "path": "Procedure.recorder",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.asserter",
+      "path": "Procedure.asserter",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.id",
+      "path": "Procedure.performer.id",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.extension:healthcareTeam",
+      "path": "Procedure.performer.extension",
+      "sliceName": "healthcareTeam",
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIdentificacaoEquipe-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Procedure.performer.function",
+      "path": "Procedure.performer.function",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BROcupacao-1.0"
+      }
+    },
+    {
+      "id": "Procedure.performer.function.id",
+      "path": "Procedure.performer.function.id",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.function.extension",
+      "path": "Procedure.performer.function.extension",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.function.coding",
+      "path": "Procedure.performer.function.coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Procedure.performer.function.coding.id",
+      "path": "Procedure.performer.function.coding.id",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.function.coding.extension",
+      "path": "Procedure.performer.function.coding.extension",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.function.coding.system",
+      "path": "Procedure.performer.function.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Procedure.performer.function.coding.code",
+      "path": "Procedure.performer.function.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Procedure.performer.function.coding.display",
+      "path": "Procedure.performer.function.coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.function.coding.userSelected",
+      "path": "Procedure.performer.function.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.function.text",
+      "path": "Procedure.performer.function.text",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.actor",
+      "path": "Procedure.performer.actor",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProfissional-1.0",
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0",
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPessoaJuridicaProfissionalLiberal-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Procedure.performer.actor.id",
+      "path": "Procedure.performer.actor.id",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.actor.extension",
+      "path": "Procedure.performer.actor.extension",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.actor.reference",
+      "path": "Procedure.performer.actor.reference",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.actor.type",
+      "path": "Procedure.performer.actor.type",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.actor.identifier",
+      "path": "Procedure.performer.actor.identifier",
+      "min": 1
+    },
+    {
+      "id": "Procedure.performer.actor.identifier.id",
+      "path": "Procedure.performer.actor.identifier.id",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.actor.identifier.extension",
+      "path": "Procedure.performer.actor.identifier.extension",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.actor.identifier.use",
+      "path": "Procedure.performer.actor.identifier.use",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.actor.identifier.type",
+      "path": "Procedure.performer.actor.identifier.type",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.actor.identifier.system",
+      "path": "Procedure.performer.actor.identifier.system",
+      "min": 1
+    },
+    {
+      "id": "Procedure.performer.actor.identifier.value",
+      "path": "Procedure.performer.actor.identifier.value",
+      "min": 1
+    },
+    {
+      "id": "Procedure.performer.actor.identifier.period",
+      "path": "Procedure.performer.actor.identifier.period",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.actor.identifier.assigner",
+      "path": "Procedure.performer.actor.identifier.assigner",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.actor.display",
+      "path": "Procedure.performer.actor.display",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf",
+      "path": "Procedure.performer.onBehalfOf",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPessoaJuridicaProfissionalLiberal-1.0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf.id",
+      "path": "Procedure.performer.onBehalfOf.id",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf.extension",
+      "path": "Procedure.performer.onBehalfOf.extension",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf.reference",
+      "path": "Procedure.performer.onBehalfOf.reference",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf.type",
+      "path": "Procedure.performer.onBehalfOf.type",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf.identifier",
+      "path": "Procedure.performer.onBehalfOf.identifier",
+      "min": 1
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf.identifier.id",
+      "path": "Procedure.performer.onBehalfOf.identifier.id",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf.identifier.extension",
+      "path": "Procedure.performer.onBehalfOf.identifier.extension",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf.identifier.use",
+      "path": "Procedure.performer.onBehalfOf.identifier.use",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf.identifier.type",
+      "path": "Procedure.performer.onBehalfOf.identifier.type",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf.identifier.system",
+      "path": "Procedure.performer.onBehalfOf.identifier.system",
+      "min": 1
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf.identifier.value",
+      "path": "Procedure.performer.onBehalfOf.identifier.value",
+      "min": 1
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf.identifier.period",
+      "path": "Procedure.performer.onBehalfOf.identifier.period",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf.identifier.assigner",
+      "path": "Procedure.performer.onBehalfOf.identifier.assigner",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf.display",
+      "path": "Procedure.performer.onBehalfOf.display",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.location",
+      "path": "Procedure.location",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.reasonCode",
+      "path": "Procedure.reasonCode",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.reasonReference",
+      "path": "Procedure.reasonReference",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.bodySite",
+      "path": "Procedure.bodySite",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.outcome",
+      "path": "Procedure.outcome",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.report",
+      "path": "Procedure.report",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.complication",
+      "path": "Procedure.complication",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.complicationDetail",
+      "path": "Procedure.complicationDetail",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.followUp",
+      "path": "Procedure.followUp",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.note",
+      "path": "Procedure.note",
+      "short": "Resultado ou observações do procedimento"
+    },
+    {
+      "id": "Procedure.note.author[x]",
+      "path": "Procedure.note.author[x]",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.note.time",
+      "path": "Procedure.note.time",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.note.text",
+      "path": "Procedure.note.text",
+      "mustSupport": true
+    },
+    {
+      "id": "Procedure.focalDevice",
+      "path": "Procedure.focalDevice",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.usedReference",
+      "path": "Procedure.usedReference",
+      "max": "0"
+    },
+    {
+      "id": "Procedure.usedCode",
+      "path": "Procedure.usedCode",
+      "max": "0"
+    }
+  ]
+}

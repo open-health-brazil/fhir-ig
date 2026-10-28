@@ -1,0 +1,40 @@
+{
+  "key": "BRResponsavelAtendimento",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRResponsavelAtendimento",
+  "version": "01.00",
+  "name": "BRResponsavelAtendimento",
+  "title": "Responsável pelo Atendimento",
+  "status": "draft",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Representa se o profissional foi o responsável pelo atendimento registrado.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRResponsavelAtendimento"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "types": [
+        {
+          "code": "boolean"
+        },
+        {
+          "code": "Coding"
+        }
+      ]
+    }
+  ]
+}

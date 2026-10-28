@@ -1,0 +1,122 @@
+{
+  "key": "BROrtesesProtesesMateriais",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROrtesesProtesesMateriais",
+  "version": "1.0.0",
+  "name": "BROrtesesProtesesMateriais",
+  "title": "Órteses, Próteses e Materiais",
+  "status": "active",
+  "kind": "resource",
+  "type": "Device",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Device",
+  "description": "A type of a manufactured item that is used in the provision of healthcare without being substantially changed through that activity. The device may be a medical or non-medical device.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Device.identifier",
+      "path": "Device.identifier",
+      "max": "1"
+    },
+    {
+      "id": "Device.identifier.system",
+      "path": "Device.identifier.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS"
+      }
+    },
+    {
+      "id": "Device.identifier.value",
+      "path": "Device.identifier.value",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRProcedimentosNacionais-1.0"
+      }
+    },
+    {
+      "id": "Device.lotNumber",
+      "path": "Device.lotNumber",
+      "min": 1
+    },
+    {
+      "id": "Device.patient",
+      "path": "Device.patient",
+      "min": 1,
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true
+    },
+    {
+      "id": "Device.patient.extension",
+      "path": "Device.patient.extension",
+      "sliced": true
+    },
+    {
+      "id": "Device.patient.extension:unidentifiedPatient",
+      "path": "Device.patient.extension",
+      "sliceName": "unidentifiedPatient",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuoNaoIdentificado-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Dados do Indivíduo Não Identificado"
+    },
+    {
+      "id": "Device.patient.extension:unidentifiedPatient.extension",
+      "path": "Device.patient.extension.extension",
+      "min": 4,
+      "sliced": true
+    },
+    {
+      "id": "Device.patient.extension:unidentifiedPatient.extension:gender",
+      "path": "Device.patient.extension.extension",
+      "sliceName": "gender",
+      "mustSupport": true
+    },
+    {
+      "id": "Device.patient.extension:unidentifiedPatient.extension:birthYear",
+      "path": "Device.patient.extension.extension",
+      "sliceName": "birthYear",
+      "mustSupport": true
+    },
+    {
+      "id": "Device.patient.extension:unidentifiedPatient.extension:reason",
+      "path": "Device.patient.extension.extension",
+      "sliceName": "reason",
+      "mustSupport": true
+    },
+    {
+      "id": "Device.subject.extension:unidentifiedPatient.extension:operator",
+      "path": "Device.subject.extension.extension",
+      "sliceName": "operator",
+      "mustSupport": true
+    },
+    {
+      "id": "Device.patient.identifier.system",
+      "path": "Device.patient.identifier.system",
+      "min": 1
+    },
+    {
+      "id": "Device.patient.identifier.value",
+      "path": "Device.patient.identifier.value",
+      "min": 1
+    }
+  ]
+}

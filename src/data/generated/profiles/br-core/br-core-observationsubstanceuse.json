@@ -1,0 +1,115 @@
+{
+  "key": "br-core-observationsubstanceuse",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observationsubstanceuse",
+  "version": "1.7.1",
+  "name": "BRCoreObservationSubstanceUse",
+  "title": "Uso de substância",
+  "status": "active",
+  "kind": "resource",
+  "type": "Observation",
+  "baseDefinition": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation",
+  "description": "O perfil [br-core-observationsubstanceuse](StructureDefinition-br-core-observationsubstanceuse.html) herda do [br-core-observation](StructureDefinition-br-core-observation.html) para registrar o uso de uma substância (álcool, tabaco ou outra) e a frequência de uso nos últimos 3 meses. Uma observação por substância.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Observation.category",
+      "path": "Observation.category",
+      "min": 1,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "mustSupport": true,
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/observation-category|4.0.1"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+              "code": "social-history"
+            }
+          ]
+        }
+      },
+      "short": "História social"
+    },
+    {
+      "id": "Observation.code",
+      "path": "Observation.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "mustSupport": true,
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoSubstanciaUso"
+      },
+      "short": "Substância usada"
+    },
+    {
+      "id": "Observation.effective[x]",
+      "path": "Observation.effective[x]",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "dateTime"
+        },
+        {
+          "code": "Period"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Data da avaliação ou período avaliado"
+    },
+    {
+      "id": "Observation.value[x]",
+      "path": "Observation.value[x]",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRFreqUsoSubstancia"
+      },
+      "short": "Frequência de uso nos últimos 3 meses"
+    },
+    {
+      "id": "Observation.dataAbsentReason",
+      "path": "Observation.dataAbsentReason",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "mustSupport": true,
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/data-absent-reason|4.0.1"
+      },
+      "short": "Motivo da ausência da frequência"
+    }
+  ]
+}

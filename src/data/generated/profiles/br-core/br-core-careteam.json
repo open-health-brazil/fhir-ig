@@ -1,0 +1,74 @@
+{
+  "key": "br-core-careteam",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-careteam",
+  "version": "1.7.1",
+  "name": "BRCoreCareTeam",
+  "title": "BR-Core CareTeam",
+  "status": "draft",
+  "kind": "resource",
+  "type": "CareTeam",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/CareTeam",
+  "description": "Equipe de cuidado no contexto brasileiro. O identificador da equipe pode ser o Identificador Nacional de Equipe (INE) do CNES e/ou identificadores atribuídos por estabelecimentos, secretarias de saúde ou sistemas de informação.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "CareTeam.identifier",
+      "path": "CareTeam.identifier",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "sliced": true,
+      "short": "External Ids for this team"
+    },
+    {
+      "id": "CareTeam.identifier:ine",
+      "path": "CareTeam.identifier",
+      "sliceName": "ine",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "INE: Identificador Nacional de Equipe (CNES)"
+    },
+    {
+      "id": "CareTeam.identifier:ine.system",
+      "path": "CareTeam.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://terminologia.saude.gov.br/fhir/NamingSystem/ine"
+      },
+      "short": "The namespace for the identifier value"
+    },
+    {
+      "id": "CareTeam.identifier:ine.value",
+      "path": "CareTeam.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "The value that is unique"
+    }
+  ]
+}

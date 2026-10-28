@@ -1,0 +1,268 @@
+{
+  "key": "BRIntervaloDoses",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIntervaloDoses",
+  "version": "1.0",
+  "name": "BRIntervaloDoses",
+  "title": "Intervalo entre Doses",
+  "status": "draft",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Extensão para descrever uma unidade de tempo referenciada pelo UCUM.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.id",
+      "path": "Extension.id",
+      "max": "0"
+    },
+    {
+      "id": "Extension.extension",
+      "path": "Extension.extension",
+      "min": 0,
+      "sliced": true
+    },
+    {
+      "id": "Extension.extension:periodUnit",
+      "path": "Extension.extension",
+      "sliceName": "periodUnit",
+      "min": 0,
+      "max": "1",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRUnidadeTempo"
+      }
+    },
+    {
+      "id": "Extension.extension:periodUnit.id",
+      "path": "Extension.extension.id",
+      "max": "0"
+    },
+    {
+      "id": "Extension.extension:periodUnit.url",
+      "path": "Extension.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "periodUnit"
+      }
+    },
+    {
+      "id": "Extension.extension:periodUnit.value[x]",
+      "path": "Extension.extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRUnidadeTempo"
+      }
+    },
+    {
+      "id": "Extension.extension:periodUnit.value[x].id",
+      "path": "Extension.extension.value[x].id",
+      "max": "0"
+    },
+    {
+      "id": "Extension.extension:period",
+      "path": "Extension.extension",
+      "sliceName": "period",
+      "min": 0,
+      "max": "1",
+      "short": "Intervalo entre doses"
+    },
+    {
+      "id": "Extension.extension:period.id",
+      "path": "Extension.extension.id",
+      "max": "0"
+    },
+    {
+      "id": "Extension.extension:period.url",
+      "path": "Extension.extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "period"
+      }
+    },
+    {
+      "id": "Extension.extension:period.value[x]",
+      "path": "Extension.extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "positiveInt"
+        }
+      ],
+      "short": "Intervalo entre doses"
+    },
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIntervaloDoses"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "max": "0",
+      "types": [
+        {
+          "code": "base64Binary"
+        },
+        {
+          "code": "boolean"
+        },
+        {
+          "code": "canonical"
+        },
+        {
+          "code": "code"
+        },
+        {
+          "code": "date"
+        },
+        {
+          "code": "dateTime"
+        },
+        {
+          "code": "decimal"
+        },
+        {
+          "code": "id"
+        },
+        {
+          "code": "instant"
+        },
+        {
+          "code": "integer"
+        },
+        {
+          "code": "markdown"
+        },
+        {
+          "code": "oid"
+        },
+        {
+          "code": "positiveInt"
+        },
+        {
+          "code": "string"
+        },
+        {
+          "code": "time"
+        },
+        {
+          "code": "unsignedInt"
+        },
+        {
+          "code": "uri"
+        },
+        {
+          "code": "url"
+        },
+        {
+          "code": "uuid"
+        },
+        {
+          "code": "Address"
+        },
+        {
+          "code": "Age"
+        },
+        {
+          "code": "Annotation"
+        },
+        {
+          "code": "Attachment"
+        },
+        {
+          "code": "CodeableConcept"
+        },
+        {
+          "code": "Coding"
+        },
+        {
+          "code": "ContactPoint"
+        },
+        {
+          "code": "Count"
+        },
+        {
+          "code": "Distance"
+        },
+        {
+          "code": "Duration"
+        },
+        {
+          "code": "HumanName"
+        },
+        {
+          "code": "Identifier"
+        },
+        {
+          "code": "Money"
+        },
+        {
+          "code": "Period"
+        },
+        {
+          "code": "Quantity"
+        },
+        {
+          "code": "Range"
+        },
+        {
+          "code": "Ratio"
+        },
+        {
+          "code": "Reference"
+        },
+        {
+          "code": "SampledData"
+        },
+        {
+          "code": "Signature"
+        },
+        {
+          "code": "Timing"
+        },
+        {
+          "code": "ContactDetail"
+        },
+        {
+          "code": "Contributor"
+        },
+        {
+          "code": "DataRequirement"
+        },
+        {
+          "code": "Expression"
+        },
+        {
+          "code": "ParameterDefinition"
+        },
+        {
+          "code": "RelatedArtifact"
+        },
+        {
+          "code": "TriggerDefinition"
+        },
+        {
+          "code": "UsageContext"
+        },
+        {
+          "code": "Dosage"
+        }
+      ]
+    }
+  ]
+}

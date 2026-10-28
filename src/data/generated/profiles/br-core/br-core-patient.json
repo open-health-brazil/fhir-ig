@@ -1,0 +1,895 @@
+{
+  "key": "br-core-patient",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+  "version": "1.7.1",
+  "name": "BRCorePatient",
+  "title": null,
+  "status": "active",
+  "kind": "resource",
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "description": "Este perfil representa o perfil [br-core-patient](StructureDefinition-br-core-patient.html) com todas as informações demográficas e administrativas necessárias para descrever um paciente no Brasil, com as respectivas legislações dos elementos e domínios obrigatórios conforme abaixo. O perfil [br-core-patient](StructureDefinition-br-core-patient.html) herda do recurso FHIR R4 [Patient](https://hl7.org/fhir/R4B/patient.html) para definições de escopo e uso. Este perfil define expectativas mínimas para o recurso [br-core-patient](StructureDefinition-br-core-patient.html) registrar, pesquisar e buscar dados demográficos básicos e outras informações administrativas sobre um paciente individual. Ele especifica quais elementos principais, extensões, vocabulários e conjuntos de valores DEVEM estar presentes e restringe como os elementos são usados.  \r\n\r\nPara contemplar uma descrição do paciente com maior equidade, conforme recomendações da portaria GM/MS Nº 230, de 7 de março de 2023, foram adicionados atributos adicionais para expressar o sexo do paciente, além do sexo administrativo: sexo ao nascer descritos no ValueSet [BRSexoNascimento](https://terminologia.saude.gov.br/fhir/ValueSet/BRSexoNascimento) e identidade de gênero descrita no ValueSet [BRIdentidadeGenero](https://terminologia.saude.gov.br/fhir/ValueSet/BRIdentidadeGenero). Com relação a orientação sexual, este é um dado que pode mudar durante a vida do paciente, portanto, recomenda-se que ele seja coletado em cada evento assistencial",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Patient.extension",
+      "path": "Patient.extension",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Extension"
+        }
+      ],
+      "sliced": true,
+      "short": "Extension"
+    },
+    {
+      "id": "Patient.extension:localNascimento",
+      "path": "Patient.extension",
+      "sliceName": "localNascimento",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/patient-birthPlace"
+          ]
+        }
+      ],
+      "short": "Local de nascimento do paciente"
+    },
+    {
+      "id": "Patient.extension:identidadeGenero",
+      "path": "Patient.extension",
+      "sliceName": "identidadeGenero",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "https://ips.saude.gov.br/fhir/StructureDefinition/identidade-genero-br-ips"
+          ]
+        }
+      ],
+      "short": "Identidade de gênero do paciente"
+    },
+    {
+      "id": "Patient.extension:raca",
+      "path": "Patient.extension",
+      "sliceName": "raca",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "https://ips.saude.gov.br/fhir/StructureDefinition/raca-br-ips"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Raça do paciente"
+    },
+    {
+      "id": "Patient.extension:povoIndigena",
+      "path": "Patient.extension",
+      "sliceName": "povoIndigena",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "https://ips.saude.gov.br/fhir/StructureDefinition/povo-indigena-br-ips"
+          ]
+        }
+      ],
+      "short": "Etnia indígena do paciente"
+    },
+    {
+      "id": "Patient.extension:sexoNascimento",
+      "path": "Patient.extension",
+      "sliceName": "sexoNascimento",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "https://ips.saude.gov.br/fhir/StructureDefinition/sexo-nascimento-br-ips"
+          ]
+        }
+      ],
+      "short": "Sexo do nascimento do paciente"
+    },
+    {
+      "id": "Patient.extension:povoTradicional",
+      "path": "Patient.extension",
+      "sliceName": "povoTradicional",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-populacaotradicional"
+          ]
+        }
+      ],
+      "short": "Extensão de população tradicional"
+    },
+    {
+      "id": "Patient.extension:povoItinerante",
+      "path": "Patient.extension",
+      "sliceName": "povoItinerante",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-povoitinerante"
+          ]
+        }
+      ],
+      "short": "Extensão de povo intinerante"
+    },
+    {
+      "id": "Patient.identifier",
+      "path": "Patient.identifier",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "sliced": true,
+      "short": "Identificadores externos para este recurso"
+    },
+    {
+      "id": "Patient.identifier:cns",
+      "path": "Patient.identifier",
+      "sliceName": "cns",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cns.use",
+      "path": "Patient.identifier.use",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "short": "Uso do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cns.type",
+      "path": "Patient.identifier.type",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoDocumentoIndividuo"
+      },
+      "short": "Tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cns.type.coding",
+      "path": "Patient.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Codificação do tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cns.type.coding.system",
+      "path": "Patient.identifier.type.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cns.type.coding.code",
+      "path": "Patient.identifier.type.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "HC"
+      },
+      "short": "Tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cns.system",
+      "path": "Patient.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/fhir/sid/cns"
+      },
+      "short": "Sistema do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cns.value",
+      "path": "Patient.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Valor do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cns.assigner",
+      "path": "Patient.identifier.assigner",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Entidade que atribuiu o identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cpf",
+      "path": "Patient.identifier",
+      "sliceName": "cpf",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cpf.use",
+      "path": "Patient.identifier.use",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "fixed": {
+        "kind": "fixed",
+        "value": "official"
+      },
+      "short": "Uso do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cpf.type",
+      "path": "Patient.identifier.type",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoDocumentoIndividuo"
+      },
+      "short": "Tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cpf.type.coding",
+      "path": "Patient.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Codificação do tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cpf.type.coding.system",
+      "path": "Patient.identifier.type.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cpf.type.coding.code",
+      "path": "Patient.identifier.type.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "TAX"
+      },
+      "short": "Tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cpf.system",
+      "path": "Patient.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/fhir/sid/cpf"
+      },
+      "short": "Sistema do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cpf.value",
+      "path": "Patient.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Valor do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:cpf.assigner",
+      "path": "Patient.identifier.assigner",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Entidade que atribuiu o identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:registroEstrangeiro",
+      "path": "Patient.identifier",
+      "sliceName": "registroEstrangeiro",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:registroEstrangeiro.use",
+      "path": "Patient.identifier.use",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "fixed": {
+        "kind": "fixed",
+        "value": "official"
+      },
+      "short": "Uso do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:registroEstrangeiro.type",
+      "path": "Patient.identifier.type",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoDocumentoIndividuo"
+      },
+      "short": "Tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:registroEstrangeiro.type.coding",
+      "path": "Patient.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Codificação do tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:registroEstrangeiro.type.coding.system",
+      "path": "Patient.identifier.type.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:registroEstrangeiro.type.coding.code",
+      "path": "Patient.identifier.type.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "RNE"
+      },
+      "short": "Tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:registroEstrangeiro.system",
+      "path": "Patient.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/fhir/sid/rne"
+      },
+      "short": "Sistema do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:registroEstrangeiro.value",
+      "path": "Patient.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Valor do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:registroEstrangeiro.assigner",
+      "path": "Patient.identifier.assigner",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Entidade que atribuiu o identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:passaporte",
+      "path": "Patient.identifier",
+      "sliceName": "passaporte",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:passaporte.use",
+      "path": "Patient.identifier.use",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "fixed": {
+        "kind": "fixed",
+        "value": "official"
+      },
+      "short": "Uso do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:passaporte.type",
+      "path": "Patient.identifier.type",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoDocumentoIndividuo"
+      },
+      "short": "Tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:passaporte.type.coding",
+      "path": "Patient.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Codificação do tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:passaporte.type.coding.system",
+      "path": "Patient.identifier.type.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:passaporte.type.coding.code",
+      "path": "Patient.identifier.type.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "PPN"
+      },
+      "short": "Tipo do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:passaporte.system",
+      "path": "Patient.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://hl7.org/fhir/sid/passport-BRA"
+      },
+      "short": "Sistema do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:passaporte.value",
+      "path": "Patient.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Valor do identificador do paciente"
+    },
+    {
+      "id": "Patient.identifier:passaporte.assigner",
+      "path": "Patient.identifier.assigner",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Entidade que atribuiu o identificador do paciente"
+    },
+    {
+      "id": "Patient.gender",
+      "path": "Patient.gender",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1"
+      },
+      "short": "Sexo"
+    },
+    {
+      "id": "Patient.deceased[x]",
+      "path": "Patient.deceased[x]",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        },
+        {
+          "code": "dateTime"
+        }
+      ],
+      "sliced": true,
+      "short": "Indica se o indivíduo faleceu"
+    },
+    {
+      "id": "Patient.deceased[x]:deceasedBoolean",
+      "path": "Patient.deceased[x]",
+      "sliceName": "deceasedBoolean",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "Indicates if the individual is deceased or not"
+    },
+    {
+      "id": "Patient.deceased[x]:deceasedDateTime",
+      "path": "Patient.deceased[x]",
+      "sliceName": "deceasedDateTime",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "Data e hora do falecimento do paciente"
+    },
+    {
+      "id": "Patient.address.extension:aldeia",
+      "path": "Patient.address.extension",
+      "sliceName": "aldeia",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-address-aldeia"
+          ]
+        }
+      ],
+      "short": "Aldeia indígena do endereço do paciente"
+    },
+    {
+      "id": "Patient.address.extension:municipio",
+      "path": "Patient.address.extension",
+      "sliceName": "municipio",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-address-municipio"
+          ]
+        }
+      ],
+      "short": "Município do endereço (código IBGE)"
+    },
+    {
+      "id": "Patient.multipleBirth[x]",
+      "path": "Patient.multipleBirth[x]",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        },
+        {
+          "code": "integer"
+        }
+      ],
+      "sliced": true,
+      "short": "Se o paciente faz parte de um parto gemelar"
+    },
+    {
+      "id": "Patient.multipleBirth[x]:multipleBirthBoolean",
+      "path": "Patient.multipleBirth[x]",
+      "sliceName": "multipleBirthBoolean",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "Whether patient is part of a multiple birth"
+    },
+    {
+      "id": "Patient.multipleBirth[x]:multipleBirthInteger",
+      "path": "Patient.multipleBirth[x]",
+      "sliceName": "multipleBirthInteger",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "integer"
+        }
+      ],
+      "short": "Gemelaridade do paciente"
+    },
+    {
+      "id": "Patient.contact.organization",
+      "path": "Patient.contact.organization",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Organização do contato do paciente"
+    },
+    {
+      "id": "Patient.generalPractitioner",
+      "path": "Patient.generalPractitioner",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole"
+          ]
+        }
+      ],
+      "short": "Médico da atenção primária do paciente"
+    },
+    {
+      "id": "Patient.managingOrganization",
+      "path": "Patient.managingOrganization",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Organização responsável pelo paciente"
+    },
+    {
+      "id": "Patient.link.other",
+      "path": "Patient.link.other",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson"
+          ]
+        }
+      ],
+      "short": "Outro recurso que se relaciona com este recurso"
+    }
+  ]
+}

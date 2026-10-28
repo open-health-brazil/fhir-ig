@@ -1,0 +1,148 @@
+{
+  "key": "BREndereco-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREndereco-1.0",
+  "version": "1.0",
+  "name": "BREndereco",
+  "title": "Endereço",
+  "status": "active",
+  "kind": "complex-type",
+  "type": "Address",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Address",
+  "description": "Padronização de endereços no Brasil.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Address.use",
+      "path": "Address.use",
+      "mustSupport": true,
+      "short": "Uso do Endereço"
+    },
+    {
+      "id": "Address.type",
+      "path": "Address.type",
+      "mustSupport": true,
+      "short": "Tipo de Endereço"
+    },
+    {
+      "id": "Address.text",
+      "path": "Address.text",
+      "max": "0"
+    },
+    {
+      "id": "Address.line",
+      "path": "Address.line",
+      "min": 1,
+      "mustSupport": true,
+      "sliced": true,
+      "short": "Endereço"
+    },
+    {
+      "id": "Address.line:streetType",
+      "path": "Address.line",
+      "sliceName": "streetType",
+      "max": "1",
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRTipoLogradouro-1.0"
+      },
+      "short": "Tipo de Logradouro"
+    },
+    {
+      "id": "Address.line:street",
+      "path": "Address.line",
+      "sliceName": "street",
+      "min": 1,
+      "max": "1",
+      "mustSupport": true,
+      "short": "Logradouro"
+    },
+    {
+      "id": "Address.line:number",
+      "path": "Address.line",
+      "sliceName": "number",
+      "min": 1,
+      "max": "1",
+      "mustSupport": true,
+      "short": "Número"
+    },
+    {
+      "id": "Address.line:complement",
+      "path": "Address.line",
+      "sliceName": "complement",
+      "max": "1",
+      "mustSupport": true,
+      "short": "Complemento"
+    },
+    {
+      "id": "Address.line:neighborhood",
+      "path": "Address.line",
+      "sliceName": "neighborhood",
+      "min": 1,
+      "max": "1",
+      "mustSupport": true,
+      "short": "Bairro"
+    },
+    {
+      "id": "Address.city",
+      "path": "Address.city",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRMunicipio-1.0"
+      },
+      "short": "Município"
+    },
+    {
+      "id": "Address.district",
+      "path": "Address.district",
+      "max": "0"
+    },
+    {
+      "id": "Address.state",
+      "path": "Address.state",
+      "min": 1,
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRUnidadeFederativa-1.0"
+      },
+      "short": "UF"
+    },
+    {
+      "id": "Address.postalCode",
+      "path": "Address.postalCode",
+      "min": 1,
+      "mustSupport": true,
+      "short": "CEP"
+    },
+    {
+      "id": "Address.country",
+      "path": "Address.country",
+      "max": "0"
+    },
+    {
+      "id": "Address.period",
+      "path": "Address.period",
+      "mustSupport": true,
+      "short": "Período do Endereço"
+    },
+    {
+      "id": "Address.period.start",
+      "path": "Address.period.start",
+      "mustSupport": true,
+      "short": "Data de Inicio do Endereço"
+    },
+    {
+      "id": "Address.period.end",
+      "path": "Address.period.end",
+      "mustSupport": true,
+      "short": "Data de Término do Endereço"
+    }
+  ]
+}

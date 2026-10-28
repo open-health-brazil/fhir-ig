@@ -1,0 +1,648 @@
+{
+  "key": "RNDSProfissional",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSProfissional",
+  "version": "1.0.0",
+  "name": "RNDSProfissional",
+  "title": "Profissional RNDS",
+  "status": "active",
+  "kind": "resource",
+  "type": "Practitioner",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Practitioner",
+  "description": "O Profissional é uma pessoa que está direta ou indiretamente envolvida na prestação de cuidados de saúde ou serviços relacionados ao paciente.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Practitioner.id",
+      "path": "Practitioner.id",
+      "min": 1,
+      "short": "ID Lógico do Artefato"
+    },
+    {
+      "id": "Practitioner.identifier",
+      "path": "Practitioner.identifier",
+      "min": 1,
+      "sliced": true,
+      "short": "Identificadores do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:cns",
+      "path": "Practitioner.identifier",
+      "sliceName": "cns",
+      "max": "1",
+      "short": "Identificador do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:cns.type",
+      "path": "Practitioner.identifier.type",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/namingsystem-identifier-system-type"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+              "code": "PHO"
+            }
+          ]
+        }
+      },
+      "short": "Tipo do identificador do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:cns.type.coding",
+      "path": "Practitioner.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "short": "Codificação do tipo do identificador do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:cns.type.coding.system",
+      "path": "Practitioner.identifier.type.coding.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:cns.type.coding.code",
+      "path": "Practitioner.identifier.type.coding.code",
+      "min": 1,
+      "short": "Código da codificação do tipo do identificador do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:cns.system",
+      "path": "Practitioner.identifier.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/sid/cns"
+      },
+      "short": "Sistema do identificador do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:cns.value",
+      "path": "Practitioner.identifier.value",
+      "min": 1,
+      "short": "Valor do identificador do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:cpf",
+      "path": "Practitioner.identifier",
+      "sliceName": "cpf",
+      "max": "1",
+      "short": "Identificador do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:cpf.type",
+      "path": "Practitioner.identifier.type",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/namingsystem-identifier-system-type"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+              "code": "TAX"
+            }
+          ]
+        }
+      },
+      "short": "Tipo do identificador do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:cpf.type.coding",
+      "path": "Practitioner.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "short": "Codificação do tipo do identificador do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:cpf.type.coding.system",
+      "path": "Practitioner.identifier.type.coding.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:cpf.type.coding.code",
+      "path": "Practitioner.identifier.type.coding.code",
+      "min": 1,
+      "short": "Código da codificação do tipo do identificador do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:cpf.system",
+      "path": "Practitioner.identifier.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/sid/cpf"
+      },
+      "short": "Sistema do identificador do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:cpf.value",
+      "path": "Practitioner.identifier.value",
+      "min": 1,
+      "short": "Valor do identificador do profissional"
+    },
+    {
+      "id": "Practitioner.identifier:crm",
+      "path": "Practitioner.identifier",
+      "sliceName": "crm",
+      "max": "1",
+      "short": "Identificador do médico, pelo CRM"
+    },
+    {
+      "id": "Practitioner.identifier:crm.type",
+      "path": "Practitioner.identifier.type",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/namingsystem-identifier-system-type"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+              "code": "MD"
+            }
+          ]
+        }
+      },
+      "short": "Tipo do identificador do médico"
+    },
+    {
+      "id": "Practitioner.identifier:crm.type.coding",
+      "path": "Practitioner.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "short": "Codificação do tipo do identificador do médico"
+    },
+    {
+      "id": "Practitioner.identifier:crm.type.coding.system",
+      "path": "Practitioner.identifier.type.coding.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do médico"
+    },
+    {
+      "id": "Practitioner.identifier:crm.type.coding.code",
+      "path": "Practitioner.identifier.type.coding.code",
+      "min": 1,
+      "short": "Código da codificação do tipo do identificador do médico"
+    },
+    {
+      "id": "Practitioner.identifier:crm.system",
+      "path": "Practitioner.identifier.system",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCRM"
+      },
+      "short": "Sistema do identificador do médico"
+    },
+    {
+      "id": "Practitioner.identifier:crm.value",
+      "path": "Practitioner.identifier.value",
+      "min": 1,
+      "short": "Valor do identificador do médico"
+    },
+    {
+      "id": "Practitioner.identifier:rms",
+      "path": "Practitioner.identifier",
+      "sliceName": "rms",
+      "max": "1",
+      "short": "Identificador do médico, pelo RMS"
+    },
+    {
+      "id": "Practitioner.identifier:rms.type",
+      "path": "Practitioner.identifier.type",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/namingsystem-identifier-system-type"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+              "code": "MRT"
+            }
+          ]
+        }
+      },
+      "short": "Tipo do identificador do médico"
+    },
+    {
+      "id": "Practitioner.identifier:rms.type.coding",
+      "path": "Practitioner.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "short": "Codificação do tipo do identificador do médico"
+    },
+    {
+      "id": "Practitioner.identifier:rms.type.coding.system",
+      "path": "Practitioner.identifier.type.coding.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do médico"
+    },
+    {
+      "id": "Practitioner.identifier:rms.type.coding.code",
+      "path": "Practitioner.identifier.type.coding.code",
+      "min": 1,
+      "short": "Código da codificação do tipo do identificador do médico"
+    },
+    {
+      "id": "Practitioner.identifier:rms.system",
+      "path": "Practitioner.identifier.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/sid/rms"
+      },
+      "short": "Sistema do identificador do médico"
+    },
+    {
+      "id": "Practitioner.identifier:rms.value",
+      "path": "Practitioner.identifier.value",
+      "min": 1,
+      "short": "Valor do identificador do médico"
+    },
+    {
+      "id": "Practitioner.identifier:rqe",
+      "path": "Practitioner.identifier",
+      "sliceName": "rqe",
+      "max": "1"
+    },
+    {
+      "id": "Practitioner.identifier:rqe.type",
+      "path": "Practitioner.identifier.type",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/namingsystem-identifier-system-type"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+              "code": "DN"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "Practitioner.identifier:rqe.type.coding",
+      "path": "Practitioner.identifier.type.coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Practitioner.identifier:rqe.type.coding.system",
+      "path": "Practitioner.identifier.type.coding.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      }
+    },
+    {
+      "id": "Practitioner.identifier:rqe.type.coding.code",
+      "path": "Practitioner.identifier.type.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Practitioner.identifier:rqe.system",
+      "path": "Practitioner.identifier.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/sid/rqe"
+      }
+    },
+    {
+      "id": "Practitioner.identifier:rqe.value",
+      "path": "Practitioner.identifier.value",
+      "min": 1
+    },
+    {
+      "id": "Practitioner.identifier:crf",
+      "path": "Practitioner.identifier",
+      "sliceName": "crf",
+      "max": "1",
+      "short": "Identificador do farmacêutico"
+    },
+    {
+      "id": "Practitioner.identifier:crf.type",
+      "path": "Practitioner.identifier.type",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/namingsystem-identifier-system-type"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+              "code": "RPH"
+            }
+          ]
+        }
+      },
+      "short": "Tipo do identificador do farmacêutico"
+    },
+    {
+      "id": "Practitioner.identifier:crf.type.coding",
+      "path": "Practitioner.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "short": "Codificação do tipo do identificador do farmacêutico"
+    },
+    {
+      "id": "Practitioner.identifier:crf.type.coding.system",
+      "path": "Practitioner.identifier.type.coding.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do farmacêutico"
+    },
+    {
+      "id": "Practitioner.identifier:crf.type.coding.code",
+      "path": "Practitioner.identifier.type.coding.code",
+      "min": 1,
+      "fixed": {
+        "kind": "pattern",
+        "value": "RPH"
+      },
+      "short": "Código da codificação do tipo do identificador do farmacêutico"
+    },
+    {
+      "id": "Practitioner.identifier:crf.system",
+      "path": "Practitioner.identifier.system",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCRF"
+      },
+      "short": "Sistema do identificador do farmacêutico"
+    },
+    {
+      "id": "Practitioner.identifier:crf.value",
+      "path": "Practitioner.identifier.value",
+      "min": 1,
+      "short": "Valor do identificador do farmacêutico"
+    },
+    {
+      "id": "Practitioner.identifier:cro",
+      "path": "Practitioner.identifier",
+      "sliceName": "cro",
+      "max": "1",
+      "short": "Identificador do odontólogo"
+    },
+    {
+      "id": "Practitioner.identifier:cro.type",
+      "path": "Practitioner.identifier.type",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/namingsystem-identifier-system-type"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+              "code": "DDS"
+            }
+          ]
+        }
+      },
+      "short": "Tipo do identificador do odontólogo"
+    },
+    {
+      "id": "Practitioner.identifier:cro.type.coding",
+      "path": "Practitioner.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "short": "Codificação do tipo do identificador do odontólogo"
+    },
+    {
+      "id": "Practitioner.identifier:cro.type.coding.system",
+      "path": "Practitioner.identifier.type.coding.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do odontólogo"
+    },
+    {
+      "id": "Practitioner.identifier:cro.type.coding.code",
+      "path": "Practitioner.identifier.type.coding.code",
+      "min": 1,
+      "fixed": {
+        "kind": "pattern",
+        "value": "DDS"
+      },
+      "short": "Código da codificação do tipo do identificador do odontólogo"
+    },
+    {
+      "id": "Practitioner.identifier:cro.system",
+      "path": "Practitioner.identifier.system",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCRO"
+      },
+      "short": "Sistema do identificador do odontólogo"
+    },
+    {
+      "id": "Practitioner.identifier:cro.value",
+      "path": "Practitioner.identifier.value",
+      "min": 1,
+      "short": "Valor do identificador do odontólogo"
+    },
+    {
+      "id": "Practitioner.identifier:coren",
+      "path": "Practitioner.identifier",
+      "sliceName": "coren",
+      "max": "1",
+      "short": "Identificador do enfermeiro"
+    },
+    {
+      "id": "Practitioner.identifier:coren.type",
+      "path": "Practitioner.identifier.type",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/namingsystem-identifier-system-type"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+              "code": "RN"
+            }
+          ]
+        }
+      },
+      "short": "Tipo do identificador do enfermeiro"
+    },
+    {
+      "id": "Practitioner.identifier:coren.type.coding",
+      "path": "Practitioner.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "short": "Codificação do tipo do identificador do enfermeiro"
+    },
+    {
+      "id": "Practitioner.identifier:coren.type.coding.system",
+      "path": "Practitioner.identifier.type.coding.system",
+      "min": 1,
+      "short": "Sistema da codificação do tipo do identificador do enfermeiro"
+    },
+    {
+      "id": "Practitioner.identifier:coren.type.coding.code",
+      "path": "Practitioner.identifier.type.coding.code",
+      "min": 1,
+      "fixed": {
+        "kind": "pattern",
+        "value": "RN"
+      },
+      "short": "Código da codificação do tipo do identificador do enfermeiro"
+    },
+    {
+      "id": "Practitioner.identifier:coren.system",
+      "path": "Practitioner.identifier.system",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCOREN"
+      },
+      "short": "Sistema do identificador do enfermeiro"
+    },
+    {
+      "id": "Practitioner.identifier:coren.value",
+      "path": "Practitioner.identifier.value",
+      "min": 1,
+      "short": "Valor do identificador do enfermeiro"
+    },
+    {
+      "id": "Practitioner.identifier:identificadorOutrosProfissionais",
+      "path": "Practitioner.identifier",
+      "sliceName": "identificadorOutrosProfissionais",
+      "max": "1",
+      "short": "Identificador de outros profissionais"
+    },
+    {
+      "id": "Practitioner.identifier:identificadorOutrosProfissionais.type",
+      "path": "Practitioner.identifier.type",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/namingsystem-identifier-system-type"
+      },
+      "fixed": {
+        "kind": "pattern",
+        "value": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+              "code": "LN"
+            }
+          ]
+        }
+      },
+      "short": "Tipo do identificador de outros profissionais"
+    },
+    {
+      "id": "Practitioner.identifier:identificadorOutrosProfissionais.type.coding",
+      "path": "Practitioner.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "short": "Codificação do tipo do identificador de outros profissionais"
+    },
+    {
+      "id": "Practitioner.identifier:identificadorOutrosProfissionais.type.coding.system",
+      "path": "Practitioner.identifier.type.coding.system",
+      "min": 1,
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador de outros profissionais"
+    },
+    {
+      "id": "Practitioner.identifier:identificadorOutrosProfissionais.type.coding.code",
+      "path": "Practitioner.identifier.type.coding.code",
+      "min": 1,
+      "fixed": {
+        "kind": "pattern",
+        "value": "LN"
+      },
+      "short": "Código da codificação do tipo do identificador de outros profissionais"
+    },
+    {
+      "id": "Practitioner.identifier:identificadorOutrosProfissionais.system",
+      "path": "Practitioner.identifier.system",
+      "min": 1,
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BROutrosProfissionais"
+      },
+      "short": "Sistema do identificador de outros profissionais"
+    },
+    {
+      "id": "Practitioner.identifier:identificadorOutrosProfissionais.value",
+      "path": "Practitioner.identifier.value",
+      "min": 1,
+      "short": "Valor do identificador de outros profissionais"
+    },
+    {
+      "id": "Practitioner.active",
+      "path": "Practitioner.active",
+      "min": 1,
+      "mustSupport": true,
+      "short": "Indica se o registro deste profissional está ativo"
+    }
+  ]
+}

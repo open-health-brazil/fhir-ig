@@ -1,0 +1,65 @@
+{
+  "key": "br-core-povoitinerante",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-povoitinerante",
+  "version": "1.7.1",
+  "name": "BRCorePovoItinerante",
+  "title": "Extensão de povo itinerante do Core do Brasil",
+  "status": "active",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Este perfil de extensão representa um povo itinerante com a qual uma pessoa se associa",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Extension.extension",
+      "path": "Extension.extension",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Extension"
+        }
+      ],
+      "sliced": true,
+      "short": "Extension"
+    },
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "http://hl7.org/fhirpath/System.String"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-povoitinerante"
+      },
+      "short": "identifies the meaning of the extension"
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRPovoItinerante"
+      },
+      "short": "Value of extension"
+    }
+  ]
+}

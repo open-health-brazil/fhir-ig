@@ -1,0 +1,47 @@
+{
+  "key": "BRTurno",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRTurno",
+  "version": "1.0",
+  "name": "BRTurno",
+  "title": "Turno",
+  "status": "draft",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": "Extensão para descrever uma unidade de tempo referenciada pelo UCUM.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.id",
+      "path": "Extension.id",
+      "max": "0"
+    },
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRTurno"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRTurno"
+      },
+      "short": "Turno do dia"
+    }
+  ]
+}

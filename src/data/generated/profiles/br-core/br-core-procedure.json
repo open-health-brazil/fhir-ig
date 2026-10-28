@@ -1,0 +1,361 @@
+{
+  "key": "br-core-procedure",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-procedure",
+  "version": "1.7.1",
+  "name": "BRCoreProcedure",
+  "title": null,
+  "status": "active",
+  "kind": "resource",
+  "type": "Procedure",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Procedure",
+  "description": "Este recurso descreve uma ação que é ou foi realizada em ou para um paciente. Pode ser uma intervenção física como uma operação, ou menos invasiva como serviços de longo prazo, aconselhamento ou hipnoterapia",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Procedure.basedOn",
+      "path": "Procedure.basedOn",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-careplan",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-servicerequest"
+          ]
+        }
+      ],
+      "short": "Referência aos planos de cuidado/requisições para este procedimento"
+    },
+    {
+      "id": "Procedure.partOf",
+      "path": "Procedure.partOf",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-procedure",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationadministration"
+          ]
+        }
+      ],
+      "short": "Referência aos procedimento/observação/administração de medicamentos asssociados a este procedimento"
+    },
+    {
+      "id": "Procedure.statusReason",
+      "path": "Procedure.statusReason",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRMotivoProcedimentoNaoRealizado"
+      },
+      "short": "Motivo para o status atual"
+    },
+    {
+      "id": "Procedure.category",
+      "path": "Procedure.category",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCategoriaProcedimento"
+      },
+      "short": "Classificação do procedimento"
+    },
+    {
+      "id": "Procedure.code",
+      "path": "Procedure.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRProcedimentosNacionais"
+      },
+      "short": "Código do procedimento"
+    },
+    {
+      "id": "Procedure.subject",
+      "path": "Procedure.subject",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient"
+          ]
+        }
+      ],
+      "short": "Referência ao paciente"
+    },
+    {
+      "id": "Procedure.encounter",
+      "path": "Procedure.encounter",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-encounter"
+          ]
+        }
+      ],
+      "short": "Referência ao atendimento associado a este procedimento"
+    },
+    {
+      "id": "Procedure.recorder",
+      "path": "Procedure.recorder",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole"
+          ]
+        }
+      ],
+      "short": "Referência à paciente/pessoa/profissional que registrou o procedimento"
+    },
+    {
+      "id": "Procedure.asserter",
+      "path": "Procedure.asserter",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole"
+          ]
+        }
+      ],
+      "short": "Referência à paciente/pessoa/profissional que atestou este procedimento"
+    },
+    {
+      "id": "Procedure.performer",
+      "path": "Procedure.performer",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Executante do procedimento"
+    },
+    {
+      "id": "Procedure.performer.actor",
+      "path": "Procedure.performer.actor",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization",
+            "http://hl7.org/fhir/StructureDefinition/Device"
+          ]
+        }
+      ],
+      "short": "Referência do profispaciente/pessoa/profissional executante"
+    },
+    {
+      "id": "Procedure.performer.onBehalfOf",
+      "path": "Procedure.performer.onBehalfOf",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Referência à organização associada a este procedimento"
+    },
+    {
+      "id": "Procedure.location",
+      "path": "Procedure.location",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-location"
+          ]
+        }
+      ],
+      "short": "Referência ao local de execução do procedimento"
+    },
+    {
+      "id": "Procedure.reasonCode",
+      "path": "Procedure.reasonCode",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRProblemaDiagnostico"
+      },
+      "short": "Motivo da realização do procedimento"
+    },
+    {
+      "id": "Procedure.reasonReference",
+      "path": "Procedure.reasonReference",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-condition",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-procedure",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-diagnosticreport",
+            "http://hl7.org/fhir/StructureDefinition/DocumentReference"
+          ]
+        }
+      ],
+      "short": "Referência à condição, observação, procedimento, relatório diagnóstico, documento clínico associado ao procedimento"
+    },
+    {
+      "id": "Procedure.bodySite",
+      "path": "Procedure.bodySite",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+      },
+      "short": "Local anatômico associado ao procedimento"
+    },
+    {
+      "id": "Procedure.outcome",
+      "path": "Procedure.outcome",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRDesfechoProcedimento"
+      },
+      "short": "Resultado do procedimento"
+    },
+    {
+      "id": "Procedure.report",
+      "path": "Procedure.report",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-diagnosticreport",
+            "http://hl7.org/fhir/StructureDefinition/DocumentReference",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-composition"
+          ]
+        }
+      ],
+      "short": "Referência ao documento/relatório resultantes deste procedimento"
+    },
+    {
+      "id": "Procedure.complication",
+      "path": "Procedure.complication",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRProblemaDiagnostico"
+      },
+      "short": "Complicações deste procedimento"
+    },
+    {
+      "id": "Procedure.complicationDetail",
+      "path": "Procedure.complicationDetail",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-condition"
+          ]
+        }
+      ],
+      "short": "Referência às condições resultantes das complicações dete procedimento"
+    },
+    {
+      "id": "Procedure.usedReference",
+      "path": "Procedure.usedReference",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medication",
+            "http://hl7.org/fhir/StructureDefinition/Substance"
+          ]
+        }
+      ],
+      "short": "Referência ao dispositivo/medicamento/substância utilizados durante o procedimento"
+    }
+  ]
+}

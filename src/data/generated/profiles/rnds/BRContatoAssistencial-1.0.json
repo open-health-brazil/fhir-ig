@@ -1,0 +1,919 @@
+{
+  "key": "BRContatoAssistencial-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRContatoAssistencial-1.0",
+  "version": "2.1.0",
+  "name": "BRContatoAssistencial",
+  "title": "Contato Assistencial",
+  "status": "active",
+  "kind": "resource",
+  "type": "Encounter",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Encounter",
+  "description": "Resumo ou sumário referente a um atendimento ininterrupto dispensado a um indivíduo em uma mesma modalidade assistencial e em um mesmo estabelecimento de saúde, gerado após a conclusão deste atendimento.",
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Encounter.identifier",
+      "path": "Encounter.identifier",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.status",
+      "path": "Encounter.status",
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BREstadoContatoAssistencial-1.0"
+      },
+      "short": "finished | entered-in-error"
+    },
+    {
+      "id": "Encounter.statusHistory",
+      "path": "Encounter.statusHistory",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.class",
+      "path": "Encounter.class",
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRModalidadeAssistencial-1.0"
+      },
+      "short": "Modalidade Assistencial"
+    },
+    {
+      "id": "Encounter.class.system",
+      "path": "Encounter.class.system",
+      "min": 1
+    },
+    {
+      "id": "Encounter.class.code",
+      "path": "Encounter.class.code",
+      "min": 1
+    },
+    {
+      "id": "Encounter.class.display",
+      "path": "Encounter.class.display",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.class.userSelected",
+      "path": "Encounter.class.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.classHistory",
+      "path": "Encounter.classHistory",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.type",
+      "path": "Encounter.type",
+      "max": "1",
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRModalidadeTelessaude"
+      },
+      "short": "Modalidade de Telessaúde"
+    },
+    {
+      "id": "Encounter.type.coding",
+      "path": "Encounter.type.coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Encounter.type.coding.system",
+      "path": "Encounter.type.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Encounter.type.coding.code",
+      "path": "Encounter.type.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Encounter.type.coding.display",
+      "path": "Encounter.type.coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.type.coding.userSelected",
+      "path": "Encounter.type.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.type.text",
+      "path": "Encounter.type.text",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.serviceType",
+      "path": "Encounter.serviceType",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.priority",
+      "path": "Encounter.priority",
+      "min": 1,
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRCaraterAtendimento-1.0"
+      },
+      "short": "Caráter do Atendimento"
+    },
+    {
+      "id": "Encounter.priority.coding",
+      "path": "Encounter.priority.coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Encounter.priority.coding.system",
+      "path": "Encounter.priority.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Encounter.priority.coding.code",
+      "path": "Encounter.priority.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Encounter.priority.coding.display",
+      "path": "Encounter.priority.coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.priority.coding.userSelected",
+      "path": "Encounter.priority.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.priority.text",
+      "path": "Encounter.priority.text",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.subject",
+      "path": "Encounter.subject",
+      "min": 1,
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true
+    },
+    {
+      "id": "Encounter.subject.extension",
+      "path": "Encounter.subject.extension",
+      "sliced": true
+    },
+    {
+      "id": "Encounter.subject.extension:unidentifiedPatient",
+      "path": "Encounter.subject.extension",
+      "sliceName": "unidentifiedPatient",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuoNaoIdentificado-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Dados do Indivíduo Não Identificado"
+    },
+    {
+      "id": "Encounter.subject.reference",
+      "path": "Encounter.subject.reference",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.subject.type",
+      "path": "Encounter.subject.type",
+      "max": "0",
+      "fixed": {
+        "kind": "fixed",
+        "value": "Patient"
+      }
+    },
+    {
+      "id": "Encounter.subject.identifier.use",
+      "path": "Encounter.subject.identifier.use",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.subject.identifier.type",
+      "path": "Encounter.subject.identifier.type",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.subject.identifier.system",
+      "path": "Encounter.subject.identifier.system",
+      "min": 1
+    },
+    {
+      "id": "Encounter.subject.identifier.value",
+      "path": "Encounter.subject.identifier.value",
+      "min": 1
+    },
+    {
+      "id": "Encounter.subject.identifier.period",
+      "path": "Encounter.subject.identifier.period",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.subject.identifier.assigner",
+      "path": "Encounter.subject.identifier.assigner",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.subject.display",
+      "path": "Encounter.subject.display",
+      "max": "0",
+      "short": "Nome ou descrição do sujeito"
+    },
+    {
+      "id": "Encounter.episodeOfCare",
+      "path": "Encounter.episodeOfCare",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.basedOn",
+      "path": "Encounter.basedOn",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.participant",
+      "path": "Encounter.participant",
+      "mustSupport": true,
+      "short": "Participante(s) do Contato Assistencial"
+    },
+    {
+      "id": "Encounter.participant.extension:function",
+      "path": "Encounter.participant.extension",
+      "sliceName": "function",
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROcupacao-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true
+    },
+    {
+      "id": "Encounter.participant.extension:team",
+      "path": "Encounter.participant.extension",
+      "sliceName": "team",
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIdentificacaoEquipe-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Equipe"
+    },
+    {
+      "id": "Encounter.participant.type",
+      "path": "Encounter.participant.type",
+      "max": "1",
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRResponsabilidadeParticipante-1.0"
+      },
+      "short": "Tipo de Participação"
+    },
+    {
+      "id": "Encounter.participant.type.coding.system",
+      "path": "Encounter.participant.type.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Encounter.participant.type.coding.code",
+      "path": "Encounter.participant.type.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Encounter.participant.type.coding.display",
+      "path": "Encounter.participant.type.coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.participant.type.coding.userSelected",
+      "path": "Encounter.participant.type.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.participant.type.text",
+      "path": "Encounter.participant.type.text",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.participant.period",
+      "path": "Encounter.participant.period",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.participant.individual",
+      "path": "Encounter.participant.individual",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProfissional-1.0",
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLotacaoProfissional-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Participante"
+    },
+    {
+      "id": "Encounter.participant.individual.reference",
+      "path": "Encounter.participant.individual.reference",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.participant.individual.type",
+      "path": "Encounter.participant.individual.type",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.participant.individual.identifier",
+      "path": "Encounter.participant.individual.identifier",
+      "min": 1
+    },
+    {
+      "id": "Encounter.participant.individual.identifier.use",
+      "path": "Encounter.participant.individual.identifier.use",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.participant.individual.identifier.type",
+      "path": "Encounter.participant.individual.identifier.type",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.participant.individual.identifier.system",
+      "path": "Encounter.participant.individual.identifier.system",
+      "min": 1
+    },
+    {
+      "id": "Encounter.participant.individual.identifier.value",
+      "path": "Encounter.participant.individual.identifier.value",
+      "min": 1
+    },
+    {
+      "id": "Encounter.participant.individual.identifier.period",
+      "path": "Encounter.participant.individual.identifier.period",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.participant.individual.identifier.assigner",
+      "path": "Encounter.participant.individual.identifier.assigner",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.participant.individual.display",
+      "path": "Encounter.participant.individual.display",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.appointment",
+      "path": "Encounter.appointment",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.period",
+      "path": "Encounter.period",
+      "min": 1,
+      "mustSupport": true,
+      "short": "Início e Término do Contato Assistencial"
+    },
+    {
+      "id": "Encounter.period.start",
+      "path": "Encounter.period.start",
+      "min": 1,
+      "mustSupport": true,
+      "short": "Momento da Admissão"
+    },
+    {
+      "id": "Encounter.period.end",
+      "path": "Encounter.period.end",
+      "mustSupport": true,
+      "short": "Momento do Desfecho"
+    },
+    {
+      "id": "Encounter.length",
+      "path": "Encounter.length",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.reasonCode",
+      "path": "Encounter.reasonCode",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.reasonReference",
+      "path": "Encounter.reasonReference",
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRObservacaoDescritiva-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Motivo do Atendimento"
+    },
+    {
+      "id": "Encounter.reasonReference.reference",
+      "path": "Encounter.reasonReference.reference",
+      "min": 1
+    },
+    {
+      "id": "Encounter.reasonReference.type",
+      "path": "Encounter.reasonReference.type",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.reasonReference.identifier",
+      "path": "Encounter.reasonReference.identifier",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.reasonReference.display",
+      "path": "Encounter.reasonReference.display",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.diagnosis",
+      "path": "Encounter.diagnosis",
+      "min": 1,
+      "sliced": true,
+      "short": "Diagnósticos Secundários, Outros Problemas e Procedimentos"
+    },
+    {
+      "id": "Encounter.diagnosis:problemAndDiagnosis",
+      "path": "Encounter.diagnosis",
+      "sliceName": "problemAndDiagnosis",
+      "mustSupport": true,
+      "short": "Diagnósticos/Problemas Avaliados"
+    },
+    {
+      "id": "Encounter.diagnosis:problemAndDiagnosis.condition",
+      "path": "Encounter.diagnosis.condition",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProblemaDiagnostico"
+          ]
+        }
+      ],
+      "mustSupport": true
+    },
+    {
+      "id": "Encounter.diagnosis:problemAndDiagnosis.condition.reference",
+      "path": "Encounter.diagnosis.condition.reference",
+      "min": 1
+    },
+    {
+      "id": "Encounter.diagnosis:problemAndDiagnosis.condition.type",
+      "path": "Encounter.diagnosis.condition.type",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.diagnosis:problemAndDiagnosis.condition.identifier",
+      "path": "Encounter.diagnosis.condition.identifier",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.diagnosis:problemAndDiagnosis.condition.display",
+      "path": "Encounter.diagnosis.condition.display",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.diagnosis:problemAndDiagnosis.use",
+      "path": "Encounter.diagnosis.use",
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRPapelProblemaDiagnostico"
+      }
+    },
+    {
+      "id": "Encounter.diagnosis:problemAndDiagnosis.use.coding",
+      "path": "Encounter.diagnosis.use.coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Encounter.diagnosis:problemAndDiagnosis.use.coding.system",
+      "path": "Encounter.diagnosis.use.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Encounter.diagnosis:problemAndDiagnosis.use.coding.code",
+      "path": "Encounter.diagnosis.use.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Encounter.diagnosis:problemAndDiagnosis.use.coding.userSelected",
+      "path": "Encounter.diagnosis.use.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.diagnosis:problemAndDiagnosis.use.text",
+      "path": "Encounter.diagnosis.use.text",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.diagnosis:procedure",
+      "path": "Encounter.diagnosis",
+      "sliceName": "procedure",
+      "min": 1,
+      "mustSupport": true,
+      "short": "Procedimento(s) Realizado(s)"
+    },
+    {
+      "id": "Encounter.diagnosis:procedure.condition",
+      "path": "Encounter.diagnosis.condition",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRProcedimentoRealizado-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true
+    },
+    {
+      "id": "Encounter.diagnosis:procedure.condition.extension",
+      "path": "Encounter.diagnosis.condition.extension",
+      "min": 1
+    },
+    {
+      "id": "Encounter.diagnosis:procedure.condition.extension:financier",
+      "path": "Encounter.diagnosis.condition.extension",
+      "sliceName": "financier",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRFinanciamento-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true
+    },
+    {
+      "id": "Encounter.diagnosis:procedure.condition.reference",
+      "path": "Encounter.diagnosis.condition.reference",
+      "min": 1
+    },
+    {
+      "id": "Encounter.diagnosis:procedure.condition.identifier",
+      "path": "Encounter.diagnosis.condition.identifier",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.diagnosis:procedure.condition.display",
+      "path": "Encounter.diagnosis.condition.display",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.diagnosis:procedure.use",
+      "path": "Encounter.diagnosis.use",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.diagnosis:procedure.rank",
+      "path": "Encounter.diagnosis.rank",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.account",
+      "path": "Encounter.account",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.hospitalization",
+      "path": "Encounter.hospitalization",
+      "min": 1,
+      "mustSupport": true
+    },
+    {
+      "id": "Encounter.hospitalization.extension:otherInformations",
+      "path": "Encounter.hospitalization.extension",
+      "sliceName": "otherInformations",
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BROutrasInformacoes"
+          ]
+        }
+      ],
+      "short": "Outras Informações"
+    },
+    {
+      "id": "Encounter.hospitalization.preAdmissionIdentifier",
+      "path": "Encounter.hospitalization.preAdmissionIdentifier",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.hospitalization.origin",
+      "path": "Encounter.hospitalization.origin",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.hospitalization.admitSource",
+      "path": "Encounter.hospitalization.admitSource",
+      "min": 1,
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRProcedencia-1.0"
+      },
+      "short": "Procedência"
+    },
+    {
+      "id": "Encounter.hospitalization.admitSource.coding",
+      "path": "Encounter.hospitalization.admitSource.coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Encounter.hospitalization.admitSource.coding.system",
+      "path": "Encounter.hospitalization.admitSource.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Encounter.hospitalization.admitSource.coding.code",
+      "path": "Encounter.hospitalization.admitSource.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Encounter.hospitalization.admitSource.coding.display",
+      "path": "Encounter.hospitalization.admitSource.coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.hospitalization.admitSource.coding.userSelected",
+      "path": "Encounter.hospitalization.admitSource.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.hospitalization.admitSource.text",
+      "path": "Encounter.hospitalization.admitSource.text",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.hospitalization.reAdmission",
+      "path": "Encounter.hospitalization.reAdmission",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.hospitalization.dietPreference",
+      "path": "Encounter.hospitalization.dietPreference",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.hospitalization.specialCourtesy",
+      "path": "Encounter.hospitalization.specialCourtesy",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.hospitalization.specialArrangement",
+      "path": "Encounter.hospitalization.specialArrangement",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.hospitalization.destination",
+      "path": "Encounter.hospitalization.destination",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.hospitalization.dischargeDisposition",
+      "path": "Encounter.hospitalization.dischargeDisposition",
+      "min": 1,
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRMotivoDesfecho-1.0"
+      },
+      "short": "Motivo de Desfecho"
+    },
+    {
+      "id": "Encounter.hospitalization.dischargeDisposition.coding",
+      "path": "Encounter.hospitalization.dischargeDisposition.coding",
+      "min": 1,
+      "max": "1"
+    },
+    {
+      "id": "Encounter.hospitalization.dischargeDisposition.coding.system",
+      "path": "Encounter.hospitalization.dischargeDisposition.coding.system",
+      "min": 1
+    },
+    {
+      "id": "Encounter.hospitalization.dischargeDisposition.coding.code",
+      "path": "Encounter.hospitalization.dischargeDisposition.coding.code",
+      "min": 1
+    },
+    {
+      "id": "Encounter.hospitalization.dischargeDisposition.coding.display",
+      "path": "Encounter.hospitalization.dischargeDisposition.coding.display",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.hospitalization.dischargeDisposition.coding.userSelected",
+      "path": "Encounter.hospitalization.dischargeDisposition.coding.userSelected",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.hospitalization.dischargeDisposition.text",
+      "path": "Encounter.hospitalization.dischargeDisposition.text",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.location",
+      "path": "Encounter.location",
+      "max": "1",
+      "mustSupport": true,
+      "short": "Local de Atendimento"
+    },
+    {
+      "id": "Encounter.location.location",
+      "path": "Encounter.location.location",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRLocalAtendimento-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true
+    },
+    {
+      "id": "Encounter.location.location.reference",
+      "path": "Encounter.location.location.reference",
+      "min": 1
+    },
+    {
+      "id": "Encounter.location.location.type",
+      "path": "Encounter.location.location.type",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.location.location.identifier",
+      "path": "Encounter.location.location.identifier",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.location.location.display",
+      "path": "Encounter.location.location.display",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.location.status",
+      "path": "Encounter.location.status",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.location.physicalType",
+      "path": "Encounter.location.physicalType",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.location.period",
+      "path": "Encounter.location.period",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.serviceProvider",
+      "path": "Encounter.serviceProvider",
+      "min": 1,
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPessoaJuridicaProfissionalLiberal-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Estabelecimento de Saúde do Contato Assistencial"
+    },
+    {
+      "id": "Encounter.serviceProvider.reference",
+      "path": "Encounter.serviceProvider.reference",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.serviceProvider.type",
+      "path": "Encounter.serviceProvider.type",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.serviceProvider.identifier",
+      "path": "Encounter.serviceProvider.identifier",
+      "min": 1
+    },
+    {
+      "id": "Encounter.serviceProvider.identifier.use",
+      "path": "Encounter.serviceProvider.identifier.use",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.serviceProvider.identifier.type",
+      "path": "Encounter.serviceProvider.identifier.type",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.serviceProvider.identifier.system",
+      "path": "Encounter.serviceProvider.identifier.system",
+      "min": 1
+    },
+    {
+      "id": "Encounter.serviceProvider.identifier.value",
+      "path": "Encounter.serviceProvider.identifier.value",
+      "min": 1
+    },
+    {
+      "id": "Encounter.serviceProvider.identifier.period",
+      "path": "Encounter.serviceProvider.identifier.period",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.serviceProvider.identifier.assigner",
+      "path": "Encounter.serviceProvider.identifier.assigner",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.serviceProvider.display",
+      "path": "Encounter.serviceProvider.display",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.partOf",
+      "path": "Encounter.partOf",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRContatoAssistencial-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Contato Assistencial anterior"
+    },
+    {
+      "id": "Encounter.partOf.reference",
+      "path": "Encounter.partOf.reference",
+      "min": 1
+    },
+    {
+      "id": "Encounter.partOf.type",
+      "path": "Encounter.partOf.type",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.partOf.identifier",
+      "path": "Encounter.partOf.identifier",
+      "max": "0"
+    },
+    {
+      "id": "Encounter.partOf.display",
+      "path": "Encounter.partOf.display",
+      "max": "0"
+    }
+  ]
+}

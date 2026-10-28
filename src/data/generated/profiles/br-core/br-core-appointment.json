@@ -1,0 +1,211 @@
+{
+  "key": "br-core-appointment",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-appointment",
+  "version": "1.7.1",
+  "name": "BRCoreAppointment",
+  "title": "br-core-appointment",
+  "status": "active",
+  "kind": "resource",
+  "type": "Appointment",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Appointment",
+  "description": "Perfil brasileiro do recurso FHIR R4 Appointment, utilizado para agendamento de atendimentos, procedimentos e interações de cuidado no contexto do SUS, RNDS, saúde suplementar e privada, incluindo marcação, remarcação e cancelamento, bem como gestão de participantes, datas/horários e justificativas.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Appointment.identifier",
+      "path": "Appointment.identifier",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Identificadores do agendamento"
+    },
+    {
+      "id": "Appointment.status",
+      "path": "Appointment.status",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "mustSupport": true,
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/appointmentstatus"
+      },
+      "short": "Status do agendamento"
+    },
+    {
+      "id": "Appointment.cancelationReason",
+      "path": "Appointment.cancelationReason",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/appointment-cancellation-reason"
+      },
+      "short": "Motivo do cancelamento"
+    },
+    {
+      "id": "Appointment.serviceCategory",
+      "path": "Appointment.serviceCategory",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRModalidadeAssistencial"
+      },
+      "short": "Categoria do serviço"
+    },
+    {
+      "id": "Appointment.serviceType",
+      "path": "Appointment.serviceType",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRProcedimentosNacionais"
+      },
+      "short": "Tipo de serviço"
+    },
+    {
+      "id": "Appointment.specialty",
+      "path": "Appointment.specialty",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BROcupacao"
+      },
+      "short": "Especialidade clínica"
+    },
+    {
+      "id": "Appointment.appointmentType",
+      "path": "Appointment.appointmentType",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://terminology.hl7.org/ValueSet/v2-0276"
+      },
+      "short": "Tipo do agendamento"
+    },
+    {
+      "id": "Appointment.reasonCode",
+      "path": "Appointment.reasonCode",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCID10"
+      },
+      "short": "Motivo (código) do agendamento"
+    },
+    {
+      "id": "Appointment.participant.type",
+      "path": "Appointment.participant.type",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoParticipante"
+      },
+      "short": "Tipo de participante"
+    },
+    {
+      "id": "Appointment.participant.actor",
+      "path": "Appointment.participant.actor",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-healthcareservice"
+          ]
+        }
+      ],
+      "short": "Entidade participante"
+    },
+    {
+      "id": "Appointment.participant.required",
+      "path": "Appointment.participant.required",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/participantrequired"
+      },
+      "short": "Participação obrigatória?"
+    },
+    {
+      "id": "Appointment.participant.status",
+      "path": "Appointment.participant.status",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/participationstatus"
+      },
+      "short": "Status de participação"
+    }
+  ]
+}

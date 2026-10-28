@@ -1,0 +1,29 @@
+{
+  "fhirVersion": "4.0.1",
+  "packages": [
+    {
+      "id": "br.gov.saude.br-core.fhir",
+      "version": "1.7.1"
+    },
+    {
+      "id": "br.gov.saude.terminologia.fhir",
+      "version": "1.1.0"
+    },
+    {
+      "id": "br.gov.saude.ips.fhir",
+      "version": "1.0.0"
+    }
+  ],
+  "brCoreDeclaredDependencies": {
+    "hl7.fhir.r4.core": "4.0.1",
+    "hl7.terminology.r4": "7.4.0",
+    "hl7.fhir.uv.extensions.r4": "5.3.0",
+    "br.gov.saude.terminologia.fhir": "1.2.0",
+    "br.gov.saude.ips.fhir": "1.0.0"
+  },
+  "rnds": {
+    "source": "https://fhir.simplifier.net/RedeNacionaldeDadosemSaude",
+    "capturedAt": "2026-10-28",
+    "count": 104
+  }
+}

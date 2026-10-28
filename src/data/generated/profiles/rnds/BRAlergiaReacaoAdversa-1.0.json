@@ -1,0 +1,726 @@
+{
+  "key": "BRAlergiaReacaoAdversa-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAlergiaReacaoAdversa-1.0",
+  "version": "01.10",
+  "name": "BRAlergiaReacaoAdversa",
+  "title": "Alergia ou Reação Adversa",
+  "status": "draft",
+  "kind": "resource",
+  "type": "AllergyIntolerance",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance",
+  "description": null,
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "AllergyIntolerance.contained",
+      "path": "AllergyIntolerance.contained",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Resource"
+        }
+      ],
+      "short": "Contained, inline Resources"
+    },
+    {
+      "id": "AllergyIntolerance.identifier",
+      "path": "AllergyIntolerance.identifier",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "External ids for this item"
+    },
+    {
+      "id": "AllergyIntolerance.verificationStatus",
+      "path": "AllergyIntolerance.verificationStatus",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRGrauCertezaAlergiasReacoesAdversas-1.0"
+      },
+      "short": "Grau de Certeza"
+    },
+    {
+      "id": "AllergyIntolerance.verificationStatus.coding",
+      "path": "AllergyIntolerance.verificationStatus.coding",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Code defined by a terminology system"
+    },
+    {
+      "id": "AllergyIntolerance.verificationStatus.coding.system",
+      "path": "AllergyIntolerance.verificationStatus.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "short": "Identity of the terminology system"
+    },
+    {
+      "id": "AllergyIntolerance.verificationStatus.coding.code",
+      "path": "AllergyIntolerance.verificationStatus.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "short": "Symbol in syntax defined by the system"
+    },
+    {
+      "id": "AllergyIntolerance.verificationStatus.coding.display",
+      "path": "AllergyIntolerance.verificationStatus.coding.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Representation defined by the system"
+    },
+    {
+      "id": "AllergyIntolerance.verificationStatus.coding.userSelected",
+      "path": "AllergyIntolerance.verificationStatus.coding.userSelected",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "If this coding was chosen directly by the user"
+    },
+    {
+      "id": "AllergyIntolerance.verificationStatus.text",
+      "path": "AllergyIntolerance.verificationStatus.text",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Plain text representation of the concept"
+    },
+    {
+      "id": "AllergyIntolerance.type",
+      "path": "AllergyIntolerance.type",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/allergy-intolerance-type|4.0.1"
+      },
+      "short": "Tipo de Reação"
+    },
+    {
+      "id": "AllergyIntolerance.category",
+      "path": "AllergyIntolerance.category",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRCategoriaAgenteAlergiasReacoesAdversas-1.0"
+      },
+      "short": "Categoria do Agente Causador"
+    },
+    {
+      "id": "AllergyIntolerance.criticality",
+      "path": "AllergyIntolerance.criticality",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRCriticidadeAlergiasReacoesAdversas-1.0"
+      },
+      "short": "Criticidade"
+    },
+    {
+      "id": "AllergyIntolerance.code",
+      "path": "AllergyIntolerance.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRAlergenos-1.0"
+      },
+      "short": "Agente ou Substância"
+    },
+    {
+      "id": "AllergyIntolerance.code.coding",
+      "path": "AllergyIntolerance.code.coding",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Agente ou Substância Codificada"
+    },
+    {
+      "id": "AllergyIntolerance.code.coding.system",
+      "path": "AllergyIntolerance.code.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "short": "Identity of the terminology system"
+    },
+    {
+      "id": "AllergyIntolerance.code.coding.code",
+      "path": "AllergyIntolerance.code.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "short": "Symbol in syntax defined by the system"
+    },
+    {
+      "id": "AllergyIntolerance.code.coding.display",
+      "path": "AllergyIntolerance.code.coding.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Representation defined by the system"
+    },
+    {
+      "id": "AllergyIntolerance.code.coding.userSelected",
+      "path": "AllergyIntolerance.code.coding.userSelected",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "If this coding was chosen directly by the user"
+    },
+    {
+      "id": "AllergyIntolerance.code.text",
+      "path": "AllergyIntolerance.code.text",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "mustSupport": true,
+      "short": "Agente ou Substância em Texto Livre"
+    },
+    {
+      "id": "AllergyIntolerance.patient",
+      "path": "AllergyIntolerance.patient",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Indivíduo"
+    },
+    {
+      "id": "AllergyIntolerance.patient.reference",
+      "path": "AllergyIntolerance.patient.reference",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Literal reference, Relative, internal or absolute URL"
+    },
+    {
+      "id": "AllergyIntolerance.patient.type",
+      "path": "AllergyIntolerance.patient.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+      },
+      "short": "Type the reference refers to (e.g. \"Patient\")"
+    },
+    {
+      "id": "AllergyIntolerance.patient.identifier",
+      "path": "AllergyIntolerance.patient.identifier",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Logical reference, when literal reference is not known"
+    },
+    {
+      "id": "AllergyIntolerance.patient.identifier.use",
+      "path": "AllergyIntolerance.patient.identifier.use",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "short": "usual | official | temp | secondary | old (If known)"
+    },
+    {
+      "id": "AllergyIntolerance.patient.identifier.type",
+      "path": "AllergyIntolerance.patient.identifier.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-type"
+      },
+      "short": "Description of identifier"
+    },
+    {
+      "id": "AllergyIntolerance.patient.identifier.system",
+      "path": "AllergyIntolerance.patient.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "mustSupport": true,
+      "short": "The namespace for the identifier value"
+    },
+    {
+      "id": "AllergyIntolerance.patient.identifier.value",
+      "path": "AllergyIntolerance.patient.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "mustSupport": true,
+      "short": "The value that is unique"
+    },
+    {
+      "id": "AllergyIntolerance.patient.identifier.period",
+      "path": "AllergyIntolerance.patient.identifier.period",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Period"
+        }
+      ],
+      "short": "Time period when id is/was valid for use"
+    },
+    {
+      "id": "AllergyIntolerance.patient.identifier.assigner",
+      "path": "AllergyIntolerance.patient.identifier.assigner",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Organization that issued id (may be just text)"
+    },
+    {
+      "id": "AllergyIntolerance.patient.display",
+      "path": "AllergyIntolerance.patient.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Text alternative for the resource"
+    },
+    {
+      "id": "AllergyIntolerance.encounter",
+      "path": "AllergyIntolerance.encounter",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Encounter"
+          ]
+        }
+      ],
+      "short": "Encounter when the allergy or intolerance was asserted"
+    },
+    {
+      "id": "AllergyIntolerance.onset[x]",
+      "path": "AllergyIntolerance.onset[x]",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "Data da Instalação da Alergia ou Reação Adversa"
+    },
+    {
+      "id": "AllergyIntolerance.recordedDate",
+      "path": "AllergyIntolerance.recordedDate",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "Date first version of the resource instance was recorded"
+    },
+    {
+      "id": "AllergyIntolerance.recorder",
+      "path": "AllergyIntolerance.recorder",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
+            "http://hl7.org/fhir/StructureDefinition/PractitionerRole",
+            "http://hl7.org/fhir/StructureDefinition/Patient",
+            "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+          ]
+        }
+      ],
+      "short": "Who recorded the sensitivity"
+    },
+    {
+      "id": "AllergyIntolerance.asserter",
+      "path": "AllergyIntolerance.asserter",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Patient",
+            "http://hl7.org/fhir/StructureDefinition/RelatedPerson",
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
+            "http://hl7.org/fhir/StructureDefinition/PractitionerRole"
+          ]
+        }
+      ],
+      "short": "Source of the information about the allergy"
+    },
+    {
+      "id": "AllergyIntolerance.lastOccurrence",
+      "path": "AllergyIntolerance.lastOccurrence",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "Date(/time) of last known occurrence of a reaction"
+    },
+    {
+      "id": "AllergyIntolerance.note",
+      "path": "AllergyIntolerance.note",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Annotation"
+        }
+      ],
+      "short": "Evolução da Alergia ou Reação Adversa"
+    },
+    {
+      "id": "AllergyIntolerance.note.author[x]",
+      "path": "AllergyIntolerance.note.author[x]",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
+            "http://hl7.org/fhir/StructureDefinition/Patient",
+            "http://hl7.org/fhir/StructureDefinition/RelatedPerson",
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        },
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Individual responsible for the annotation"
+    },
+    {
+      "id": "AllergyIntolerance.note.time",
+      "path": "AllergyIntolerance.note.time",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "When the annotation was made"
+    },
+    {
+      "id": "AllergyIntolerance.reaction",
+      "path": "AllergyIntolerance.reaction",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Adverse Reaction Events linked to exposure to substance"
+    },
+    {
+      "id": "AllergyIntolerance.reaction.substance",
+      "path": "AllergyIntolerance.reaction.substance",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/substance-code"
+      },
+      "short": "Specific substance or pharmaceutical product considered to be responsible for event"
+    },
+    {
+      "id": "AllergyIntolerance.reaction.manifestation",
+      "path": "AllergyIntolerance.reaction.manifestation",
+      "min": 1,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRReacoesAdversasMedDRA-1.0"
+      },
+      "short": "Sinais e sintomas clínicos associados ao evento"
+    },
+    {
+      "id": "AllergyIntolerance.reaction.manifestation.coding",
+      "path": "AllergyIntolerance.reaction.manifestation.coding",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Code defined by a terminology system"
+    },
+    {
+      "id": "AllergyIntolerance.reaction.manifestation.coding.system",
+      "path": "AllergyIntolerance.reaction.manifestation.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "short": "Identity of the terminology system"
+    },
+    {
+      "id": "AllergyIntolerance.reaction.manifestation.coding.code",
+      "path": "AllergyIntolerance.reaction.manifestation.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "short": "Symbol in syntax defined by the system"
+    },
+    {
+      "id": "AllergyIntolerance.reaction.manifestation.coding.display",
+      "path": "AllergyIntolerance.reaction.manifestation.coding.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Representation defined by the system"
+    },
+    {
+      "id": "AllergyIntolerance.reaction.manifestation.coding.userSelected",
+      "path": "AllergyIntolerance.reaction.manifestation.coding.userSelected",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "If this coding was chosen directly by the user"
+    },
+    {
+      "id": "AllergyIntolerance.reaction.description",
+      "path": "AllergyIntolerance.reaction.description",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Description of the event as a whole"
+    },
+    {
+      "id": "AllergyIntolerance.reaction.onset",
+      "path": "AllergyIntolerance.reaction.onset",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "Date(/time) when manifestations showed"
+    },
+    {
+      "id": "AllergyIntolerance.reaction.severity",
+      "path": "AllergyIntolerance.reaction.severity",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/reaction-event-severity|4.0.1"
+      },
+      "short": "mild | moderate | severe (of event as a whole)"
+    },
+    {
+      "id": "AllergyIntolerance.reaction.exposureRoute",
+      "path": "AllergyIntolerance.reaction.exposureRoute",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/route-codes"
+      },
+      "short": "How the subject was exposed to the substance"
+    },
+    {
+      "id": "AllergyIntolerance.reaction.note",
+      "path": "AllergyIntolerance.reaction.note",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Annotation"
+        }
+      ],
+      "short": "Text about event not captured in other fields"
+    }
+  ]
+}

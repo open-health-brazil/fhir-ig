@@ -1,0 +1,28 @@
+{
+  "fhirVersion": "4.0.1",
+  "packages": [
+    {
+      "id": "br.gov.saude.br-core.fhir",
+      "version": "1.7.1",
+      "track": true,
+      "packageList": "https://hl7.org.br/fhir/core/package-list.json",
+      "tarball": "https://hl7.org.br/fhir/core/v{version}/package.tgz"
+    },
+    {
+      "id": "br.gov.saude.terminologia.fhir",
+      "version": "1.1.0",
+      "track": true,
+      "packageList": "https://terminologia.saude.gov.br/fhir/package-list.json",
+      "tarball": "https://terminologia.saude.gov.br/fhir/v{version}/package.tgz",
+      "note": "BR Core 1.7.1 declares 1.2.0, which is not published (404, checked 2026-10-28). Pinned to 1.1.0, the current release."
+    },
+    {
+      "id": "br.gov.saude.ips.fhir",
+      "version": "1.0.0",
+      "track": false,
+      "packageList": "https://hl7.org.br/fhir/ips/package-list.json",
+      "tarball": "https://hl7.org.br/fhir/ips/v{version}/package.tgz",
+      "note": "Only needed by the validator. Pinned to the version BR Core declares, not the latest."
+    }
+  ]
+}

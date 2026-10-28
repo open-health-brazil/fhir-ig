@@ -1,0 +1,194 @@
+{
+  "key": "br-core-servicerequest",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-servicerequest",
+  "version": "1.7.1",
+  "name": "BRCoreServiceRequest",
+  "title": null,
+  "status": "active",
+  "kind": "resource",
+  "type": "ServiceRequest",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/ServiceRequest",
+  "description": "Este recurso restringe o recurso [ServiceRequest](https://hl7.org/fhir/R4/servicerequest.html) que registra uma solicitação de serviço, como investigações diagnósticas, tratamentos ou operações a serem realizadas",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "ServiceRequest.basedOn",
+      "path": "ServiceRequest.basedOn",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-careplan",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-servicerequest",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationrequest"
+          ]
+        }
+      ],
+      "short": "Referência aos planos de cuidado/solicitações/medicamentos associados a esta requisição"
+    },
+    {
+      "id": "ServiceRequest.category",
+      "path": "ServiceRequest.category",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCategoriaProcedimento"
+      },
+      "short": "Categoria desta requisição"
+    },
+    {
+      "id": "ServiceRequest.priority",
+      "path": "ServiceRequest.priority",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRCaraterAtendimentoMIRA"
+      },
+      "short": "Prioridade desta requisição"
+    },
+    {
+      "id": "ServiceRequest.code",
+      "path": "ServiceRequest.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRProcedimentosNacionais"
+      },
+      "short": "Código do procedimento solicitado"
+    },
+    {
+      "id": "ServiceRequest.subject",
+      "path": "ServiceRequest.subject",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "http://hl7.org/fhir/StructureDefinition/Group",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-location",
+            "http://hl7.org/fhir/StructureDefinition/Device"
+          ]
+        }
+      ],
+      "short": "Referência ao paciente/grupo/localidade/dispositivo associado a esta requisição"
+    },
+    {
+      "id": "ServiceRequest.requester",
+      "path": "ServiceRequest.requester",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson"
+          ]
+        }
+      ],
+      "short": "Referência ao profissional/organização/paciente/dispotivo/pessoa relacionada que está solicitando o procedimento"
+    },
+    {
+      "id": "ServiceRequest.performer",
+      "path": "ServiceRequest.performer",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization",
+            "http://hl7.org/fhir/StructureDefinition/CareTeam",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-healthcareservice",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient",
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-relatedperson"
+          ]
+        }
+      ],
+      "short": "Referência ao profissional executante solicitado"
+    },
+    {
+      "id": "ServiceRequest.locationReference",
+      "path": "ServiceRequest.locationReference",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-location"
+          ]
+        }
+      ],
+      "short": "ReferÇencia à localização solicitada"
+    },
+    {
+      "id": "ServiceRequest.reasonReference",
+      "path": "ServiceRequest.reasonReference",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-condition",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation",
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-diagnosticreport",
+            "http://hl7.org/fhir/StructureDefinition/DocumentReference"
+          ]
+        }
+      ],
+      "short": "Referência à explicação/justificativa para serviço ou procedimento"
+    },
+    {
+      "id": "ServiceRequest.bodySite",
+      "path": "ServiceRequest.bodySite",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+      },
+      "short": "Local anatômico associado ao procedimento"
+    }
+  ]
+}

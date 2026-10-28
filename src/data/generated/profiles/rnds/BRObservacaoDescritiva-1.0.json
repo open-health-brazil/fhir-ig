@@ -1,0 +1,599 @@
+{
+  "key": "BRObservacaoDescritiva-1.0",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRObservacaoDescritiva-1.0",
+  "version": "1.1.0",
+  "name": "BRObservacaoDescritiva",
+  "title": "Observação Descritiva",
+  "status": "draft",
+  "kind": "resource",
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "description": "Descrições textuais simples sobre um paciente.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Observation.identifier",
+      "path": "Observation.identifier",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Business Identifier for observation"
+    },
+    {
+      "id": "Observation.basedOn",
+      "path": "Observation.basedOn",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/CarePlan",
+            "http://hl7.org/fhir/StructureDefinition/DeviceRequest",
+            "http://hl7.org/fhir/StructureDefinition/ImmunizationRecommendation",
+            "http://hl7.org/fhir/StructureDefinition/MedicationRequest",
+            "http://hl7.org/fhir/StructureDefinition/NutritionOrder",
+            "http://hl7.org/fhir/StructureDefinition/ServiceRequest"
+          ]
+        }
+      ],
+      "short": "Fulfills plan, proposal or order"
+    },
+    {
+      "id": "Observation.partOf",
+      "path": "Observation.partOf",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/MedicationAdministration",
+            "http://hl7.org/fhir/StructureDefinition/MedicationDispense",
+            "http://hl7.org/fhir/StructureDefinition/MedicationStatement",
+            "http://hl7.org/fhir/StructureDefinition/Procedure",
+            "http://hl7.org/fhir/StructureDefinition/Immunization",
+            "http://hl7.org/fhir/StructureDefinition/ImagingStudy"
+          ]
+        }
+      ],
+      "short": "Part of referenced event"
+    },
+    {
+      "id": "Observation.status",
+      "path": "Observation.status",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BREstadoObservacao-1.0"
+      },
+      "short": "Estado da Observação"
+    },
+    {
+      "id": "Observation.category",
+      "path": "Observation.category",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "preferred",
+        "valueSet": "http://hl7.org/fhir/ValueSet/observation-category"
+      },
+      "short": "Classification of  type of observation"
+    },
+    {
+      "id": "Observation.code",
+      "path": "Observation.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://www.saude.gov.br/fhir/r4/ValueSet/BRTipoObservacao-1.0"
+      },
+      "fixed": {
+        "kind": "fixed",
+        "value": {
+          "coding": [
+            {
+              "system": "https://loinc.org/",
+              "code": "48767-8"
+            }
+          ]
+        }
+      },
+      "short": "Tipo da Observação"
+    },
+    {
+      "id": "Observation.code.coding",
+      "path": "Observation.code.coding",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Code defined by a terminology system"
+    },
+    {
+      "id": "Observation.code.coding.system",
+      "path": "Observation.code.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "short": "Identity of the terminology system"
+    },
+    {
+      "id": "Observation.code.coding.code",
+      "path": "Observation.code.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "short": "Symbol in syntax defined by the system"
+    },
+    {
+      "id": "Observation.code.coding.display",
+      "path": "Observation.code.coding.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Representation defined by the system"
+    },
+    {
+      "id": "Observation.code.coding.userSelected",
+      "path": "Observation.code.coding.userSelected",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "boolean"
+        }
+      ],
+      "short": "If this coding was chosen directly by the user"
+    },
+    {
+      "id": "Observation.code.text",
+      "path": "Observation.code.text",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Plain text representation of the concept"
+    },
+    {
+      "id": "Observation.subject",
+      "path": "Observation.subject",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Who and/or what the observation is about"
+    },
+    {
+      "id": "Observation.subject.type",
+      "path": "Observation.subject.type",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+      },
+      "fixed": {
+        "kind": "fixed",
+        "value": "Patient"
+      },
+      "short": "Type the reference refers to (e.g. \"Patient\")"
+    },
+    {
+      "id": "Observation.subject.identifier.use",
+      "path": "Observation.subject.identifier.use",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "short": "usual | official | temp | secondary | old (If known)"
+    },
+    {
+      "id": "Observation.subject.identifier.type",
+      "path": "Observation.subject.identifier.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-type"
+      },
+      "short": "Description of identifier"
+    },
+    {
+      "id": "Observation.subject.identifier.system",
+      "path": "Observation.subject.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "mustSupport": true,
+      "short": "The namespace for the identifier value"
+    },
+    {
+      "id": "Observation.subject.identifier.value",
+      "path": "Observation.subject.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "mustSupport": true,
+      "short": "The value that is unique"
+    },
+    {
+      "id": "Observation.subject.identifier.period",
+      "path": "Observation.subject.identifier.period",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Period"
+        }
+      ],
+      "short": "Time period when id is/was valid for use"
+    },
+    {
+      "id": "Observation.subject.identifier.assigner",
+      "path": "Observation.subject.identifier.assigner",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Organization that issued id (may be just text)"
+    },
+    {
+      "id": "Observation.subject.display",
+      "path": "Observation.subject.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Text alternative for the resource"
+    },
+    {
+      "id": "Observation.focus",
+      "path": "Observation.focus",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Resource"
+          ]
+        }
+      ],
+      "short": "What the observation is about, when it is not about the subject of record"
+    },
+    {
+      "id": "Observation.encounter",
+      "path": "Observation.encounter",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Encounter"
+          ]
+        }
+      ],
+      "short": "Healthcare event during which this observation is made"
+    },
+    {
+      "id": "Observation.effective[x]",
+      "path": "Observation.effective[x]",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "dateTime"
+        },
+        {
+          "code": "Period"
+        },
+        {
+          "code": "Timing"
+        },
+        {
+          "code": "instant"
+        }
+      ],
+      "short": "Clinically relevant time/time-period for observation"
+    },
+    {
+      "id": "Observation.issued",
+      "path": "Observation.issued",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "instant"
+        }
+      ],
+      "short": "Data/hora da Observação"
+    },
+    {
+      "id": "Observation.performer",
+      "path": "Observation.performer",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
+            "http://hl7.org/fhir/StructureDefinition/PractitionerRole",
+            "http://hl7.org/fhir/StructureDefinition/Organization",
+            "http://hl7.org/fhir/StructureDefinition/CareTeam",
+            "http://hl7.org/fhir/StructureDefinition/Patient",
+            "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+          ]
+        }
+      ],
+      "short": "Who is responsible for the observation"
+    },
+    {
+      "id": "Observation.value[x]",
+      "path": "Observation.value[x]",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Observação"
+    },
+    {
+      "id": "Observation.dataAbsentReason",
+      "path": "Observation.dataAbsentReason",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/data-absent-reason"
+      },
+      "short": "Why the result is missing"
+    },
+    {
+      "id": "Observation.interpretation",
+      "path": "Observation.interpretation",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/observation-interpretation"
+      },
+      "short": "High, low, normal, etc."
+    },
+    {
+      "id": "Observation.note",
+      "path": "Observation.note",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Annotation"
+        }
+      ],
+      "short": "Comments about the observation"
+    },
+    {
+      "id": "Observation.bodySite",
+      "path": "Observation.bodySite",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/body-site"
+      },
+      "short": "Observed body part"
+    },
+    {
+      "id": "Observation.method",
+      "path": "Observation.method",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/observation-methods"
+      },
+      "short": "How it was done"
+    },
+    {
+      "id": "Observation.specimen",
+      "path": "Observation.specimen",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Specimen"
+          ]
+        }
+      ],
+      "short": "Specimen used for this observation"
+    },
+    {
+      "id": "Observation.device",
+      "path": "Observation.device",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Device",
+            "http://hl7.org/fhir/StructureDefinition/DeviceMetric"
+          ]
+        }
+      ],
+      "short": "(Measurement) Device"
+    },
+    {
+      "id": "Observation.referenceRange",
+      "path": "Observation.referenceRange",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Provides guide for interpretation"
+    },
+    {
+      "id": "Observation.hasMember",
+      "path": "Observation.hasMember",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Observation",
+            "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+            "http://hl7.org/fhir/StructureDefinition/MolecularSequence"
+          ]
+        }
+      ],
+      "short": "Related resource that belongs to the Observation group"
+    },
+    {
+      "id": "Observation.derivedFrom",
+      "path": "Observation.derivedFrom",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/DocumentReference",
+            "http://hl7.org/fhir/StructureDefinition/ImagingStudy",
+            "http://hl7.org/fhir/StructureDefinition/Media",
+            "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+            "http://hl7.org/fhir/StructureDefinition/Observation",
+            "http://hl7.org/fhir/StructureDefinition/MolecularSequence"
+          ]
+        }
+      ],
+      "short": "Related measurements the observation is made from"
+    },
+    {
+      "id": "Observation.component",
+      "path": "Observation.component",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Component results"
+    }
+  ]
+}

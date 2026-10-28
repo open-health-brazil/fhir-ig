@@ -1,0 +1,430 @@
+{
+  "key": "BRResumoEvolucaoClinica",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRResumoEvolucaoClinica",
+  "version": "1.0.0",
+  "name": "BRResumoEvolucaoClinica",
+  "title": "Resumo da Evolução Clínica",
+  "status": "draft",
+  "kind": "resource",
+  "type": "ClinicalImpression",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/ClinicalImpression",
+  "description": "Descrição da evolução clínica do indivíduo.",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "ClinicalImpression.identifier",
+      "path": "ClinicalImpression.identifier",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Business identifier"
+    },
+    {
+      "id": "ClinicalImpression.status",
+      "path": "ClinicalImpression.status",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/clinicalimpression-status|4.0.1"
+      },
+      "fixed": {
+        "kind": "fixed",
+        "value": "completed"
+      },
+      "short": "in-progress | completed | entered-in-error"
+    },
+    {
+      "id": "ClinicalImpression.statusReason",
+      "path": "ClinicalImpression.statusReason",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example"
+      },
+      "short": "Reason for current status"
+    },
+    {
+      "id": "ClinicalImpression.code",
+      "path": "ClinicalImpression.code",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example"
+      },
+      "short": "Kind of assessment performed"
+    },
+    {
+      "id": "ClinicalImpression.description",
+      "path": "ClinicalImpression.description",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Why/how the assessment was performed"
+    },
+    {
+      "id": "ClinicalImpression.subject",
+      "path": "ClinicalImpression.subject",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0"
+          ]
+        }
+      ],
+      "mustSupport": true,
+      "short": "Patient or group assessed"
+    },
+    {
+      "id": "ClinicalImpression.subject.reference",
+      "path": "ClinicalImpression.subject.reference",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Literal reference, Relative, internal or absolute URL"
+    },
+    {
+      "id": "ClinicalImpression.subject.type",
+      "path": "ClinicalImpression.subject.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/resource-types"
+      },
+      "short": "Type the reference refers to (e.g. \"Patient\")"
+    },
+    {
+      "id": "ClinicalImpression.subject.identifier.use",
+      "path": "ClinicalImpression.subject.identifier.use",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "short": "usual | official | temp | secondary | old (If known)"
+    },
+    {
+      "id": "ClinicalImpression.subject.identifier.type",
+      "path": "ClinicalImpression.subject.identifier.type",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "extensible",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-type"
+      },
+      "short": "Description of identifier"
+    },
+    {
+      "id": "ClinicalImpression.subject.identifier.system",
+      "path": "ClinicalImpression.subject.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "mustSupport": true,
+      "short": "The namespace for the identifier value"
+    },
+    {
+      "id": "ClinicalImpression.subject.identifier.value",
+      "path": "ClinicalImpression.subject.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "mustSupport": true,
+      "short": "The value that is unique"
+    },
+    {
+      "id": "ClinicalImpression.subject.identifier.period",
+      "path": "ClinicalImpression.subject.identifier.period",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Period"
+        }
+      ],
+      "short": "Time period when id is/was valid for use"
+    },
+    {
+      "id": "ClinicalImpression.subject.identifier.assigner",
+      "path": "ClinicalImpression.subject.identifier.assigner",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Organization"
+          ]
+        }
+      ],
+      "short": "Organization that issued id (may be just text)"
+    },
+    {
+      "id": "ClinicalImpression.subject.display",
+      "path": "ClinicalImpression.subject.display",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Text alternative for the resource"
+    },
+    {
+      "id": "ClinicalImpression.encounter",
+      "path": "ClinicalImpression.encounter",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Encounter"
+          ]
+        }
+      ],
+      "short": "Encounter created as part of"
+    },
+    {
+      "id": "ClinicalImpression.effective[x]",
+      "path": "ClinicalImpression.effective[x]",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "dateTime"
+        },
+        {
+          "code": "Period"
+        }
+      ],
+      "short": "Time of assessment"
+    },
+    {
+      "id": "ClinicalImpression.date",
+      "path": "ClinicalImpression.date",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "When the assessment was documented"
+    },
+    {
+      "id": "ClinicalImpression.assessor",
+      "path": "ClinicalImpression.assessor",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Practitioner",
+            "http://hl7.org/fhir/StructureDefinition/PractitionerRole"
+          ]
+        }
+      ],
+      "short": "The clinician performing the assessment"
+    },
+    {
+      "id": "ClinicalImpression.previous",
+      "path": "ClinicalImpression.previous",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/ClinicalImpression"
+          ]
+        }
+      ],
+      "short": "Reference to last assessment"
+    },
+    {
+      "id": "ClinicalImpression.problem",
+      "path": "ClinicalImpression.problem",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Condition",
+            "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance"
+          ]
+        }
+      ],
+      "short": "Relevant impressions of patient state"
+    },
+    {
+      "id": "ClinicalImpression.investigation",
+      "path": "ClinicalImpression.investigation",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "One or more sets of investigations (signs, symptoms, etc.)"
+    },
+    {
+      "id": "ClinicalImpression.protocol",
+      "path": "ClinicalImpression.protocol",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "short": "Clinical Protocol followed"
+    },
+    {
+      "id": "ClinicalImpression.summary",
+      "path": "ClinicalImpression.summary",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Resumo da evolução clínica"
+    },
+    {
+      "id": "ClinicalImpression.finding",
+      "path": "ClinicalImpression.finding",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "BackboneElement"
+        }
+      ],
+      "short": "Possible or likely findings and diagnoses"
+    },
+    {
+      "id": "ClinicalImpression.prognosisCodeableConcept",
+      "path": "ClinicalImpression.prognosisCodeableConcept",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "http://hl7.org/fhir/ValueSet/clinicalimpression-prognosis"
+      },
+      "short": "Estimate of likely outcome"
+    },
+    {
+      "id": "ClinicalImpression.prognosisReference",
+      "path": "ClinicalImpression.prognosisReference",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/RiskAssessment"
+          ]
+        }
+      ],
+      "short": "RiskAssessment expressing likely outcome"
+    },
+    {
+      "id": "ClinicalImpression.supportingInfo",
+      "path": "ClinicalImpression.supportingInfo",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "http://hl7.org/fhir/StructureDefinition/Resource"
+          ]
+        }
+      ],
+      "short": "Information supporting the clinical impression"
+    },
+    {
+      "id": "ClinicalImpression.note",
+      "path": "ClinicalImpression.note",
+      "min": 0,
+      "max": "0",
+      "types": [
+        {
+          "code": "Annotation"
+        }
+      ],
+      "short": "Comments made about the ClinicalImpression"
+    }
+  ]
+}

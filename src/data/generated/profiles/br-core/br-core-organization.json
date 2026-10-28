@@ -1,0 +1,841 @@
+{
+  "key": "br-core-organization",
+  "source": {
+    "kind": "package",
+    "package": "br.gov.saude.br-core.fhir",
+    "version": "1.7.1"
+  },
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization",
+  "version": "1.7.1",
+  "name": "BRCoreOrganization",
+  "title": null,
+  "status": "active",
+  "kind": "resource",
+  "type": "Organization",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Organization",
+  "description": "Este perfil representa um agrupamento formal ou informal reconhecido de pessoas ou organizações com o propósito de alcançar alguma forma de ação coletiva. Inclui empresas, instituições, corporações, departamentos, grupos comunitários, grupos de práticas de saúde, planos de saúde, empresas fabricantes de produtos medicinais, entre outros",
+  "hasSnapshot": true,
+  "elements": [
+    {
+      "id": "Organization.extension",
+      "path": "Organization.extension",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Extension"
+        }
+      ],
+      "sliced": true,
+      "short": "Extension"
+    },
+    {
+      "id": "Organization.extension:subType",
+      "path": "Organization.extension",
+      "sliceName": "subType",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization-subtype"
+          ]
+        }
+      ],
+      "short": "Subtipo do estabelecimento de saúde"
+    },
+    {
+      "id": "Organization.extension:memberOf",
+      "path": "Organization.extension",
+      "sliceName": "memberOf",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization-memberof"
+          ]
+        }
+      ],
+      "short": "Organização à qual o estabelecimento está vinculado"
+    },
+    {
+      "id": "Organization.identifier",
+      "path": "Organization.identifier",
+      "min": 1,
+      "max": "*",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "sliced": true,
+      "short": "Identificadores externos para este recurso"
+    },
+    {
+      "id": "Organization.identifier:cnes",
+      "path": "Organization.identifier",
+      "sliceName": "cnes",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Identificador do estabelecimento (CNES)"
+    },
+    {
+      "id": "Organization.identifier:cnes.use",
+      "path": "Organization.identifier.use",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "fixed": {
+        "kind": "fixed",
+        "value": "official"
+      },
+      "short": "Uso do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnes.type",
+      "path": "Organization.identifier.type",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-type"
+      },
+      "short": "Tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnes.type.coding",
+      "path": "Organization.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnes.type.coding.system",
+      "path": "Organization.identifier.type.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnes.type.coding.code",
+      "path": "Organization.identifier.type.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "PRN"
+      },
+      "short": "Código da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnes.system",
+      "path": "Organization.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/fhir/sid/cnes"
+      },
+      "short": "Sistema do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnes.value",
+      "path": "Organization.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Valor do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnes.assigner",
+      "path": "Organization.identifier.assigner",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Referência à organização que atribuiu o identificador ao estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf",
+      "path": "Organization.identifier",
+      "sliceName": "cpf",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Identificador do estabelecimento (CPF)"
+    },
+    {
+      "id": "Organization.identifier:cpf.use",
+      "path": "Organization.identifier.use",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "fixed": {
+        "kind": "fixed",
+        "value": "official"
+      },
+      "short": "Uso do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf.type",
+      "path": "Organization.identifier.type",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-type"
+      },
+      "short": "Tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf.type.coding",
+      "path": "Organization.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf.type.coding.system",
+      "path": "Organization.identifier.type.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf.type.coding.code",
+      "path": "Organization.identifier.type.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "short": "Código da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf.system",
+      "path": "Organization.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/fhir/sid/cpf"
+      },
+      "short": "Sistema do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf.value",
+      "path": "Organization.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Valor do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cpf.assigner",
+      "path": "Organization.identifier.assigner",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Referência à organização que atribuiu o identificador ao estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj",
+      "path": "Organization.identifier",
+      "sliceName": "cnpj",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Identificador do estabelecimento (CNPJ)"
+    },
+    {
+      "id": "Organization.identifier:cnpj.use",
+      "path": "Organization.identifier.use",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "fixed": {
+        "kind": "fixed",
+        "value": "official"
+      },
+      "short": "Uso do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj.type",
+      "path": "Organization.identifier.type",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-type"
+      },
+      "short": "Tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj.type.coding",
+      "path": "Organization.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj.type.coding.system",
+      "path": "Organization.identifier.type.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj.type.coding.code",
+      "path": "Organization.identifier.type.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "short": "Código da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj.system",
+      "path": "Organization.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/fhir/sid/cnpj"
+      },
+      "short": "Sistema do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj.value",
+      "path": "Organization.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Valor do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:cnpj.assigner",
+      "path": "Organization.identifier.assigner",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Referência à organização que atribuiu o identificador ao estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:dsei",
+      "path": "Organization.identifier",
+      "sliceName": "dsei",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Identificador do Distrito Sanitário Especial Indígena (DSEI)"
+    },
+    {
+      "id": "Organization.identifier:dsei.use",
+      "path": "Organization.identifier.use",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "fixed": {
+        "kind": "fixed",
+        "value": "official"
+      },
+      "short": "Uso do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:dsei.type",
+      "path": "Organization.identifier.type",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-type"
+      },
+      "short": "Tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:dsei.type.coding",
+      "path": "Organization.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:dsei.type.coding.system",
+      "path": "Organization.identifier.type.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:dsei.type.coding.code",
+      "path": "Organization.identifier.type.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "short": "Código da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:dsei.system",
+      "path": "Organization.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/fhir/sid/dsei"
+      },
+      "short": "Sistema do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:dsei.value",
+      "path": "Organization.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Valor do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:dsei.assigner",
+      "path": "Organization.identifier.assigner",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Referência à organização que atribuiu o identificador ao estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:poloBase",
+      "path": "Organization.identifier",
+      "sliceName": "poloBase",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Identifier"
+        }
+      ],
+      "short": "Identificador do Polo Base"
+    },
+    {
+      "id": "Organization.identifier:poloBase.use",
+      "path": "Organization.identifier.use",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-use|4.0.1"
+      },
+      "fixed": {
+        "kind": "fixed",
+        "value": "official"
+      },
+      "short": "Uso do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:poloBase.type",
+      "path": "Organization.identifier.type",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "required",
+        "valueSet": "http://hl7.org/fhir/ValueSet/identifier-type"
+      },
+      "short": "Tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:poloBase.type.coding",
+      "path": "Organization.identifier.type.coding",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Coding"
+        }
+      ],
+      "short": "Codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:poloBase.type.coding.system",
+      "path": "Organization.identifier.type.coding.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      "short": "Sistema da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:poloBase.type.coding.code",
+      "path": "Organization.identifier.type.coding.code",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "code"
+        }
+      ],
+      "short": "Código da codificação do tipo do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:poloBase.system",
+      "path": "Organization.identifier.system",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "uri"
+        }
+      ],
+      "fixed": {
+        "kind": "fixed",
+        "value": "https://saude.gov.br/fhir/sid/polo-base"
+      },
+      "short": "Sistema do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:poloBase.value",
+      "path": "Organization.identifier.value",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Valor do identificador do estabelecimento"
+    },
+    {
+      "id": "Organization.identifier:poloBase.assigner",
+      "path": "Organization.identifier.assigner",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Referência à organização que atribuiu o identificador ao estabelecimento"
+    },
+    {
+      "id": "Organization.type",
+      "path": "Organization.type",
+      "min": 0,
+      "max": "*",
+      "types": [
+        {
+          "code": "CodeableConcept"
+        }
+      ],
+      "binding": {
+        "strength": "example",
+        "valueSet": "https://terminologia.saude.gov.br/fhir/ValueSet/BRTipoEstabelecimentoSaude"
+      },
+      "short": "Tipo da organização"
+    },
+    {
+      "id": "Organization.name",
+      "path": "Organization.name",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Nome da organização"
+    },
+    {
+      "id": "Organization.alias",
+      "path": "Organization.alias",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "string"
+        }
+      ],
+      "short": "Razão social da organização"
+    },
+    {
+      "id": "Organization.address",
+      "path": "Organization.address",
+      "min": 1,
+      "max": "1",
+      "types": [
+        {
+          "code": "Address"
+        }
+      ],
+      "short": "Endereço"
+    },
+    {
+      "id": "Organization.address.extension:aldeia",
+      "path": "Organization.address.extension",
+      "sliceName": "aldeia",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-address-aldeia"
+          ]
+        }
+      ],
+      "short": "Aldeia indígena do endereço"
+    },
+    {
+      "id": "Organization.address.extension:municipio",
+      "path": "Organization.address.extension",
+      "sliceName": "municipio",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Extension",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-address-municipio"
+          ]
+        }
+      ],
+      "short": "Município do endereço (código IBGE)"
+    },
+    {
+      "id": "Organization.partOf",
+      "path": "Organization.partOf",
+      "min": 0,
+      "max": "1",
+      "types": [
+        {
+          "code": "Reference",
+          "profiles": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        }
+      ],
+      "short": "Referência à Organização associada (p.ex. Mantenedora)"
+    }
+  ]
+}

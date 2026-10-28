@@ -1,0 +1,44 @@
+{
+  "key": "BRDataPrescricao",
+  "source": {
+    "kind": "vendor",
+    "name": "rnds",
+    "capturedAt": "2026-10-28"
+  },
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRDataPrescricao",
+  "version": null,
+  "name": "BRDataPrescricao",
+  "title": "Data de Prescrição",
+  "status": "draft",
+  "kind": "complex-type",
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "description": null,
+  "hasSnapshot": false,
+  "elements": [
+    {
+      "id": "Extension.id",
+      "path": "Extension.id",
+      "max": "0"
+    },
+    {
+      "id": "Extension.url",
+      "path": "Extension.url",
+      "fixed": {
+        "kind": "fixed",
+        "value": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRDataPrescricao"
+      }
+    },
+    {
+      "id": "Extension.value[x]",
+      "path": "Extension.value[x]",
+      "min": 1,
+      "types": [
+        {
+          "code": "dateTime"
+        }
+      ],
+      "short": "Data de prescrição do medicamento"
+    }
+  ]
+}
