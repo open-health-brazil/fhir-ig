@@ -1,0 +1,334 @@
+---
+title: Prescrição e dispensação de medicamentos
+description: Como montar os documentos REPM e REDFM da RNDS e a prescrição no BR Core, com MedicationRequest, MedicationDispense, Medication e a Ontologia Brasileira de Medicamentos.
+sidebar:
+  order: 4
+---
+
+import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+import ProfileTable from '../../../../components/ProfileTable.astro';
+import FhirExample from '../../../../components/FhirExample.astro';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+A prescrição e a dispensação de medicamentos chegam à Rede Nacional de Dados em Saúde (RNDS) como dois documentos
+separados:
+
+- **Registro Eletrônico da Prescrição de Medicamentos (REPM)**: o que o profissional prescreveu, para quem, por qual
+  motivo e com qual posologia.
+- **Registro Eletrônico de Dispensação ou Fornecimento de Medicamentos (REDFM)**: o que a farmácia ou a unidade de
+  saúde entregou, de qual lote, para quem e com base em qual prescrição.
+
+Os dois modelos de informação foram instituídos pela
+[Portaria GM/MS nº 6.100, de 17 de dezembro de 2024](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2024/prt6100_18_12_2024.html),
+que lista o conteúdo mínimo de cada um (arts. 2º e 3º). A portaria determina o envio regular à RNDS das prescrições e
+dispensações feitas em meio eletrônico e remete os prazos a um plano operativo tripartite (art. 6º). Esta página não
+afirma prazo. Antes dela, a
+[Portaria SAES/MS nº 50, de 9 de fevereiro de 2022](https://www.in.gov.br/web/dou/-/portaria-saes/ms-n-50-de-9-de-fevereiro-de-2022-379573004)
+havia instituído os primeiros modelos, Registro de Prescrição de Medicamentos (RPM) e Registro de Dispensação de
+Medicamentos (RDM), que o [guia da RNDS](https://rnds-guia.saude.gov.br/docs/rpm/objetivo-rpm/) ainda descreve. Para
+a visão de gestão, veja [Prescrição e dispensação (gestão)](/fhir-ig/gestao/casos-de-uso/prescricao-e-dispensacao/).
+
+## Quando usar
+
+- **RNDS (REPM e REDFM)**: para enviar à RNDS uma prescrição emitida ou uma dispensação realizada. Use os perfis
+  `RNDS*` publicados em 10 de dezembro de 2024 (versão 2.0.0), que estão com status ativo.
+- **BR Core (`br-core-medicationrequest`, `br-core-medicationdispense`, `br-core-medication`)**: para trocar
+  prescrições e dispensações entre sistemas brasileiros fora da RNDS, por exemplo entre o prontuário e a farmácia
+  hospitalar, ou para compor outros documentos, como a seção de prescrição da alta do
+  [Sumário de Alta](/fhir-ig/desenvolvimento/casos-de-uso/sumario-de-alta/).
+- **BR Core (`br-core-medicationstatement`, `br-core-medicationadministration`)**: para registrar medicamentos em uso
+  relatados pelo paciente e administrações feitas pela equipe. Não há equivalente RNDS para esses dois.
+
+## Estrutura dos documentos RNDS
+
+Os dois documentos seguem o padrão de envio da RNDS: um `Bundle` do tipo `document` cuja primeira entrada é a
+`Composition`, seguida dos recursos que ela referencia. O envio em si está descrito em
+[Envio de documentos](/fhir-ig/desenvolvimento/envio-de-documentos/).
+
+### REPM
+
+```text
+Bundle (type = document)
+├── Composition  RNDSRegistroEletronicoPrescricaoMedicamentos   type = BRTipoDocumento#RPM
+│   ├── section "Motivo(s) da Prescrição"   code = LOINC 75310-3 → Condition (BRProblemaDiagnostico)
+│   └── section "Medicamentos Prescritos"   code = LOINC 57828-6 → MedicationRequest (RNDSPrescricaoMedicamento)
+├── Condition           BRProblemaDiagnostico       (CID-10 ou CIAP-2)
+├── MedicationRequest   RNDSPrescricaoMedicamento   (um por item prescrito)
+├── Medication          RNDSMedicamento             (código da OBM)
+├── PractitionerRole    RNDSLotacaoProfissional     (prescritor)
+├── Practitioner        RNDSProfissional
+└── Organization        RNDSEstabelecimentoSaude
+```
+
+### REDFM
+
+```text
+Bundle (type = document)
+├── Composition  RNDSRegistroEletronicoDispensacaoFornecimentoMedicamentos   type = BRTipoDocumento#RDM
+│   ├── section "Medicamentos Dispensados"     code = LOINC 56445-0 → MedicationDispense
+│   └── section "Informações da Prescrição"    code = LOINC 57828-6   (só se a prescrição não está na RNDS)
+│       ├── section "Motivo(s) da Prescrição"  code = LOINC 75310-3 → Condition
+│       └── section "Medicamentos Prescritos"  code = LOINC 57828-6 → MedicationRequest
+├── MedicationDispense  RNDSDispensacaoMedicamento
+├── Medication          RNDSMedicamento             (com lote e validade)
+├── PractitionerRole    RNDSLotacaoProfissional     (dispensador)
+├── Practitioner        RNDSProfissional
+└── Organization        RNDSEstabelecimentoSaude
+```
+
+As seções são fatiadas pelo `code` (discriminador `value` em `section.code`), então o código LOINC de cada seção é o
+que importa. O título também é fixo e deve ser enviado como está no perfil.
+
+## Perfis RNDS
+
+### Documento de prescrição (REPM)
+
+<ProfileHeader source="rnds" id="RNDSRegistroEletronicoPrescricaoMedicamentos" />
+<ProfileTable source="rnds" id="RNDSRegistroEletronicoPrescricaoMedicamentos" hideProhibited />
+
+### Item prescrito
+
+<ProfileHeader source="rnds" id="RNDSPrescricaoMedicamento" />
+<ProfileTable source="rnds" id="RNDSPrescricaoMedicamento" hideProhibited />
+
+### Documento de dispensação (REDFM)
+
+<ProfileHeader source="rnds" id="RNDSRegistroEletronicoDispensacaoFornecimentoMedicamentos" />
+<ProfileTable source="rnds" id="RNDSRegistroEletronicoDispensacaoFornecimentoMedicamentos" hideProhibited />
+
+### Item dispensado
+
+<ProfileHeader source="rnds" id="RNDSDispensacaoMedicamento" />
+<ProfileTable source="rnds" id="RNDSDispensacaoMedicamento" hideProhibited />
+
+### Medicamento
+
+<ProfileHeader source="rnds" id="RNDSMedicamento" />
+<ProfileTable source="rnds" id="RNDSMedicamento" hideProhibited />
+
+### Prescritor e dispensador
+
+O `requester` da prescrição e o `performer.actor` da dispensação apontam para um `PractitionerRole` no perfil
+`RNDSLotacaoProfissional`, incluído no próprio Bundle. Ele liga o profissional (`RNDSProfissional`) ao
+estabelecimento (`RNDSEstabelecimentoSaude`) e informa a ocupação pela Classificação Brasileira de Ocupações (CBO).
+
+<ProfileHeader source="rnds" id="RNDSLotacaoProfissional" />
+<ProfileTable source="rnds" id="RNDSLotacaoProfissional" hideProhibited />
+
+<ProfileHeader source="rnds" id="RNDSProfissional" />
+<ProfileTable source="rnds" id="RNDSProfissional" only="Practitioner.identifier:cpf" />
+
+### Modelos anteriores (rascunho)
+
+<Aside type="caution" title="Perfis em rascunho, substituídos pelos RNDS*">
+O pacote da RNDS ainda publica a primeira geração de perfis de medicamentos, ligada aos modelos RPM e RDM de 2022.
+Todos estão com status `draft` e não devem ser usados em novas integrações:
+
+| Perfil | Recurso | Situação |
+|---|---|---|
+| `BRRegistroPrescricaoMedicamento` | `Composition` | Substituído por `RNDSRegistroEletronicoPrescricaoMedicamentos` |
+| `BRPrescricaoMedicamento` | `MedicationRequest` | Substituído por `RNDSPrescricaoMedicamento` |
+| `BRRegistroDispensacaoMedicamento` | `Composition` | Substituído por `RNDSRegistroEletronicoDispensacaoFornecimentoMedicamentos` |
+| `BRDispensacaoMedicamento` | `MedicationDispense` | Substituído por `RNDSDispensacaoMedicamento` |
+| `BRMedicamento` | `Medication` | Substituído por `RNDSMedicamento` |
+
+O `BRDispensacaoMedicamento` nem chega a ser utilizável: o validador oficial não consegue gerar o snapshot dele, porque
+`authorizingPrescription` aponta para `BRRegistroPrescricaoMedicamento`, que é uma `Composition`, e não um
+`MedicationRequest`. O `RNDSDispensacaoMedicamento` corrige isso apontando para `RNDSPrescricaoMedicamento`.
+
+Os documentos [RAC](/fhir-ig/desenvolvimento/casos-de-uso/atendimento-clinico/) e
+[SA](/fhir-ig/desenvolvimento/casos-de-uso/sumario-de-alta/) ainda referenciam o `BRRegistroPrescricaoMedicamento` nas
+seções de prescrição, por identificador lógico.
+</Aside>
+
+## Perfis BR Core
+
+<ProfileHeader source="br-core" id="br-core-medicationrequest" />
+<ProfileTable source="br-core" id="br-core-medicationrequest" hideProhibited />
+
+<ProfileHeader source="br-core" id="br-core-medicationdispense" />
+<ProfileTable source="br-core" id="br-core-medicationdispense" hideProhibited />
+
+<ProfileHeader source="br-core" id="br-core-medication" />
+<ProfileTable source="br-core" id="br-core-medication" hideProhibited />
+
+O BR Core também traz `br-core-medicationstatement` (uso de medicamento relatado) e
+`br-core-medicationadministration` (administração registrada pela equipe):
+
+<ProfileHeader source="br-core" id="br-core-medicationstatement" />
+<ProfileHeader source="br-core" id="br-core-medicationadministration" />
+
+### Diferenças entre BR Core e RNDS
+
+| Aspecto | BR Core | RNDS (REPM/REDFM) |
+|---|---|---|
+| Medicamento | `medicationCodeableConcept` ou `medicationReference` | Só `medicationReference` para um `Medication` (`RNDSMedicamento`) no Bundle |
+| Terminologia do medicamento | Binding de exemplo | Binding `required` ao ValueSet `BRTerminologiaMedicamento` (OBM) |
+| Paciente | `subject.reference` para `br-core-patient` | `subject.identifier` com CNS ou CPF, sem recurso `Patient` |
+| Prescritor | Profissional, lotação, organização, paciente etc. | Só `RNDSLotacaoProfissional`, incluído no Bundle |
+| Validade da receita | `dispenseRequest.validityPeriod` obrigatório | Não exigido |
+| Via de administração | ValueSet de vias do IPS (EDQM) | ValueSet `BRViaAdministracao-1.0` |
+| Agrupamento da receita | Opcional | `groupIdentifier` obrigatório, igual em todos os itens |
+
+## Nuances brasileiras
+
+### O medicamento vem da Ontologia Brasileira de Medicamentos (OBM)
+
+O `Medication.code` do `RNDSMedicamento` tem binding obrigatório com o ValueSet `BRTerminologiaMedicamento`, que reúne
+cinco CodeSystems da OBM. Use o nível que corresponde ao que você sabe:
+
+| CodeSystem | O que identifica | Exemplo | Quando usar |
+|---|---|---|---|
+| `BRObmVMP` | Produto virtual: substância, concentração e forma | `@brasil12898180271` Amoxicilina 500 mg cápsula | Prescrição pelo princípio ativo |
+| `BRObmAMPP` | Embalagem comercial de um fabricante | `@brasil16481197685` Amoxicilina 500 mg cápsula (Aché) x 21 cápsulas | Dispensação, quando você sabe o que saiu da prateleira |
+| `BRObmCATMAT` | Item do Catálogo de Materiais do governo federal | `BR0271089-1` Amoxicilina 500 mg cápsula | Assistência farmacêutica pública |
+| `BRObmEAN` | Código de barras (GTIN/EAN) da embalagem | `7896241221853` | Leitura do código de barras na dispensação |
+| `BRObmANVISA` | Registro do produto na Agência Nacional de Vigilância Sanitária (Anvisa) | `1236100020010` | Quando o sistema guarda o registro Anvisa |
+
+Os códigos das tabelas acima são reais, conferidos nos CodeSystems legados da RNDS
+(`http://www.saude.gov.br/fhir/r4/CodeSystem/BRObm*`). O pacote de terminologia publica as mesmas tabelas na canônica
+nova, além do `BRObmVTM` (substância, sem concentração), que não faz parte do ValueSet da RNDS:
+
+<TerminologyCard id="BRObmVMP" />
+<TerminologyCard id="BRObmAMPP" />
+
+O CodeSystem `BRMedicamento` (códigos como `BR0292331-2`, SALBUTAMOL 0,4 MG/ML XAROPE 120 ML) não está no ValueSet do `RNDSMedicamento`. Ele aparece no BR Core no ValueSet `BRAlergenos`.
+
+### Forma farmacêutica ou embalagem comercial, nunca os dois
+
+A invariante `obm-1` do `RNDSMedicamento` exige `Medication.form` **ou** um código de embalagem
+(`BRObmAMPP`/`VMPP`), nunca os dois:
+
+```text
+form.exists() xor (code.coding.system.contains('AMPP') or code.coding.system.contains('VMPP'))
+```
+
+Na prescrição pelo VMP ou pelo CATMAT, informe `form` com a unidade do ValueSet `BRUnidadeMedidaMedicamento` (por
+exemplo `13` Cápsula do CodeSystem `BRUnidadeMedida`). Na dispensação pelo AMPP, omita `form`.
+
+### A dispensação exige fabricante, lote e validade
+
+Para os tipos de dispensação `fully-dispensing`, `partial-dispensing` e `medication-return` (CodeSystem
+`BRTipoDispensacaoRealizada`), o `RNDSDispensacaoMedicamento` impõe:
+
+- `dfm-2` e `dfm-3`: `receiver` e `quantity` presentes;
+- `dfm-6`: o fabricante identificado, ou por `Medication.manufacturer` ou por um código AMPP (que já embute o
+  fabricante), nunca pelos dois;
+- `dfm-7` e `dfm-8`: `Medication.batch.lotNumber` e `Medication.batch.expirationDate`;
+- `dfm-5`: em `partial-dispensing` e `not-dispensed`, uma `note` com a justificativa.
+
+Isso espelha os incisos VI a XII do art. 3º da Portaria GM/MS nº 6.100/2024 (quantidade, fabricante, lote, validade,
+estorno e justificativas).
+
+### Prescrição que está ou não está na RNDS
+
+`MedicationDispense.authorizingPrescription` tem duas fatias, discriminadas pelo `id` do elemento:
+
+- **`in-rnds`**: a prescrição já foi enviada à RNDS num REPM. Informe só o `identifier` com o sistema
+  `http://www.saude.gov.br/fhir/r4/NamingSystem/prescription-item-id` e o mesmo valor usado no
+  `MedicationRequest.identifier` da prescrição. `reference` é proibido.
+- **`out-of-rnds`**: a prescrição não está na RNDS (receita em papel, por exemplo). Inclua o `MedicationRequest` no
+  Bundle e referencie-o por `reference`. Nesse caso, a invariante `dfm-1` obriga a seção "Informações da Prescrição"
+  (LOINC `57828-6`) com as subseções de motivo e de medicamentos prescritos.
+
+### Identificadores do item e da receita
+
+- `MedicationRequest.identifier:prescriptionItemId` (sistema `.../NamingSystem/prescription-item-id`): identificador
+  local de cada item prescrito. É por ele que a dispensação encontra a prescrição.
+- `MedicationRequest.identifier:sncrNumber` (sistema `.../NamingSystem/sncr-number`): número da receita no Sistema
+  Nacional de Controle de Receituários (SNCR), exigido pelo art. 2º, VIII, da Portaria GM/MS nº 6.100/2024 para
+  medicamento sujeito a controle especial.
+- `MedicationRequest.groupIdentifier`: identifica a receita como um todo. A invariante `pem-5` exige que o sistema
+  comece com `http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-`, e a `pem-4` da `Composition` exige o mesmo
+  `groupIdentifier` em todos os itens do documento. Um REPM é, portanto, uma receita.
+
+### Exigências sobre o prescritor e o dispensador
+
+As invariantes navegam do item até o `Practitioner` dentro do Bundle:
+
+- `pem-1`: o prescritor precisa de um identificador de conselho com `type` `MD` (CRM), `RN` (Coren), `RI` ou `MRT` (o `MRT`
+  é o tipo da fatia do Registro Único do Ministério da Saúde, RMS);
+- `pem-2`: precisa também de CPF (`TAX`) ou CNS (`PHO`);
+- `pem-3`: Registro de Qualificação de Especialista (RQE, `DN`) só junto com CRM;
+- `dfm-4`: se a ocupação do dispensador começa com `2234` (farmacêuticos na CBO), ele precisa de um CRF (`RPH`).
+
+Atenção ao `system` dos identificadores do `RNDSProfissional`: CPF e CNS usam `https://saude.gov.br/sid/cpf` e
+`https://saude.gov.br/sid/cns` (sem `/fhir/`), diferente tanto do BR Core (`https://saude.gov.br/fhir/sid/cpf`) quanto
+das referências legadas (`http://rnds.saude.gov.br/fhir/r4/NamingSystem/cpf`). Já o CRM e o CRF usam os sistemas por
+UF dos ValueSets `BRCRM` e `BRCRF`, como `https://saude.gov.br/fhir/sid/crm-sp`. Veja
+[Identificadores](/fhir-ig/desenvolvimento/identificadores/).
+
+### Responsável pelo paciente
+
+Quando a legislação exige identificar o responsável (art. 2º, III, da Portaria GM/MS nº 6.100/2024), use a fatia
+`supportingInformation:responsibleForThePatient`: `id` fixo `responsible-for-the-patient`, só `identifier` (CPF ou
+CNS), sem `reference`. A invariante `pem-7` impede que o responsável seja o próprio paciente, e a `pem-6` exige o mesmo
+responsável em todos os itens.
+
+### Datas e consistência do paciente
+
+- `Composition.date` precisa casar com a expressão da invariante `date-1`, que só aceita data no formato `AAAA-MM-DD`,
+  sem hora. A hora da prescrição vai em `MedicationRequest.authoredOn`.
+- A invariante `ident-2` exige que todo recurso referenciado pelas seções tenha o mesmo
+  `subject.identifier.value` da `Composition`.
+- `ident-1` valida o formato do identificador do paciente: 11 dígitos (CPF) ou 15 dígitos começando com 1, 2, 7, 8 ou 9
+  (CNS), sem todos os dígitos iguais.
+
+### Unidades, vias e posologia
+
+- `dosageInstruction.route` é obrigatório, com o ValueSet `BRViaAdministracao-1.0` (por exemplo `10907` Oral).
+- `doseAndRate.doseQuantity` e `dispenseRequest.quantity` usam o ValueSet `BRUnidadeMedidaMedicamento`.
+- `timing.repeat` é obrigatório. Use `frequency`/`period`/`periodUnit` para a frequência e `boundsDuration` para a
+  duração do tratamento (art. 2º, XII e XIII).
+
+<TerminologyCard id="BRViaAdministracao" />
+
+### Órteses, próteses e materiais não entram aqui
+
+Os perfis `BREntregaSuprimentos` (`SupplyDelivery`) e `BROrtesesProtesesMateriais` (`Device`) não fazem parte do REPM
+nem do REDFM. Eles registram órteses, próteses e materiais especiais (OPM) usados em procedimentos e pertencem ao
+[Conjunto Mínimo de Dados](/fhir-ig/desenvolvimento/casos-de-uso/conjunto-minimo-de-dados/).
+
+## Exemplos
+
+<Tabs>
+	<TabItem label="REPM (RNDS)">
+
+Prescrição de amoxicilina pelo código CATMAT, com motivo em CID-10 e prescritor médico.
+
+<FhirExample file="rnds/prescricao-e-dispensacao/repm-bundle.json" />
+
+	</TabItem>
+	<TabItem label="REDFM (RNDS)">
+
+Dispensação total da mesma prescrição, apontando para o item já enviado à RNDS (fatia `in-rnds`), com o medicamento
+pelo AMPP, lote e validade.
+
+<FhirExample file="rnds/prescricao-e-dispensacao/redfm-bundle.json" />
+
+	</TabItem>
+	<TabItem label="Prescrição (BR Core)">
+
+O mesmo item como `br-core-medicationrequest`, com o medicamento pelo VMP da OBM na canônica do pacote de
+terminologia.
+
+<FhirExample file="prescricao-e-dispensacao/prescricao-br-core.json" />
+
+	</TabItem>
+</Tabs>
+
+## Erros comuns
+
+- **Usar o CNES fictício `9999999` nos testes da RNDS.** As invariantes `estab-1` e `estab-2` rejeitam números com
+  todos os dígitos iguais. Os exemplos RNDS desta página usam `9990001`.
+- **Mandar `Medication.form` junto com um código AMPP.** Viola `obm-1`.
+- **Esquecer o lote e a validade na dispensação.** O lote e a validade ficam no `Medication` (`batch`), não no
+  `MedicationDispense`.
+- **Usar `medicationCodeableConcept` no RNDS.** O `RNDSPrescricaoMedicamento` só aceita `medicationReference`.
+- **Enviar data e hora em `Composition.date`.** A invariante `date-1` só aceita `AAAA-MM-DD`.
+- **`groupIdentifier` com sistema próprio.** A `pem-5` exige o prefixo `http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-`.
+- **Referenciar a prescrição da RNDS por `reference`.** Na fatia `in-rnds`, use só `identifier`.
+- **Prescritor sem CPF/CNS ou sem conselho no `Practitioner`.** As invariantes `pem-1` e `pem-2` falham, e o erro
+  aparece no `MedicationRequest`, não no `Practitioner`.
+- **Usar os perfis `BR*` antigos.** Eles estão em rascunho e foram substituídos pelos `RNDS*`.

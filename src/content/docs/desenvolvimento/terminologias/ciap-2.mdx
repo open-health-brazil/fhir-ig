@@ -1,0 +1,84 @@
+---
+title: CIAP-2
+description: Como codificar motivos de consulta e problemas da atenção primária com a CIAP-2 no BR Core e na RNDS.
+sidebar:
+  order: 3
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+<TerminologyCard id="BRCIAP2" />
+
+## O que é
+
+A Classificação Internacional de Atenção Primária, segunda edição (CIAP-2), codifica motivos de consulta, problemas e
+diagnósticos do ponto de vista da atenção primária. Ela classifica o que a pessoa traz à consulta, e não só doenças. Os
+códigos têm uma letra, que indica o capítulo por sistema do corpo (`K` para circulatório, `T` para endócrino e metabólico),
+e dois dígitos: `K86` é hipertensão sem complicações, `T90` é diabetes não insulino-dependente.
+
+## Quem mantém e fonte oficial
+
+A CIAP-2 é a versão em português da ICPC-2, classificação da Organização Mundial de Médicos de Família (WONCA). A edição
+brasileira é publicada pela [Sociedade Brasileira de Medicina de Família e Comunidade (SBMFC)](https://www.sbmfc.org.br/).
+
+Para os documentos da RNDS, a RNDS publica no Simplifier.net o CodeSystem legado completo, com 686 códigos:
+[`http://www.saude.gov.br/fhir/r4/CodeSystem/BRCIAP2`](https://fhir.simplifier.net/RedeNacionaldeDadosemSaude/CodeSystem/BRCIAP2).
+
+## Onde é usado
+
+| Perfil | Elemento | Binding |
+|---|---|---|
+| RNDS `BRCIAP2Avaliado-1.0` (rascunho) | `Condition.code` | `BRCIAP2-1.0` da RNDS (required), URI legada |
+| `br-core-condition` | `Condition.code` | `BRProblemaDiagnostico` (example). O binding é só exemplo, então a CIAP-2 pode ser usada com o system abaixo. |
+
+Na atenção primária, é comum registrar o mesmo problema em CIAP-2 e em CID-10. Em FHIR, isso cabe em um único
+`CodeableConcept` com dois `coding`, quando o perfil permite mais de um. Os perfis da RNDS costumam limitar `coding` a 1;
+nesse caso, use o recurso e o perfil próprios de cada classificação.
+
+## Situação do ValueSet
+
+Diferente da maioria das tabelas, o ValueSet `BRCIAP2` do pacote 1.1.0 enumera os 686 códigos, o mesmo número do
+CodeSystem legado da RNDS. Ele pode ser usado como lista de validação, e os códigos têm o mesmo formato nas duas
+publicações.
+
+## Exemplo de Coding
+
+<Tabs>
+	<TabItem label="BR Core">
+
+```json
+{
+  "coding": [
+    {
+      "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCIAP2",
+      "code": "K86",
+      "display": "Hipertensão sem complicações"
+    }
+  ]
+}
+```
+
+	</TabItem>
+	<TabItem label="RNDS">
+
+```json
+{
+  "coding": [
+    {
+      "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCIAP2",
+      "code": "K86"
+    }
+  ]
+}
+```
+
+	</TabItem>
+</Tabs>
+
+## Erros comuns
+
+- **Usar a URI internacional da ICPC-2.** O NamingSystem registra `http://hl7.org/fhir/sid/icpc-2` como URI alternativa,
+  mas os perfis brasileiros esperam as URIs acima.
+- **Usar CIAP-2 onde o perfil exige CID-10.** O `BRCID10Avaliado-1.0` da RNDS aceita só CID-10.
+- **Escrever o código em minúscula** (`k86`). A letra do capítulo é maiúscula.

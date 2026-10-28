@@ -1,0 +1,85 @@
+---
+title: Atendimento clínico
+description: O Registro de Atendimento Clínico (RAC) e o registro de teleconsultoria (RATC), quem envia, o que as portarias exigem e o que o estabelecimento precisa ter.
+sidebar:
+  order: 5
+---
+
+import { Aside, Badge, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+
+## O que é
+
+O **Registro de Atendimento Clínico (RAC)** reúne os dados essenciais de uma consulta feita a um cidadão na atenção
+primária, na atenção especializada ou em atendimento domiciliar. Segundo o modelo de informação, ele traz medições,
+problemas e diagnósticos avaliados, exames, procedimentos, pequenas cirurgias e o desfecho do atendimento. O registro é
+feito pelo profissional, de preferência durante a consulta.
+
+O modelo foi instituído pela
+[Portaria SAES/MS nº 234, de 18 de julho de 2022](https://bvsms.saude.gov.br/bvs/saudelegis/Saes/2022/prt0234_20_07_2022.html),
+que atribui ao Departamento de Informática do SUS (DATASUS) o modelo computacional e a implantação na Rede Nacional de
+Dados em Saúde (RNDS).
+
+Com o RAC na RNDS, o profissional que atender o mesmo cidadão depois, em outro serviço ou em uma urgência, encontra os
+diagnósticos, as alergias e as condutas da consulta anterior.
+
+### Teleconsultoria: o RATC
+
+A [Portaria GM/MS nº 10.341, de 12 de março de 2026](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2026/prt10341_16_03_2026.html),
+instituiu o **Registro de Atendimento via Teleconsultoria (RATC)**. Na teleconsultoria, um profissional de saúde pede
+orientação técnica sobre um caso a outro profissional, o teleconsultor, de forma síncrona ou assíncrona. O RATC
+tem duas partes:
+
+1. **a solicitação**, feita pelo profissional com o modelo de informação de regulação assistencial vigente, acrescido da
+   dúvida principal, do relato do caso e da indicação de que se trata de teleconsultoria;
+2. **as recomendações do teleconsultor**, com a identificação dele, os diagnósticos avaliados (CID-10 ou CIAP-2), a
+   resposta à dúvida, as orientações técnicas e a conduta ou o encaminhamento proposto.
+
+A mesma portaria liga os dois modelos: ao final do atendimento, o profissional solicitante deve fazer o **RAC**,
+registrando como conduziu o caso, tenha seguido ou não a orientação recebida.
+
+## Quem envia
+
+- **RAC:** o estabelecimento onde a consulta foi realizada, por meio do sistema de prontuário. A Portaria SAES/MS
+  nº 234/2022 define o RAC como de adoção obrigatória em todo o sistema de saúde do país, para pessoas físicas e
+  jurídicas que prestam atenção à saúde nas esferas pública, suplementar e privada.
+- **RATC:** o serviço do profissional solicitante (para a solicitação) e o serviço de teleconsultoria (para as
+  recomendações).
+
+## Quando enviar e prazo
+
+As portarias do RAC e do RATC não fixam prazo de envio em horas ou dias. A Portaria nº 10.341/2026 diz que as
+especificações técnicas para o recebimento do RATC serão definidas e publicadas pelo DATASUS no
+[Portal de Serviços](https://servicos-datasus.saude.gov.br/).
+
+O momento natural de envio do RAC é o encerramento da consulta no prontuário.
+
+<Aside type="caution" title="Modelo técnico em rascunho">
+	O modelo de produção do RAC no projeto da RNDS está com status <Badge text="rascunho" variant="caution" />. Antes de
+	planejar a implantação, confirme com o DATASUS, pelo Portal de Serviços, se o recebimento do RAC já está liberado
+	para o seu tipo de estabelecimento. Na data desta página, o modelo computacional do RATC ainda não aparecia entre os
+	perfis da RNDS publicados no [Simplifier](https://simplifier.net/redenacionaldedadosemsaude).
+</Aside>
+
+## O que o estabelecimento precisa ter
+
+- **Sistema de prontuário credenciado na RNDS**, homologado e com acesso à produção. Veja
+  [Adesão e credenciamento](/fhir-ig/gestao/adesao-e-credenciamento/).
+- **Cadastro no CNES atualizado.** O número do Cadastro Nacional de Estabelecimentos de Saúde (CNES) identifica onde a
+  consulta aconteceu.
+- **Profissionais cadastrados no CNES**, com CNS ou CPF, a ocupação (CBO) e, quando for o caso, a equipe (INE)
+  corretos.
+- **Identificação do paciente** pelo CPF ou pelo Cartão Nacional de Saúde (CNS).
+- **Diagnósticos codificados** pela CID-10 ou pela CIAP-2 e procedimentos pela Tabela SUS no prontuário. Texto livre
+  não substitui o código.
+
+## Modelos técnicos
+
+<ProfileHeader source="rnds" id="BRRegistroAtendimentoClinico" />
+
+## Próximos passos
+
+<CardGrid>
+	<LinkCard title="Página técnica: Atendimento clínico" description="Perfis, regras e exemplo para a equipe de TI." href="/fhir-ig/desenvolvimento/casos-de-uso/atendimento-clinico/" />
+	<LinkCard title="Regulação assistencial" description="O modelo usado nas solicitações de teleconsultoria." href="/fhir-ig/gestao/casos-de-uso/regulacao-assistencial/" />
+</CardGrid>

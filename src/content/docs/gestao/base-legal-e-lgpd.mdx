@@ -1,0 +1,171 @@
+---
+title: Base legal e LGPD
+description: As normas que criam a RNDS e seus modelos de informação, e como a Lei Geral de Proteção de Dados se aplica ao envio de dados de saúde.
+---
+
+import { Aside, LinkCard, CardGrid } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../components/ProfileHeader.astro';
+import TerminologyCard from '../../../components/TerminologyCard.astro';
+
+Esta página reúne as normas que sustentam a Rede Nacional de Dados em Saúde (RNDS) e explica, em linguagem simples, como
+a Lei Geral de Proteção de Dados Pessoais (LGPD) se aplica quando um estabelecimento envia dados de pacientes à RNDS.
+Todas as normas citadas foram conferidas no texto publicado e têm link para a fonte.
+
+<Aside type="caution" title="Esta página não substitui orientação jurídica">
+	O conteúdo resume normas públicas para ajudar o gestor a se orientar. Decisões sobre o tratamento de dados no seu
+	estabelecimento devem passar pelo encarregado de dados (DPO) e pela assessoria jurídica.
+</Aside>
+
+## Quadro das normas
+
+A maior parte das normas abaixo altera a **Portaria de Consolidação GM/MS nº 1/2017** (PRC nº 1), que reúne as regras
+gerais do SUS. Por isso elas aparecem citadas como "art. 254-A da PRC nº 1", por exemplo.
+
+| Norma | O que determina | Fonte |
+|---|---|---|
+| Portaria GM/MS nº 1.434, de 28 de maio de 2020 | Institui o Programa Conecte SUS e a RNDS (arts. 254-A a 254-C da PRC nº 1). Define a RNDS como plataforma nacional de interoperabilidade, a ser alcançada de forma gradativa até ser a via única de interoperabilidade nacional em saúde. Atribui ao DATASUS a implementação. Determina que o acesso observe a LGPD e a LAI. | [bvsms](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2020/prt1434_29_05_2020.html) |
+| Portaria GM/MS nº 1.792, de 17 de julho de 2020 | Marco histórico. Tornou obrigatória a notificação de todos os resultados de testes de COVID-19 ao Ministério da Saúde em até 24 horas, por meio da RNDS. Foi o primeiro uso em larga escala da rede. A vigência atual desta regra não foi confirmada para esta página. | [bvsms](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2020/prt1792_21_07_2020.html) |
+| Portaria GM/MS nº 3.632, de 21 de dezembro de 2020 | Institui a Estratégia de Saúde Digital para o Brasil 2020-2028 (ESD28). A visão (art. 244-B) é implementar a RNDS até 2028 como a plataforma digital de inovação, informação e serviços de saúde. | [bvsms](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2020/prt3632_22_12_2020.html) |
+| Portaria SAES/MS nº 50, de 9 de fevereiro de 2022 | Instituiu os primeiros modelos de Registro de Prescrição de Medicamentos (RPM) e de Dispensação de Medicamentos (RDM). | [bvsms](https://bvsms.saude.gov.br/bvs/saudelegis/Saes/2022/prt0050_11_02_2022.html) |
+| Portaria SAES/MS nº 234, de 18 de julho de 2022 | Institui o modelo de informação do Registro de Atendimento Clínico (RAC) e o define como de adoção obrigatória nas esferas pública, suplementar e privada. Atribui ao DATASUS o modelo computacional e a implantação na RNDS. | [bvsms](https://bvsms.saude.gov.br/bvs/saudelegis/Saes/2022/prt0234_20_07_2022.html) |
+| Portaria Conjunta SAES/SVSA/SEIDIGI nº 25, de 27 de novembro de 2023 | Institui o modelo de informação do Registro de Imunobiológico Administrado (RIA). Atribui ao DATASUS o modelo computacional e a implantação técnica na RNDS. Define o conteúdo; a obrigação de envio vem da Portaria nº 5.663/2024. | [bvsms](https://bvsms.saude.gov.br/bvs/saudelegis/Saes/2023/poc0025_30_11_2023.html) |
+| Portaria GM/MS nº 5.663, de 31 de outubro de 2024 | Inclui o art. 312-A na PRC nº 1: os sistemas de vacinação devem enviar as doses aplicadas **exclusivamente** à RNDS, conforme o RIA vigente, em até 24 horas (salas com conectividade) ou 15 dias (salas sem conectividade). Vigora 120 dias após a publicação. Encerra o envio de vacinação pela antiga integração LEDI. | [bvsms](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2024/prt5663_04_11_2024.html) |
+| Portaria GM/MS nº 6.100, de 17 de dezembro de 2024 | Institui os modelos de Registro Eletrônico da Prescrição de Medicamentos (REPM) e de Dispensação ou Fornecimento de Medicamentos (REDFM) na RNDS. As prescrições e dispensações feitas em meio eletrônico devem seguir esses padrões e ser enviadas regularmente à RNDS. Os prazos finais serão definidos em plano operativo tripartite. | [bvsms](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2024/prt6100_18_12_2024.html) |
+| Portaria GM/MS nº 8.026, de 27 de agosto de 2025 | Institui o modelo de informação do Sumário de Alta (SA) na RNDS e lista o conteúdo mínimo. Revoga a Portaria SAES/MS nº 701/2022. | [bvsms](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2025/prt8026_28_08_2025.html) |
+| Portaria GM/MS nº 10.341, de 12 de março de 2026 | Inclui os arts. 254-CA e 254-CB na PRC nº 1 e institui na RNDS os modelos de Registro de Atendimento via Teleconsultoria (RATC) e de Resultado de Exame com Laudo Clínico (RELC). Os resultados com laudo clínico devem ser enviados regularmente à RNDS. | [bvsms](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2026/prt10341_16_03_2026.html) |
+| Portaria GM/MS nº 11.952, de 13 de julho de 2026 | Inclui o art. 357-A e o Anexo XLI na PRC nº 1 e institui o modelo do Conjunto Mínimo de Dados (CMD). Os dados devem ser enviados regularmente à RNDS. Tem efeitos operacionais na RNDS a partir da competência seguinte à publicação. | [bvsms](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2026/prt11952_14_07_2026.html) |
+| Art. 257, § 2º, da PRC nº 1 | Segundo o BR Core, na redação da Portaria GM/MS nº 12.263/2026: quando o cidadão não tiver CPF, o Cartão Nacional de Saúde (CNS) é obrigatório na identificação. O BR Core transforma essa regra na validação `br-core-pat-2`. | [BR Core](https://hl7.org.br/fhir/core/) |
+| Lei nº 13.709, de 14 de agosto de 2018 (LGPD) | Regula o tratamento de dados pessoais, com regras mais rígidas para dados sensíveis, entre eles os de saúde. | [planalto](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm) |
+| Lei nº 12.527, de 18 de novembro de 2011 (LAI) | Regula o acesso a informações públicas. O art. 254-C da PRC nº 1 manda observá-la no acesso à RNDS. | [planalto](https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12527.htm) |
+
+<Aside type="note" title="O que não está no quadro">
+	Não foi encontrada portaria que adote formalmente o BR Core ou o padrão HL7 FHIR como padrão nacional obrigatório. Os
+	padrões de interoperabilidade do SUS são publicados nos portais indicados no art. 233 da PRC nº 1
+	(servicos-datasus.saude.gov.br, rts.saude.gov.br e saudedigital.saude.gov.br). Os modelos computacionais da RNDS, que
+	o DATASUS publica, usam o padrão FHIR.
+</Aside>
+
+## LGPD aplicada ao envio à RNDS
+
+### Dado de saúde é dado sensível
+
+A LGPD chama de **dado pessoal sensível** o dado que pode expor a pessoa a discriminação. O art. 5º, inciso II, inclui
+expressamente os dados referentes à saúde. Tudo o que o estabelecimento envia à RNDS (vacinas, exames, diagnósticos,
+medicamentos) é, portanto, dado sensível, e o tratamento precisa se apoiar em uma das hipóteses do art. 11, que é a
+lista própria para esse tipo de dado.
+
+"Tratamento", na LGPD, é qualquer operação com o dado: coletar, registrar, guardar, enviar, consultar. Enviar à RNDS é
+tratamento.
+
+### Em que hipóteses o envio se apoia
+
+O consentimento do paciente é apenas uma das bases legais da LGPD. Para os envios à RNDS, as hipóteses que se
+relacionam diretamente com a finalidade do envio são estas:
+
+| Situação | Dados pessoais em geral (art. 7º) | Dados sensíveis (art. 11) |
+|---|---|---|
+| A norma obriga o envio (por exemplo, as doses de vacina pela Portaria nº 5.663/2024) | inciso II: cumprimento de obrigação legal ou regulatória | inciso II, alínea "a": cumprimento de obrigação legal ou regulatória |
+| O dado é usado pela administração pública para executar uma política pública de saúde | inciso III: execução de políticas públicas pela administração pública | inciso II, alínea "b": uso compartilhado necessário à execução de políticas públicas |
+| O dado serve ao cuidado do paciente por profissionais, serviços de saúde ou autoridade sanitária | inciso VIII: tutela da saúde | inciso II, alínea "f": tutela da saúde |
+
+Em termos práticos:
+
+- **Obrigação regulatória.** Quando uma portaria determina o envio, o estabelecimento trata os dados para cumprir essa
+  obrigação. É o caso da vacinação.
+- **Políticas públicas.** A RNDS é mantida pelo Ministério da Saúde como parte do Sistema Nacional de Informações em
+  Saúde. Vigilância, imunização e regulação são políticas públicas que dependem desses dados. O art. 23 da LGPD trata
+  especificamente do tratamento feito pelo poder público, que deve atender à finalidade pública e às competências legais
+  do órgão.
+- **Tutela da saúde.** O objetivo assistencial da RNDS é que o próximo profissional que atender o paciente tenha acesso
+  ao histórico. Essa hipótese vale somente para procedimentos realizados por profissionais de saúde, serviços de saúde ou
+  autoridade sanitária.
+
+A LGPD também permite o tratamento para estudos por órgão de pesquisa (art. 13 trata da pesquisa em saúde pública), mas
+isso diz respeito ao uso posterior dos dados, e não ao envio pelo estabelecimento.
+
+### O que continua sendo responsabilidade do estabelecimento
+
+Usar uma base legal adequada não dispensa as demais obrigações da LGPD. Para o envio à RNDS, isso significa:
+
+- **Transparência.** O cidadão tem direito de saber que os seus dados são tratados e com quem são compartilhados
+  (art. 18). Informe, por exemplo em cartaz ou na política de privacidade, que os registros são enviados à RNDS.
+- **Necessidade.** Envie o que o modelo de informação pede. Os modelos da RNDS já definem um conjunto mínimo de dados.
+- **Qualidade.** O titular pode pedir correção de dados errados (art. 18). Na RNDS, corrige-se um documento enviando
+  uma nova versão que substitui a anterior. A equipe de TI encontra o procedimento em
+  [Envio de documentos](/fhir-ig/desenvolvimento/envio-de-documentos/).
+- **Segurança.** O certificado digital e a senha dão acesso à RNDS em nome do estabelecimento. Restrinja quem os
+  conhece.
+- **Encarregado.** O controlador deve indicar um encarregado pelo tratamento de dados pessoais (art. 41).
+- **Vedação ao uso comercial.** O art. 11, § 4º, proíbe a comunicação ou o uso compartilhado de dados de saúde entre
+  controladores com objetivo de obter vantagem econômica, com exceções restritas, como a portabilidade pedida pelo
+  próprio titular.
+
+### E a Lei de Acesso à Informação?
+
+O art. 254-C da PRC nº 1 manda observar, no acesso à RNDS, tanto a LGPD quanto a
+[Lei de Acesso à Informação (LAI)](https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12527.htm). A LAI
+garante o acesso a informações públicas e, ao mesmo tempo, protege as informações pessoais, cujo acesso é restrito.
+Para o gestor, a consequência é que pedidos feitos com base na LAI não dão acesso aos dados individuais de saúde de
+terceiros.
+
+## Como registrar a base legal no sistema
+
+O BR Core oferece duas peças para que os sistemas registrem, de forma estruturada, o consentimento do paciente e a base
+legal de um tratamento. Elas são úteis em trocas entre sistemas e em prontuários que precisam documentar a base legal.
+Elas **não** fazem parte dos documentos que a RNDS recebe hoje: o envio à RNDS segue os modelos da RNDS.
+
+### O perfil de consentimento
+
+<ProfileHeader source="br-core" id="br-core-consent" />
+
+O perfil `br-core-consent` descreve um consentimento ou autorização de tratamento de dados conforme a LGPD. Em linguagem
+simples, ele registra:
+
+- **quem** é o titular dos dados (o paciente);
+- **quem** é o controlador (a organização responsável pelos dados);
+- **quando** o registro foi feito e qual é a evidência (por exemplo, um termo assinado);
+- **o que** é permitido ou negado, para quem, por quanto tempo e com qual finalidade;
+- **qual base legal** da LGPD sustenta o tratamento. Essa informação é obrigatória no perfil.
+
+Apesar do nome "consentimento", o perfil pode registrar outras bases legais. Um tratamento apoiado em obrigação
+regulatória ou em tutela da saúde também pode ser documentado nele, com a base legal correspondente.
+
+### A extensão de base legal
+
+A base legal é informada pela extensão `br-core-base-legal-lgpd`, obrigatória no perfil de consentimento. Ela recebe um
+código da tabela `BRBaseLegalLGPD`, do pacote de terminologia do Ministério da Saúde. O ValueSet da tabela traz estes
+códigos:
+
+| Código | Base legal |
+|---|---|
+| `CONSENT` | Consentimento do titular |
+| `OBRILEGAL` | Obrigação legal ou regulatória |
+| `EXECPOLPUB` | Execução de políticas públicas |
+| `PESQUISA` | Estudos por órgão de pesquisa |
+| `EXECONTRATO` | Execução de contrato |
+| `EXERDIREITO` | Exercício regular de direitos |
+| `PROTVIDA` | Proteção da vida |
+| `TUTSAUDE` | Tutela da saúde |
+| `LEGINTER` | Legítimo interesse |
+| `PROTCRED` | Proteção do crédito |
+
+Para dados de saúde, só cabem as hipóteses que o art. 11 permite para dados sensíveis. Legítimo interesse e proteção do
+crédito, por exemplo, não estão entre elas.
+
+<TerminologyCard id="BRBaseLegalLGPD" />
+
+<Aside type="tip" title="Para a equipe de TI">
+	Na versão 1.7.1 do BR Core, a extensão `br-core-base-legal-lgpd` declara o tipo do valor (um `CodeableConcept`), mas
+	não vincula a tabela de códigos, a sua descrição foi copiada de outra extensão e o contexto declarado é `Patient`,
+	embora o perfil `br-core-consent` a use em `Consent`. Use sempre o sistema
+	`https://terminologia.saude.gov.br/fhir/CodeSystem/BRBaseLegalLGPD` com um dos códigos acima e aplique a extensão no
+	recurso `Consent`, como o perfil determina. Se o validador acusar uso da extensão fora do contexto, a causa é a
+	declaração no pacote, e não o seu registro.
+</Aside>
+
+## Próximos passos
+
+<CardGrid>
+	<LinkCard title="Adesão e credenciamento" description="O passo a passo para conectar o estabelecimento à RNDS." href="/fhir-ig/gestao/adesao-e-credenciamento/" />
+	<LinkCard title="Casos de uso" description="O que cada portaria exige, documento por documento." href="/fhir-ig/gestao/casos-de-uso/imunizacao/" />
+</CardGrid>

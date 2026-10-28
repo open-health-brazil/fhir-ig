@@ -1,0 +1,376 @@
+---
+title: Identificadores
+description: CPF, CNS, CNES, CNPJ, RNE, passaporte, registros de conselhos, INE e identificadores indígenas, com o system, o type e as regras de validação de cada um.
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+import IdentifierTable from '../../../components/IdentifierTable.astro';
+
+Identificadores nacionais aparecem em quase todo recurso: o paciente, o profissional, o estabelecimento, a equipe. Esta
+página reúne o `system` (o NamingSystem), o `type` e as regras de formato e validação de cada um. Ela vale para o BR Core
+e para a RNDS, que representam os mesmos identificadores de formas diferentes.
+
+## Identificadores nacionais
+
+<IdentifierTable ids={['cpf', 'cns', 'cnes', 'cnpj', 'rne']} />
+
+- O `system` do BR Core é a URI preferida do NamingSystem no pacote de terminologia.
+- A URI legada `http://rnds.saude.gov.br/fhir/r4/NamingSystem/...` está registrada no mesmo NamingSystem. A RNDS a aceita
+  nas referências por identificador feitas pelos seus documentos (por exemplo, `Composition.subject.identifier`).
+- O `value` leva só os caracteres do documento, sem máscara: nada de pontos, barras ou hífens.
+
+## O `type` de cada identificador no BR Core
+
+O BR Core fatia (slices) o `identifier` de cada recurso pelo `system` e fixa o `type` com códigos da tabela
+`http://terminology.hl7.org/CodeSystem/v2-0203` da HL7. Os valores abaixo foram lidos dos perfis do BR Core 1.7.1:
+
+| Recurso (perfil) | Fatia | `system` | `type.coding.code` |
+|---|---|---|---|
+| `Patient` (`br-core-patient`) | `cpf` | `https://saude.gov.br/fhir/sid/cpf` | `TAX` |
+| | `cns` | `https://saude.gov.br/fhir/sid/cns` | `HC` |
+| | `registroEstrangeiro` | `https://saude.gov.br/fhir/sid/rne` | `RNE` |
+| | `passaporte` | `http://hl7.org/fhir/sid/passport-BRA` | `PPN` |
+| `Practitioner` (`br-core-practitioner`) | `cns` | `https://saude.gov.br/fhir/sid/cns` | `HC` |
+| | `cpf` | `https://saude.gov.br/fhir/sid/cpf` | `TAX` |
+| | `identificadorMedico` | CRM da UF (ValueSet `BRCRM`) | `MD` |
+| | `identificadorEnfermeiro` | COREN da UF (ValueSet `BRCOREN`) | `RN` |
+| | `identificadorFarmaceutico` | CRF da UF (ValueSet `BRCRF`) | `RPH` |
+| | `identificadorOdontologo` | CRO da UF (ValueSet `BRCRO`) | `DDS` |
+| | `identificadorOutrosProfissionais` | Demais conselhos (ValueSet `BROutrosProfissionais`) | `RI` |
+| `Organization` (`br-core-organization`) | `cnes` | `https://saude.gov.br/fhir/sid/cnes` | `PRN` |
+| | `cnpj` | `https://saude.gov.br/fhir/sid/cnpj` | não fixado; o exemplo oficial usa `TAX` |
+| | `cpf` | `https://saude.gov.br/fhir/sid/cpf` | não fixado; o exemplo oficial usa `TAX` |
+| | `dsei` | `https://saude.gov.br/fhir/sid/dsei` | não fixado |
+| | `poloBase` | `https://saude.gov.br/fhir/sid/polo-base` | não fixado; o exemplo oficial usa `PRN` |
+| `CareTeam` (`br-core-careteam`) | `ine` | `https://terminologia.saude.gov.br/fhir/NamingSystem/ine` | não fixado |
+
+Em todas as fatias acima, exceto `cns` do paciente e `ine` da equipe, o BR Core fixa `use` como `official`. No CNS do
+paciente, a invariante `br-core-pat-3` aceita `official` (definitivo) ou `temp` (provisório).
+
+<Aside type="caution" title="O código RNE não existe na tabela v2-0203">
+	O BR Core fixa `type.coding.code = RNE` com o system `v2-0203`, mas a tabela v2-0203 (pacote `hl7.terminology.r4` 7.4.0)
+	não tem esse código. Para estar conforme ao perfil, use o valor fixado, porque um valor fixo não admite alternativa. Espere
+	que o validador aponte o código como desconhecido nessa tabela.
+</Aside>
+
+## BR Core × RNDS: `system` ou `type`
+
+Os perfis de produção da RNDS que descrevem pessoas (`BRIndividuo-1.0` e `BRProfissional-1.0`) tipam o `identifier` com o
+perfil `BRDocumentoIndividuo-1.0`. Nele, `Identifier.system` é **proibido** e `Identifier.type` é **obrigatório**, vinculado
+ao ValueSet `BRTipoDocumentoIndividuo-1.0`. O mesmo CNS fica assim nos dois mundos:
+
+<Tabs>
+	<TabItem label="BR Core">
+
+```json
+{
+  "use": "official",
+  "type": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "HC" }] },
+  "system": "https://saude.gov.br/fhir/sid/cns",
+  "value": "200000000000003"
+}
+```
+
+	</TabItem>
+	<TabItem label="RNDS (BRDocumentoIndividuo-1.0)">
+
+```json
+{
+  "use": "official",
+  "type": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "HC" }] },
+  "value": "200000000000003"
+}
+```
+
+	</TabItem>
+	<TabItem label="RNDS (referência em documento)">
+
+```json
+{
+  "identifier": {
+    "system": "http://rnds.saude.gov.br/fhir/r4/NamingSystem/cns",
+    "value": "200000000000003"
+  }
+}
+```
+
+	</TabItem>
+</Tabs>
+
+O ValueSet `BRTipoDocumentoIndividuo-1.0`, publicado pela RNDS no Simplifier.net, inclui estes códigos da v2-0203: `HC`,
+`RRI`, `MCT`, `PPN`, `RN`, `SS`, `DL`, `BCT`, `BR`, `IND`, `MI`, `MD`, `DDS` e `TAX`, além do CodeSystem
+`http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoIdentificador`. Por isso, na RNDS, o CRM usa `MD`, o COREN usa `RN` e o
+CRO usa `DDS`, enquanto os demais conselhos usam códigos do `BRTipoIdentificador` (por exemplo, `BRACRF` para o CRF e
+`BRACRP` para o CRP). Sem `system`, a UF do conselho não fica na URI: o perfil oferece para isso a extensão
+`assignerJurisdiction` (`BRJurisdicaoOrgaoEmissor-1.0`), marcada como Must Support. Veja a
+página [Paciente](/fhir-ig/desenvolvimento/recursos/paciente/) para o caso completo do `BRIndividuo-1.0`.
+
+### Perfis RNDS de prescrição e dispensação
+
+Os perfis mais recentes da RNDS para prescrição e dispensação de medicamentos, `RNDSProfissional` e
+`RNDSEstabelecimentoSaude`, seguem um terceiro padrão: têm `system` fixo, como o BR Core, mas em outra URI, sem o
+segmento `/fhir`.
+
+| Perfil | Fatia | `system` fixado | `type` |
+|---|---|---|---|
+| `RNDSProfissional` | `cns` | `https://saude.gov.br/sid/cns` | `PHO` (v2-0203) |
+| | `cpf` | `https://saude.gov.br/sid/cpf` | `TAX` |
+| | `rms` | `https://saude.gov.br/sid/rms` | `MRT` |
+| | `rqe` | `https://saude.gov.br/sid/rqe` | `DN` |
+| | `crm`, `crf`, `cro`, `coren` | ValueSets `BRCRM`, `BRCRF`, `BRCRO`, `BRCOREN` | `MD`, `RPH`, `DDS`, `RN` |
+| | `identificadorOutrosProfissionais` | ValueSet `BROutrosProfissionais` | `LN` |
+| `RNDSEstabelecimentoSaude` | `cnes`, `cpf`, `cnpj` | `https://saude.gov.br/sid/cnes`, `.../cpf`, `.../cnpj` | não fixado |
+
+Ao enviar documentos que usam esses perfis, use exatamente as URIs que eles fixam (`https://saude.gov.br/sid/cns`), e não
+a forma do BR Core (`https://saude.gov.br/fhir/sid/cns`). Um valor fixo não aceita alternativa: a URI do BR Core faria o
+recurso falhar na validação contra o perfil RNDS. Se o seu sistema produz os dois formatos, mantenha a escolha da URI na
+camada de serialização de cada perfil.
+
+Esses perfis também trazem invariantes de formato que ajudam a validar antes do envio:
+
+- `estab-2` (`RNDSEstabelecimentoSaude`): CNES com 7 dígitos e **não todos iguais**. `9999999` é rejeitado.
+- `estab-3` e `estab-4`: CPF com 11 dígitos e CNPJ com 14 caracteres (12 alfanuméricos maiúsculos e 2 dígitos), em ambos
+  os casos sem sequência de um único dígito repetido.
+- `cns-1` (`RNDSProfissional`): CNS com 15 dígitos, primeiro dígito em 1, 2, 5, 7, 8 ou 9, e não todos iguais.
+- `cpf-1` (`RNDSProfissional`): CPF com 11 dígitos, não todos iguais.
+
+## CPF
+
+O Cadastro de Pessoas Físicas (CPF) é o identificador do cidadão na Receita Federal.
+
+- **Formato:** 11 dígitos numéricos. Os dois últimos são dígitos verificadores (DV).
+- **`system`:** `https://saude.gov.br/fhir/sid/cpf`. **`type`:** `TAX`. **`use`:** `official`.
+- **Paciente no BR Core:** a invariante `br-core-pat-2` exige CPF ou CNS. Segundo o BR Core, a regra vem do art. 257,
+  § 2º, da Portaria de Consolidação nº 1/2017, na redação da Portaria GM/MS nº 12.263/2026.
+
+### Validação do dígito verificador
+
+O algoritmo é o módulo 11. A Agência Nacional de Saúde Suplementar (ANS) publica uma implementação de referência no
+documento [Algoritmos do aplicativo de carga SIB-XML](https://www.gov.br/ans/pt-br/arquivos/assuntos/espaco-da-operadora-de-plano-de-saude/aplicativos-ans/sib/sib-algoritmos-xml10-17012019.pdf),
+que também rejeita sequências de dígitos repetidos.
+
+```text
+para o 1º DV: soma = d1×10 + d2×9 + ... + d9×2
+para o 2º DV: soma = d1×11 + d2×10 + ... + d9×3 + DV1×2
+resto = soma mod 11
+DV = 0 se resto < 2; senão DV = 11 − resto
+rejeitar 00000000000, 11111111111, ..., 99999999999
+```
+
+```ts
+export function cpfValido(cpf: string): boolean {
+  if (!/^\d{11}$/.test(cpf) || /^(\d)\1{10}$/.test(cpf)) return false;
+  const d = [...cpf].map(Number);
+  const dv = (n: number) => {
+    let soma = 0;
+    for (let i = 0; i < n; i++) soma += d[i] * (n + 1 - i);
+    const resto = soma % 11;
+    return resto < 2 ? 0 : 11 - resto;
+  };
+  return dv(9) === d[9] && dv(10) === d[10];
+}
+
+cpfValido('52998224725'); // true
+cpfValido('52998224724'); // false
+```
+
+## CNS
+
+O Cartão Nacional de Saúde (CNS) identifica o cidadão e o profissional no SUS. É o identificador usado pela RNDS nas
+referências a pacientes e no header `Authorization` (veja [Autenticação](/fhir-ig/desenvolvimento/autenticacao/)).
+
+- **Formato:** 15 dígitos numéricos.
+- **Definitivo e provisório:** o número definitivo começa com 1 ou 2; o provisório, com 7, 8 ou 9. No BR Core, o
+  definitivo usa `use: official` e o provisório `use: temp`.
+- **`system`:** `https://saude.gov.br/fhir/sid/cns`. **`type`:** `HC`.
+
+### Validação
+
+A ANS publica, no mesmo
+[documento de algoritmos](https://www.gov.br/ans/pt-br/arquivos/assuntos/espaco-da-operadora-de-plano-de-saude/aplicativos-ans/sib/sib-algoritmos-xml10-17012019.pdf),
+duas rotinas para o CNS:
+
+- **Provisório (`validaCnsProv`):** multiplica os 15 dígitos pelos pesos 15, 14, ..., 1, soma e exige resto zero na
+  divisão por 11.
+- **Definitivo (`validaCns`):** recalcula o número a partir dos 11 primeiros dígitos (pesos 15 a 5, módulo 11) e
+  acrescenta `000` + DV, ou `001` + DV quando o primeiro cálculo dá 10. O número só é válido se for igual ao recalculado.
+
+O número definitivo construído assim também tem soma ponderada (pesos 15 a 1) divisível por 11. Por isso, a soma ponderada
+serve como verificação única para os dois tipos, combinada com o primeiro dígito:
+
+```text
+soma = d1×15 + d2×14 + ... + d14×2 + d15×1
+válido se: 15 dígitos, primeiro dígito em {1, 2, 7, 8, 9} e soma mod 11 = 0
+```
+
+```ts
+export function cnsValido(cns: string): boolean {
+  if (!/^[12789]\d{14}$/.test(cns)) return false;
+  const soma = [...cns].reduce((acc, c, i) => acc + Number(c) * (15 - i), 0);
+  return soma % 11 === 0;
+}
+
+export function cnsProvisorio(cns: string): boolean {
+  return /^[789]/.test(cns);
+}
+
+cnsValido('200000000000003'); // true  (definitivo, paciente dos exemplos deste site)
+cnsValido('102345678900005'); // true  (definitivo, profissional dos exemplos deste site)
+cnsValido('898001234567891'); // true  (provisório, exemplo oficial do BR Core)
+cnsValido('200000000000004'); // false
+```
+
+<Aside type="note">
+	Um CNS com DV válido pode não existir no Cadastro Nacional de Usuários do SUS (CADSUS). A validação matemática só
+	descarta erros de digitação. A existência é conferida pela RNDS no envio.
+</Aside>
+
+## CNES
+
+O código do Cadastro Nacional de Estabelecimentos de Saúde (CNES) identifica o estabelecimento.
+
+- **Formato:** 7 dígitos numéricos, como no exemplo do guia da RNDS (`2337991`). Preserve os zeros à esquerda: guarde o
+  CNES como texto, nunca como número.
+- **`system`:** `https://saude.gov.br/fhir/sid/cnes`. **`type`:** `PRN`. **`use`:** `official`.
+- **Validação:** o pacote de terminologia não define um dígito verificador para o CNES. Valide o formato (`^\d{7}$`),
+  rejeite sequências de um único dígito repetido (o perfil `RNDSEstabelecimentoSaude` faz isso com a invariante `estab-2`)
+  e confira a existência consultando `GET /api/fhir/r4/Organization/<CNES>` na RNDS (veja
+  [Envio de documentos](/fhir-ig/desenvolvimento/envio-de-documentos/)).
+- **Na RNDS,** o CNES do estabelecimento é o `author` dos documentos e determina a UF do endpoint de produção.
+
+## CNPJ
+
+O Cadastro Nacional da Pessoa Jurídica (CNPJ) identifica a empresa mantenedora, o laboratório ou o profissional liberal
+constituído como pessoa jurídica.
+
+- **Formato:** 14 posições. As 12 primeiras formam a raiz e a ordem do estabelecimento; as 2 últimas são DVs numéricos.
+- **`system`:** `https://saude.gov.br/fhir/sid/cnpj`. O BR Core não fixa o `type`; o exemplo oficial usa `TAX`.
+
+### CNPJ alfanumérico
+
+A Receita Federal [informa](https://www.gov.br/receitafederal/pt-br/acesso-a-informacao/acoes-e-programas/programas-e-atividades/cnpj-alfanumerico)
+que, a partir de julho de 2026, novas inscrições recebem CNPJ alfanumérico, conforme a Instrução Normativa RFB nº 2.229,
+de 15 de outubro de 2024. Quem já está inscrito mantém o número. Segundo o
+[manual de cálculo do DV](https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/documentos-tecnicos/cnpj/manual-dv-cnpj.pdf),
+as 12 primeiras posições podem ter letras maiúsculas e dígitos, e os 2 DVs continuam numéricos. O cálculo continua sendo o
+módulo 11, com cada caractere convertido para o seu código ASCII menos 48 (`0`=0, ..., `9`=9, `A`=17, `B`=18, ...).
+
+Consequências para o seu sistema:
+
+- Armazene o CNPJ como texto de 14 caracteres, em maiúsculas. Colunas numéricas não comportam o novo formato.
+- Remova a máscara antes de enviar e de validar (`12.ABC.345/01DE-35` vira `12ABC34501DE35`).
+- Atualize as validações que aceitam só dígitos.
+
+```text
+valores: cada caractere → código ASCII − 48
+pesos: 2, 3, 4, 5, 6, 7, 8, 9, 2, 3, ... da direita para a esquerda
+1º DV sobre as 12 primeiras posições; 2º DV sobre as 12 posições + 1º DV
+resto = soma mod 11; DV = 0 se resto < 2; senão DV = 11 − resto
+```
+
+```ts
+export function cnpjValido(cnpj: string): boolean {
+  if (!/^[0-9A-Z]{12}\d{2}$/.test(cnpj) || /^(\d)\1{13}$/.test(cnpj)) return false;
+  const valores = [...cnpj].map((c) => c.charCodeAt(0) - 48);
+  const dv = (n: number) => {
+    let soma = 0;
+    for (let i = 0; i < n; i++) soma += valores[n - 1 - i] * ((i % 8) + 2);
+    const resto = soma % 11;
+    return resto < 2 ? 0 : 11 - resto;
+  };
+  return dv(12) === valores[12] && dv(13) === valores[13];
+}
+
+cnpjValido('12ABC34501DE35'); // true  (exemplo do manual da Receita Federal)
+cnpjValido('12ABC34501DE36'); // false
+```
+
+A mesma função valida CNPJs numéricos, porque o código ASCII de um dígito menos 48 é o próprio dígito.
+
+## RNE e passaporte
+
+- **Registro Nacional de Estrangeiro (RNE):** `system` `https://saude.gov.br/fhir/sid/rne`, `type` `RNE` (veja o aviso
+  sobre esse código acima), `use` `official`. Informe o número como consta no documento, sem pontuação. O pacote de
+  terminologia não define regra de validação para ele.
+- **Passaporte:** o BR Core usa `http://hl7.org/fhir/sid/passport-BRA` com `type` `PPN`. O sufixo `BRA` indica passaporte
+  brasileiro, no padrão de URIs de passaporte da HL7 (`passport-` seguido do código ISO 3166 de três letras do país
+  emissor). Esse `system` não tem NamingSystem no pacote de terminologia.
+
+## Registros de conselhos profissionais
+
+Cada conselho regional tem um NamingSystem próprio, com `system` no formato `https://saude.gov.br/fhir/sid/<conselho>-<uf>`.
+Alguns conselhos têm jurisdição sobre mais de uma UF, e o identificador reflete isso (`crefito-go-df`, `crn-sp-ms`). A
+lista abaixo foi gerada dos NamingSystems do pacote de terminologia 1.1.0:
+
+| Conselho | Quantidade | Sufixos de `system` (`https://saude.gov.br/fhir/sid/<sufixo>`) |
+|---|---|---|
+| Medicina (CRM) | 27 | `crm-ac`, `crm-al`, `crm-am`, `crm-ap`, `crm-ba`, `crm-ce`, `crm-df`, `crm-es`, `crm-go`, `crm-ma`, `crm-mg`, `crm-ms`, `crm-mt`, `crm-pa`, `crm-pb`, `crm-pe`, `crm-pi`, `crm-pr`, `crm-rj`, `crm-rn`, `crm-ro`, `crm-rr`, `crm-rs`, `crm-sc`, `crm-se`, `crm-sp`, `crm-to` |
+| Enfermagem (COREN) | 27 | `coren-ac`, `coren-al`, `coren-am`, `coren-ap`, `coren-ba`, `coren-ce`, `coren-df`, `coren-es`, `coren-go`, `coren-ma`, `coren-mg`, `coren-ms`, `coren-mt`, `coren-pa`, `coren-pb`, `coren-pe`, `coren-pi`, `coren-pr`, `coren-rj`, `coren-rn`, `coren-ro`, `coren-rr`, `coren-rs`, `coren-sc`, `coren-se`, `coren-sp`, `coren-to` |
+| Odontologia (CRO) | 27 | `cro-ac`, `cro-al`, `cro-am`, `cro-ap`, `cro-ba`, `cro-ce`, `cro-df`, `cro-es`, `cro-go`, `cro-ma`, `cro-mg`, `cro-ms`, `cro-mt`, `cro-pa`, `cro-pb`, `cro-pe`, `cro-pi`, `cro-pr`, `cro-rj`, `cro-rn`, `cro-ro`, `cro-rr`, `cro-rs`, `cro-sc`, `cro-se`, `cro-sp`, `cro-to` |
+| Farmácia (CRF) | 27 | `crf-ac`, `crf-al`, `crf-am`, `crf-ap`, `crf-ba`, `crf-ce`, `crf-df`, `crf-es`, `crf-go`, `crf-ma`, `crf-mg`, `crf-ms`, `crf-mt`, `crf-pa`, `crf-pb`, `crf-pe`, `crf-pi`, `crf-pr`, `crf-rj`, `crf-rn`, `crf-ro`, `crf-rr`, `crf-rs`, `crf-sc`, `crf-se`, `crf-sp`, `crf-to` |
+| Psicologia (CRP) | 24 | `crp-ac-ro`, `crp-al`, `crp-am-rr`, `crp-ba`, `crp-ce`, `crp-df`, `crp-es`, `crp-go`, `crp-ma`, `crp-mg`, `crp-ms`, `crp-mt`, `crp-pa-ap`, `crp-pb`, `crp-pe`, `crp-pi`, `crp-pr`, `crp-rj`, `crp-rn`, `crp-rs`, `crp-sc`, `crp-se`, `crp-sp`, `crp-to` |
+| Nutrição (CRN) | 11 | `crn-al`, `crn-ba-se`, `crn-ce-ma-pi`, `crn-df-go-mt-to`, `crn-pa-ac-am-ap-ro-rr`, `crn-pe-al-pb-rn`, `crn-pr`, `crn-rj-es`, `crn-rs`, `crn-sc`, `crn-sp-ms` |
+| Fisioterapia e Terapia Ocupacional (CREFITO) | 18 | `crefito-ba`, `crefito-ce`, `crefito-es`, `crefito-go-df`, `crefito-ma`, `crefito-mg`, `crefito-ms`, `crefito-mt`, `crefito-pa-am-to-rr-ap`, `crefito-pe-pb-al-rn`, `crefito-pi`, `crefito-pr`, `crefito-rj`, `crefito-ro-ac`, `crefito-rs`, `crefito-sc`, `crefito-se`, `crefito-sp` |
+| Fonoaudiologia (CREFONO) | 9 | `crefono-am-ac-ap-pa-ro-rr`, `crefono-ce-ma-pi-rn`, `crefono-go-df-ms-mt-to`, `crefono-mg-es`, `crefono-pe-al-ba-pb-se`, `crefono-pr-sc`, `crefono-rj`, `crefono-rs`, `crefono-sp` |
+| Serviço Social (CRESS) | 27 | `cress-ac`, `cress-al`, `cress-am`, `cress-ap`, `cress-ba`, `cress-ce`, `cress-df`, `cress-es`, `cress-go`, `cress-ma`, `cress-mg`, `cress-ms`, `cress-mt`, `cress-pa`, `cress-pb`, `cress-pe`, `cress-pi`, `cress-pr`, `cress-rj`, `cress-rn`, `cress-ro`, `cress-rr`, `cress-rs`, `cress-sc`, `cress-se`, `cress-sp`, `cress-to` |
+
+Como usar:
+
+- **Escolha o `system` pelo conselho que emitiu a inscrição,** e não pela UF onde o profissional atende. Um médico inscrito
+  no CRM-SP que atende em Goiás continua com `https://saude.gov.br/fhir/sid/crm-sp`.
+- **Use a fatia certa no `br-core-practitioner`:** CRM em `identificadorMedico` (`MD`), COREN em `identificadorEnfermeiro`
+  (`RN`), CRF em `identificadorFarmaceutico` (`RPH`), CRO em `identificadorOdontologo` (`DDS`) e os demais (CRP, CRN,
+  CREFITO, CREFONO, CRESS) em `identificadorOutrosProfissionais` (`RI`).
+- **O valor:** o BR Core não fixa um formato para o número. Os exemplos oficiais do BR Core usam o número seguido da UF,
+  como `100003-SP` (CRM) e `200001-SP` (COREN).
+- **Use a URI do ValueSet.** As fatias de conselho no BR Core têm binding `required` com os ValueSets `BRCRM`, `BRCOREN`,
+  `BRCRF`, `BRCRO` e `BROutrosProfissionais`. A URI aceita é a que está no ValueSet. Na terminologia 1.1.0 (conferido em 28 de outubro de 2026),
+  as URIs dos ValueSets coincidem com as dos NamingSystems, inclusive nos conselhos de várias UFs
+  (`crefito-pa-am-to-rr-ap`, `crefono-am-ac-ap-pa-ro-rr`, `crn-pa-ac-am-ap-ro-rr`). Se uma versão futura divergir, siga o
+  ValueSet.
+- **Alagoas na Nutrição:** o pacote traz `crn-al` e também `crn-pe-al-pb-rn`. Use o que corresponde ao conselho regional
+  que de fato emitiu a inscrição.
+- Os mesmos `system` são os códigos do CodeSystem `BRConselhoProfissional`. Veja
+  [Conselhos profissionais](/fhir-ig/desenvolvimento/terminologias/conselhos-profissionais/).
+
+## INE: equipe de saúde
+
+O Identificador Nacional de Equipe (INE) é atribuído pelo CNES às equipes cadastradas, como as da Estratégia Saúde da
+Família.
+
+- **BR Core:** fatia `ine` de `CareTeam.identifier` no perfil `br-core-careteam`, com `system` fixo
+  `https://terminologia.saude.gov.br/fhir/NamingSystem/ine`. O perfil não fixa `type` nem `use`; os exemplos oficiais usam
+  `use: official`.
+- **Formato:** os exemplos oficiais do BR Core usam 10 dígitos com zeros à esquerda (`0000123456`). Guarde o INE como
+  texto.
+- O `system` aponta para a base de NamingSystems do pacote de terminologia, mas a versão 1.1.0 do pacote não traz um
+  NamingSystem `ine`. Use a URI exatamente como o perfil fixa.
+- **RNDS:** a extensão `BRIdentificacaoEquipe-1.0` (status rascunho) leva o INE em `valueInteger`. Como inteiro, ele
+  perde os zeros à esquerda. Ao converter de volta para texto, complete com zeros à esquerda até 10 dígitos.
+
+## DSEI e polo-base
+
+O `br-core-organization` tem duas fatias para a saúde indígena, ambas descritas como identificadores atribuídos pela
+Secretaria de Saúde Indígena (SESAI):
+
+| Fatia | `system` | Uso |
+|---|---|---|
+| `dsei` | `https://saude.gov.br/fhir/sid/dsei` | Distrito Sanitário Especial Indígena |
+| `poloBase` | `https://saude.gov.br/fhir/sid/polo-base` | Polo-base de um DSEI |
+
+Esses `system` não têm NamingSystem no pacote de terminologia 1.1.0, e o perfil não fixa o `type`. Para usá-los:
+
+- copie o `system` exatamente como o perfil fixa;
+- informe `type` com o system `v2-0203` (obrigatório na fatia); o exemplo oficial de polo-base usa `PRN`;
+- use o código atribuído pela SESAI como `value`, sem máscara (o exemplo oficial usa `1720`);
+- se a unidade também tem CNES, informe o CNES na fatia `cnes` da mesma `Organization`.
+
+## Erros comuns
+
+- **Guardar identificadores como número.** CNES, INE e CNS perdem zeros à esquerda, e o CNPJ alfanumérico deixa de caber.
+- **Mandar máscara no `value`.** `529.982.247-25` não é um CPF válido para o FHIR; `52998224725` é.
+- **Enviar `Identifier.system` no `BRDocumentoIndividuo-1.0`.** O elemento é proibido nesse perfil da RNDS.
+- **Usar a URI legada no BR Core.** O BR Core fixa `https://saude.gov.br/fhir/sid/...`; a forma
+  `http://rnds.saude.gov.br/fhir/r4/NamingSystem/...` serve às referências da RNDS.
+- **Escolher o conselho pela UF de atendimento.** O `system` segue o conselho que emitiu a inscrição.
+- **Confiar só no DV.** O DV detecta erro de digitação, mas não prova que o CPF, o CNS ou o CNES existem.

@@ -1,0 +1,425 @@
+---
+title: Exames laboratoriais
+description: Como montar o Resultado de Exame Laboratorial (REL) da RNDS e representar laudos laboratoriais no BR Core com DiagnosticReport, Observation e Specimen.
+sidebar:
+  order: 2
+---
+
+import { Aside, Tabs, TabItem, Steps, Badge } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+import ProfileTable from '../../../../components/ProfileTable.astro';
+import FhirExample from '../../../../components/FhirExample.astro';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+O resultado de exame laboratorial existe em dois formatos. Na Rede Nacional de Dados em Saúde (RNDS), ele é o documento
+**Resultado de Exame Laboratorial (REL)**: um `Bundle` do tipo `document` com perfis próprios de produção. No BR Core,
+o mesmo conteúdo é representado pelos perfis `br-core-diagnosticreport`, `br-core-observation` e `br-core-specimen`,
+pensados para qualquer troca entre sistemas brasileiros. Esta página mostra os dois formatos e como passar de um para o
+outro.
+
+## Quando usar
+
+- **RNDS (REL)**: quando o laboratório envia resultados à RNDS. Segundo o
+  [guia da RNDS](https://rnds-guia.saude.gov.br/docs/rel/objetivo-rel), o REL documentado está restrito aos resultados
+  de exames de COVID-19 e de Monkeypox Vírus, e o público-alvo são os laboratórios de análises clínicas, públicos ou
+  privados, que realizam esses exames.
+- **BR Core**: em integrações entre prontuários, sistemas de laboratório (LIS) e plataformas estaduais ou municipais
+  que sigam o BR Core, para qualquer exame laboratorial, inclusive os que não fazem parte do escopo do REL.
+
+### Contexto histórico
+
+O REL nasceu com a pandemia. A Portaria GM/MS nº 1.792, de 17 de julho de 2020, incluiu na Portaria nº 356/2020 o
+art. 8º-A, que tornou obrigatória a notificação ao Ministério da Saúde de todos os resultados de testes diagnósticos
+para detecção da COVID-19, em até 24 horas, por meio da RNDS
+([texto da portaria](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2020/prt1792_21_07_2020.html)). Trate essa portaria
+como marco histórico: a vigência atual dessa obrigação deve ser confirmada com o Ministério da Saúde.
+
+Segundo o [modelo de informação do REL](https://rnds-guia.saude.gov.br/docs/rel/mi-rel), o modelo foi depois
+generalizado para incluir os testes de Monkeypox Vírus e ganhou dois atributos novos: **Suspeita Diagnóstica** e
+**Patógeno**. É essa versão generalizada que os perfis `3.2.1` implementam. Para a visão de gestão, veja
+[Exames laboratoriais (gestão)](/fhir-ig/gestao/casos-de-uso/exames-laboratoriais/).
+
+## Estrutura do documento REL
+
+O [modelo computacional do REL](https://rnds-guia.saude.gov.br/docs/rel/mc-rel) define um `Bundle` com quatro tipos de
+recurso, cada um em sua própria `entry`, ligados por referências `urn:uuid`:
+
+<Steps>
+
+1. **`Composition`** (`BRResultadoExameLaboratorial-3.2.1`): a primeira entrada. Identifica o paciente, o laboratório
+   autor e lista, em uma única seção, a condição investigada e os resultados.
+2. **`Condition`** (`BRCondicaoSaude`): a suspeita diagnóstica em estudo, por exemplo `B342` (infecção por coronavírus)
+   ou `B04` (Monkeypox). Exatamente uma por documento.
+3. **`Observation`** (`BRDiagnosticoLaboratorioClinico-3.2.1`): um resultado de exame. Pode haver vários no mesmo
+   documento.
+4. **`Specimen`** (`BRAmostraBiologica-1.0`): a amostra biológica usada no exame, referenciada pela `Observation`.
+
+</Steps>
+
+O documento é enviado com `POST /api/fhir/r4/Bundle` ao endpoint da RNDS, como descrito em
+[Envio de documentos](/fhir-ig/desenvolvimento/envio-de-documentos/). O endpoint de produção é o da Unidade Federativa
+(UF) do laboratório: segundo o guia da RNDS, "cada laboratório, conforme o CNES em questão, fará uso do estado
+correspondente". Veja [Ambientes](/fhir-ig/desenvolvimento/ambientes/).
+
+## Perfis RNDS
+
+### Documento: Resultado de Exame Laboratorial
+
+<ProfileHeader source="rnds" id="BRResultadoExameLaboratorial-3.2.1" />
+<ProfileTable source="rnds" id="BRResultadoExameLaboratorial-3.2.1" hideProhibited />
+
+A seção é fatiada por perfil (`resolve()`): a fatia `condicaoSaude` (1..1) aponta para a `Condition` e a fatia
+`diagnosticoLaboratorioClinico` (1..\*) aponta para as `Observation`. As duas referências ficam na **mesma** seção, em
+`Composition.section[0].entry`.
+
+### Condição investigada
+
+<ProfileHeader source="rnds" id="BRCondicaoSaude" />
+<ProfileTable source="rnds" id="BRCondicaoSaude" hideProhibited />
+
+A `Condition` aponta de volta para os resultados em `stage.assessment`. Cada `Observation` do documento deve aparecer
+ali.
+
+### Resultado: Diagnóstico em Laboratório Clínico
+
+<ProfileHeader source="rnds" id="BRDiagnosticoLaboratorioClinico-3.2.1" />
+<ProfileTable source="rnds" id="BRDiagnosticoLaboratorioClinico-3.2.1" hideProhibited />
+
+A extensão de patógeno usada em `Observation.extension:pathogen` tem perfil próprio, em
+<Badge text="rascunho" variant="caution" /> no Simplifier da RNDS, mas já referenciado pelo perfil ativo `3.2.1`:
+
+<ProfileHeader source="rnds" id="BRPatogeno" />
+
+### Amostra biológica
+
+<ProfileHeader source="rnds" id="BRAmostraBiologica-1.0" />
+<ProfileTable source="rnds" id="BRAmostraBiologica-1.0" hideProhibited />
+
+O perfil proíbe tudo, exceto `Specimen.type`. Data da coleta, método de coleta e identificador da amostra não vão no
+`Specimen`: a data da coleta vai em `Observation.effectiveDateTime`.
+
+### Teste rápido de COVID-19
+
+Para testes rápidos de COVID-19 há um par de perfis específico, também ativo. A estrutura é mais simples: não há
+`Condition`, a seção aceita apenas `Observation` de teste rápido e o título é fixo
+(`Resultado de Exame Laboratorial - Teste Rapido`).
+
+<ProfileHeader source="rnds" id="BRResultadoExameLaboratorial-TesteRapido-01.01" />
+<ProfileHeader source="rnds" id="BRDiagnosticoCOVID19-TesteRapido-01.01" />
+<ProfileTable source="rnds" id="BRDiagnosticoCOVID19-TesteRapido-01.01" hideProhibited />
+
+Diferenças em relação ao `3.2.1`: o `code` usa o ValueSet `BRNomeExameTRCOVID19LOINC-1.0` (só exames LOINC de teste
+rápido), o resultado é sempre qualitativo (`valueCodeableConcept` no ValueSet `BRResultadoQualitativoExame-1.0`) e há
+exatamente um `performer`.
+
+### Versões descontinuadas
+
+Os perfis abaixo estão com status `retired` no Simplifier da RNDS e não devem ser usados em novas integrações:
+
+| Perfil descontinuado | Substituto |
+|---|---|
+| `BRResultadoExameLaboratorial-1.0` | `BRResultadoExameLaboratorial-3.2.1` |
+| `BRResultadoExameLaboratorial-1.1` | `BRResultadoExameLaboratorial-3.2.1` |
+| `BRResultadoExameLaboratorial-2.0` | `BRResultadoExameLaboratorial-3.2.1` |
+| `BRResultadoExameLaboratorial-TesteRapido-1.0` | `BRResultadoExameLaboratorial-TesteRapido-01.01` |
+
+A diferença mais visível do `3.2.1` em relação ao `2.0` é a `Condition` obrigatória com a suspeita diagnóstica e a
+extensão de patógeno. Se o seu sistema ainda gera o formato `2.0`, acrescente a `Condition` e a referência a ela na
+seção.
+
+## Perfis BR Core
+
+No BR Core, um laudo laboratorial é um `DiagnosticReport` que agrupa uma ou mais `Observation`, cada uma ligada à sua
+`Specimen`, e todos podem apontar para o `ServiceRequest` (pedido de exame) que os originou.
+
+### Laudo
+
+<ProfileHeader source="br-core" id="br-core-diagnosticreport" />
+<ProfileTable source="br-core" id="br-core-diagnosticreport" />
+
+### Resultado
+
+<ProfileHeader source="br-core" id="br-core-observation" />
+<ProfileTable source="br-core" id="br-core-observation" />
+
+### Amostra
+
+<ProfileHeader source="br-core" id="br-core-specimen" />
+<ProfileTable source="br-core" id="br-core-specimen" />
+
+### Pedido de exame
+
+<ProfileHeader source="br-core" id="br-core-servicerequest" />
+<ProfileTable source="br-core" id="br-core-servicerequest" />
+
+### Correspondência entre RNDS e BR Core
+
+| Informação | RNDS (REL 3.2.1) | BR Core |
+|---|---|---|
+| Documento / laudo | `Composition` `BRResultadoExameLaboratorial-3.2.1` | `DiagnosticReport` `br-core-diagnosticreport` |
+| Suspeita diagnóstica | `Condition` `BRCondicaoSaude` | `DiagnosticReport.conclusionCode` ou `ServiceRequest.reasonCode` |
+| Resultado | `Observation` `BRDiagnosticoLaboratorioClinico-3.2.1` | `Observation` `br-core-observation` |
+| Amostra | `Specimen.type` (só o tipo) | `Specimen` completo (tipo, coleta, quantidade, método) |
+| Laboratório executor | `Observation.performer:estabelecimentoSaude` (CNES) | `DiagnosticReport.performer` e `Observation.performer` (`Organization`) |
+| Responsável pelo laudo | `Composition.author` | `DiagnosticReport.resultsInterpreter` |
+| Solicitante | não existe no perfil (`basedOn` é proibido) | `ServiceRequest.requester`, ligado por `basedOn` |
+| Data da coleta | `Observation.effectiveDateTime` | `Specimen.collection.collectedDateTime` e `Observation.effectiveDateTime` |
+| Data de liberação | `Observation.issued` | `DiagnosticReport.issued` e `Observation.issued` |
+| Paciente | `subject.identifier` (CNS) | `subject.reference` para um `Patient` `br-core-patient` |
+
+## Terminologias
+
+<Tabs>
+	<TabItem label="Nome do exame (LOINC)">
+<TerminologyCard id="BRNomeExameLOINC" />
+	</TabItem>
+	<TabItem label="Nome do exame (GAL)">
+<TerminologyCard id="BRNomeExameGAL" />
+	</TabItem>
+	<TabItem label="Categoria (Subgrupo SUS)">
+<TerminologyCard id="BRSubgrupoTabelaSUS" />
+	</TabItem>
+	<TabItem label="Resultado qualitativo">
+<TerminologyCard id="BRResultadoQualitativoExame" />
+	</TabItem>
+	<TabItem label="Tipo de amostra (GAL)">
+<TerminologyCard id="BRTipoAmostraGAL" />
+	</TabItem>
+	<TabItem label="Patógeno">
+<TerminologyCard id="BRTerminologiaPatogeno" />
+	</TabItem>
+</Tabs>
+
+O resultado qualitativo do `3.2.1` usa o ValueSet `BRResultadoQualitativoExame-2.0`, que reúne o CodeSystem genérico
+`BRResultadoQualitativoExame` e oito CodeSystems por tipo de resultado. Todos usam os códigos `1`, `2` e `3`, com
+significados diferentes:
+
+| CodeSystem | `1` | `2` | `3` |
+|---|---|---|---|
+| `BRResultadoQualitativoExame` | Detectável | Não Detectável | Inconclusivo |
+| `BRTipoResultadoDTNT` | Detectável | Não Detectável | Indeterminado |
+| `BRTipoResultadoRGNR` | Reagente | Não Reagente | Indeterminado |
+| `BRTipoResultadoPSNG` | Positivo | Negativo | Inconclusivo |
+| `BRTipoResultadoPRAU` | Presença | Ausência | Inconclusivo |
+| `BRTipoResultadoAVIDEZ` | Baixa Avidez | Alta Avidez | Indeterminado |
+| `BRTipoResultadoHISPT` | Compatível | Não Compatível | Inconclusivo |
+| `BRTipoResultadoRSBAC` | Foram visualizados | Não Foram visualizados | Inconclusivo |
+| `BRTipoResultadoRSCUL` | Não houve crescimento | Houve crescimento | Inconclusivo |
+
+Como o código sozinho não diz nada, o `system` é que dá o significado. A tabela 2 do
+[modelo de informação](https://rnds-guia.saude.gov.br/docs/rel/mi-rel) indica, para cada código LOINC de SARS-CoV-2, o
+tipo de resultado esperado: por exemplo, `94309-2` (RNA por amplificação) usa DTNT e `94505-5` (IgG por imunoensaio)
+usa o tipo reagente/não reagente. Na RNDS, as canônicas são as legadas
+(`http://www.saude.gov.br/fhir/r4/CodeSystem/...`). No BR Core, use as do pacote de terminologia
+(`https://terminologia.saude.gov.br/fhir/CodeSystem/...`). Mais detalhes em
+[Terminologias de exames laboratoriais](/fhir-ig/desenvolvimento/terminologias/exames-laboratoriais/).
+
+## Nuances brasileiras
+
+### Paciente e laboratório são identificados, não referenciados
+
+No REL, nenhum `Patient` ou `Organization` vai no `Bundle`. O paciente é identificado por `subject.identifier`, com o
+`system` **fixo** na URL do perfil `BRIndividuo-1.0` (e não na URI de um NamingSystem). O guia da RNDS usa o Cartão
+Nacional de Saúde (CNS) em `value`; o modelo de informação admite CNS ou CPF como identificador nacional do indivíduo.
+
+```json
+"subject": {
+  "identifier": {
+    "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+    "value": "200000000000003"
+  }
+}
+```
+
+O laboratório segue o mesmo padrão, com o Cadastro Nacional de Estabelecimentos de Saúde (CNES) e o `system` fixo
+`http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0`. Ele aparece duas vezes:
+
+- em `Composition.author`, como responsável pelo documento;
+- em `Observation.performer`, na fatia obrigatória `estabelecimentoSaude`, como **laboratório executor**.
+
+As fatias opcionais `pessoaJuridicaProfissionalLiberal` e `lotacaoProfissional` identificam, quando houver, a pessoa
+jurídica ou o profissional responsável pelo resultado.
+
+### O solicitante não vai no REL
+
+O perfil `3.2.1` proíbe `Observation.basedOn`, e não há outro elemento para o pedido médico. O REL registra quem fez o
+exame, não quem pediu. Se o seu fluxo precisa do solicitante (por exemplo, para devolver o resultado ao prontuário de
+origem), use o BR Core: `ServiceRequest.requester` aponta para o profissional ou estabelecimento solicitante, e
+`DiagnosticReport.basedOn` e `Observation.basedOn` apontam para o `ServiceRequest`.
+
+### Resultado qualitativo × quantitativo
+
+`Observation.value[x]` aceita `CodeableConcept` ou `Quantity`. O guia da RNDS define a regra: resultado qualitativo vai
+em `valueCodeableConcept`, **sem** `interpretation`; resultado quantitativo vai em `valueQuantity`, **com**
+`interpretation` obrigatória.
+
+<Tabs>
+	<TabItem label="Qualitativo">
+
+```json
+"valueCodeableConcept": {
+  "coding": [{
+    "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoDTNT",
+    "code": "1"
+  }]
+}
+```
+
+	</TabItem>
+	<TabItem label="Quantitativo">
+
+```json
+"valueQuantity": {
+  "value": 12.4,
+  "unit": "U/mL",
+  "system": "http://unitsofmeasure.org",
+  "code": "[arb'U]/mL"
+},
+"interpretation": [{
+  "coding": [{
+    "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRResultadoQualitativoExame",
+    "code": "1"
+  }]
+}]
+```
+
+	</TabItem>
+</Tabs>
+
+Detalhes que costumam passar despercebidos:
+
+- `valueQuantity.value` é um número JSON com ponto decimal (`12.4`). Um texto como `"1,5"`, comum em exemplos antigos,
+  é rejeitado pelo parser FHIR.
+- Para a unidade, use a UCUM (`http://unitsofmeasure.org`) em `system` e `code`, e o texto legível em `unit`. O
+  CodeSystem `BRUnidadeMedida` da RNDS descreve unidades de **medicamentos** (ampola, comprimido, frasco) e não serve
+  para resultados de exame.
+- O perfil vincula `interpretation` ao ValueSet `BRResultadoQualitativoExame-1.0` (Detectável, Não Detectável,
+  Inconclusivo). Use esse CodeSystem na interpretação, mesmo quando o `valueCodeableConcept` equivalente usaria outro tipo
+  de resultado.
+- `interpretation` admite uma única ocorrência e um único `coding`.
+
+### Método, faixa de referência e notas
+
+- **Método** (`Observation.method`, obrigatório): só texto livre em `method.text`; `method.coding` é proibido. Exemplo:
+  `"RT-PCR em tempo real"`, `"Imunocromatográfico"`.
+- **Faixa de referência** (`Observation.referenceRange`, exatamente uma): só `referenceRange.text`, obrigatório. `low`,
+  `high` e `age` são proibidos, mesmo em resultados quantitativos. Escreva a faixa por extenso.
+- **Notas** (`Observation.note`): opcionais, só `note.text`.
+
+### Material (amostra)
+
+`Specimen.type` aceita códigos de duas tabelas: o Tipo de Amostra do Gerenciador de Ambiente Laboratorial (GAL),
+`BRTipoAmostraGAL` (por exemplo `SNOF`, swab naso-orofaríngeo; `SGHEM`, sangue; `RASPEL`, raspado de pele), e a tabela
+v2-0487 da HL7 (por exemplo `SER`, soro; `PLAS`, plasma). Cada `Observation` aponta para a sua `Specimen`. Exames
+feitos em materiais diferentes (swab e soro, por exemplo) precisam de uma `Specimen` para cada um.
+
+### Nome do exame: LOINC ou GAL
+
+`Observation.code` aceita códigos `BRNomeExameLOINC` ou `BRNomeExameGAL`. O guia da RNDS é explícito: laboratórios
+privados **não** devem usar os códigos do GAL e devem usar exclusivamente a tabela de exames LOINC. Os códigos do GAL
+são para a rede pública que já opera nesse sistema.
+
+### Categoria, patógeno e suspeita diagnóstica
+
+- `Observation.category` (1..1) usa o Subgrupo da Tabela SUS: `0202` (diagnóstico em laboratório clínico) ou `0214`
+  (diagnóstico por teste rápido), entre outros.
+- A extensão `BRPatogeno` informa o patógeno testado (`07` SARS-CoV-2, `03` Vírus Monkeypox etc.).
+- A `Condition` `BRCondicaoSaude` informa a suspeita diagnóstica em `code`, no CodeSystem
+  `BRTerminologiaSuspeitaDiagnostica` (códigos no formato da CID-10 sem ponto, como `B342` e `B04`).
+
+### Datas e fuso horário
+
+`Observation.effectiveDateTime` é a data e hora da **coleta**; `Observation.issued` é a data e hora da **liberação do
+resultado**; `Composition.date` é a geração do documento. As três podem ser diferentes. Segundo o guia da RNDS, cada
+estabelecimento deve usar o fuso horário do seu local: `-03:00` no horário de Brasília e `-05:00` no Acre, por exemplo.
+
+### Identificador do Bundle
+
+O `Bundle.identifier` combina o identificador do solicitante atribuído pela RNDS no credenciamento (veja
+[Adesão e credenciamento](/fhir-ig/gestao/adesao-e-credenciamento/)) com um identificador único criado pelo laboratório
+para o resultado:
+
+```json
+"identifier": {
+  "system": "http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-99",
+  "value": "LAB-2026-000123"
+}
+```
+
+Dois resultados diferentes do mesmo laboratório nunca podem ter o mesmo `value`.
+
+### Retificação de resultado
+
+Para corrigir um resultado já enviado, o [guia da RNDS](https://rnds-guia.saude.gov.br/docs/rel/alterar-resultado)
+manda enviar um novo REL completo com duas regras:
+
+<Steps>
+
+1. Mantenha o **mesmo** `Bundle.identifier` do resultado original (o identificador criado pelo laboratório).
+2. Acrescente `Composition.relatesTo` com `code` `replaces` e `targetReference.reference` apontando para o
+   identificador que a **RNDS** atribuiu ao documento original, devolvido nos headers `content-location` e `location`
+   da resposta ao envio.
+
+</Steps>
+
+```json
+"relatesTo": [{
+  "code": "replaces",
+  "targetReference": { "reference": "Composition/{{exame-id-rnds}}" }
+}]
+```
+
+O perfil admite um único `relatesTo` e proíbe `targetReference.identifier`: a referência é sempre pelo id da RNDS.
+
+### Intervalo de referência no BR Core 1.7.1
+
+O `br-core-observation` 1.7.1 declara `Observation.referenceRange.modifierExtension` com cardinalidade 1..1 sem dizer
+qual extensão usar. Na prática, qualquer `Observation.referenceRange` preenchido falha na validação contra o perfil.
+Até a correção no BR Core, siga uma destas opções:
+
+- em painéis com vários analitos, informe o intervalo em `Observation.component.referenceRange`, que não tem essa
+  restrição (é o que faz o exemplo oficial de colesterol do BR Core);
+- em analitos isolados, informe a interpretação codificada em `Observation.interpretation`
+  (`http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation`, códigos `N`, `H`, `L` etc.) e o intervalo em
+  `Observation.note`, como no exemplo abaixo.
+
+Acompanhe as versões do BR Core em [hl7.org.br](https://hl7.org.br/fhir/core/) para saber quando a restrição for
+corrigida.
+
+## Exemplos
+
+### RNDS: REL com resultado qualitativo e quantitativo
+
+Bundle `document` com dois resultados de SARS-CoV-2 do mesmo paciente: um RT-PCR qualitativo em swab naso-orofaríngeo e
+uma dosagem de IgG quantitativa em soro, cada um com a sua amostra.
+
+<FhirExample file="rnds/exames-laboratoriais/rel-resultado.json" />
+
+### BR Core: laudo de glicemia
+
+`Bundle` `collection` com o `DiagnosticReport`, a `Observation` quantitativa, a `Specimen` e o `ServiceRequest` de
+origem. As referências a `Patient`, `Organization` e `PractitionerRole` apontam para os recursos de
+[Paciente](/fhir-ig/desenvolvimento/recursos/paciente/), [Estabelecimento](/fhir-ig/desenvolvimento/recursos/estabelecimento/)
+e [Lotação profissional](/fhir-ig/desenvolvimento/recursos/lotacao-profissional/).
+
+<FhirExample file="exames-laboratoriais/resultado-glicose-br-core.json" />
+
+## Erros comuns
+
+- **Usar a URI do NamingSystem em `subject.identifier.system` no REL.** O perfil fixa
+  `http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0`. Qualquer outro valor é rejeitado.
+- **Esquecer a `Condition` no `3.2.1`.** A fatia `condicaoSaude` é 1..1: sem ela o documento não valida. Ela também
+  precisa listar os resultados em `stage.assessment`.
+- **Aninhar a `Specimen` dentro da `Observation`.** `contained` não é usado: a amostra é uma `entry` própria do `Bundle`,
+  referenciada por `urn:uuid`.
+- **Mandar `interpretation` com resultado qualitativo, ou omiti-la com resultado quantitativo.** A regra do guia é o
+  inverso: só o quantitativo leva interpretação.
+- **Enviar `referenceRange.low` e `referenceRange.high` no REL.** São proibidos; use apenas `referenceRange.text`.
+- **Codificar o método.** `method.coding` é proibido; use `method.text`.
+- **Usar código do GAL em laboratório privado.** O guia da RNDS restringe esses laboratórios à tabela LOINC.
+- **Retificar com um `Bundle.identifier` novo.** A substituição exige o mesmo identificador do laboratório e
+  `relatesTo` com o id atribuído pela RNDS, não o id local.
+- **Confundir as datas.** `effectiveDateTime` é a coleta, não a liberação. Data de coleta posterior a `issued` indica
+  troca de campos.
+- **Copiar o `system` do pacote de 2022.** O antigo IG da RNDS publicado em 2022 usava canônicas
+  `https://rnds-fhir.saude.gov.br/...`. Em produção, os perfis e CodeSystems usam `http://www.saude.gov.br/fhir/r4/...`.

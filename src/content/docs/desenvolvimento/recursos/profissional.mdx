@@ -1,0 +1,222 @@
+---
+title: Profissional
+description: Como representar o profissional de saúde (Practitioner) no BR Core e nos perfis BRProfissional e RNDSProfissional da RNDS, com CPF, CNS, registro em conselho e CBO.
+sidebar:
+  order: 2
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+import ProfileTable from '../../../../components/ProfileTable.astro';
+import FhirExample from '../../../../components/FhirExample.astro';
+import IdentifierTable from '../../../../components/IdentifierTable.astro';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+O recurso `Practitioner` representa a **pessoa** do profissional de saúde: quem ela é, como se identifica e quais
+qualificações tem. Ele não diz onde a pessoa trabalha nem em qual função. Isso é papel da
+[Lotação do profissional](/fhir-ig/desenvolvimento/recursos/lotacao-profissional/) (`PractitionerRole`).
+
+No Brasil, o profissional aparece em três perfis: o `br-core-practitioner` do BR Core e, na RNDS, o
+`BRProfissional-1.0` (o perfil usado como alvo de referência pela maioria dos documentos) e o `RNDSProfissional`
+(perfil mais recente, usado pela prescrição e pela dispensação eletrônicas).
+
+## Quando usar
+
+- **BR Core (`br-core-practitioner`)**: em qualquer troca entre sistemas brasileiros que siga o BR Core, como APIs de
+  prontuário, regulação e integrações estaduais e municipais.
+- **RNDS (`BRProfissional-1.0`)**: é o perfil que os documentos da RNDS declaram como alvo das referências ao
+  profissional, por exemplo `Immunization.performer.actor` no
+  [Registro de Imunobiológico Administrado](/fhir-ig/desenvolvimento/casos-de-uso/imunizacao/). Nesses documentos o
+  `Practitioner` normalmente **não** viaja no Bundle: ele é apenas referenciado.
+- **RNDS (`RNDSProfissional`)**: é o alvo de `RNDSLotacaoProfissional`, que por sua vez é referenciado pelos perfis
+  `RNDSPrescricaoMedicamento` e `RNDSDispensacaoMedicamento`. Veja
+  [Prescrição e dispensação](/fhir-ig/desenvolvimento/casos-de-uso/prescricao-e-dispensacao/).
+
+## Perfil BR Core
+
+<ProfileHeader source="br-core" id="br-core-practitioner" />
+<ProfileTable source="br-core" id="br-core-practitioner" />
+
+## Perfis RNDS
+
+### BRProfissional-1.0
+
+<ProfileHeader source="rnds" id="BRProfissional-1.0" />
+<ProfileTable source="rnds" id="BRProfissional-1.0" hideProhibited />
+
+Assim como o `BRIndividuo-1.0` do paciente, o `BRProfissional-1.0` tipa `Practitioner.identifier` com o perfil
+`BRDocumentoIndividuo-1.0`, no qual `Identifier.system` é proibido e o documento é identificado só pelo `type`. Veja a
+explicação em [Paciente](/fhir-ig/desenvolvimento/recursos/paciente/).
+
+### RNDSProfissional
+
+<ProfileHeader source="rnds" id="RNDSProfissional" />
+<ProfileTable source="rnds" id="RNDSProfissional" only="Practitioner.identifier" hideProhibited />
+
+Fora `identifier`, o `RNDSProfissional` exige apenas `id` e `active`. Os demais elementos são os do recurso base.
+
+## Nuances brasileiras
+
+### Identificadores: CPF, CNS e o registro no conselho
+
+O BR Core fatia `Practitioner.identifier` pelo `system` e fixa, em cada fatia, o `type` (tabela v2-0203 da HL7) e
+`use: official`. Pelo menos um identificador é obrigatório (`identifier 1..*`), mas nenhuma fatia é obrigatória
+sozinha.
+
+| Fatia | `system` | `type.coding.code` |
+|---|---|---|
+| `cpf` | `https://saude.gov.br/fhir/sid/cpf` | `TAX` |
+| `cns` | `https://saude.gov.br/fhir/sid/cns` | `HC` |
+| `identificadorMedico` | um valor do ValueSet `BRCRM` (ex.: `https://saude.gov.br/fhir/sid/crm-sp`) | `MD` |
+| `identificadorEnfermeiro` | um valor do ValueSet `BRCOREN` (ex.: `https://saude.gov.br/fhir/sid/coren-sp`) | `RN` |
+| `identificadorFarmaceutico` | um valor do ValueSet `BRCRF` (ex.: `https://saude.gov.br/fhir/sid/crf-sp`) | `RPH` |
+| `identificadorOdontologo` | um valor do ValueSet `BRCRO` (ex.: `https://saude.gov.br/fhir/sid/cro-sp`) | `DDS` |
+| `identificadorOutrosProfissionais` | um valor do ValueSet `BROutrosProfissionais` (ex.: `https://saude.gov.br/fhir/sid/crp-sp`) | `RI` |
+
+O registro em conselho profissional é **regional**. O `system` muda conforme a Unidade da Federação (UF) do conselho
+que emitiu o registro: um médico inscrito no CRM de São Paulo usa `https://saude.gov.br/fhir/sid/crm-sp`; se ele
+também tiver inscrição no CRM do Rio de Janeiro, essa segunda inscrição usa `.../crm-rj`. O `value` leva apenas o
+número de inscrição, sem a sigla do conselho nem a UF.
+
+<IdentifierTable ids={['cpf', 'cns', 'crm-sp', 'coren-sp', 'crf-sp', 'cro-sp', 'crp-sp']} />
+
+Os quatro primeiros ValueSets (`BRCRM`, `BRCOREN`, `BRCRF`, `BRCRO`) têm uma URI por UF, 27 cada. O
+`BROutrosProfissionais` reúne os demais conselhos com registro de profissionais de saúde: Psicologia (`crp-*`),
+Fisioterapia e Terapia Ocupacional (`crefito-*`), Fonoaudiologia (`crefono-*`), Serviço Social (`cress-*`) e
+Nutrição (`crn-*`). Alguns desses conselhos têm jurisdição sobre mais de uma UF, e a URI reflete isso (por exemplo,
+`crp-ac-ro`). Veja a lista completa em
+[Conselhos profissionais](/fhir-ig/desenvolvimento/terminologias/conselhos-profissionais/).
+
+<Aside type="caution" title="Conselhos com jurisdição regional múltipla">
+Nos conselhos que cobrem várias UFs, a URI lista todas as UFs da jurisdição, na ordem do pacote de terminologia, por
+exemplo `https://saude.gov.br/fhir/sid/crefito-pa-am-to-rr-ap`. Como o BR Core vincula `system` ao ValueSet com força
+`required`, copie a URI **exatamente** como está no ValueSet `BROutrosProfissionais` (versão 1.1.0 do pacote de
+terminologia). Não a monte a partir da UF do profissional.
+</Aside>
+
+### O mesmo profissional, três formatos de identificador
+
+Os três perfis identificam o profissional de formas diferentes. Converta na hora de serializar:
+
+<Tabs>
+	<TabItem label="BR Core">
+
+```json
+{
+  "use": "official",
+  "type": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "HC" }] },
+  "system": "https://saude.gov.br/fhir/sid/cns",
+  "value": "102345678900005"
+}
+```
+
+	</TabItem>
+	<TabItem label="BRProfissional-1.0">
+
+```json
+{
+  "type": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "HC" }] },
+  "value": "102345678900005"
+}
+```
+
+	</TabItem>
+	<TabItem label="RNDSProfissional">
+
+```json
+{
+  "type": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "PHO" }] },
+  "system": "https://saude.gov.br/sid/cns",
+  "value": "102345678900005"
+}
+```
+
+	</TabItem>
+</Tabs>
+
+As diferenças que mais causam erro:
+
+- **`system` do CNS e do CPF.** O BR Core usa `https://saude.gov.br/fhir/sid/cns`. O `RNDSProfissional` fixa
+  `https://saude.gov.br/sid/cns` e `https://saude.gov.br/sid/cpf`, **sem** o segmento `/fhir`. Já as fatias de conselho
+  do `RNDSProfissional` (`crm`, `coren`, `crf`, `cro`) usam os mesmos ValueSets do BR Core, com `/fhir/` na URI.
+- **`type` do CNS.** O BR Core usa `HC`; o `RNDSProfissional` fixa `PHO`.
+- **Discriminador.** O BR Core fatia por `system`; o `RNDSProfissional` fatia por `type`. Por isso, no
+  `RNDSProfissional`, o `type` é o que coloca o identificador na fatia certa.
+- **Conselhos de outros profissionais.** O BR Core usa o `type` `RI`; o `RNDSProfissional` usa `LN`.
+- **Fatias exclusivas do `RNDSProfissional`.** `rms` (`MRT`, `https://saude.gov.br/sid/rms`) e `rqe` (Registro de
+  Qualificação de Especialista, `DN`, `https://saude.gov.br/sid/rqe`).
+- **Validação de formato.** O `RNDSProfissional` traz as invariantes `cns-1` (15 dígitos, começando com 1, 2, 5, 7, 8
+  ou 9, sem todos os dígitos iguais) e `cpf-1` (11 dígitos, sem todos iguais). Elas checam só o formato. O dígito
+  verificador continua sob sua responsabilidade. Veja [Identificadores](/fhir-ig/desenvolvimento/identificadores/).
+
+<Aside type="note">
+No `RNDSProfissional`, o `type` de cada fatia declara um binding `required` para o ValueSet
+`namingsystem-identifier-system-type`, que não existe no FHIR R4. O validador apenas avisa que não encontrou o
+ValueSet. O que vale na prática é o valor fixo de cada fatia (`PHO`, `TAX`, `MD`, `RN` e assim por diante).
+</Aside>
+
+### Ocupação (CBO) e `qualification`
+
+A Classificação Brasileira de Ocupações (CBO), mantida pelo Ministério do Trabalho, é o código de ocupação usado em
+todo o SUS. No `Practitioner` do BR Core ela vai em `qualification.code` (0..1), com binding de exemplo para o ValueSet
+`BROcupacao`. No `BRProfissional-1.0`, `qualification.code` tem binding `required` para `BROcupacao-1.0` e exige
+exatamente um `coding`.
+
+<TerminologyCard id="BRCBO" />
+
+O ValueSet `BROcupacao` do pacote de terminologia enumera só parte das ocupações (1.000 de 2.714). Use o CodeSystem
+`BRCBO` com o código de 6 dígitos da [CBO oficial](https://cbo.mte.gov.br/), sem hífen. Mais detalhes em
+[CBO](/fhir-ig/desenvolvimento/terminologias/cbo/).
+
+A ocupação descrita em `Practitioner.qualification` é uma formação ou habilitação da pessoa. A função que ela exerce
+**em um estabelecimento específico** vai em `PractitionerRole.code`. Quando um documento pede "a ocupação do
+profissional no atendimento", a fonte certa é a lotação.
+
+### `active` é obrigatório
+
+Os três perfis tornam `Practitioner.active` obrigatório. Ele indica se o **registro** do profissional está em uso no
+seu sistema. Não use `active` para dizer se o profissional está de férias ou afastado; para isso, encerre ou suspenda a
+lotação (`PractitionerRole.period`, `PractitionerRole.active`).
+
+### Endereço
+
+O BR Core acrescenta a `Practitioner.address` as mesmas extensões do paciente: `br-core-address-municipio` (código IBGE
+do município) e `br-core-address-aldeia`. O endereço do profissional é opcional e raramente necessário em documentos
+clínicos.
+
+### Referência ao profissional nos documentos da RNDS
+
+Nos documentos da RNDS, o profissional costuma ser referenciado, não enviado. Cada perfil de documento define como:
+
+- No Registro de Imunobiológico Administrado (RIA), `Immunization.performer.actor.reference` é obrigatório e
+  `actor.identifier` é proibido. O
+  [guia da RNDS para o RIA](https://rnds-guia.saude.gov.br/docs/ria-rotina/mc-ria-r) mostra a referência na forma
+  `Practitioner/<CNS do profissional>`. Veja o exemplo completo em
+  [Imunização](/fhir-ig/desenvolvimento/casos-de-uso/imunizacao/).
+- Em outros documentos, a referência é feita pela lotação (`BRLotacaoProfissional-1.0` ou `RNDSLotacaoProfissional`).
+  Veja [Lotação do profissional](/fhir-ig/desenvolvimento/recursos/lotacao-profissional/).
+
+## Exemplo (BR Core)
+
+<FhirExample file="recursos/profissional.json" />
+
+## Exemplo (RNDSProfissional)
+
+O mesmo profissional no formato do `RNDSProfissional`. Repare no `system` sem `/fhir` para CNS e CPF e no `type` `PHO`
+do CNS.
+
+<FhirExample file="rnds/recursos/profissional.json" />
+
+## Erros comuns
+
+- **Pôr a UF ou a sigla no `value` do registro no conselho.** `CRM-SP 123456` vira `system` `.../crm-sp` e `value`
+  `123456`.
+- **Usar um `system` de conselho genérico**, como `https://saude.gov.br/fhir/sid/crm`. Não existe: o `system` é sempre
+  por UF (ou por região, nos conselhos de jurisdição múltipla).
+- **Copiar o `system` do BR Core para o `RNDSProfissional`.** No `RNDSProfissional`, CNS e CPF usam
+  `https://saude.gov.br/sid/...`, sem `/fhir`.
+- **Usar `HC` no CNS do `RNDSProfissional`.** O perfil fixa `PHO`.
+- **Mandar `Identifier.system` no `BRProfissional-1.0`.** O elemento é proibido nesse perfil.
+- **Pôr o local de trabalho no `Practitioner`.** Estabelecimento, ocupação no vínculo e período vão em
+  `PractitionerRole`.
+- **Usar código CBO com hífen ou ponto** (`2235-05`). O código tem 6 dígitos: `223505`.

@@ -1,0 +1,51 @@
+---
+title: Interop Saúde BR
+description: Documentação sobre interoperabilidade em saúde no Brasil com HL7 FHIR, BR Core e a Rede Nacional de Dados em Saúde (RNDS).
+template: splash
+hero:
+  tagline: Como trocar dados de saúde no Brasil com HL7 FHIR, do credenciamento na RNDS ao Bundle validado.
+  actions:
+    - text: Sou gestor
+      link: /fhir-ig/gestao/o-que-e-a-rnds/
+      icon: right-arrow
+    - text: Sou desenvolvedor
+      link: /fhir-ig/desenvolvimento/visao-geral/
+      icon: right-arrow
+      variant: secondary
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Duas trilhas, um mesmo padrão
+
+<CardGrid>
+	<Card title="Gestão" icon="document">
+		O que é a RNDS, quem precisa aderir, como solicitar o credenciamento, qual é a base legal e quais são os prazos
+		de envio de cada tipo de registro.
+	</Card>
+	<Card title="Desenvolvimento" icon="seti:json">
+		Autenticação com certificado ICP-Brasil, ambientes, identificadores (CPF, CNS, CNES), terminologias, perfis do
+		BR Core e da RNDS e exemplos validados de cada documento.
+	</Card>
+</CardGrid>
+
+## Por onde começar
+
+<CardGrid>
+	<LinkCard title="Visão geral técnica" description="BR Core, RNDS e terminologia: o papel de cada um e as três URLs canônicas." href="/fhir-ig/desenvolvimento/visao-geral/" />
+	<LinkCard title="Adesão e credenciamento" description="As duas fases (homologação e produção) e o que o gestor precisa providenciar." href="/fhir-ig/gestao/adesao-e-credenciamento/" />
+	<LinkCard title="Identificadores" description="CPF, CNS, CNES, CNPJ e registros de conselho: sistemas, URIs legadas e validação." href="/fhir-ig/desenvolvimento/identificadores/" />
+	<LinkCard title="Imunização (RIA)" description="O registro de vacinação, obrigatório na RNDS desde a Portaria GM/MS nº 5.663/2024." href="/fhir-ig/desenvolvimento/casos-de-uso/imunizacao/" />
+</CardGrid>
+
+## O que este site é, e o que não é
+
+Este site é uma **proposta comunitária** de documentação, mantida de forma independente e aberta a contribuições. Ele
+consolida em um só lugar o que está espalhado entre o [BR Core](https://hl7.org.br/fhir/core/), o
+[guia da RNDS](https://rnds-guia.saude.gov.br/), o projeto da RNDS no
+[Simplifier](https://simplifier.net/redenacionaldedadosemsaude) e as portarias do Ministério da Saúde.
+
+Ele **não** é um canal oficial. Em caso de divergência, prevalecem as publicações do Ministério da Saúde e do DATASUS.
+
+As tabelas de perfis são geradas automaticamente a partir dos pacotes oficiais, e todos os exemplos são validados com
+o validador oficial da HL7. Veja [como o projeto funciona](/fhir-ig/sobre/).

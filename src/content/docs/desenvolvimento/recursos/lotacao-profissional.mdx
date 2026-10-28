@@ -1,0 +1,154 @@
+---
+title: Lotação do profissional
+description: Como representar o vínculo entre profissional, estabelecimento e ocupação (PractitionerRole) no BR Core e nos perfis BRLotacaoProfissional e RNDSLotacaoProfissional da RNDS.
+sidebar:
+  order: 3
+---
+
+import { Aside } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+import ProfileTable from '../../../../components/ProfileTable.astro';
+import FhirExample from '../../../../components/FhirExample.astro';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+A lotação é o **vínculo** de um profissional com um estabelecimento de saúde, em uma ocupação, durante um período. Em
+FHIR ela é o recurso `PractitionerRole`, que liga três coisas:
+
+- o profissional (`practitioner` → [Profissional](/fhir-ig/desenvolvimento/recursos/profissional/));
+- o estabelecimento (`organization` → [Estabelecimento de saúde](/fhir-ig/desenvolvimento/recursos/estabelecimento/));
+- a ocupação exercida nesse vínculo (`code`, com a Classificação Brasileira de Ocupações, CBO).
+
+No Brasil a lotação aparece em três perfis: o `br-core-practitionerrole` do BR Core e, na RNDS, o
+`BRLotacaoProfissional-1.0` e o `RNDSLotacaoProfissional`.
+
+## Quando usar
+
+- **BR Core (`br-core-practitionerrole`)**: sempre que precisar dizer quem fez algo **em nome de qual estabelecimento e
+  em qual função**. É a referência recomendada para autores e executantes em integrações que sigam o BR Core.
+- **RNDS (`BRLotacaoProfissional-1.0`)**: é o alvo de referência de vários perfis de produção da RNDS, como
+  `BRDiagnosticoLaboratorioClinico` 3.2.1 (resultado de exame), `BRContatoAssistencial` 2.1.0 e
+  `BRProcedimentoRealizado` 1.1.0.
+- **RNDS (`RNDSLotacaoProfissional`)**: é o alvo de referência do prescritor e do dispensador nos perfis
+  `RNDSPrescricaoMedicamento` e `RNDSDispensacaoMedicamento`. Veja
+  [Prescrição e dispensação](/fhir-ig/desenvolvimento/casos-de-uso/prescricao-e-dispensacao/).
+
+## Perfil BR Core
+
+<ProfileHeader source="br-core" id="br-core-practitionerrole" />
+<ProfileTable source="br-core" id="br-core-practitionerrole" />
+
+## Perfis RNDS
+
+### BRLotacaoProfissional-1.0
+
+<ProfileHeader source="rnds" id="BRLotacaoProfissional-1.0" />
+<ProfileTable source="rnds" id="BRLotacaoProfissional-1.0" hideProhibited />
+
+### RNDSLotacaoProfissional
+
+<ProfileHeader source="rnds" id="RNDSLotacaoProfissional" />
+<ProfileTable source="rnds" id="RNDSLotacaoProfissional" hideProhibited />
+
+## Nuances brasileiras
+
+### Por que a lotação, e não o profissional, é o ator certo
+
+Uma mesma pessoa pode ter vários vínculos ao mesmo tempo: enfermeira em uma Unidade Básica de Saúde (UBS) de manhã e
+em um hospital à noite, ou médico clínico em um estabelecimento e cirurgião em outro. O `Practitioner` sozinho não diz
+qual desses vínculos estava em jogo. A lotação diz.
+
+Isso importa porque documentos da RNDS como o Registro de Imunobiológico Administrado têm como autor o estabelecimento (identificado pelo Cadastro Nacional de
+Estabelecimentos de Saúde, CNES), e a ocupação só faz sentido dentro de um vínculo. Referenciar a lotação permite
+responder, a partir de um único recurso:
+
+- quem fez (o profissional);
+- em nome de qual estabelecimento (o CNES da `organization`);
+- em qual ocupação (a CBO em `code`);
+- se o vínculo era válido na data do evento (`period` e `active`).
+
+Por isso o BR Core aceita `PractitionerRole` como ator em vários perfis (por exemplo, em
+`Immunization.performer.actor` do `br-core-immunization`) e a RNDS usa a lotação como alvo de referência em
+resultados de exame, contatos assistenciais, procedimentos, prescrições e dispensações. Use o `Practitioner` direto
+apenas quando o perfil exigir, como no Registro de Imunobiológico Administrado da RNDS, que referencia o
+`BRProfissional-1.0` (veja [Imunização](/fhir-ig/desenvolvimento/casos-de-uso/imunizacao/)).
+
+### `period` e `active` são obrigatórios no BR Core
+
+O BR Core exige `period` (1..1) e `active` (1..1). O `BRLotacaoProfissional-1.0` exige os dois e também
+`period.start`. Na prática:
+
+- `period.start` é a data de início do vínculo;
+- `period.end` só aparece quando o vínculo terminou; deixe-o ausente enquanto o vínculo estiver vigente;
+- `active: false` indica que o registro de lotação não está mais em uso (por exemplo, vínculo encerrado).
+
+O `RNDSLotacaoProfissional` exige `active`, mas deixa `period` opcional. Ainda assim, informe `period.start` sempre que
+souber: é o que permite conferir se o vínculo estava vigente na data do evento.
+
+### Ocupação (CBO) em `code`
+
+`PractitionerRole.code` leva a ocupação exercida no vínculo. No BR Core é 1..\*, com binding de exemplo para
+`BROcupacao`. Nos dois perfis RNDS o binding é `required` para o ValueSet `BROcupacao-1.0`, e o
+`BRLotacaoProfissional-1.0` exige exatamente um `coding`.
+
+<TerminologyCard id="BRCBO" />
+
+O ValueSet `BROcupacao` do pacote de terminologia enumera só parte das ocupações (1.000 de 2.714). Use o código de 6
+dígitos da [CBO oficial](https://cbo.mte.gov.br/). Veja [CBO](/fhir-ig/desenvolvimento/terminologias/cbo/).
+
+Especialidades vão em `specialty`. No BR Core o binding de `specialty` é `preferred` para o mesmo ValueSet
+`BROcupacao`, porque as especialidades médicas também são ocupações da CBO (por exemplo, `225125`, médico clínico).
+
+### Referências: literal na RNDS, livre no BR Core
+
+O `BRLotacaoProfissional-1.0` exige `practitioner.reference` e `organization.reference`, e **proíbe** os
+`identifier` dessas referências. Os alvos são `BRProfissional-1.0` e `BREstabelecimentoSaude-1.0`. O
+`RNDSLotacaoProfissional` aponta para `RNDSProfissional` e `RNDSEstabelecimentoSaude`, e exige `id` na própria
+lotação.
+
+No BR Core, `practitioner` e `organization` são obrigatórios, mas o tipo de referência é livre: pode ser literal
+(`Practitioner/123`), por `urn:uuid` dentro de um Bundle ou lógica (por `identifier`).
+
+### A extensão "Atende SUS"
+
+O `BRLotacaoProfissional-1.0` exige a extensão `BRAtendeSUS-1.0` (fatia `isSUS`, 1..1). Ela leva um `valueBoolean`
+que diz se o profissional atende pelo Sistema Único de Saúde (SUS) nesse vínculo:
+
+```json
+{
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAtendeSUS-1.0",
+  "valueBoolean": true
+}
+```
+
+O BR Core não tem essa extensão. O `RNDSLotacaoProfissional` também não a exige.
+
+### `identifier` da lotação
+
+O BR Core permite `PractitionerRole.identifier` e, quando ele existe, exige `use` e `type` (com `system` do `type` fixo
+em `http://terminology.hl7.org/CodeSystem/v2-0203`). O `BRLotacaoProfissional-1.0` proíbe `identifier`.
+
+## Exemplo (BR Core)
+
+<FhirExample file="recursos/lotacao-profissional.json" />
+
+## Exemplo (RNDSLotacaoProfissional)
+
+<FhirExample file="rnds/recursos/lotacao-profissional.json" />
+
+<Aside type="note">
+Nos dois exemplos, a lotação aponta para o profissional e o estabelecimento descritos em
+[Profissional](/fhir-ig/desenvolvimento/recursos/profissional/) e
+[Estabelecimento de saúde](/fhir-ig/desenvolvimento/recursos/estabelecimento/).
+</Aside>
+
+## Erros comuns
+
+- **Omitir `period` no BR Core.** É obrigatório. Se o sistema não sabe a data de início, busque-a no cadastro do
+  vínculo antes de enviar.
+- **Preencher `period.end` com uma data futura "padrão"** (como `2999-12-31`). Vínculo vigente não tem `end`.
+- **Pôr a ocupação em `specialty` e deixar `code` vazio.** `code` é obrigatório; `specialty` é complementar.
+- **Usar `identifier` nas referências do `BRLotacaoProfissional-1.0`.** O perfil exige `reference` e proíbe
+  `identifier`.
+- **Reaproveitar uma lotação encerrada.** Quando o profissional muda de estabelecimento ou de ocupação, crie uma nova
+  lotação e encerre a anterior (`period.end` e `active: false`).
+- **Esquecer a extensão `BRAtendeSUS-1.0`** no `BRLotacaoProfissional-1.0`.

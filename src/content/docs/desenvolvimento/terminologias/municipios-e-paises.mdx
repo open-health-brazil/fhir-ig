@@ -1,0 +1,131 @@
+---
+title: Municípios e países
+description: Como informar município (código IBGE de 6 ou 7 dígitos), UF e país no BR Core e na RNDS, contornando o ValueSet BRMunicipio incompleto.
+sidebar:
+  order: 8
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+## Municípios e UFs
+
+<TerminologyCard id="BRDivisaoGeograficaBrasil" />
+
+### O que é
+
+O código de município do Instituto Brasileiro de Geografia e Estatística (IBGE) identifica cada município brasileiro. Ele
+tem **7 dígitos**: os 2 primeiros são o código da UF, os 4 seguintes identificam o município e o último é o dígito
+verificador. São Paulo (capital) é `3550308`: UF `35`, município `5030`, DV `8`.
+
+Muitos sistemas do DATASUS usam a forma de **6 dígitos**, sem o DV (`355030` para São Paulo). Essa forma aparece no próprio
+pacote de terminologia: o único município listado no ValueSet `BRMunicipio`, Santa Luzia (MG), está como `315780`, cujo
+código IBGE completo é `3157807`.
+
+### Quem mantém e fonte oficial
+
+O IBGE mantém a tabela e a publica em [Códigos dos municípios](https://www.ibge.gov.br/explica/codigos-dos-municipios.php).
+O IBGE também oferece a [API de localidades](https://servicodados.ibge.gov.br/api/docs/localidades), que devolve os
+municípios com o código de 7 dígitos (por exemplo,
+`https://servicodados.ibge.gov.br/api/v1/localidades/municipios/3550308`), útil para carregar e atualizar a tabela no seu
+sistema.
+
+### O ValueSet BRMunicipio está incompleto
+
+O ValueSet `BRMunicipio` do pacote 1.1.0 tem só 33 códigos: as 5 regiões (`1` a `5`), as UFs e um município. Além de não
+listar os municípios, ele traz **São Paulo como `34`**, mas o código IBGE da UF de São Paulo é `35`. A publicação legada da
+RNDS no Simplifier.net, `http://www.saude.gov.br/fhir/r4/CodeSystem/BRDivisaoGeograficaBrasil`, tem o mesmo conteúdo.
+
+A extensão `br-core-address-municipio` do BR Core tem binding `required` com esse ValueSet. Um teste com o validador HL7
+(BR Core 1.7.1, terminologia 1.1.0, sem servidor de terminologia, em 28 de outubro de 2026) das duas formas de informar
+São Paulo deu este resultado:
+
+| `system` | `code` | Resultado |
+|---|---|---|
+| `https://terminologia.saude.gov.br/fhir/CodeSystem/BRIBGE` (forma usada nos exemplos oficiais do BR Core) | `3550308` | **Erro**: "None of the codings provided are in the value set 'BR Municipio'" |
+| `https://terminologia.saude.gov.br/fhir/CodeSystem/BRDivisaoGeograficaBrasil` | `3550308` | Aceito, com aviso de CodeSystem não encontrado |
+
+Como implementar corretamente:
+
+- **No BR Core,** use o `system` `BRDivisaoGeograficaBrasil` com o código IBGE de 7 dígitos. É a combinação que atende ao
+  binding e carrega o código oficial completo.
+- **Na RNDS** (extensão `BRMunicipio-1.0`, URI legada `http://www.saude.gov.br/fhir/r4/CodeSystem/BRDivisaoGeograficaBrasil`),
+  o ValueSet `BRMunicipio-1.0` seleciona os municípios pela propriedade `type = city`, e o único município da publicação
+  legada usa 6 dígitos. Siga essa convenção: envie o código de 6 dígitos, sem DV. A extensão aceita um único `coding` e
+  proíbe `display`.
+- **No seu banco,** guarde o código de 7 dígitos, que é o oficial, e derive o de 6 removendo o último dígito. O caminho
+  inverso exige a tabela do IBGE, porque o DV não é recuperável sem ela.
+- **Para UF,** use o código IBGE de 2 dígitos (`35` para São Paulo), não o `34` do ValueSet.
+
+<Tabs>
+	<TabItem label="BR Core">
+
+```json
+{
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-address-municipio",
+  "valueCodeableConcept": {
+    "coding": [
+      {
+        "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDivisaoGeograficaBrasil",
+        "code": "3550308",
+        "display": "São Paulo"
+      }
+    ]
+  }
+}
+```
+
+	</TabItem>
+	<TabItem label="RNDS">
+
+```json
+{
+  "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRMunicipio-1.0",
+  "valueCodeableConcept": {
+    "coding": [
+      {
+        "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRDivisaoGeograficaBrasil",
+        "code": "355030"
+      }
+    ]
+  }
+}
+```
+
+	</TabItem>
+</Tabs>
+
+<Aside type="note" title="BRIBGE">
+	O pacote de terminologia também tem o CodeSystem `BRIBGE` (`not-present`, sem ValueSet). Os exemplos oficiais do BR Core
+	1.7.1 usam esse `system` na extensão de município, mas, como mostra o teste acima, ele não satisfaz o binding `required`
+	da extensão.
+</Aside>
+
+## Países
+
+<TerminologyCard id="BRPais" />
+
+O CodeSystem `BRPais` é a tabela nacional de países usada pelo Ministério da Saúde. Os códigos **não** são os da ISO 3166:
+o Brasil é `10`, a Argentina `21`, Portugal `45`. O ValueSet `BRPais` do pacote enumera os 345 códigos, os mesmos do
+CodeSystem legado publicado pela RNDS no Simplifier.net, e pode ser usado como lista de validação.
+
+Onde aparece:
+
+- RNDS: extensão `BRPais-1.0`, usada, por exemplo, como país de nascimento (`birthCountry`, obrigatória no
+  `BRIndividuo-1.0`) e no país de origem do registro de vacina (`Immunization.location.identifier.value`, binding
+  `BRPais-1.0`).
+- Em `Address.country`, o tipo FHIR é texto livre, e os exemplos deste site usam a sigla ISO 3166 de três letras (`BRA`).
+  Não confunda esse uso com o código da tabela `BRPais`.
+
+```json
+{
+  "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRPais",
+  "code": "10"
+}
+```
+
+## Erros comuns
+
+- **Mandar o código de 6 dígitos no BR Core** ou o de 7 na RNDS. Converta na serialização.
+- **Usar o `34` para São Paulo.** O código IBGE da UF é `35`.
+- **Usar `BR` ou `BRA` onde a RNDS espera `BRPais`.** A extensão `BRPais-1.0` usa a tabela nacional (`10`).

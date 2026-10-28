@@ -1,0 +1,101 @@
+---
+title: CBO
+description: Classificação Brasileira de Ocupações (CBO) em FHIR, com a fonte oficial dos códigos e como contornar o ValueSet BROcupacao incompleto.
+sidebar:
+  order: 1
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+<TerminologyCard id="BRCBO" />
+
+## O que é
+
+A Classificação Brasileira de Ocupações (CBO) codifica as ocupações do mercado de trabalho. Na saúde, ela diz o que o
+profissional faz em um estabelecimento: médico clínico, enfermeiro, técnico de enfermagem, agente comunitário de saúde. O
+código de ocupação usado nos sistemas de saúde tem **6 dígitos** (por exemplo, `225125`, médico clínico).
+
+## Quem mantém e fonte oficial
+
+A CBO é mantida pelo Ministério do Trabalho e Emprego. A fonte oficial é o [site da CBO](https://cbo.mte.gov.br/), cuja
+[página de downloads](https://cbo.mte.gov.br/cbosite/pages/downloads.jsf) oferece a estrutura completa em CSV.
+
+Para os documentos da RNDS, a RNDS publica no Simplifier.net o CodeSystem legado completo, com 2.714 ocupações:
+[`http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO`](https://fhir.simplifier.net/RedeNacionaldeDadosemSaude/CodeSystem/BRCBO).
+
+## Onde é usado
+
+| Perfil | Elemento | Binding |
+|---|---|---|
+| `br-core-practitionerrole` | `PractitionerRole.code` | `BROcupacao` (example) |
+| `br-core-practitionerrole` | `PractitionerRole.specialty` | `BROcupacao` (preferred) |
+| `br-core-immunization` | `Immunization.performer.function` | `BROcupacao` (extensible) |
+| `br-core-healthcareservice`, `br-core-appointment`, `br-core-slot` | `specialty` | `BROcupacao` (preferred) |
+| `br-core-practitioner` | `Practitioner.qualification.code` | `BROcupacao` (example) |
+| RNDS `BRLotacaoProfissional-1.0` | `PractitionerRole.code` (obrigatório) | `BROcupacao-1.0` da RNDS (required) |
+| RNDS extensão `BROcupacao-1.0` | `valueCodeableConcept` | `BROcupacao-1.0` da RNDS (required) |
+
+A CBO é a base da lotação do profissional. A RNDS confere o vínculo CBO do profissional requisitante (erro `EHR-ERR906`,
+veja [Autenticação](/fhir-ig/desenvolvimento/autenticacao/)). Veja também
+[Lotação do profissional](/fhir-ig/desenvolvimento/recursos/lotacao-profissional/).
+
+## O ValueSet BROcupacao está incompleto
+
+O ValueSet `BROcupacao` do pacote de terminologia 1.1.0 enumera **1.000 das 2.714 ocupações**, só os códigos de `261415` a
+`992225`, em ordem. Ocupações comuns na saúde ficam de fora, como `225125` (médico clínico), `223505` (enfermeiro) e
+`515105` (agente comunitário de saúde). Os próprios exemplos oficiais do BR Core usam `223505`.
+
+Como implementar corretamente:
+
+- Use o `system` `https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO` com qualquer código de 6 dígitos da CBO oficial.
+- Não restrinja a sua lista de ocupações ao ValueSet do pacote. Carregue a CBO do Ministério do Trabalho e Emprego (ou o
+  CodeSystem legado completo da RNDS) e valide contra ela.
+- Os bindings do BR Core para CBO são `example`, `preferred` ou `extensible`, então um código fora do ValueSet não torna o
+  recurso inválido. No `extensible` de `Immunization.performer.function`, o validador pode emitir um aviso para códigos fora
+  da lista; ele é esperado.
+
+## Exemplo de Coding
+
+<Tabs>
+	<TabItem label="BR Core">
+
+```json
+{
+  "coding": [
+    {
+      "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO",
+      "code": "223505",
+      "display": "Enfermeiro"
+    }
+  ]
+}
+```
+
+	</TabItem>
+	<TabItem label="RNDS">
+
+```json
+{
+  "coding": [
+    {
+      "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO",
+      "code": "223505"
+    }
+  ]
+}
+```
+
+O `BRLotacaoProfissional-1.0` e a extensão `BROcupacao-1.0` proíbem `display` e `text` (cardinalidade máxima 0) e
+admitem um único `coding`.
+
+	</TabItem>
+</Tabs>
+
+## Erros comuns
+
+- **Usar a família (4 dígitos) no lugar da ocupação.** `2235` é o código de uma família ocupacional; a ocupação tem 6
+  dígitos.
+- **Enviar o código com hífen ou ponto** (`2235-05`). O `code` leva só os 6 dígitos.
+- **Validar contra o `BROcupacao`.** Ele rejeitaria ocupações válidas e frequentes.
+- **Trocar CBO por especialidade do conselho.** A CBO é a ocupação; o título de especialista (RQE) é outra informação.

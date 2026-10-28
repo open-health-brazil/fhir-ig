@@ -1,0 +1,250 @@
+---
+title: Conjunto Mínimo de Dados (CMD)
+description: Como montar o documento do Conjunto Mínimo de Dados da RNDS (BRConjuntoMinimoDados-1.1), quando usar as variantes ANS, como registrar órteses e próteses e como representar o contato assistencial no BR Core.
+sidebar:
+  order: 7
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+import ProfileTable from '../../../../components/ProfileTable.astro';
+import FhirExample from '../../../../components/FhirExample.astro';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+O Conjunto Mínimo de Dados (CMD) é o registro de cada **contato assistencial**: um atendimento ininterrupto prestado
+a um indivíduo numa mesma modalidade assistencial e num mesmo estabelecimento de saúde. Ele reúne quem foi atendido,
+onde, com qual caráter, quais problemas foram avaliados, quais procedimentos foram feitos, como foram financiados e
+como o atendimento terminou.
+
+O modelo de informação foi instituído pela
+[Portaria GM/MS nº 11.952, de 13 de julho de 2026](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2026/prt11952_14_07_2026.html),
+que inclui o art. 357-A e o Anexo XLI na Portaria de Consolidação nº 1/2017. A portaria entra em vigor na publicação,
+"com efeitos operacionais na Rede Nacional de Dados em Saúde - RNDS e nos sistemas de informação na competência
+seguinte à sua publicação". O art. 2º do Anexo determina que as informações registradas em meio eletrônico sigam os
+padrões da portaria e sejam enviadas regularmente à RNDS, com as regras técnicas publicadas pelo DATASUS. Para a visão
+de gestão, veja [Conjunto Mínimo de Dados (gestão)](/fhir-ig/gestao/casos-de-uso/conjunto-minimo-de-dados/).
+
+O CMD também é a base técnica de outros documentos: o
+[Registro de Atendimento Clínico](/fhir-ig/desenvolvimento/casos-de-uso/atendimento-clinico/) e o
+[Sumário de Alta](/fhir-ig/desenvolvimento/casos-de-uso/sumario-de-alta/) derivam do perfil
+`BRConjuntoMinimoDados-1.1`, e o art. 4º da Portaria GM/MS nº 8.026/2025 diz que o SA contempla as informações do CMD.
+
+## Quando usar
+
+- **RNDS (`BRConjuntoMinimoDados-1.1`)**: para enviar o registro de um contato assistencial em estabelecimentos
+  públicos ou privados, inclusive quando houver órteses, próteses e materiais especiais (OPM).
+- **RNDS, variantes ANS (`BRConjuntoMinimoDadosANS-1.0.0` e perfis associados)**: para o registro feito por
+  prestadores identificados por CNPJ, com procedimentos da Terminologia Unificada da Saúde Suplementar (TUSS) e sem a
+  seção de OPM. O sufixo ANS remete à Agência Nacional de Saúde Suplementar. Veja
+  [As variantes ANS](#as-variantes-ans).
+- **BR Core**: o BR Core não tem um perfil de documento CMD. O núcleo do CMD, o contato assistencial, é representado
+  pelo `br-core-encounter`, com diagnósticos (`br-core-condition`) e procedimentos (`br-core-procedure`).
+
+<Aside type="caution" title="O perfil RNDS principal está em rascunho">
+O `BRConjuntoMinimoDados-1.1` (versão 2.0, de 8 de junho de 2022) está com status `draft`, assim como o
+`BRProblemaDiagnostico` e os perfis ANS de problema, procedimento e indivíduo não identificado. O
+`BRContatoAssistencial-1.0` (versão 2.1.0, de 24 de junho de 2026), o `BRProcedimentoRealizado-1.0`, o
+`BRConjuntoMinimoDadosANS-1.0.0` e o `BRContatoAssistencialANS-1.0.0` estão ativos. Os exemplos desta página passam
+sem erros no validador oficial. Como a Portaria GM/MS nº 11.952/2026 é posterior ao perfil, confira a especificação
+vigente no [Portal de Serviços do DATASUS](https://servicos-datasus.saude.gov.br) antes de ir para produção.
+</Aside>
+
+## Conteúdo mínimo e onde cada item vai
+
+O art. 1º do Anexo XLI lista o conteúdo mínimo. Os itens sem elemento dedicado no perfil de 2022 estão indicados.
+
+| Item do Anexo XLI | Elemento no `BRConjuntoMinimoDados-1.1` |
+|---|---|
+| I.a. CPF do indivíduo ou, excepcionalmente, CNS | `Composition.subject.identifier` e `subject.identifier` de cada recurso |
+| I.a. Município ou país de residência | Sem elemento dedicado no documento (o paciente é referenciado só pelo identificador) |
+| I.b. Pessoa não identificável | Extensão `BRIndividuoNaoIdentificado-1.0` em `subject` |
+| II.a. Estabelecimento que realizou o atendimento | `Composition.author.identifier` (CNES) e `Encounter.serviceProvider` |
+| II.b. Forma de atendimento | Sem elemento dedicado; o `BRContatoAssistencial-1.0` traz `Encounter.type` (`BRModalidadeTelessaude`) para atendimentos por telessaúde |
+| II.c. Contratante terceiro | Sem elemento dedicado no perfil de 2022 |
+| II.d. Data da admissão, procedência, modalidade, caráter | `Encounter.period.start`, `hospitalization.admitSource`, `class`, `priority` |
+| II.e. Data e motivo do desfecho | `Encounter.period.end`, `hospitalization.dischargeDisposition` |
+| II.f. CPF do responsável pelo registro | Sem elemento dedicado; os profissionais do contato vão em `Encounter.participant` |
+| IV. Problemas e diagnósticos (CID ou CIAP, categoria, presença na admissão) | Seção `problemasDiagnosticosAvaliados` → `BRProblemaDiagnostico`; papel em `Encounter.diagnosis.use` |
+| V. Data do resultado do exame oncológico | Sem elemento dedicado no perfil de 2022 |
+| VI.a–c. Procedimento (Tabela SUS, TUSS, CBHPM ou ICHI) e terminologia | `Procedure.code` (`BRProcedimentosNacionais-1.0`: Tabela SUS e CBHPM/TUSS) |
+| VI.d. Quantidade | Extensão `BRQuantidade-1.0` |
+| VI.e. Forma de financiamento | Extensão `BRFinanciamento-1.0` em `Encounter.diagnosis.condition` |
+| VI.f. Data de realização | `Procedure.performedDateTime` |
+| VI.g. Estabelecimento terceiro executante | `Procedure.performer.onBehalfOf.identifier` |
+| VI.h. Profissional executante: CPF, CBO e equipe (INE) | `Procedure.performer.actor.identifier`, `performer.function`, extensão `BRIdentificacaoEquipe-1.0` |
+| VI.i. Autorização do procedimento | `Procedure.identifier` com `type` `AUTH` |
+| VI.j. OPM: fornecedor, lote, número de série, documento fiscal | Seção `informacoesOPM` → `SupplyDelivery` e `Device` |
+
+## Estrutura do documento RNDS
+
+```text
+Bundle (type = document)
+├── Composition  BRConjuntoMinimoDados-1.1    type = BRTipoDocumento#CMD
+│   │                                         category = BRModalidadeAssistencial (1..1)
+│   ├── section informacoesContatoAssistencial   1..1 → Encounter (BRContatoAssistencial-1.0)
+│   ├── section problemasDiagnosticosAvaliados   0..* → Condition (BRProblemaDiagnostico)
+│   ├── section procedimentosRealizados          1..* → Procedure (BRProcedimentoRealizado-1.0)
+│   └── section informacoesOPM                   0..* → SupplyDelivery (BREntregaSuprimentos)
+├── Encounter, Condition, Procedure
+└── SupplyDelivery e Device (só quando houver OPM)
+```
+
+Regras do CMD que valem também para o RAC e o SA:
+
+- Cada seção tem exatamente uma `entry`. Dois procedimentos são duas seções `procedimentosRealizados`.
+- `section.title`, `section.code` e `section.text` são proibidos. A seção é reconhecida pelo perfil do recurso
+  referenciado (discriminador `profile` em `entry.resolve()`), então cada recurso declara o seu perfil RNDS em
+  `meta.profile`.
+- `Composition.subject` só aceita `identifier` (CNS ou CPF) ou a extensão de indivíduo não identificado. `reference`,
+  `display` e `Composition.encounter` são proibidos.
+- `Composition.author` só aceita `identifier`: o CNES do estabelecimento ou o CNPJ de pessoa jurídica ou profissional
+  liberal (`BRPessoaJuridicaProfissionalLiberal-1.0`).
+- `confidentiality`, `attester`, `custodian` e `event` são proibidos. `relatesTo` admite só `replaces`, para
+  substituir um documento já enviado.
+
+## Perfis RNDS
+
+<ProfileHeader source="rnds" id="BRConjuntoMinimoDados-1.1" />
+<ProfileTable source="rnds" id="BRConjuntoMinimoDados-1.1" hideProhibited />
+
+<ProfileHeader source="rnds" id="BRContatoAssistencial-1.0" />
+<ProfileHeader source="rnds" id="BRProblemaDiagnostico" />
+<ProfileHeader source="rnds" id="BRProcedimentoRealizado-1.0" />
+
+As tabelas desses três perfis estão em
+[Registro de Atendimento Clínico](/fhir-ig/desenvolvimento/casos-de-uso/atendimento-clinico/#recursos-referenciados).
+
+### Órteses, próteses e materiais especiais (OPM)
+
+<ProfileHeader source="rnds" id="BREntregaSuprimentos" />
+<ProfileTable source="rnds" id="BREntregaSuprimentos" hideProhibited />
+
+<ProfileHeader source="rnds" id="BROrtesesProtesesMateriais" />
+<ProfileTable source="rnds" id="BROrtesesProtesesMateriais" hideProhibited />
+
+O registro de OPM tem três peças ligadas entre si:
+
+1. O `Device` (`BROrtesesProtesesMateriais`) descreve o item: código do procedimento de OPM da Tabela SUS em
+   `identifier` (sistema `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS`), lote obrigatório em `lotNumber`
+   e o paciente.
+2. O `SupplyDelivery` (`BREntregaSuprimentos`) registra a entrega: nota fiscal em `identifier` (sistema
+   `http://www.saude.gov.br/fhir/r4/NamingSystem/BRNotaFiscal`), fornecedor pelo CNPJ em `supplier.identifier` e o
+   `Device` em `suppliedItem.itemReference`. Ele entra na seção `informacoesOPM`.
+3. O `Procedure` que usou o material aponta para o `Device` em `focalDevice.manipulated`.
+
+As invariantes `opm-1`, `opm-2` e `opm-3` da `Composition` tornam esse vínculo obrigatório conforme o grupo do
+procedimento (códigos da Tabela SUS iniciados por `0702`, de OPM) e a modalidade assistencial em
+`Composition.category`: o `Procedure` precisa apontar para um `Device` que esteja em algum `SupplyDelivery` da seção
+`informacoesOPM`.
+
+### Profissional exigido por procedimento
+
+A invariante `cbo-1` exige `Procedure.performer.function` (ocupação na CBO) quando o código do procedimento pertence
+ao ValueSet `BRProcedimentosComCBO`, ou seja, procedimentos da Tabela SUS que exigem a ocupação do executante.
+Informe sempre `performer.function` e `performer.actor.identifier` com o CPF do profissional.
+
+### As variantes ANS
+
+O pacote da RNDS publica um segundo conjunto de perfis para o CMD, com o sufixo ANS. Eles não derivam do
+`BRConjuntoMinimoDados-1.1`: são perfis paralelos, com as diferenças abaixo.
+
+<ProfileHeader source="rnds" id="BRConjuntoMinimoDadosANS-1.0.0" />
+<ProfileTable source="rnds" id="BRConjuntoMinimoDadosANS-1.0.0" hideProhibited />
+
+| Perfil | Recurso | Para que serve | Diferença em relação ao CMD principal |
+|---|---|---|---|
+| `BRConjuntoMinimoDadosANS-1.0.0` | `Composition` | Documento CMD da variante ANS | `type` fixo em `CMD` e `title` fixo em "Conjunto Mínimo de Dados"; autor só por `BRPessoaJuridicaProfissionalLiberal-1.0` (CNPJ); sem a seção `informacoesOPM` e sem as invariantes de OPM |
+| `BRContatoAssistencialANS-1.0.0` | `Encounter` | Contato assistencial da variante ANS | Mesma estrutura do `BRContatoAssistencial-1.0`, mas os diagnósticos e procedimentos apontam para os perfis ANS; sem `Encounter.type` (telessaúde) |
+| `BRProblemaDiagnosticoANS` | `Condition` | Problema ou diagnóstico da variante ANS | Usa a extensão de indivíduo não identificado ANS |
+| `BRProcedimentoRealizadoANS-1.0.0` | `Procedure` | Procedimento da variante ANS | Código pelo ValueSet `BRProcedimentosANSeCarga` (Tabela SUS, CBHPM/TUSS e os códigos `no-procedure-info` e `no-known-procedures`); quantidade aceita valor decimal; `focalDevice` proibido |
+| `BRIndividuoNaoIdentificadoANS-1.0.0` | `Extension` | Paciente não identificável | O operador responsável (`operator`) é opcional; na extensão principal, é obrigatório |
+
+<ProfileHeader source="rnds" id="BRContatoAssistencialANS-1.0.0" />
+<ProfileHeader source="rnds" id="BRProblemaDiagnosticoANS" />
+<ProfileHeader source="rnds" id="BRProcedimentoRealizadoANS-1.0.0" />
+<ProfileHeader source="rnds" id="BRIndividuoNaoIdentificadoANS-1.0.0" />
+
+## Perfil BR Core
+
+<ProfileHeader source="br-core" id="br-core-encounter" />
+<ProfileTable source="br-core" id="br-core-encounter" hideProhibited />
+
+O `br-core-encounter` usa as mesmas tabelas nacionais do contato assistencial, na canônica do pacote de terminologia
+(`https://terminologia.saude.gov.br/fhir/CodeSystem/...`): `BRCaraterAtendimento` em `priority`, `BRProcedencia` em
+`hospitalization.admitSource`, `BRMotivoDesfecho` em `hospitalization.dischargeDisposition` e
+`BRResponsabilidadeParticipante` em `participant.type`. A modalidade assistencial não tem elemento próprio: `class`
+usa o `v3-ActCode` (`AMB`, `IMP`, `EMER` etc.).
+
+## Nuances brasileiras
+
+### Financiamento por procedimento
+
+A forma de financiamento não fica no `Procedure`, e sim na referência a ele dentro do `Encounter`
+(`Encounter.diagnosis`, fatia `procedure`, extensão `BRFinanciamento-1.0` em `condition`). O CodeSystem
+`BRFinanciamento` tem `01` Federal SUS, `02` Plano de Saúde Público, `03` Plano de Saúde Privado, `04` Particular,
+`05` Gratuidade, `06` Estadual SUS, `07` Municipal SUS e `08` Programas e Projetos Federais.
+
+### Código de autorização
+
+Quando houver autorização (por exemplo, a de internação), ela vai em `Procedure.identifier`, com `type` fixo
+`BRTipoIdentificador#AUTH`, sem `system`. A invariante `cmd-1` impõe o formato
+`^\d{6}-[ME]-\d{2}-\d{2}-\d{6}-\d{7}-\d{1}$`.
+
+### Tabela SUS, TUSS e CBHPM
+
+O ValueSet `BRProcedimentosNacionais-1.0` reúne a Tabela de Procedimentos do SUS (`BRTabelaSUS`) e a CBHPM/TUSS
+(`BRCBHPMTUSS`). Use o código da tabela em que o procedimento foi registrado e faturado. Veja
+[Tabela SUS (SIGTAP)](/fhir-ig/desenvolvimento/terminologias/tabela-sus-sigtap/).
+
+<TerminologyCard id="BRTabelaSUS" />
+<TerminologyCard id="BRProcedencia" />
+
+### CPF primeiro
+
+O Anexo XLI pede o CPF do indivíduo e admite o CNS só excepcionalmente, quando a pessoa não tiver CPF. Os perfis
+aceitam os dois em `subject.identifier`. Os exemplos desta página usam o CNS para manter a coerência com as demais
+páginas; num sistema novo, prefira o CPF quando ele existir. Veja
+[Identificadores](/fhir-ig/desenvolvimento/identificadores/).
+
+## Exemplos
+
+<Tabs>
+	<TabItem label="CMD (RNDS)">
+
+Consulta em ambulatório de especialidade, por demanda referenciada, com hipertensão avaliada e consulta médica em
+atenção especializada financiada pelo SUS.
+
+<FhirExample file="rnds/conjunto-minimo-de-dados/cmd-bundle.json" />
+
+	</TabItem>
+	<TabItem label="CMD ANS (RNDS)">
+
+O mesmo atendimento num prestador identificado por CNPJ, com o procedimento pela TUSS (`10101012`, consulta em
+consultório).
+
+<FhirExample file="rnds/conjunto-minimo-de-dados/cmd-ans-bundle.json" />
+
+	</TabItem>
+	<TabItem label="Contato assistencial (BR Core)">
+
+O contato assistencial como `br-core-encounter`, com caráter, procedência, desfecho e o papel do profissional pelas
+tabelas nacionais.
+
+<FhirExample file="conjunto-minimo-de-dados/contato-assistencial-br-core.json" />
+
+	</TabItem>
+</Tabs>
+
+## Erros comuns
+
+- **Várias entradas na mesma seção.** No CMD, cada seção tem uma `entry`; repita a seção.
+- **Preencher `section.title` ou `section.code`.** São proibidos no CMD.
+- **Esquecer `Composition.category`.** A modalidade assistencial é obrigatória no documento e no `Encounter.class`.
+- **Procedimento de OPM sem `focalDevice`.** As invariantes `opm-1` a `opm-3` exigem o vínculo com um `Device` entregue
+  na seção `informacoesOPM`.
+- **Financiamento no lugar errado.** A extensão `BRFinanciamento-1.0` fica em `Encounter.diagnosis.condition`, não no
+  `Procedure`.
+- **Misturar perfis principais e ANS.** O `BRContatoAssistencialANS-1.0.0` aponta para os perfis ANS de problema e
+  procedimento; o `BRContatoAssistencial-1.0`, para os principais.
+- **Usar o CNES fictício `9999999`.** As invariantes da RNDS rejeitam identificadores com todos os dígitos iguais; os
+  exemplos usam `9990001`.

@@ -1,0 +1,200 @@
+---
+title: Adesão e credenciamento
+description: O passo a passo para credenciar um estabelecimento de saúde na RNDS, das tarefas do gestor às da equipe de tecnologia, nas fases de homologação e produção.
+---
+
+import { Aside, Steps, Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Credenciar o estabelecimento é obter do Departamento de Informática do SUS (DATASUS) a autorização para que o sistema do
+estabelecimento envie e consulte dados na Rede Nacional de Dados em Saúde (RNDS). Esta página reúne o processo descrito
+no [passo a passo do guia da RNDS](https://rnds-guia.saude.gov.br/docs/passo-a-passo/), separando o que cabe ao gestor e
+o que cabe à equipe de tecnologia.
+
+## O que é
+
+Segundo o guia da RNDS, o credenciamento acontece em **duas fases**:
+
+1. **Homologação.** O estabelecimento pede acesso ao ambiente de homologação, um ambiente de testes que funciona como a
+   RNDS real, mas sem dados válidos. Ali a equipe de tecnologia prova que o sistema envia os documentos corretamente.
+2. **Produção.** Com a homologação concluída, o estabelecimento pede acesso ao ambiente de produção. A partir dessa
+   autorização, os registros enviados passam a valer e ficam disponíveis para profissionais e cidadãos.
+
+Não existe atalho: o acesso à produção só é pedido depois que o sistema foi testado em homologação.
+
+## Quem precisa
+
+Qualquer estabelecimento de saúde, público ou privado, que vá trocar informações com a RNDS. Isso inclui, por exemplo,
+salas de vacinação (obrigadas a enviar as doses aplicadas desde a
+[Portaria GM/MS nº 5.663/2024](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2024/prt5663_04_11_2024.html)),
+laboratórios, hospitais, clínicas e farmácias, conforme os
+[casos de uso](/fhir-ig/gestao/casos-de-uso/imunizacao/) em que atuam.
+
+### Quem faz o quê
+
+O guia da RNDS define dois papéis no estabelecimento. O DATASUS é o terceiro participante, do lado do Ministério da
+Saúde.
+
+<CardGrid>
+	<Card title="Gestor" icon="approve-check">
+		O responsável pelo estabelecimento. Cuida da parte administrativa: certificado digital, conta gov.br, pedidos de
+		acesso no Portal de Serviços, identificador do solicitante e termo de compromisso.
+	</Card>
+	<Card title="Integrador (equipe de TI)" icon="setting">
+		Quem desenvolve ou configura o sistema que conversa com a RNDS (o "conector"). Pode ser a equipe interna, a
+		secretaria de saúde ou o fornecedor do sistema. Testa, gera as evidências e coloca em produção.
+	</Card>
+	<Card title="DATASUS" icon="information">
+		Recebe e analisa os pedidos, libera o acesso a cada ambiente e fornece o identificador do solicitante.
+	</Card>
+</CardGrid>
+
+<Aside type="tip" title="Se você usa um sistema de terceiros">
+	Mesmo quando o sistema é de um fornecedor ou da secretaria de saúde, o pedido de acesso, o certificado e o termo de
+	compromisso continuam sendo do estabelecimento. Combine com o fornecedor, por escrito, quem executa cada passo
+	técnico e quem guarda o certificado.
+</Aside>
+
+## Antes de começar: o que o gestor precisa ter
+
+### Certificado digital ICP-Brasil
+
+O certificado digital é a identidade eletrônica do estabelecimento perante a RNDS. Segundo a
+[página de certificado do guia da RNDS](https://rnds-guia.saude.gov.br/docs/publico-alvo/gestor/certificado/):
+
+- A RNDS exige certificado da **ICP-Brasil**, a infraestrutura oficial de certificação do país. Ele é comprado de uma
+  autoridade certificadora credenciada.
+- O estabelecimento pode ser reconhecido pelo **e-CPF do seu gestor** (certificado de pessoa física) ou pelo **e-CNPJ do
+  próprio estabelecimento** (certificado de pessoa jurídica). A escolha é feita no pedido de acesso.
+- O certificado pode ser do tipo **A1**, que é um arquivo instalado no servidor e usado pelo sistema. O guia também
+  menciona o tipo A3, fornecido em cartão ou token físico, que pode ter validade maior.
+- O certificado informado no pedido de acesso **deve ser o mesmo** usado depois pelo sistema para se autenticar. A RNDS
+  identifica as requisições do estabelecimento por esse certificado.
+
+O certificado e a sua senha devem ser guardados com segurança, porque é com eles que o sistema acessa a RNDS em nome do
+estabelecimento. Anote também a data de vencimento: um certificado vencido interrompe os envios.
+
+### Conta gov.br
+
+O gestor precisa de uma conta [gov.br](https://acesso.gov.br), a conta de acesso aos serviços digitais do governo
+federal. É com ela que ele entra no Portal de Serviços do DATASUS. Qualquer cidadão pode criar a conta gratuitamente.
+
+### Informações do sistema
+
+O pedido de acesso pede dados técnicos que a equipe de TI deve fornecer ao gestor, entre eles a **faixa de IPs dos
+servidores**, isto é, os endereços de internet de onde o sistema vai se conectar à RNDS.
+
+## O que fazer
+
+### Fase 1: homologação
+
+<Steps>
+
+1. **Gestor: obter o certificado digital.** Compre um certificado ICP-Brasil (e-CPF do gestor ou e-CNPJ do
+   estabelecimento), de preferência do tipo A1, se o estabelecimento ainda não tiver um adequado.
+
+2. **Gestor: criar a conta gov.br**, se ainda não tiver uma.
+
+3. **Gestor: solicitar acesso no Portal de Serviços.** Acesse o
+   [Portal de Serviços do DATASUS](https://servicos-datasus.saude.gov.br/), escolha o serviço RNDS e clique em
+   "Solicitar acesso". Entre com a conta gov.br. O formulário tem quatro etapas: **Responsável, Sistema, Operação e
+   Finalização**. Nelas você informa os dados do estabelecimento, o certificado que será usado e a faixa de IPs dos
+   servidores. Na primeira etapa, um estabelecimento de fora do Ministério da Saúde escolhe a opção "Outros". O
+   [guia da RNDS ilustra cada tela](https://rnds-guia.saude.gov.br/docs/publico-alvo/gestor/portal/).
+
+4. **Gestor: anotar o identificador do solicitante.** Quando o DATASUS aprova o pedido, o Portal de Serviços passa a
+   mostrar o **identificador do solicitante**. Segundo o
+   [guia da RNDS](https://rnds-guia.saude.gov.br/docs/publico-alvo/gestor/identificador/), ele não é o número do
+   Cadastro Nacional de Estabelecimentos de Saúde (CNES): é um código criado pela RNDS para o estabelecimento. Repasse-o
+   à equipe de TI, porque o sistema o usa ao montar os documentos enviados.
+
+5. **Integrador: conhecer os serviços da RNDS.** A equipe de TI estuda o que a RNDS recebe e devolve. Esta etapa pode
+   começar antes das anteriores, em paralelo com o trâmite administrativo. Veja a
+   [trilha Desenvolvimento](/fhir-ig/desenvolvimento/visao-geral/).
+
+6. **Integrador: desenvolver o conector.** O conector é a parte do sistema que monta os documentos no formato exigido,
+   se autentica com o certificado e envia à RNDS.
+
+7. **Integrador: verificar a conformidade.** A equipe confere se os documentos gerados seguem os modelos da RNDS, usando
+   o validador e o ambiente de homologação.
+
+8. **Integrador: produzir as evidências de homologação.** Veja abaixo o que o arquivo deve conter.
+
+</Steps>
+
+### Fase 2: produção
+
+<Steps>
+
+1. **Gestor: solicitar acesso à produção**, apresentando o PDF de evidências de homologação, e aguardar a resposta do
+   DATASUS.
+
+2. **Integrador: colocar em produção.** Com o acesso liberado, a equipe de TI configura o sistema homologado para usar
+   o ambiente de produção. A partir daí, os registros enviados são reais.
+
+</Steps>
+
+### O termo de compromisso
+
+Segundo o guia da RNDS, o gestor assina formalmente o **termo de compromisso com a RNDS**. É o documento em que o
+estabelecimento assume as responsabilidades pelo uso da rede. Leia-o com atenção antes de assinar e guarde uma cópia
+junto com a documentação do credenciamento.
+
+### As evidências de homologação
+
+O guia da RNDS diz que o [arquivo PDF com as evidências é obrigatório](https://rnds-guia.saude.gov.br/docs/publico-alvo/ti/homologar/)
+e deve ser apresentado ao pedir acesso à produção. Ele reúne, em um único documento:
+
+1. o conteúdo de um documento enviado com sucesso ao ambiente de homologação (no exemplo do guia, um resultado de
+   exame);
+2. uma captura de tela do validador mostrando que esse documento foi validado sem falhas;
+3. o identificador que a RNDS atribuiu ao documento aceito, devolvido pela própria RNDS na resposta ao envio.
+
+O gestor não precisa entender o conteúdo técnico do PDF, mas deve conferir que os três itens estão presentes antes de
+enviar o pedido.
+
+## Prazos e obrigações
+
+O guia da RNDS não informa prazo para a análise dos pedidos pelo DATASUS. Planeje o credenciamento com antecedência em
+relação aos prazos de envio que se aplicam ao seu estabelecimento. Hoje, o prazo de envio verificado em portaria é o da
+vacinação: 24 horas após a aplicação nas salas com conectividade e 15 dias nas salas sem conectividade, segundo a
+[Portaria GM/MS nº 5.663/2024](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2024/prt5663_04_11_2024.html). Veja
+[Imunização](/fhir-ig/gestao/casos-de-uso/imunizacao/).
+
+O compromisso não termina com a liberação. O estabelecimento passa a ser responsável por manter o certificado válido,
+os cadastros atualizados e os envios em dia.
+
+## Checklist do gestor
+
+Use esta lista para acompanhar o processo. Cada item deve estar resolvido antes de considerar o credenciamento concluído:
+
+- Certificado ICP-Brasil (e-CPF do gestor ou e-CNPJ do estabelecimento) adquirido, de preferência A1, com a data de
+  vencimento registrada.
+- Senha do certificado guardada em local seguro, com acesso restrito.
+- Conta gov.br do gestor criada.
+- Faixa de IPs dos servidores obtida com a equipe de TI.
+- Pedido de acesso à homologação enviado no Portal de Serviços (etapas Responsável, Sistema, Operação e
+  Finalização).
+- Identificador do solicitante recebido e repassado à equipe de TI.
+- Cadastro do estabelecimento no CNES conferido e atualizado.
+- Cadastro dos profissionais conferido no CNES, com CNS ou CPF e a ocupação (CBO) corretos.
+- PDF de evidências de homologação recebido da equipe de TI, com os três itens.
+- Termo de compromisso com a RNDS assinado e arquivado.
+- Pedido de acesso à produção enviado.
+- Acesso à produção liberado e sistema em produção.
+- Rotina definida para renovar o certificado antes do vencimento.
+- Responsável definido para acompanhar envios recusados pela RNDS.
+
+<Aside type="note" title="Por que conferir o CNES e os cadastros">
+	Os documentos enviados à RNDS identificam o estabelecimento pelo CNES e os profissionais pelo CPF ou CNS e pela
+	ocupação. O CNES também define para qual endereço estadual da RNDS o sistema envia os dados em produção. Manter
+	esses cadastros corretos evita recusas e registros atribuídos ao lugar errado.
+</Aside>
+
+## Próximos passos
+
+<CardGrid>
+	<LinkCard title="Casos de uso" description="O que cada tipo de registro exige do estabelecimento." href="/fhir-ig/gestao/casos-de-uso/imunizacao/" />
+	<LinkCard title="Base legal e LGPD" description="As normas da RNDS e as bases legais para o envio de dados de saúde." href="/fhir-ig/gestao/base-legal-e-lgpd/" />
+	<LinkCard title="Para a equipe de TI: ambientes" description="Endereços de homologação e produção da RNDS." href="/fhir-ig/desenvolvimento/ambientes/" />
+	<LinkCard title="Para a equipe de TI: autenticação" description="Como o certificado é usado para obter acesso." href="/fhir-ig/desenvolvimento/autenticacao/" />
+</CardGrid>

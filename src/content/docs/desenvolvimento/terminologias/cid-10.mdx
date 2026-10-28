@@ -1,0 +1,111 @@
+---
+title: CID-10
+description: Como codificar diagnósticos com a CID-10 no BR Core e na RNDS, com a fonte oficial e a diferença de formato entre as publicações.
+sidebar:
+  order: 2
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+<TerminologyCard id="BRCID10" />
+
+## O que é
+
+A Classificação Estatística Internacional de Doenças e Problemas Relacionados à Saúde, 10ª revisão (CID-10), codifica
+diagnósticos, causas de morte e motivos de atendimento. Os códigos têm uma letra e dois dígitos na categoria (`I10`,
+hipertensão essencial) e, na subcategoria, mais um dígito (`B34.2`, infecção por coronavírus de localização não
+especificada).
+
+## Quem mantém e fonte oficial
+
+A CID-10 é uma classificação da Organização Mundial da Saúde (OMS). A versão em português usada no SUS é publicada pelo
+DATASUS em [CID-10 (DATASUS)](http://www2.datasus.gov.br/cid10/V2008/cid10.htm). A referência internacional está no
+[navegador da CID-10 da OMS](https://icd.who.int/browse10/2019/en).
+
+Para os documentos da RNDS, a RNDS publica no Simplifier.net o CodeSystem legado completo, com 14.240 códigos:
+[`http://www.saude.gov.br/fhir/r4/CodeSystem/BRCID10`](https://fhir.simplifier.net/RedeNacionaldeDadosemSaude/CodeSystem/BRCID10).
+
+## Onde é usado
+
+| Perfil | Elemento | Binding |
+|---|---|---|
+| `br-core-condition`, `br-core-procedure` | `Condition.code`, `Procedure.reasonCode`, `Procedure.complication` | `BRProblemaDiagnostico` (example), que enumera 1.000 códigos da CID-10 |
+| `br-core-medicationrequest` | `MedicationRequest.reasonCode` | `BRCID10` (example) |
+| `br-core-medicationrequest` | `dosageInstruction.asNeeded[x]` | `BRCID10` (required) |
+| `br-core-immunization` | `Immunization.protocolApplied.targetDisease` | `BRCID10` (example) |
+| `br-core-appointment` | `Appointment.reasonCode` | `BRCID10` (preferred) |
+| RNDS `BRCID10Avaliado-1.0` (rascunho) | `Condition.code` | `BRCID10-1.0` da RNDS (required), URI legada |
+
+## Ponto ou sem ponto: as duas publicações diferem
+
+As duas publicações em FHIR usam formatos de código diferentes:
+
+| Publicação | `system` | Formato | Exemplo |
+|---|---|---|---|
+| Terminologia nova (BR Core) | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10` | com ponto | `B34.2` |
+| Legado RNDS | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCID10` | sem ponto | `B342` |
+
+Os ValueSets do pacote de terminologia e os exemplos oficiais do BR Core usam o ponto. O CodeSystem legado da RNDS não tem
+nenhum código com ponto. Guarde o código em um formato só no seu sistema (por exemplo, sem ponto) e converta ao serializar
+para cada destino: insira o ponto depois do terceiro caractere para o BR Core e remova-o para a RNDS.
+
+## O ValueSet BRCID10 está incompleto
+
+O ValueSet `BRCID10` do pacote 1.1.0 enumera **1.000 códigos**, só de `N97.0` a `Z99.9`. Capítulos inteiros (doenças
+infecciosas, neoplasias, doenças do aparelho circulatório) ficam de fora. Somando todos os ValueSets do pacote, há 2.039
+códigos distintos da CID-10, contra 14.240 do CodeSystem legado da RNDS.
+
+Como implementar corretamente:
+
+- Use a CID-10 completa, da publicação do DATASUS ou do CodeSystem legado da RNDS, como tabela de validação no seu sistema.
+- No único binding `required` (`asNeeded[x]` na prescrição), um código fora da lista enumerada pode gerar erro no
+  validador. Nos demais, os bindings são `example` ou `preferred` e não impedem a validação.
+
+## Exemplo de Coding
+
+<Tabs>
+	<TabItem label="BR Core">
+
+```json
+{
+  "coding": [
+    {
+      "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10",
+      "code": "B34.2",
+      "display": "Infecção por coronavírus de localização não especificada"
+    }
+  ]
+}
+```
+
+	</TabItem>
+	<TabItem label="RNDS">
+
+```json
+{
+  "coding": [
+    {
+      "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCID10",
+      "code": "B342"
+    }
+  ]
+}
+```
+
+	</TabItem>
+</Tabs>
+
+<Aside type="note">
+	O NamingSystem `BRCID10` também registra `http://hl7.org/fhir/sid/icd-10` (a URI da HL7 para a CID-10 da OMS) como URI
+	alternativa. Nos perfis brasileiros, use as URIs acima.
+</Aside>
+
+## Erros comuns
+
+- **Misturar formatos.** `B34.2` com o system legado, ou `B342` com o system novo, não corresponde a nenhum código da
+  publicação.
+- **Usar só a categoria quando a subcategoria existe.** Se o diagnóstico tem subcategoria, prefira o código completo.
+- **Validar contra o ValueSet do pacote.** Ele cobre só parte da CID-10.
+- **Confundir CID-10 com CIAP-2.** A CIAP-2 codifica motivos de consulta e problemas na atenção primária e tem
+  CodeSystem próprio. Veja [CIAP-2](/fhir-ig/desenvolvimento/terminologias/ciap-2/).

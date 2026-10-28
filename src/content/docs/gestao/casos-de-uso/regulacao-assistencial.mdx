@@ -1,0 +1,82 @@
+---
+title: Regulação assistencial
+description: O documento de Regulação Assistencial (RA) da RNDS, que acompanha uma solicitação de consulta, exame ou internação regulada da fila ao atendimento.
+sidebar:
+  order: 3
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+
+## O que é
+
+A regulação assistencial organiza o acesso do cidadão a consultas especializadas, exames e internações que dependem de
+autorização ou de vaga: o serviço solicita, a central de regulação avalia e agenda, e outro serviço executa.
+
+O documento de **Regulação Assistencial (RA)** da Rede Nacional de Dados em Saúde (RNDS) registra cada etapa dessa
+trajetória para um paciente. Ele informa:
+
+- **o que foi solicitado:** o procedimento (pela Tabela SUS ou pela tabela CBHPM/TUSS da saúde suplementar), a
+  modalidade (ambulatorial ou hospitalar), o caráter (rotina ou urgência), o motivo e o estabelecimento solicitante;
+- **o agendamento:** quando e onde o atendimento foi marcado, para qual especialidade e por qual central reguladora;
+- **a situação atual da solicitação.**
+
+A situação segue uma sequência de estados, e cada mudança é enviada à RNDS:
+
+| Situação | Significado |
+|---|---|
+| Pendente | A solicitação foi registrada e aguarda regulação |
+| Agendada | Há data e local marcados |
+| Atendida | O paciente foi atendido ou internado |
+| Cancelada | A solicitação foi cancelada |
+| Falta | O paciente não compareceu ao agendamento |
+| Excluída | A solicitação foi retirada da fila |
+
+O modelo de informação de regulação é chamado de MIRA (Modelo de Informação de Regulação Assistencial) na
+[Portaria GM/MS nº 10.341/2026](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2026/prt10341_16_03_2026.html), que o
+reaproveita para as solicitações de teleconsultoria. Veja
+[Atendimento clínico](/fhir-ig/gestao/casos-de-uso/atendimento-clinico/).
+
+Com o registro na RNDS, a solicitação deixa de existir só dentro do sistema da central. Outros serviços que atendem o
+mesmo paciente passam a saber que ele aguarda, ou já realizou, um procedimento.
+
+## Quem envia
+
+O sistema que registra os eventos da regulação: em geral, o sistema da central de regulação municipal ou estadual. O
+documento identifica como autor o estabelecimento de saúde responsável pelo registro, pelo número do Cadastro Nacional
+de Estabelecimentos de Saúde (CNES). Quando a solicitação e o atendimento são registrados em sistemas diferentes,
+combine na secretaria de saúde qual sistema envia cada evento, para que a mesma etapa não seja enviada duas vezes.
+
+## Quando enviar e prazo
+
+Envie um documento a cada mudança de situação da solicitação: na entrada na fila, no agendamento, no atendimento, no
+cancelamento, na falta ou na exclusão. Cada documento registra a data e a hora da mudança.
+
+Não foi encontrada, entre as normas verificadas por este site, portaria que fixe prazo de envio para a regulação
+assistencial. Quanto mais próximo do evento for o envio, mais fiel será a informação que outros serviços verão.
+
+## O que o estabelecimento precisa ter
+
+- **Sistema de regulação credenciado na RNDS**, homologado e com acesso à produção. Veja
+  [Adesão e credenciamento](/fhir-ig/gestao/adesao-e-credenciamento/).
+- **Cadastro no CNES atualizado** da central reguladora e dos estabelecimentos solicitantes e executantes, porque todos
+  são identificados pelo CNES.
+- **Profissionais cadastrados no CNES**, com CNS ou CPF e a ocupação (CBO) corretos.
+- **Identificação do paciente** pelo CPF ou pelo Cartão Nacional de Saúde (CNS). O modelo também prevê o registro de
+  paciente não identificado, com sexo, ano de nascimento e motivo.
+- **Procedimentos codificados** pela Tabela SUS ou, na saúde suplementar, pela tabela CBHPM/TUSS.
+
+## Modelos técnicos
+
+O documento de regulação e os registros que ele reúne:
+
+<ProfileHeader source="rnds" id="BRRegulacaoAssistencial" />
+<ProfileHeader source="rnds" id="BRRequisicaoRegulacaoAssistencial" />
+<ProfileHeader source="rnds" id="BRAgendamentoRegulacaoAssistencial" />
+
+## Próximos passos
+
+<CardGrid>
+	<LinkCard title="Página técnica: Regulação assistencial" description="Perfis, regras e exemplo validado para a equipe de TI." href="/fhir-ig/desenvolvimento/casos-de-uso/regulacao-assistencial/" />
+	<LinkCard title="Tabela SUS (SIGTAP)" description="Como os procedimentos são codificados." href="/fhir-ig/desenvolvimento/terminologias/tabela-sus-sigtap/" />
+</CardGrid>

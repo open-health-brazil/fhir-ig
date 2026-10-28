@@ -1,0 +1,212 @@
+---
+title: Visão geral
+description: Como se relacionam o BR Core, os perfis da RNDS, o pacote de terminologia e o IPS-BR, e como configurar esses pacotes em ferramentas FHIR.
+---
+
+import { Aside, Card, CardGrid, LinkCard, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Quem integra um sistema brasileiro com FHIR lida com quatro conjuntos de artefatos publicados pelo Ministério da Saúde.
+Eles têm canônicas, pacotes e finalidades diferentes. Esta página explica o papel de cada um, como os pacotes dependem
+uns dos outros e por onde começar a leitura deste site.
+
+## Os quatro conjuntos de artefatos
+
+<CardGrid>
+	<Card title="BR Core" icon="puzzle">
+		Guia de perfis FHIR R4 de uso geral no Brasil: `Patient`, `Practitioner`, `Organization`, `Immunization`,
+		`Composition` e outros. Define como representar os dados em qualquer troca entre sistemas brasileiros.
+	</Card>
+	<Card title="RNDS" icon="rocket">
+		Plataforma nacional que recebe e devolve documentos clínicos. Tem perfis próprios de produção (RIA, REL, RAC, SA...)
+		e é a única que tem endpoints, autenticação e credenciamento.
+	</Card>
+	<Card title="Terminologia" icon="list-format">
+		Pacote com os CodeSystems, ValueSets e NamingSystems brasileiros: CBO, CID-10, CIAP-2, Tabela SUS, imunobiológicos,
+		CPF, CNS, CNES, conselhos profissionais.
+	</Card>
+	<Card title="IPS-BR" icon="document">
+		Adaptação brasileira do Sumário Internacional do Paciente (IPS). O BR Core reaproveita extensões dele, como raça/cor e
+		identidade de gênero.
+	</Card>
+</CardGrid>
+
+### As três bases canônicas
+
+Cada conjunto publica seus artefatos sob uma URL base própria. Ver a canônica de um perfil ou CodeSystem já diz de onde
+ele vem:
+
+| Conjunto | URL base canônica | Exemplo |
+|---|---|---|
+| BR Core | `https://br-core.saude.gov.br/fhir` | `https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient` |
+| Terminologia | `https://terminologia.saude.gov.br/fhir` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO` |
+| RNDS (produção) | `http://www.saude.gov.br/fhir/r4` | `http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0` |
+| IPS-BR | `https://ips.saude.gov.br/fhir` | extensões `raca-br-ips`, `identidade-genero-br-ips` |
+
+Os perfis da RNDS usam CodeSystems na base antiga, `http://www.saude.gov.br/fhir/r4/CodeSystem/...` (por exemplo,
+`http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO`). O pacote de terminologia publica os mesmos sistemas na base nova e
+registra a URL antiga como legada no NamingSystem correspondente.
+
+### Identificadores: `sid` novo e URI legada
+
+Para identificadores de pessoas e estabelecimentos, há também duas formas:
+
+- **BR Core:** `https://saude.gov.br/fhir/sid/cpf`, `.../cns`, `.../cnes`, `.../cnpj`, `.../rne` e os conselhos por UF
+  (`.../crm-sp`, `.../coren-rj` etc.).
+- **Legado RNDS:** `http://rnds.saude.gov.br/fhir/r4/NamingSystem/cpf`, `.../cns`, `.../cnes`, `.../cnpj`, `.../rne`.
+
+As duas formas estão no mesmo NamingSystem do pacote de terminologia, a primeira como preferida. Veja as regras de cada
+identificador em [Identificadores](/fhir-ig/desenvolvimento/identificadores/).
+
+## BR Core × RNDS: qual se aplica
+
+| Pergunta | BR Core | RNDS |
+|---|---|---|
+| O que é | Guia de perfis (especificação) | Plataforma em produção, com perfis próprios |
+| Onde vale | Qualquer troca entre sistemas brasileiros | Envio e consulta na RNDS |
+| Canônica dos perfis | `https://br-core.saude.gov.br/fhir/StructureDefinition/...` | `http://www.saude.gov.br/fhir/r4/StructureDefinition/...` |
+| Identificador do paciente | `Identifier.system` obrigatório (`https://saude.gov.br/fhir/sid/cpf`) | No `BRDocumentoIndividuo-1.0`, `system` proibido e `type` obrigatório |
+| Terminologia | Canônicas novas (`https://terminologia.saude.gov.br/fhir/CodeSystem/...`) | Canônicas legadas (`http://www.saude.gov.br/fhir/r4/CodeSystem/...`) |
+| Precisa de credenciamento | Não | Sim |
+
+Um documento que atende ao BR Core não é automaticamente aceito pela RNDS, e o contrário também vale. Se você mantém um
+modelo interno único, converta para o perfil de destino na hora de serializar. A página
+[Mapeamento RNDS ↔ BR Core](/fhir-ig/desenvolvimento/mapeamento-rnds-br-core/) mostra as diferenças elemento a elemento.
+
+## Os pacotes e suas dependências
+
+| Pacote | Versão | Onde baixar | Depende de |
+|---|---|---|---|
+| `br.gov.saude.br-core.fhir` | 1.7.1 | `https://hl7.org.br/fhir/core/v1.7.1/package.tgz` | `hl7.fhir.r4.core#4.0.1`, `hl7.terminology.r4#7.4.0`, `hl7.fhir.uv.extensions.r4#5.3.0`, `br.gov.saude.terminologia.fhir#1.2.0`, `br.gov.saude.ips.fhir#1.0.0` |
+| `br.gov.saude.terminologia.fhir` | 1.1.0 | `https://terminologia.saude.gov.br/fhir/v1.1.0/package.tgz` | `hl7.fhir.r4.core#4.0.1`, `hl7.fhir.uv.extensions.r4#5.3.0`, `hl7.terminology#5.5.0` |
+| `br.gov.saude.ips.fhir` | 1.0.0 | `https://hl7.org.br/fhir/ips/v1.0.0/package.tgz` | `hl7.fhir.uv.ips#1.1.0`, `br.gov.saude.terminologia.fhir#1.0.0`, entre outros |
+
+As dependências acima foram lidas do `package.json` de cada pacote. Duas particularidades exigem configuração manual:
+
+1. **O BR Core não está no registro público `packages.fhir.org`.** Ferramentas que resolvem dependências pelo registro
+   (SUSHI, IG Publisher, validador HL7) não o encontram sozinhas. Baixe o tarball de `hl7.org.br`.
+2. **O BR Core 1.7.1 declara a terminologia 1.2.0, que não foi publicada.** A URL
+   `https://terminologia.saude.gov.br/fhir/v1.2.0/package.tgz` responde 404 (verificado em 28 de outubro de 2026). A versão
+   publicada mais recente é a 1.1.0. Use-a no lugar da 1.2.0.
+
+Os perfis de produção da RNDS não são distribuídos como pacote NPM com esses números. O
+[guia da RNDS](https://rnds-guia.saude.gov.br/docs/rnds/definicoes) indica que as definições estão no Portal de Serviços
+do DATASUS e no projeto da RNDS no Simplifier.net.
+
+### Como configurar o cache de pacotes
+
+O validador HL7, o SUSHI e o IG Publisher leem pacotes do cache local do FHIR, em `~/.fhir/packages/<id>#<versão>/package/`.
+Colocar os pacotes brasileiros nesse cache resolve as duas particularidades acima. É o método que este projeto usa no
+script `scripts/prepare-validator-cache.ts`.
+
+```sh
+CACHE=~/.fhir/packages
+
+# BR Core 1.7.1
+mkdir -p "$CACHE/br.gov.saude.br-core.fhir#1.7.1"
+curl -fsSL https://hl7.org.br/fhir/core/v1.7.1/package.tgz \
+  | tar -xz -C "$CACHE/br.gov.saude.br-core.fhir#1.7.1"
+
+# Terminologia 1.1.0
+mkdir -p "$CACHE/br.gov.saude.terminologia.fhir#1.1.0"
+curl -fsSL https://terminologia.saude.gov.br/fhir/v1.1.0/package.tgz \
+  | tar -xz -C "$CACHE/br.gov.saude.terminologia.fhir#1.1.0"
+
+# A 1.2.0 que o BR Core declara não existe: aponte-a para o conteúdo da 1.1.0
+cp -r "$CACHE/br.gov.saude.terminologia.fhir#1.1.0" "$CACHE/br.gov.saude.terminologia.fhir#1.2.0"
+
+# IPS-BR 1.0.0 e a terminologia 1.0.0, da qual ele depende
+mkdir -p "$CACHE/br.gov.saude.ips.fhir#1.0.0"
+curl -fsSL https://hl7.org.br/fhir/ips/v1.0.0/package.tgz \
+  | tar -xz -C "$CACHE/br.gov.saude.ips.fhir#1.0.0"
+mkdir -p "$CACHE/br.gov.saude.terminologia.fhir#1.0.0"
+curl -fsSL https://terminologia.saude.gov.br/fhir/v1.0.0/package.tgz \
+  | tar -xz -C "$CACHE/br.gov.saude.terminologia.fhir#1.0.0"
+```
+
+Cada tarball já contém a pasta `package/`, por isso a extração vai direto para a pasta `<id>#<versão>`. As dependências
+internacionais (`hl7.fhir.r4.core`, `hl7.terminology.r4` etc.) estão no registro público e são baixadas pelas ferramentas.
+
+<Tabs>
+	<TabItem label="Validador HL7">
+
+Com o cache preparado, referencie o BR Core pelo id e versão:
+
+```sh
+java -jar validator_cli.jar exemplo.json \
+  -version 4.0.1 \
+  -ig br.gov.saude.br-core.fhir#1.7.1
+```
+
+A ajuda do validador (`-help`) informa que `-ig` aceita também um arquivo, uma pasta ou uma URL. Mesmo assim, o cache
+continua necessário, porque as dependências do pacote são resolvidas por id e versão. Este projeto acrescenta
+`-tx n/a` (sem servidor de terminologia), pelos motivos explicados em
+[Terminologias](/fhir-ig/desenvolvimento/terminologias/).
+
+	</TabItem>
+	<TabItem label="SUSHI / IG Publisher">
+
+No `sushi-config.yaml`, as dependências são pares `id: versão`, conforme a
+[documentação de configuração do SUSHI](https://fshschool.org/docs/sushi/configuration/):
+
+```yaml
+fhirVersion: 4.0.1
+dependencies:
+  br.gov.saude.br-core.fhir: 1.7.1
+  br.gov.saude.terminologia.fhir: 1.1.0
+```
+
+O SUSHI não aceita a URL de um tarball como dependência. Com o pacote no cache local, ele e o IG Publisher o encontram
+pelo id e pela versão, sem consultar o registro.
+
+	</TabItem>
+</Tabs>
+
+<Aside type="tip" title="Quando sair uma nova versão">
+	Se a terminologia 1.2.0 for publicada, troque a cópia da 1.1.0 pelo pacote real e revalide seus exemplos. Confira a lista
+	de versões em `https://terminologia.saude.gov.br/fhir/package-list.json` e `https://hl7.org.br/fhir/core/package-list.json`.
+</Aside>
+
+## Como o seu sistema conversa com a RNDS
+
+A integração usa dois endereços em cada ambiente: um de autenticação (Auth) e um de serviços FHIR (EHR), conforme o
+[guia da RNDS](https://rnds-guia.saude.gov.br/docs/rnds/ambientes). O fluxo de uma chamada é este:
+
+| Passo | Quem chama | Endereço | O que acontece |
+|---|---|---|---|
+| 1 | Seu sistema | Auth: `GET /api/token` | Conexão TLS com o certificado digital ICP-Brasil do estabelecimento como certificado de cliente. A RNDS devolve um `access_token` válido por 30 minutos. |
+| 2 | Seu sistema | EHR: `POST /api/fhir/r4/Bundle` (ou `GET` de consulta) | Headers `X-Authorization-Server: Bearer <access_token>` e `Authorization: <CNS do profissional requisitante>`. Sem certificado de cliente. |
+| 3 | RNDS | Resposta | Sucesso: o id atribuído pela RNDS vem nos headers `location` e `content-location`. Erro: um `OperationOutcome` com código `EHR-ERRnnn`. |
+| 4 | Seu sistema | — | Guarda o id da RNDS (necessário para substituir o documento) e reaproveita o token até ele expirar. |
+
+Em produção, o endereço EHR depende da UF do estabelecimento (por exemplo, `go-ehr-services.saude.gov.br`). Os detalhes
+estão em [Ambientes](/fhir-ig/desenvolvimento/ambientes/), [Autenticação](/fhir-ig/desenvolvimento/autenticacao/) e
+[Envio de documentos](/fhir-ig/desenvolvimento/envio-de-documentos/).
+
+## Mapa de leitura
+
+Siga esta ordem se você está começando uma integração:
+
+1. **Fundamentos:** esta página, [Ambientes](/fhir-ig/desenvolvimento/ambientes/),
+   [Autenticação](/fhir-ig/desenvolvimento/autenticacao/) e [Envio de documentos](/fhir-ig/desenvolvimento/envio-de-documentos/).
+2. **Dados que aparecem em todo documento:** [Identificadores](/fhir-ig/desenvolvimento/identificadores/) e
+   [Terminologias](/fhir-ig/desenvolvimento/terminologias/).
+3. **Recursos base:** [Paciente](/fhir-ig/desenvolvimento/recursos/paciente/),
+   [Profissional](/fhir-ig/desenvolvimento/recursos/profissional/),
+   [Lotação do profissional](/fhir-ig/desenvolvimento/recursos/lotacao-profissional/) e
+   [Estabelecimento](/fhir-ig/desenvolvimento/recursos/estabelecimento/).
+4. **O seu caso de uso:** [Imunização](/fhir-ig/desenvolvimento/casos-de-uso/imunizacao/),
+   [Exames laboratoriais](/fhir-ig/desenvolvimento/casos-de-uso/exames-laboratoriais/),
+   [Regulação assistencial](/fhir-ig/desenvolvimento/casos-de-uso/regulacao-assistencial/),
+   [Prescrição e dispensação](/fhir-ig/desenvolvimento/casos-de-uso/prescricao-e-dispensacao/),
+   [Atendimento clínico](/fhir-ig/desenvolvimento/casos-de-uso/atendimento-clinico/),
+   [Sumário de alta](/fhir-ig/desenvolvimento/casos-de-uso/sumario-de-alta/) e
+   [Conjunto Mínimo de Dados](/fhir-ig/desenvolvimento/casos-de-uso/conjunto-minimo-de-dados/).
+5. **Consulta e evolução:** [Mapeamento RNDS ↔ BR Core](/fhir-ig/desenvolvimento/mapeamento-rnds-br-core/),
+   [Orientações de implementação](/fhir-ig/desenvolvimento/orientacoes-de-implementacao/) e
+   [Evolução R5/R6](/fhir-ig/desenvolvimento/evolucao-r5-r6/).
+
+<LinkCard
+	title="Credenciamento na RNDS"
+	description="O lado do gestor: certificado digital, conta gov.br, solicitação no Portal de Serviços e homologação."
+	href="/fhir-ig/gestao/adesao-e-credenciamento/"
+/>

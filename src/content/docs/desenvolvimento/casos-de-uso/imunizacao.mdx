@@ -1,0 +1,539 @@
+---
+title: Imunização (RIA)
+description: Como montar e enviar à RNDS o Registro de Imunobiológico Administrado (RIA) de rotina, de campanha e de carga, e como ele se relaciona com o perfil de imunização do BR Core.
+sidebar:
+  order: 1
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+import ProfileTable from '../../../../components/ProfileTable.astro';
+import FhirExample from '../../../../components/FhirExample.astro';
+import IdentifierTable from '../../../../components/IdentifierTable.astro';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+O Registro de Imunobiológico Administrado (RIA) é o documento que um estabelecimento de saúde envia à Rede Nacional de
+Dados em Saúde (RNDS) cada vez que aplica uma vacina, soro ou imunoglobulina. É o caso de uso mais maduro da RNDS e,
+desde 2025, o **único caminho** para os sistemas de vacinação enviarem doses aplicadas ao Ministério da Saúde.
+
+Esta página explica a base legal, os três modelos de RIA (rotina, campanha e carga), cada elemento dos perfis de
+produção, as extensões brasileiras e as diferenças em relação ao perfil `br-core-immunization` do BR Core. No fim há
+exemplos completos e validados.
+
+<Aside type="tip" title="Para gestores">
+A visão de negócio (quem precisa enviar, prazos e o que fazer) está em
+[Imunização, na trilha Gestão](/fhir-ig/gestao/casos-de-uso/imunizacao/).
+</Aside>
+
+## Contexto regulatório
+
+Duas normas definem o RIA:
+
+- A [Portaria Conjunta SAES/SVSA/SEIDIGI nº 25, de 27 de novembro de 2023](https://bvsms.saude.gov.br/bvs/saudelegis/Saes/2023/poc0025_30_11_2023.html),
+  institui o **modelo de informação** do RIA: quais dados compõem o registro, para vacinas de rotina e de campanha. O
+  art. 2º atribui ao Departamento de Informática do SUS (DATASUS) a criação dos modelos computacionais (os perfis FHIR)
+  e a implantação técnica na RNDS. A portaria define o conteúdo; ela não obriga ninguém a enviar.
+- A [Portaria GM/MS nº 5.663, de 31 de outubro de 2024](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2024/prt5663_04_11_2024.html),
+  cria a **obrigação**. Ela inclui o art. 312-A na Portaria de Consolidação nº 1/2017, segundo o qual os sistemas de
+  registro de dados de vacinação do País devem encaminhar os dados de doses aplicadas exclusivamente para a RNDS,
+  conforme o modelo de RIA vigente.
+
+A Portaria GM/MS nº 5.663/2024 também fixa os prazos de envio e encerra o canal antigo:
+
+| Situação | Prazo de envio |
+|---|---|
+| Sala de vacina com conectividade | até 24 horas |
+| Sala de vacina sem conectividade | até 15 dias |
+
+- A portaria entrou em vigor 120 dias após a publicação.
+- Ela descontinua a integração por meio do Layout e-SUS APS de Dados e Interface (LEDI), em Thrift/XML, para dados de
+  vacinação. Quem enviava doses pelo LEDI precisa migrar para o RIA em FHIR.
+
+## Quando usar
+
+A RNDS publica três pares de perfis de RIA. Cada par tem uma `Composition` (o documento) e um `Immunization` (a dose):
+
+| Modelo | `Composition` | `Immunization` referenciado na `section` | Quando usar |
+|---|---|---|---|
+| **Rotina** | `BRRegistroImunobiologicoAdministradoRotina-2.0` | `BRImunobiologicoAdministrado-3.0` | Toda dose aplicada fora de campanha: calendário nacional, estratégias especiais, profilaxia, pesquisa clínica, transcrição de caderneta. É o modelo do dia a dia. |
+| **Campanha** | `BRRegistroImunobiologicoAdministradoCampanha-2.0` | `BRImunobiologicoAdministradoCampanha-2.0` | Doses aplicadas em campanha de vacinação. O modelo é mais enxuto. |
+| **Carga** | `BRRegistroImunobiologicoAdministradoCarga-2.0` | `BRImunobiologicoAdministradoCarga-2.0` | Segundo a descrição do próprio perfil, carga de registros de rotina "via carga SISAB para a RNDS". Não é o modelo para registrar doses novas. |
+
+Os perfis anteriores, `BRRegistroImunobiologicoAdministradoRotina-1.0` com `BRImunobiologicoAdministrado-2.0`, ainda
+constam como `active` no Simplifier da RNDS, mas foram substituídos pela versão 2.0 da rotina, alinhada à Portaria
+Conjunta nº 25/2023. Novas integrações devem usar a versão 2.0.
+
+## Estrutura do documento
+
+O RIA é um `Bundle` do tipo `document`. A primeira entrada é a `Composition`; a segunda, o `Immunization`. A
+`Composition` aponta para o `Immunization` em `section.entry.reference`, usando o `fullUrl` da entrada.
+
+```text
+Bundle (type = document)
+├── identifier   → BRRNDS-<identificador do solicitante> + id local do registro
+├── entry[0]     Composition (BRRegistroImunobiologicoAdministradoRotina-2.0)
+│     ├── subject.identifier  → CNS ou CPF do vacinado
+│     ├── author.identifier   → CNES do estabelecimento
+│     └── section[0].entry[0] → urn:uuid do Immunization
+└── entry[1]     Immunization (BRImunobiologicoAdministrado-3.0)
+      ├── patient.identifier  → CNS ou CPF do vacinado
+      └── performer.actor     → Practitioner/<CNS do vacinador>
+```
+
+<Steps>
+
+1. **Gere o identificador do Bundle.** O
+   [guia da RNDS para o RIA](https://rnds-guia.saude.gov.br/docs/ria-rotina/mc-ria-r) define `Bundle.identifier.system`
+   como `http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-<identificador do solicitante>`, em que o identificador do
+   solicitante é o número que a RNDS atribui na aprovação do acesso (não é o CNES). `Bundle.identifier.value` é um
+   identificador criado pelo seu sistema, único para cada registro do estabelecimento. Guarde-o: ele é reutilizado na
+   substituição.
+
+2. **Preencha `Bundle.type` e `Bundle.timestamp`.** `type` é `document`; `timestamp` é o instante em que o Bundle foi
+   montado.
+
+3. **Monte a `Composition`.** Veja a seção [A Composition](#a-composition).
+
+4. **Monte o `Immunization`.** Veja a seção [O Immunization](#o-immunization).
+
+5. **Ligue as duas entradas.** Dê a cada entrada um `fullUrl` no formato `urn:uuid:<UUID>` e use o `fullUrl` do
+   `Immunization` em `Composition.section[0].entry[0].reference`.
+
+6. **Envie.** Faça `POST` do Bundle no endpoint `Bundle` do serviço FHIR da RNDS do seu estado, com o token de acesso.
+   O identificador que a RNDS atribui ao registro volta nos headers `content-location` e `location` da resposta de
+   sucesso. Guarde-o para uma eventual substituição. Detalhes em
+   [Envio de documentos](/fhir-ig/desenvolvimento/envio-de-documentos/) e
+   [Autenticação](/fhir-ig/desenvolvimento/autenticacao/).
+
+</Steps>
+
+## Perfis RNDS: rotina
+
+### A Composition
+
+<ProfileHeader source="rnds" id="BRRegistroImunobiologicoAdministradoRotina-2.0" />
+<ProfileTable source="rnds" id="BRRegistroImunobiologicoAdministradoRotina-2.0" hideProhibited />
+
+O que cada elemento obrigatório leva:
+
+| Elemento | Valor |
+|---|---|
+| `status` | `final`. O ValueSet `BREstadoDocumento-1.0` aceita também `entered-in-error`. |
+| `type.coding` | `system` `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDocumento`, `code` `RIA`. |
+| `subject.identifier` | CNS ou CPF do vacinado, com `system` e `value`. `reference` e `display` são proibidos. |
+| `date` | Data e hora do registro no sistema de origem (a Portaria Conjunta nº 25/2023 trata como item obrigatório). |
+| `author[0].identifier` | CNES do estabelecimento, com `system` e `value`. No máximo um autor. |
+| `title` | Fixo: `Registro de Imunobiologico Administrado na Rotina` (sem acentos, exatamente assim). |
+| `section` | Exatamente uma seção, com exatamente uma `entry` que referencia o `Immunization`. Título, código e texto da seção são proibidos. |
+
+`identifier`, `category`, `encounter`, `confidentiality`, `attester`, `custodian` e `event` são proibidos.
+`relatesTo` (0..1) só aparece na [substituição](#substituição-e-cancelamento).
+
+Na rotina 2.0, **cada documento leva uma única dose**. Se o vacinado recebeu três vacinas no mesmo atendimento, envie
+três documentos.
+
+### O Immunization
+
+<ProfileHeader source="rnds" id="BRImunobiologicoAdministrado-3.0" />
+<ProfileTable source="rnds" id="BRImunobiologicoAdministrado-3.0" hideProhibited />
+
+Os elementos, na ordem em que aparecem no recurso:
+
+| Elemento | Card. | O que leva |
+|---|---|---|
+| `extension:grupoAtendimento` | 1..1 | Grupo de atendimento do vacinado. Veja [Extensões da RNDS](#extensões-da-rnds). |
+| `extension:condicaoMaternal` | 1..1 | Condição maternal. Obrigatória em todo registro. |
+| `extension:contatoHanseniase` | 0..1 | Comunicante de hanseníase. Obrigatória para a BCG. |
+| `status` | 1..1 | Fixo: `completed`. |
+| `vaccineCode` | 1..1 | Um `coding` do CodeSystem `BRImunobiologico`, sem `display` e sem `text`. |
+| `patient.identifier` | 1..1 | CNS ou CPF do vacinado, igual ao de `Composition.subject`. |
+| `occurrenceDateTime` | 1..1 | Data e hora da aplicação. Não pode ser futura. |
+| `primarySource` | 0..1 | `true` para dose aplicada pelo próprio estabelecimento; `false` para registro transcrito. |
+| `reportOrigin` | 0..1 | Só em registro anterior ou vacina no exterior (`BRRegistroOrigem`). |
+| `location.identifier` | 0..1 | País onde a dose transcrita foi aplicada (`BRPais`). |
+| `manufacturer.identifier` | 0..1 | Fabricante (`BRFabricantePNI`). |
+| `lotNumber` | 0..1 | Lote, como impresso na embalagem. |
+| `expirationDate` | 0..1 | Validade do lote. |
+| `site` | 1..1 | Local de aplicação (`BRLocalAplicacao`), um `coding` sem `display`. |
+| `route` | 1..1 | Via de administração (`BRViaAdministracao`), um `coding` sem `display`. |
+| `performer` | 1..1 | O vacinador. `actor.reference` é obrigatório. |
+| `performer.function` | 0..1 | **Especialidade do profissional prescritor** (CBO), não a ocupação do vacinador. |
+| `reasonReference` | 0..1 | Motivo de indicação (CID-10), via `BRCID10Avaliado-1.0`. |
+| `protocolApplied` | 1..1 | Estratégia (extensão obrigatória), pesquisa clínica (opcional) e dose (`doseNumberString`). |
+
+`identifier`, `statusReason`, `encounter`, `recorded`, `doseQuantity`, `note`, `reasonCode`, `isSubpotent`,
+`education`, `programEligibility`, `fundingSource` e `reaction` são proibidos.
+
+## Perfis RNDS: campanha
+
+<ProfileHeader source="rnds" id="BRRegistroImunobiologicoAdministradoCampanha-2.0" />
+
+A `Composition` de campanha é igual à de rotina, exceto por dois pontos: o `title` fixo é
+`Registro de Imunobiologico Administrado na Campanha`, e `section.entry` referencia um
+`BRImunobiologicoAdministradoCampanha-2.0`.
+
+<ProfileHeader source="rnds" id="BRImunobiologicoAdministradoCampanha-2.0" />
+<ProfileTable source="rnds" id="BRImunobiologicoAdministradoCampanha-2.0" hideProhibited />
+
+## Perfis RNDS: carga
+
+<ProfileHeader source="rnds" id="BRRegistroImunobiologicoAdministradoCarga-2.0" />
+<ProfileHeader source="rnds" id="BRImunobiologicoAdministradoCarga-2.0" />
+
+O modelo de carga tem uma diferença estrutural: a `Composition` aceita **várias seções e várias entradas**
+(`section 1..*`, `section.entry 1..*`), para levar muitas doses em um só documento. Seu `title` fixo é
+`Registro de Imunobiologico Administrado Carga`.
+
+## Rotina, campanha e carga lado a lado
+
+| Elemento do `Immunization` | Rotina (`3.0`) | Campanha (`Campanha-2.0`) | Carga (`Carga-2.0`) |
+|---|---|---|---|
+| Doses por documento | 1 | 1 | várias |
+| `extension:grupoAtendimento` | 1..1 | 1..1 | — |
+| `extension:condicaoMaternal` | 1..1 | 1..1 | — |
+| `extension:contatoHanseniase` | 0..1 | — | — |
+| `primarySource` | 0..1 | proibido | 0..1 |
+| `reportOrigin` | 0..1 | proibido | 0..1 |
+| `location` (país) | 0..1 | proibido | proibido |
+| `manufacturer.identifier` | 1..1 se houver `manufacturer` | 1..1 se houver `manufacturer` | 0..1 |
+| `lotNumber` | 0..1 | **1..1** | 0..1 |
+| `site` | **1..1** | proibido | 1..1 |
+| `route` | **1..1** | proibido | 1..1 |
+| `performer.function` | 0..1 (prescritor) | proibido | proibido |
+| `reasonReference` | 0..1 | proibido | proibido |
+| Estratégia (`protocolApplied.extension`) | **1..1** | — (a estratégia é a campanha) | 0..1 |
+| Pesquisa clínica | 0..1 | — | 0..1 |
+| `doseNumberString` | 1..1 | 1..1 | 1..1 |
+
+Os três exigem `status` `completed`, `vaccineCode`, `patient.identifier`, `occurrenceDateTime`, `performer` com
+`actor.reference` e `protocolApplied` (1..1).
+
+<Aside type="note" title="Versão anterior da rotina">
+O `BRImunobiologicoAdministrado-2.0`, usado pela `BRRegistroImunobiologicoAdministradoRotina-1.0`, não tinha as
+extensões de grupo de atendimento, condição maternal e hanseníase, deixava a estratégia opcional e exigia fabricante e
+lote. Na versão 3.0 fabricante e lote são opcionais, o que é coerente com a Portaria Conjunta nº 25/2023, que os
+dispensa na transcrição de caderneta.
+</Aside>
+
+<ProfileHeader source="rnds" id="BRRegistroImunobiologicoAdministradoRotina-1.0" />
+<ProfileHeader source="rnds" id="BRImunobiologicoAdministrado-2.0" />
+
+## Extensões da RNDS
+
+Todas as extensões do RIA usam `CodeableConcept` com exatamente um `coding` (`system` e `code` obrigatórios), exceto a
+de hanseníase (booleana) e a de pesquisa clínica (complexa).
+
+### Grupo de atendimento (`BRGrupoAtendimento`)
+
+- **URL**: `http://www.saude.gov.br/fhir/r4/StructureDefinition/BRGrupoAtendimento`
+- **Onde**: `Immunization.extension` (1..1 na rotina e na campanha).
+- **Valor**: `valueCodeableConcept` do CodeSystem `http://www.saude.gov.br/fhir/r4/CodeSystem/BRGrupoAtendimento`
+  (ValueSet `BRGrupoAtendimento-1.0`, `required`).
+- **Significado**: o grupo em que o vacinado se enquadra para fins da vacinação. Os códigos têm 6 dígitos e são
+  organizados por família: comorbidades (`0001xx`), faixa etária (`0002xx`, por exemplo `000201`, pessoas de 18 a 64
+  anos), pessoas institucionalizadas (`0003xx`), forças armadas e de segurança, povos e comunidades tradicionais,
+  trabalhadores de saúde (`0009xx`), gestantes (`001801`), puérperas (`001901`), entre outros. O código `999999` é
+  "Outros Grupos".
+- **Fonte dos códigos**: a Portaria Conjunta nº 25/2023 remete ao
+  [CodeSystem de grupo de atendimento no Simplifier da RNDS](https://simplifier.net/redenacionaldedadosemsaude/grupodeatendimento).
+  Esse CodeSystem não está no pacote de terminologia `br.gov.saude.terminologia.fhir`, então o validador não confere o
+  código.
+
+### Condição maternal (`BRCondicaoMaternal`)
+
+- **URL**: `http://www.saude.gov.br/fhir/r4/StructureDefinition/BRCondicaoMaternal`
+- **Onde**: `Immunization.extension` (1..1 na rotina e na campanha).
+- **Valor**: `valueCodeableConcept` do CodeSystem `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCondicaoMaternal`.
+- **Códigos**: `1` Nenhuma, `2` Gestante, `3` Puérpera.
+- **Significado**: a condição maternal do vacinado no ato da vacinação. A definição da extensão diz que o campo é de
+  preenchimento obrigatório para pessoas em idade fértil, independentemente do sexo. Como o perfil exige a extensão em
+  todo registro, envie `1` (Nenhuma) quando não houver gestação nem puerpério.
+
+<TerminologyCard id="BRCondicaoMaternal" />
+
+### Comunicante de hanseníase (`BRContatoHanseniase`)
+
+- **URL**: `http://www.saude.gov.br/fhir/r4/StructureDefinition/BRContatoHanseniase`
+- **Onde**: `Immunization.extension` (0..1, só na rotina).
+- **Valor**: `valueBoolean`.
+- **Significado**: indica se o vacinado tem contato próximo com pessoa que vive com hanseníase. A Portaria Conjunta
+  nº 25/2023 torna o campo obrigatório quando o imunobiológico for a BCG (código `15` do `BRImunobiologico`). O perfil
+  não verifica essa regra: a responsabilidade é do seu sistema.
+
+### Estratégia de vacinação (`BREstrategiaVacinacao-1.0`)
+
+- **URL**: `http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstrategiaVacinacao-1.0`
+- **Onde**: `Immunization.protocolApplied.extension` (fatia `strategy`, 1..1 na rotina). Não vai em
+  `Immunization.extension`, e não vai em `reasonCode` (proibido no perfil).
+- **Valor**: `valueCodeableConcept` do CodeSystem `http://www.saude.gov.br/fhir/r4/CodeSystem/BREstrategiaVacinacao`.
+- **Códigos**: `1` Rotina, `2` Especial, `3` Bloqueio, `4` Intensificação, `5` Campanha indiscriminada, `6` Campanha
+  seletiva, `7` Soroterapia, `8` Serviço privado, `9` Monitoramento rápido de cobertura vacinal, `10` Pesquisa,
+  `11` Pré-exposição, `12` Pós-exposição, `13` Reexposição.
+
+<TerminologyCard id="BREstrategiaVacinacao" />
+
+Quando a estratégia é `2` (Especial), a Portaria Conjunta nº 25/2023 torna obrigatórios a especialidade do profissional
+prescritor e o motivo de indicação. No perfil 3.0 eles são, respectivamente, `performer.function` (CBO) e
+`reasonReference` (CID-10).
+
+### Pesquisa clínica (`BREstrategiaVacinacaoPesquisa-1.0`)
+
+- **URL**: `http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstrategiaVacinacaoPesquisa-1.0`
+- **Onde**: `Immunization.protocolApplied.extension` (fatia `pesquisaClinica`, 0..1).
+- **Valor**: extensão complexa com três subextensões, todas `valueString` e 0..1:
+  - `numeroProtocoloEstudoANVISA`: número do protocolo do estudo clínico na Agência Nacional de Vigilância Sanitária
+    (Anvisa);
+  - `numeroVersaoProtocoloEstudo`: versão do protocolo do estudo;
+  - `numeroRegistroVacinaAnvisa`: registro sanitário da vacina na Anvisa, emergencial ou definitivo.
+- **Uso**: doses aplicadas em estudo clínico. Combine com a estratégia `10` (Pesquisa).
+
+```json
+"protocolApplied": [
+  {
+    "extension": [
+      {
+        "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstrategiaVacinacao-1.0",
+        "valueCodeableConcept": {
+          "coding": [{ "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BREstrategiaVacinacao", "code": "10" }]
+        }
+      },
+      {
+        "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstrategiaVacinacaoPesquisa-1.0",
+        "extension": [
+          { "url": "numeroProtocoloEstudoANVISA", "valueString": "PROTOCOLO-EXEMPLO" },
+          { "url": "numeroVersaoProtocoloEstudo", "valueString": "1.0" },
+          { "url": "numeroRegistroVacinaAnvisa", "valueString": "REGISTRO-EXEMPLO" }
+        ]
+      }
+    ],
+    "doseNumberString": "1"
+  }
+]
+```
+
+## Perfil BR Core
+
+O BR Core tem um perfil de imunização próprio, pensado para troca entre sistemas, e não para o envio à RNDS.
+
+<ProfileHeader source="br-core" id="br-core-immunization" />
+<ProfileTable source="br-core" id="br-core-immunization" hideProhibited />
+
+### Como o BR Core difere do RIA
+
+| Aspecto | `br-core-immunization` | RIA rotina (`BRImunobiologicoAdministrado-3.0`) |
+|---|---|---|
+| Recurso isolado ou documento | Recurso isolado, usado em APIs | Sempre dentro de um Bundle `document` com a `Composition` |
+| `status` | Qualquer valor do FHIR | Fixo `completed` |
+| `identifier` | Permitido | Proibido |
+| Paciente | `Reference(br-core-patient)` | Só `identifier` (CNS ou CPF) |
+| Profissional | `performer.actor`: `Practitioner`, `PractitionerRole` ou `Organization` | `Practitioner/<CNS>` (referência literal ao `BRProfissional-1.0`) |
+| `performer.function` | 1..1: função do profissional **no evento** (CBO) | 0..1: especialidade do **prescritor** (CBO) |
+| Fabricante | `Reference(br-core-organization)` | `identifier` com código do `BRFabricantePNI` |
+| `location` | `Reference(br-core-location)`: onde a dose foi aplicada | `identifier` com código do `BRPais`: país de origem de dose transcrita |
+| Estratégia | `reasonCode` (exemplo `BREstrategiaVacinacao`) | Extensão em `protocolApplied`; `reasonCode` proibido |
+| Grupo de atendimento, condição maternal, hanseníase | Não existem | Extensões RNDS |
+| Pesquisa clínica | Extensão `br-core-pesquisaclinica` | Extensão `BREstrategiaVacinacaoPesquisa-1.0` |
+| `doseQuantity`, `protocolApplied.series`, `targetDisease` | Permitidos | Proibidos |
+| `encounter`, `recorded`, `note`, `statusReason`, `reaction`, `education`, `programEligibility`, `fundingSource`, `isSubpotent` | Proibidos | Proibidos |
+| Força dos bindings | `example` na maioria | `required` |
+| `display` nos códigos | Permitido | Proibido em `vaccineCode`, `site`, `route` e `performer.function` |
+| URI dos CodeSystems | `https://terminologia.saude.gov.br/fhir/CodeSystem/...` | `http://www.saude.gov.br/fhir/r4/CodeSystem/...` |
+
+As duas extensões de pesquisa clínica têm as mesmas três subextensões, com os mesmos nomes. Ao converter, troque só a
+URL da extensão. Para um mapa completo entre os perfis, veja
+[Mapeamento RNDS ↔ BR Core](/fhir-ig/desenvolvimento/mapeamento-rnds-br-core/).
+
+## Nuances brasileiras
+
+### Paciente e profissional
+
+- **Vacinado.** Vai por `identifier` em `Composition.subject` e em `Immunization.patient`, com o mesmo valor nos dois.
+  A Portaria Conjunta nº 25/2023 aceita CNS válido ou CPF. O `Patient` não é enviado.
+- **Estabelecimento.** É o autor: CNES em `Composition.author.identifier`. O `Organization` não é enviado. Veja
+  [Estabelecimento de saúde](/fhir-ig/desenvolvimento/recursos/estabelecimento/).
+- **Vacinador.** A Portaria Conjunta nº 25/2023 pede o CNS do profissional que realizou o atendimento ou a transcrição.
+  No perfil, `performer.actor.identifier` é proibido e `performer.actor.reference` é obrigatório; o guia da RNDS mostra a
+  referência na forma `Practitioner/<CNS do profissional>`. O `Practitioner` não é incluído no Bundle, e o validador
+  apenas informa que não encontrou o recurso referenciado. Veja
+  [Profissional](/fhir-ig/desenvolvimento/recursos/profissional/).
+
+<IdentifierTable ids={['cns', 'cpf', 'cnes']} />
+
+<Aside type="caution" title="Qual system usar nas referências por identificador">
+Os exemplos deste site usam as URIs legadas que o pacote de terminologia registra para os NamingSystems:
+`http://rnds.saude.gov.br/fhir/r4/NamingSystem/cns`, `.../cpf` e `.../cnes`. O
+[guia da RNDS para o RIA](https://rnds-guia.saude.gov.br/docs/ria-rotina/mc-ria-r) mostra, em seus trechos de exemplo,
+a URL do perfil no lugar do `system` (`http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0` para o
+paciente e `.../BREstabelecimentoSaude-1.0` para o estabelecimento). Os perfis não fixam o valor de `system`. Confirme
+no ambiente de homologação qual forma o serviço aceita antes de ir para produção.
+</Aside>
+
+### Imunobiológico
+
+`vaccineCode` leva um único `coding` do CodeSystem `BRImunobiologico`, que reúne vacinas, soros e imunoglobulinas.
+Alguns exemplos: `9` hepatite B (HepB), `15` BCG, `22` poliomielite inativada (VIP), `33` influenza trivalente,
+`42` pentavalente.
+
+<TerminologyCard id="BRImunobiologico" />
+
+No RIA, use o `system` legado `http://www.saude.gov.br/fhir/r4/CodeSystem/BRImunobiologico`; no BR Core,
+`https://terminologia.saude.gov.br/fhir/CodeSystem/BRImunobiologico`. O código é o mesmo. A lista de códigos e a
+correspondência com o calendário estão em [Imunobiológicos](/fhir-ig/desenvolvimento/terminologias/imunobiologicos/).
+
+### Dose
+
+A dose vai em `protocolApplied.doseNumberString`, como **texto**, com um código do CodeSystem `BRDose`. Não use
+`doseNumberPositiveInt`: o perfil só aceita a variante `string`. Os códigos não são o número ordinal da dose. Por
+exemplo: `1` a `5` são da 1ª à 5ª dose, `6` e `7` são o 1º e o 2º reforço, `8` é "Dose", `9` é dose única, `10` é
+revacinação, `36` é dose inicial, `37` é dose adicional e `38` é reforço.
+
+<TerminologyCard id="BRDose" />
+
+### Via e local de aplicação
+
+- `route` (obrigatório na rotina): CodeSystem `BRViaAdministracao`. Os códigos mais usados em vacinação são `10890`
+  intramuscular, `10916` subcutânea, `10885` intradérmica e `10907` oral.
+- `site` (obrigatório na rotina): CodeSystem `BRLocalAplicacao`. Exemplos: `1` deltoide direito, `2` deltoide esquerdo,
+  `3` vasto lateral da coxa direita, `4` vasto lateral da coxa esquerda, `5` ventroglúteo direito, `6` ventroglúteo
+  esquerdo, `9` boca (vacinas orais). O código `7` (glúteo) está marcado como descontinuado: não o use em registros
+  novos.
+
+Na campanha, `site` e `route` são proibidos.
+
+### Fabricante e lote
+
+- O fabricante vai em `manufacturer.identifier`, com `system` fixo
+  `http://www.saude.gov.br/fhir/r4/CodeSystem/BRFabricantePNI` e o código do fabricante em `value` (por exemplo, `152`
+  Butantan, `149` Fiocruz). `manufacturer.reference` e `manufacturer.display` são proibidos.
+- O lote vai em `lotNumber`, como impresso na embalagem.
+- Na rotina 3.0 os dois são opcionais, porque a Portaria Conjunta nº 25/2023 os dispensa **apenas** na transcrição de
+  caderneta. Em dose aplicada pelo próprio estabelecimento, envie fabricante e lote sempre. Na campanha, `lotNumber` é
+  obrigatório.
+
+<TerminologyCard id="BRFabricantePNI" />
+
+### Registro anterior, transcrição de caderneta e vacina no exterior
+
+Quando o estabelecimento registra uma dose que **não aplicou** (por exemplo, ao transcrever a caderneta de um
+paciente), o `Immunization` da rotina indica a origem:
+
+- `primarySource`: `false`;
+- `reportOrigin`: CodeSystem `BRRegistroOrigem`, código `1` (registro anterior/transcrição de caderneta) ou `2`
+  (vacina no exterior);
+- `location.identifier`: o país onde a dose foi aplicada, com `system` fixo
+  `http://www.saude.gov.br/fhir/r4/CodeSystem/BRPais` e o código do país em `value` (por exemplo, `10` Brasil, `45`
+  Portugal);
+- `occurrenceDateTime`: a data em que a dose foi aplicada, conforme a caderneta;
+- `performer.actor`: o profissional que fez a transcrição.
+
+```json
+"primarySource": false,
+"reportOrigin": {
+  "coding": [{ "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRRegistroOrigem", "code": "2" }]
+},
+"location": {
+  "identifier": { "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRPais", "value": "45" }
+}
+```
+
+<TerminologyCard id="BRRegistroOrigem" />
+
+Na campanha, `primarySource`, `reportOrigin` e `location` são proibidos: transcrição se registra no modelo de rotina.
+
+### Datas
+
+- `occurrenceDateTime` é a data da aplicação. A Portaria Conjunta nº 25/2023 proíbe data posterior ao dia corrente.
+- `Composition.date` é a data e hora do registro no sistema de origem.
+- `Bundle.timestamp` é o instante em que o documento foi montado.
+
+Envie sempre com fuso horário (`-03:00` para o horário de Brasília) ou em UTC (`Z`).
+
+### Substituição e cancelamento
+
+Para corrigir um RIA já aceito, envie um **novo** documento que o substitui. Segundo o
+[guia da RNDS](https://rnds-guia.saude.gov.br/docs/ria-rotina/mc-ria-r):
+
+<Steps>
+
+1. Monte o registro corrigido completo, não só os campos alterados.
+
+2. Use em `Bundle.identifier.value` o **mesmo** identificador local do registro original.
+
+3. Inclua `Composition.relatesTo` com `code` `replaces` e `targetReference.reference` igual a
+   `Composition/<identificador atribuído pela RNDS ao registro original>`, o valor que voltou no header
+   `content-location` ou `location` do primeiro envio.
+
+4. Envie normalmente. O documento substituto passa a ser o registro ativo.
+
+</Steps>
+
+```json
+"relatesTo": [
+  {
+    "code": "replaces",
+    "targetReference": { "reference": "Composition/<id-rnds-do-registro-original>" }
+  }
+]
+```
+
+`Immunization.status` é fixo em `completed`, então não é possível anular uma dose mudando o status do
+`Immunization`. O ValueSet `BREstadoDocumento-1.0` da `Composition` aceita `entered-in-error` ("cancelado por
+informação errada", segundo o guia), mas o guia da RNDS documenta apenas o fluxo de substituição. Para invalidar um
+registro enviado por engano (paciente errado, por exemplo), valide o procedimento no ambiente de homologação antes de
+usá-lo em produção.
+
+### Códigos legados e validação
+
+Os perfis do RIA vinculam seus elementos a ValueSets da RNDS (`http://www.saude.gov.br/fhir/r4/ValueSet/...`) que não
+fazem parte do BR Core nem do pacote de terminologia. Por isso o validador oficial da HL7 apenas avisa que não encontrou os ValueSets
+e não confere os códigos. Trate como sua a responsabilidade de enviar códigos válidos: use os ValueSets equivalentes do
+pacote de terminologia (`BRImunobiologico`, `BRDose`, `BRLocalAplicacao`, `BRViaAdministracao`, `BRFabricanteImunobiologico`,
+`BREstrategiaVacinacao`, `BRRegistroOrigem`, `BRCondicaoMaternal`) para validar o código, e serialize com a URI legada.
+Veja [Terminologias](/fhir-ig/desenvolvimento/terminologias/).
+
+## Exemplos
+
+### RIA de rotina (RNDS)
+
+Dose de hepatite B aplicada em uma adulta, estratégia rotina. O Bundle tem a `Composition` e o `Immunization`; paciente
+e estabelecimento são referenciados por identificador, e o vacinador, por `Practitioner/<CNS>`.
+
+<FhirExample file="rnds/imunizacao/ria-rotina.json" />
+
+### RIA de campanha (RNDS)
+
+Dose de influenza trivalente em campanha. Repare na ausência de `site`, `route` e estratégia, e no `lotNumber`
+obrigatório.
+
+<FhirExample file="rnds/imunizacao/ria-campanha.json" />
+
+### Imunização no BR Core
+
+A mesma dose de hepatite B no formato do BR Core, para troca entre sistemas. O vacinador é referenciado pela lotação
+(`PractitionerRole`) e a estratégia vai em `reasonCode`.
+
+<FhirExample file="imunizacao/imunizacao-br-core.json" />
+
+## Erros comuns
+
+- **Pôr a estratégia em `reasonCode` no RIA.** No perfil RNDS, `reasonCode` é proibido; a estratégia é uma extensão em
+  `protocolApplied`.
+- **Pôr as extensões no lugar errado.** Grupo de atendimento, condição maternal e hanseníase vão em
+  `Immunization.extension`; estratégia e pesquisa clínica, em `Immunization.protocolApplied.extension`.
+- **Omitir a condição maternal** de homens ou crianças. A extensão é obrigatória em todo registro: use `1` (Nenhuma).
+- **Usar `performer.function` para a ocupação do vacinador.** No RIA de rotina, o elemento é a especialidade do
+  prescritor, exigida na estratégia Especial.
+- **Mandar `display` nos códigos.** O perfil RNDS proíbe `display` em `vaccineCode`, `site`, `route` e
+  `performer.function`.
+- **Usar `doseNumberPositiveInt`** ou o número ordinal da dose em vez do código `BRDose`.
+- **Escrever o `title` com acento.** O valor fixo é `Registro de Imunobiologico Administrado na Rotina`, sem acento.
+- **Enviar várias doses no mesmo RIA de rotina.** A rotina 2.0 aceita exatamente uma `section` com uma `entry`.
+- **Usar o CodeSystem do pacote de terminologia (`https://terminologia.saude.gov.br/...`) no RIA.** Os perfis RNDS e os
+  exemplos do guia usam as URIs legadas `http://www.saude.gov.br/fhir/r4/CodeSystem/...`.
+- **Gerar um novo identificador local na substituição.** O registro substituto reusa o `Bundle.identifier.value` do
+  original e aponta para o id da RNDS em `relatesTo`.
+- **Registrar transcrição com `primarySource: true`** ou sem `reportOrigin`. Dose transcrita não foi aplicada pelo
+  estabelecimento.
+- **Usar o glúteo (`7`) como local de aplicação.** O código está descontinuado.
+- **Enviar data de aplicação futura**, por exemplo por erro de fuso horário. A regra de negócio do modelo de
+  informação proíbe.

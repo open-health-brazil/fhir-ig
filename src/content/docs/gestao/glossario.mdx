@@ -1,0 +1,272 @@
+---
+title: Glossário
+description: Siglas e termos de interoperabilidade em saúde usados neste site, de A a Z, explicados em linguagem simples.
+---
+
+Este glossário explica, em poucas linhas, os termos que aparecem nas trilhas Gestão e Desenvolvimento. Os termos
+técnicos do padrão FHIR estão em inglês, como são usados nos sistemas, com a explicação em português.
+
+## A
+
+**Ambiente de homologação.** Cópia de testes da RNDS, em que a equipe de tecnologia envia documentos fictícios para
+provar que o sistema funciona antes de ser liberado para uso real. Veja
+[Adesão e credenciamento](/fhir-ig/gestao/adesao-e-credenciamento/).
+
+**Ambiente de produção.** A RNDS em uso real. Os documentos enviados ali valem como registro oficial e ficam disponíveis
+para profissionais e cidadãos. Na produção, há um endereço por estado.
+
+## B
+
+**Base legal.** A hipótese prevista na LGPD que autoriza o tratamento de um dado pessoal, como o cumprimento de
+obrigação regulatória, a execução de políticas públicas ou a tutela da saúde. Veja
+[Base legal e LGPD](/fhir-ig/gestao/base-legal-e-lgpd/).
+
+**BR Core.** Guia de implementação que define como representar, no padrão FHIR, os dados de saúde comuns no Brasil
+(paciente, profissional, estabelecimento, vacina, exame). É publicado pelo Ministério da Saúde em
+[hl7.org.br](https://hl7.org.br/fhir/core/) e serve de referência para trocas entre quaisquer sistemas brasileiros.
+
+**Bundle.** No FHIR, um "pacote" que agrupa vários registros para viajar juntos. Os documentos enviados à RNDS são
+Bundles do tipo documento: um envelope com a capa (a `Composition`) e os registros que ela descreve.
+
+## C
+
+**Canônica (URL canônica).** Endereço que identifica de forma única um perfil, uma tabela de códigos ou outro artefato
+FHIR. Funciona como o "nome oficial" do artefato, mesmo que o endereço não abra uma página.
+
+**Cardinalidade.** Regra que diz quantas vezes um campo pode aparecer em um registro. "1..1" significa obrigatório e
+único; "0..*" significa opcional e repetível.
+
+**CBO (Classificação Brasileira de Ocupações).** Tabela oficial de ocupações mantida pelo Ministério do Trabalho e
+Emprego. Na saúde, identifica a ocupação do profissional, como enfermeiro ou médico de família, e é informada no
+cadastro do profissional no CNES.
+
+**Certificado digital ICP-Brasil.** Identidade eletrônica emitida por uma autoridade certificadora da ICP-Brasil. A
+RNDS usa o certificado do estabelecimento (e-CPF do gestor ou e-CNPJ) para reconhecer quem está se conectando.
+
+**CIAP-2 (Classificação Internacional de Atenção Primária, 2ª edição).** Classificação de motivos de consulta,
+problemas e diagnósticos pensada para a atenção primária. É usada ao lado da CID-10 em registros clínicos.
+
+**CID-10 (Classificação Internacional de Doenças, 10ª revisão).** Classificação de doenças e problemas de saúde da
+Organização Mundial da Saúde, usada para codificar diagnósticos e motivos de atendimento.
+
+**CMD (Conjunto Mínimo de Dados).** Modelo de informação com os dados de cada contato assistencial (quem foi atendido,
+onde, quais diagnósticos e procedimentos), instituído pela Portaria GM/MS nº 11.952/2026. Veja
+[Conjunto Mínimo de Dados](/fhir-ig/gestao/casos-de-uso/conjunto-minimo-de-dados/).
+
+**CNES (Cadastro Nacional de Estabelecimentos de Saúde).** Cadastro oficial de todos os estabelecimentos de saúde do
+país, públicos e privados, e dos profissionais que atuam em cada um. O número CNES, de 7 dígitos, identifica o
+estabelecimento nos documentos enviados à RNDS.
+
+**CNS (Cartão Nacional de Saúde).** Número de 15 dígitos que identifica o cidadão e o profissional no SUS. Segundo o
+BR Core, quando o cidadão não tem CPF, o CNS é obrigatório.
+
+**CodeSystem.** No FHIR, a definição de uma tabela de códigos, como a CBO ou a CID-10. Diz quais códigos existem e o que
+cada um significa.
+
+**Composition.** No FHIR, a "capa" de um documento clínico. Diz que tipo de documento é, a quem se refere, quem é o
+autor e quais seções ele contém. Nos documentos da RNDS, é o primeiro registro do Bundle.
+
+**Conector.** A parte do sistema do estabelecimento que monta os documentos, se autentica e conversa com a RNDS. Pode
+ser desenvolvida pela equipe interna ou fornecida pelo fabricante do sistema.
+
+**Contato assistencial.** Cada atendimento de um cidadão em um serviço de saúde, do início (admissão) ao fim
+(desfecho). É a unidade de registro do CMD e do Sumário de Alta.
+
+**CPF (Cadastro de Pessoas Físicas).** Número de 11 dígitos da Receita Federal que identifica o cidadão. É usado ao lado
+do CNS para identificar pacientes e profissionais.
+
+## D
+
+**DATASUS (Departamento de Informática do SUS).** Órgão do Ministério da Saúde responsável por implementar a RNDS,
+conforme o art. 254-B da Portaria de Consolidação nº 1/2017. Analisa os pedidos de credenciamento e publica os modelos
+técnicos.
+
+**Dado pessoal sensível.** Na LGPD, o dado que pode expor a pessoa a discriminação. Dados de saúde são sensíveis e têm
+regras próprias de tratamento.
+
+## E
+
+**e-CNPJ / e-CPF.** Certificados digitais ICP-Brasil de pessoa jurídica (e-CNPJ) e de pessoa física (e-CPF). Para a
+RNDS, o estabelecimento usa o e-CNPJ próprio ou o e-CPF do seu gestor.
+
+**Encarregado (DPO).** Pessoa indicada pelo controlador para responder pelo tratamento de dados pessoais, conforme o
+art. 41 da LGPD.
+
+**ESD28 (Estratégia de Saúde Digital para o Brasil 2020-2028).** Estratégia instituída pela Portaria GM/MS nº 3.632/2020.
+A sua visão é implementar a RNDS até 2028 como a plataforma digital de inovação, informação e serviços de saúde.
+
+**Extensão.** No FHIR, um campo adicional criado para registrar uma informação que o padrão internacional não prevê,
+como raça/cor nas categorias do IBGE.
+
+## F
+
+**FHIR (Fast Healthcare Interoperability Resources).** Padrão internacional da HL7 para troca de dados de saúde entre
+sistemas. Organiza a informação em "recursos" (paciente, vacina, exame) que viajam pela internet em formato JSON ou XML.
+A RNDS e o BR Core usam a versão R4.
+
+## G
+
+**Gestor.** No credenciamento da RNDS, o responsável pelo estabelecimento de saúde. Cuida do certificado, da conta gov.br
+e dos pedidos de acesso.
+
+**gov.br.** Conta única de acesso aos serviços digitais do governo federal. O gestor a usa para entrar no Portal de
+Serviços do DATASUS.
+
+## H
+
+**HL7 (Health Level Seven International).** Organização internacional que desenvolve padrões de interoperabilidade em
+saúde, entre eles o FHIR. O [HL7 Brasil](https://hl7.org.br/) é a afiliada brasileira.
+
+## I
+
+**ICP-Brasil (Infraestrutura de Chaves Públicas Brasileira).** Cadeia oficial de certificação digital do país, que dá
+validade jurídica aos certificados. A RNDS só aceita certificados ICP-Brasil.
+
+**Identificador do solicitante.** Código criado pela RNDS e mostrado no Portal de Serviços quando o pedido de acesso é
+aprovado. Não é o CNES. O sistema o usa ao montar os documentos.
+
+**Imunobiológico.** Termo técnico para vacinas, soros e imunoglobulinas. O registro de cada dose aplicada é o RIA.
+
+**INE (Identificador Nacional de Equipe).** Código que identifica uma equipe de saúde no CNES, como uma equipe de Saúde
+da Família.
+
+**Integrador.** No credenciamento da RNDS, quem desenvolve e opera o conector: a equipe de TI do estabelecimento, da
+secretaria ou do fornecedor do sistema.
+
+**Interoperabilidade.** Capacidade de sistemas diferentes trocarem informações e entenderem o que receberam, sem
+redigitação.
+
+**IPS (International Patient Summary).** Padrão internacional de resumo de saúde do paciente (alergias, medicamentos,
+problemas, vacinas), pensado para atendimento em qualquer lugar. A versão brasileira, IPS-BR, é publicada em
+[hl7.org.br/fhir/ips](https://hl7.org.br/fhir/ips/), e o BR Core reaproveita algumas das suas extensões.
+
+## L
+
+**LAI (Lei de Acesso à Informação).** Lei nº 12.527/2011, que regula o acesso a informações públicas. O acesso à RNDS
+deve observá-la, ao lado da LGPD.
+
+**LEDI.** Antiga forma de integração com o e-SUS APS. A Portaria GM/MS nº 5.663/2024 a descontinuou para dados de
+vacinação, que passaram a ir exclusivamente para a RNDS.
+
+**LGPD (Lei Geral de Proteção de Dados Pessoais).** Lei nº 13.709/2018, que regula o tratamento de dados pessoais no
+Brasil, com regras mais rígidas para dados sensíveis, como os de saúde.
+
+**LOINC (Logical Observation Identifiers Names and Codes).** Tabela internacional de códigos para exames e observações
+clínicas. Os documentos da RNDS a usam, por exemplo, para identificar seções e exames.
+
+**Lotação.** O vínculo de um profissional com um estabelecimento, com a ocupação (CBO) que ele exerce ali, conforme
+registrado no CNES.
+
+## M
+
+**Meu SUS Digital.** Aplicativo do Ministério da Saúde pelo qual o cidadão consulta os seus dados de saúde que estão na
+RNDS, como vacinas, atendimentos e medicamentos.
+
+**Modelo computacional.** A versão técnica de um modelo de informação, publicada pelo DATASUS no formato FHIR, que os
+sistemas usam para enviar os dados à RNDS.
+
+**Modelo de informação.** Documento oficial, em geral instituído por portaria, que lista os dados mínimos de um tipo de
+registro (vacinação, exame, alta) sem entrar em detalhes técnicos.
+
+**Must Support.** Marcação de um campo, em um perfil FHIR, indicando que os sistemas precisam ser capazes de registrar e
+enviar aquela informação sempre que ela existir. Não significa que o campo seja obrigatório em todo registro.
+
+## N
+
+**NamingSystem.** No FHIR, a definição de um tipo de identificador, como CPF, CNS ou CNES, com o endereço oficial que o
+representa nos registros.
+
+## O
+
+**OBM (Ontologia Brasileira de Medicamentos).** Terminologia de medicamentos indicada pela Portaria GM/MS nº 6.100/2024
+para identificar os medicamentos prescritos e dispensados.
+
+## P
+
+**Perfil.** Conjunto de regras que adapta um recurso FHIR a um uso específico: quais campos são obrigatórios, quais
+tabelas de códigos usar, quais extensões existem. O BR Core e a RNDS publicam os seus próprios perfis.
+
+**Portal de Serviços do DATASUS.** Site ([servicos-datasus.saude.gov.br](https://servicos-datasus.saude.gov.br/)) em
+que o gestor pede acesso à RNDS e acompanha o pedido.
+
+**PRC nº 1 (Portaria de Consolidação nº 1/2017).** Norma que reúne as regras gerais do SUS. As portarias da RNDS a
+alteram, incluindo artigos e anexos.
+
+## R
+
+**RA (Regulação Assistencial).** Documento da RNDS que registra a solicitação, o agendamento e a realização de
+procedimentos regulados, como consultas especializadas e exames. Veja
+[Regulação assistencial](/fhir-ig/gestao/casos-de-uso/regulacao-assistencial/).
+
+**RAC (Registro de Atendimento Clínico).** Registro dos dados essenciais de uma consulta na atenção primária,
+especializada ou domiciliar, instituído pela Portaria SAES/MS nº 234/2022. Veja
+[Atendimento clínico](/fhir-ig/gestao/casos-de-uso/atendimento-clinico/).
+
+**RATC (Registro de Atendimento via Teleconsultoria).** Registro da pergunta de um profissional a um teleconsultor e da
+resposta recebida, instituído pela Portaria GM/MS nº 10.341/2026.
+
+**RDM / REDFM (Registro de Dispensação de Medicamentos / Registro Eletrônico de Dispensação ou Fornecimento de
+Medicamentos).** Registro da entrega de um medicamento ao paciente. RDM é a sigla da Portaria SAES/MS nº 50/2022;
+REDFM, a da Portaria GM/MS nº 6.100/2024. Veja
+[Prescrição e dispensação](/fhir-ig/gestao/casos-de-uso/prescricao-e-dispensacao/).
+
+**Recurso.** A unidade básica de informação do FHIR, como `Patient` (paciente), `Immunization` (vacina) ou
+`Observation` (resultado de exame).
+
+**REL (Resultado de Exame Laboratorial).** Documento da RNDS com o resultado de exames de laboratórios de análises
+clínicas. Veja [Exames laboratoriais](/fhir-ig/gestao/casos-de-uso/exames-laboratoriais/).
+
+**RELC (Resultado de Exame com Laudo Clínico).** Registro do laudo emitido por profissional habilitado, inclusive por
+telediagnóstico, instituído pela Portaria GM/MS nº 10.341/2026.
+
+**RIA (Registro de Imunobiológico Administrado).** Registro de cada dose de vacina aplicada. O envio à RNDS é
+obrigatório pela Portaria GM/MS nº 5.663/2024. Veja [Imunização](/fhir-ig/gestao/casos-de-uso/imunizacao/).
+
+**RNDS (Rede Nacional de Dados em Saúde).** Plataforma nacional de integração e interoperabilidade de informações em
+saúde, instituída pela Portaria GM/MS nº 1.434/2020 e implementada pelo DATASUS. Veja
+[O que é a RNDS](/fhir-ig/gestao/o-que-e-a-rnds/).
+
+**RPM / REPM (Registro de Prescrição de Medicamentos / Registro Eletrônico da Prescrição de Medicamentos).** Registro
+dos medicamentos prescritos por profissional habilitado. RPM é a sigla da Portaria SAES/MS nº 50/2022; REPM, a da
+Portaria GM/MS nº 6.100/2024.
+
+## S
+
+**SA (Sumário de Alta).** Resumo da internação, com diagnósticos, procedimentos, evolução e orientações para depois da
+alta, instituído pela Portaria GM/MS nº 8.026/2025. Veja [Sumário de alta](/fhir-ig/gestao/casos-de-uso/sumario-de-alta/).
+
+**SIGTAP / Tabela SUS.** O Sistema de Gerenciamento da Tabela de Procedimentos, Medicamentos e OPM do SUS (SIGTAP) mantém
+a Tabela SUS, que lista e codifica os procedimentos financiados pelo SUS. Os códigos de procedimento dos documentos da
+RNDS vêm dessa tabela.
+
+**Simplifier.** Plataforma on-line em que artefatos FHIR são publicados. Os perfis de produção da RNDS estão no
+[projeto da RNDS no Simplifier](https://simplifier.net/redenacionaldedadosemsaude).
+
+**SNIS (Sistema Nacional de Informações em Saúde).** Conjunto dos sistemas de informação do SUS. A RNDS é um dos seus
+componentes, segundo o art. 254-A da PRC nº 1.
+
+## T
+
+**Terminologia.** Conjunto das tabelas de códigos que dão significado único aos dados: CBO, CID-10, CIAP-2, Tabela SUS,
+imunobiológicos, municípios. O Ministério da Saúde publica um pacote de terminologia em
+[terminologia.saude.gov.br](https://terminologia.saude.gov.br/fhir/).
+
+**Termo de compromisso.** Documento que o gestor assina formalmente com a RNDS durante o credenciamento, assumindo as
+responsabilidades do estabelecimento no uso da rede.
+
+**Token.** Chave de acesso temporária que o sistema recebe da RNDS depois de se autenticar com o certificado digital.
+Segundo o guia da RNDS, ela vale por 30 minutos e precisa ser renovada depois disso.
+
+**TUSS (Terminologia Unificada da Saúde Suplementar).** Tabela de procedimentos usada na saúde suplementar (planos de
+saúde). O CMD e o RELC a aceitam ao lado da Tabela SUS.
+
+## V
+
+**Validador.** Programa que confere se um documento segue as regras de um perfil FHIR antes do envio. A captura de tela
+do validador faz parte das evidências de homologação.
+
+**ValueSet.** No FHIR, a lista dos códigos aceitos em um campo específico, escolhidos de uma ou mais tabelas (CodeSystem).
+Por exemplo, a lista de vacinas aceitas no registro de vacinação.
+
+**Via única de interoperabilidade.** Expressão do art. 254-A, § 3º, da PRC nº 1: a meta de que a RNDS se torne o canal
+único de troca nacional de dados de saúde, alcançada de forma gradativa.

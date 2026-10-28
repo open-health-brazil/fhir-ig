@@ -1,0 +1,80 @@
+---
+title: Sumário de alta
+description: O Sumário de Alta (SA) da RNDS, instituído pela Portaria GM/MS nº 8.026/2025, o que ele contém, quem envia e o que o hospital precisa ter.
+sidebar:
+  order: 6
+---
+
+import { Aside, Badge, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+
+## O que é
+
+O **Sumário de Alta (SA)** é o resumo da internação de um paciente. Segundo a
+[Portaria GM/MS nº 8.026, de 27 de agosto de 2025](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2025/prt8026_28_08_2025.html),
+que institui o modelo de informação na Rede Nacional de Dados em Saúde (RNDS), ele traz o relato clínico objetivo das
+intervenções realizadas, as instruções para a continuidade do cuidado depois da alta e o estado de saúde do paciente ao
+final da internação.
+
+O objetivo é que a unidade de saúde que vai acompanhar o paciente depois da alta, em especial a atenção primária, saiba
+o que aconteceu no hospital. O próprio cidadão também pode consultar o documento.
+
+### O que o sumário contém
+
+A portaria lista o conteúdo mínimo. Em resumo:
+
+- **identificação:** o número do prontuário no sistema de origem, o paciente (pelo CPF ou pelo Cartão Nacional de
+  Saúde, CNS) e o hospital (pelo número do Cadastro Nacional de Estabelecimentos de Saúde, CNES);
+- **a internação:** de onde o paciente veio, o caráter (por exemplo, eletiva ou de urgência), a data e a hora, a
+  modalidade assistencial e o motivo, pela CID;
+- **o que foi avaliado e feito:** os problemas e diagnósticos, se estavam presentes na admissão e se foram resolvidos;
+  os procedimentos realizados; restrições funcionais ou incapacidades, quando houver;
+- **a evolução:** um resumo da evolução clínica durante a internação;
+- **alergias e reações adversas**, com o agente causador codificado;
+- **medicamentos prescritos**, seguindo a Portaria GM/MS nº 6.100/2024 (veja
+  [Prescrição e dispensação](/fhir-ig/gestao/casos-de-uso/prescricao-e-dispensacao/));
+- **a alta:** a data, a hora, o desfecho e o profissional responsável, pelo CPF ou CNS e a ocupação (CBO).
+
+O art. 4º acrescenta que o modelo também contempla as informações do
+[Conjunto Mínimo de Dados](/fhir-ig/gestao/casos-de-uso/conjunto-minimo-de-dados/). O art. 5º revoga a Portaria
+SAES/MS nº 701/2022.
+
+## Quem envia
+
+Os estabelecimentos de saúde com internação, como hospitais, por meio do sistema de prontuário ou de gestão hospitalar.
+
+## Quando enviar e prazo
+
+A Portaria nº 8.026/2025 institui o modelo, mas não fixa prazo de envio. O art. 3º diz que as especificações e os
+mecanismos técnicos para o recebimento serão definidos e publicados pelo Departamento de Informática do SUS (DATASUS) no
+[Portal de Serviços](https://servicos-datasus.saude.gov.br/).
+
+O momento natural de envio é a alta: o sumário é fechado quando o desfecho da internação é registrado.
+
+<Aside type="caution" title="Modelo técnico em rascunho">
+	O modelo de produção do Sumário de Alta no projeto da RNDS está com status
+	<Badge text="rascunho" variant="caution" />. Antes de planejar a implantação, confirme no Portal de Serviços do
+	DATASUS se o recebimento já está liberado.
+</Aside>
+
+## O que o estabelecimento precisa ter
+
+- **Sistema hospitalar credenciado na RNDS**, homologado e com acesso à produção. Veja
+  [Adesão e credenciamento](/fhir-ig/gestao/adesao-e-credenciamento/).
+- **Cadastro no CNES atualizado.** O CNES identifica o hospital onde ocorreu a internação.
+- **Profissionais cadastrados no CNES**, com CNS ou CPF e a ocupação (CBO) corretos, em especial os que dão alta.
+- **Identificação do paciente** pelo CPF ou pelo CNS desde a admissão.
+- **Diagnósticos codificados** pela CID (e, quando aplicável, pela CIAP) e procedimentos pela tabela de procedimentos.
+- **Resumo da evolução clínica** escrito pela equipe na alta. O sistema pode montar boa parte do sumário a partir do
+  prontuário, mas esse resumo depende do profissional.
+
+## Modelos técnicos
+
+<ProfileHeader source="rnds" id="BRSumarioAlta" />
+
+## Próximos passos
+
+<CardGrid>
+	<LinkCard title="Página técnica: Sumário de alta" description="Perfis, regras e exemplo para a equipe de TI." href="/fhir-ig/desenvolvimento/casos-de-uso/sumario-de-alta/" />
+	<LinkCard title="Conjunto Mínimo de Dados" description="O registro de cada contato assistencial, que o sumário também contempla." href="/fhir-ig/gestao/casos-de-uso/conjunto-minimo-de-dados/" />
+</CardGrid>

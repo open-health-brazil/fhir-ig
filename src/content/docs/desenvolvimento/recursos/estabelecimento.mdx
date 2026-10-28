@@ -1,0 +1,262 @@
+---
+title: Estabelecimento de saúde
+description: Como representar o estabelecimento de saúde (Organization) no BR Core e nos perfis BREstabelecimentoSaude e RNDSEstabelecimentoSaude da RNDS, com CNES, CNPJ, CPF e as extensões da saúde indígena.
+sidebar:
+  order: 4
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+import ProfileTable from '../../../../components/ProfileTable.astro';
+import FhirExample from '../../../../components/FhirExample.astro';
+import IdentifierTable from '../../../../components/IdentifierTable.astro';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+O estabelecimento de saúde é o local, cadastrado no Cadastro Nacional de Estabelecimentos de Saúde (CNES), onde se
+realizam ações e serviços de saúde. Em FHIR ele é um `Organization`. Na RNDS, o estabelecimento é o **autor** dos
+documentos: é pelo CNES dele que a RNDS sabe quem enviou o registro.
+
+O estabelecimento aparece em três perfis principais: o `br-core-organization` do BR Core e, na RNDS, o
+`BREstabelecimentoSaude-1.0` e o `RNDSEstabelecimentoSaude`. A RNDS tem ainda o `BRPessoaJuridicaProfissionalLiberal-1.0`
+para a mantenedora (a pessoa jurídica ou o profissional liberal dono do estabelecimento).
+
+## Quando usar
+
+- **BR Core (`br-core-organization`)**: para qualquer organização em integrações que sigam o BR Core:
+  estabelecimentos, secretarias de saúde, operadoras, fabricantes, Distritos Sanitários Especiais Indígenas (DSEI) e
+  polos-base.
+- **RNDS (`BREstabelecimentoSaude-1.0`)**: é o alvo de `Composition.author` em praticamente todos os documentos da
+  RNDS. Nesses documentos o `Organization` **não** viaja no Bundle: o autor é referenciado pelo CNES em
+  `Composition.author.identifier`. Veja [Imunização](/fhir-ig/desenvolvimento/casos-de-uso/imunizacao/).
+- **RNDS (`RNDSEstabelecimentoSaude`)**: é o alvo de `RNDSLotacaoProfissional.organization`, usado na prescrição e na
+  dispensação eletrônicas. Veja [Lotação do profissional](/fhir-ig/desenvolvimento/recursos/lotacao-profissional/).
+
+## Perfil BR Core
+
+<ProfileHeader source="br-core" id="br-core-organization" />
+<ProfileTable source="br-core" id="br-core-organization" />
+
+## Perfis RNDS
+
+### BREstabelecimentoSaude-1.0
+
+<ProfileHeader source="rnds" id="BREstabelecimentoSaude-1.0" />
+<ProfileTable source="rnds" id="BREstabelecimentoSaude-1.0" hideProhibited />
+
+### BRPessoaJuridicaProfissionalLiberal-1.0
+
+A mantenedora (`Organization.partOf`, obrigatório no `BREstabelecimentoSaude-1.0`) segue este perfil:
+
+<ProfileHeader source="rnds" id="BRPessoaJuridicaProfissionalLiberal-1.0" />
+<ProfileTable source="rnds" id="BRPessoaJuridicaProfissionalLiberal-1.0" hideProhibited />
+
+### RNDSEstabelecimentoSaude
+
+<ProfileHeader source="rnds" id="RNDSEstabelecimentoSaude" />
+<ProfileTable source="rnds" id="RNDSEstabelecimentoSaude" only="Organization.identifier" hideProhibited />
+
+Fora `identifier`, o `RNDSEstabelecimentoSaude` exige apenas `id`. Os demais elementos são os do recurso base.
+
+## Nuances brasileiras
+
+### Identificadores
+
+O BR Core fatia `Organization.identifier` pelo `system`. Pelo menos um identificador é obrigatório
+(`identifier 1..*`), mas nenhuma fatia é obrigatória sozinha:
+
+| Fatia | `system` | `type.coding.code` | Uso |
+|---|---|---|---|
+| `cnes` | `https://saude.gov.br/fhir/sid/cnes` | `PRN` (fixo) | Estabelecimento cadastrado no CNES |
+| `cnpj` | `https://saude.gov.br/fhir/sid/cnpj` | `TAX` | Pessoa jurídica |
+| `cpf` | `https://saude.gov.br/fhir/sid/cpf` | `TAX` | Profissional liberal (consultório de pessoa física) |
+| `dsei` | `https://saude.gov.br/fhir/sid/dsei` | `PRN` | Distrito Sanitário Especial Indígena |
+| `poloBase` | `https://saude.gov.br/fhir/sid/polo-base` | `PRN` | Polo-base da saúde indígena |
+
+Em todas as fatias, `use` é fixo em `official`. Só a fatia `cnes` fixa o código do `type`. Nas demais, o `type` tem
+binding `required` para o ValueSet `IdentifierType` da HL7, e os exemplos oficiais do BR Core usam `TAX` para CPF e
+CNPJ e `PRN` para DSEI e polo-base.
+
+<IdentifierTable ids={['cnes', 'cnpj', 'cpf']} />
+
+O CNES tem 7 dígitos e o CNPJ, 14 caracteres. Envie só os dígitos, sem ponto, barra ou hífen. Veja as regras de
+validação em [Identificadores](/fhir-ig/desenvolvimento/identificadores/).
+
+### CNES, CNPJ ou CPF?
+
+- **Estabelecimento de saúde**: informe sempre o CNES. É ele que a RNDS usa para identificar o autor dos documentos e
+  para escolher o endpoint estadual de envio (veja [Ambientes](/fhir-ig/desenvolvimento/ambientes/)).
+- **Pessoa jurídica que não é estabelecimento** (operadora, fabricante, laboratório farmacêutico): CNPJ.
+- **Profissional liberal** (consultório isolado de pessoa física): o estabelecimento tem CNES próprio e, como
+  mantenedora, a pessoa física, identificada por CPF. No BR Core, informe o CPF na fatia `cpf` do próprio
+  estabelecimento ou em uma organização mantenedora referenciada por `partOf`. Na RNDS, a mantenedora é sempre um
+  `BRPessoaJuridicaProfissionalLiberal-1.0`, perfil que cobre tanto pessoa jurídica (CNPJ) quanto profissional liberal
+  (CPF).
+
+### Três formatos de CNES
+
+<Tabs>
+	<TabItem label="BR Core">
+
+```json
+{
+  "use": "official",
+  "type": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "PRN" }] },
+  "system": "https://saude.gov.br/fhir/sid/cnes",
+  "value": "9999999"
+}
+```
+
+	</TabItem>
+	<TabItem label="Referência em documento RNDS">
+
+```json
+"author": [
+  {
+    "identifier": {
+      "system": "http://rnds.saude.gov.br/fhir/r4/NamingSystem/cnes",
+      "value": "9999999"
+    }
+  }
+]
+```
+
+	</TabItem>
+	<TabItem label="RNDSEstabelecimentoSaude">
+
+```json
+{
+  "use": "official",
+  "type": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "PRN" }] },
+  "system": "https://saude.gov.br/sid/cnes",
+  "value": "9990001"
+}
+```
+
+	</TabItem>
+</Tabs>
+
+As diferenças:
+
+- O **BR Core** usa `https://saude.gov.br/fhir/sid/cnes`.
+- Os **documentos da RNDS** (como o RIA) referenciam o autor por `identifier`, sem `reference`. Este site usa a URI
+  legada `http://rnds.saude.gov.br/fhir/r4/NamingSystem/cnes`, que o pacote de terminologia registra como URI
+  alternativa do NamingSystem do CNES.
+- O **`RNDSEstabelecimentoSaude`** fixa `https://saude.gov.br/sid/cnes`, **sem** o segmento `/fhir`, e o mesmo padrão
+  para CPF e CNPJ.
+- O **`BREstabelecimentoSaude-1.0`** proíbe `identifier`. Nesse perfil o estabelecimento é identificado pelo `id` do
+  recurso.
+
+### Validação de formato no RNDSEstabelecimentoSaude
+
+O `RNDSEstabelecimentoSaude` traz invariantes de formato em cada fatia:
+
+| Invariante | Fatia | Regra |
+|---|---|---|
+| `estab-2` | `cnes` | 7 dígitos, sem que todos sejam iguais |
+| `estab-3` | `cpf` | 11 dígitos, sem que todos sejam iguais |
+| `estab-4` | `cnpj` | 12 caracteres alfanuméricos maiúsculos seguidos de 2 dígitos, sem que todos sejam iguais |
+
+<Aside type="caution" title="CNES fictício nos exemplos">
+Por causa da `estab-2`, um CNES com todos os dígitos iguais, como o `9999999` usado nos exemplos BR Core deste site, é
+rejeitado pelo `RNDSEstabelecimentoSaude`. O exemplo RNDS desta página usa `9990001`. Em testes, nunca use um CNES de
+dígitos repetidos achando que ele passa em qualquer validação.
+</Aside>
+
+A regra da `estab-4` aceita letras nas 12 primeiras posições do CNPJ. Não converta o CNPJ para número nem remova
+zeros à esquerda: trate-o como texto.
+
+### Tipo de estabelecimento
+
+`Organization.type` leva o tipo de estabelecimento do CNES, no CodeSystem `BRTipoEstabelecimentoSaude` (por exemplo,
+`2` para centro de saúde/unidade básica e `5` para hospital geral). No BR Core o binding é de exemplo; no
+`BREstabelecimentoSaude-1.0` é `required` e o elemento é obrigatório (1..1).
+
+<TerminologyCard id="BRTipoEstabelecimentoSaude" />
+
+### `name`, `alias` e `address` são obrigatórios no BR Core
+
+- `name` (1..1): o nome do estabelecimento, como aparece no CNES (nome fantasia).
+- `alias` (1..1): no BR Core, `alias` é a **razão social**. Em FHIR `alias` é uma lista, mas o BR Core limita a
+  exatamente um valor. Quando o estabelecimento não tem razão social própria (uma UBS municipal, por exemplo), repita
+  o nome do estabelecimento ou use o nome empresarial que consta no CNES.
+- `address` (1..1): exatamente um endereço. O BR Core acrescenta as extensões `br-core-address-municipio` (código IBGE
+  do município) e `br-core-address-aldeia`.
+
+No `BREstabelecimentoSaude-1.0`, `name`, `alias` ("Nome Empresarial", 1..1) e `address` (1..1, perfil `BREndereco-1.0`)
+também são obrigatórios. No `BRPessoaJuridicaProfissionalLiberal-1.0`, ao contrário, `alias` é o **nome fantasia**
+(0..1). Não confunda os dois.
+
+### Saúde indígena: DSEI, polo-base, `subType` e `memberOf`
+
+O BR Core modela a rede da saúde indígena com dois identificadores e duas extensões:
+
+- As fatias `dsei` e `poloBase` identificam um Distrito Sanitário Especial Indígena e um polo-base.
+- A extensão `br-core-organization-subtype` (0..1) detalha o tipo informado em `Organization.type`. Os exemplos
+  oficiais do BR Core usam o código `PoloBase` ("Polo-base Saúde Indígena") do CodeSystem
+  `https://terminologia.saude.gov.br/fhir/CodeSystem/SubtipoEstabelecimento`.
+- A extensão `br-core-organization-memberof` (0..\*) aponta para a organização à qual o estabelecimento está vinculado,
+  por exemplo um polo-base.
+
+`memberOf` e `partOf` têm papéis diferentes. `partOf` (0..1) é a mantenedora: quem é dono do estabelecimento.
+`memberOf` é um vínculo de rede e pode se repetir, porque um mesmo estabelecimento (como uma Unidade Básica de Saúde
+Indígena) pode estar vinculado a mais de um polo-base.
+
+```json
+"extension": [
+  {
+    "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization-memberof",
+    "valueReference": { "reference": "Organization/polo-base-exemplo" }
+  }
+]
+```
+
+<Aside type="note">
+O ValueSet `SubtipoEstabelecimento`, ao qual a extensão `subType` está vinculada (`preferred`), não faz parte da versão
+1.1.0 do pacote de terminologia. Por isso o validador apenas avisa que não o encontrou. Use os códigos que aparecem nos
+exemplos oficiais do BR Core.
+</Aside>
+
+### Extensões da RNDS
+
+O `BREstabelecimentoSaude-1.0` exige a extensão `BRAtendeSUS-1.0` (fatia `isSUS`, `valueBoolean`), que diz se o
+estabelecimento atende pelo Sistema Único de Saúde (SUS). Opcionalmente, aceita `BRAdministradorTerceiro-1.0`
+(fatia `outsourcedAdministrator`), que aponta para a organização gerente, administradora terceira ou interveniente do
+estabelecimento.
+
+### Local e serviço: `Location` e `HealthcareService`
+
+Dois recursos complementam o estabelecimento no BR Core:
+
+- **`br-core-location`**: um local físico dentro do estabelecimento (sala, ala, leito). Exige `status` e `name`;
+  `type` usa o ValueSet `BRServicoEspecializado` (`extensible`) e `physicalType`, o `BRInstalacoesFisicas`. Um local
+  pode ser parte de outro (`partOf`). É o alvo de `Immunization.location` no `br-core-immunization`.
+- **`br-core-healthcareservice`**: um serviço oferecido pelo estabelecimento. `category` usa `BRTipoEstabelecimentoSaude`,
+  `type` usa `BRServicoEspecializado`, `specialty` usa `BROcupacao` e `program`, o `BRProgramaSaude`.
+
+<ProfileHeader source="br-core" id="br-core-location" />
+<ProfileHeader source="br-core" id="br-core-healthcareservice" />
+
+Nos documentos de imunização da RNDS, o local da vacinação é o estabelecimento autor. Lá, `Immunization.location`
+tem outro uso: indicar o país de origem de um registro transcrito (veja
+[Imunização](/fhir-ig/desenvolvimento/casos-de-uso/imunizacao/)).
+
+## Exemplo (BR Core)
+
+<FhirExample file="recursos/estabelecimento.json" />
+
+## Exemplo (RNDSEstabelecimentoSaude)
+
+<FhirExample file="rnds/recursos/estabelecimento.json" />
+
+## Erros comuns
+
+- **Enviar o CNES com máscara ou com menos de 7 dígitos.** Complete com zeros à esquerda: o CNES é texto, não número.
+- **Usar o CNPJ como identificador do autor em documentos da RNDS.** O autor é identificado pelo CNES.
+- **Pôr o nome fantasia em `alias` no BR Core.** No BR Core, `alias` é a razão social; o nome do estabelecimento vai em
+  `name`.
+- **Enviar mais de um `alias` ou mais de um `address`** no BR Core. Os dois são 1..1.
+- **Usar `partOf` para o vínculo com o polo-base.** `partOf` é a mantenedora; vínculo de rede vai em
+  `br-core-organization-memberof`.
+- **Copiar o `system` do BR Core para o `RNDSEstabelecimentoSaude`.** Lá o `system` é `https://saude.gov.br/sid/cnes`,
+  sem `/fhir`.
+- **Usar um CNES fictício de dígitos repetidos em homologação.** A invariante `estab-2` o rejeita.

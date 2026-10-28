@@ -1,0 +1,213 @@
+---
+title: Sumário de Alta (SA)
+description: Como montar o Sumário de Alta da internação no perfil BRSumarioAlta da RNDS e no br-core-sumarioalta do BR Core, seção por seção, conforme a Portaria GM/MS nº 8.026/2025.
+sidebar:
+  order: 6
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+import ProfileTable from '../../../../components/ProfileTable.astro';
+import FhirExample from '../../../../components/FhirExample.astro';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+O Sumário de Alta (SA) é o documento emitido ao fim de uma internação. A
+[Portaria GM/MS nº 8.026, de 27 de agosto de 2025](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2025/prt8026_28_08_2025.html),
+que institui o modelo de informação no âmbito da Rede Nacional de Dados em Saúde (RNDS), o define como o documento
+"que contém o relato clínico objetivo sobre as intervenções realizadas, as instruções para continuidade do cuidado
+pós-alta e o estado de saúde do indivíduo ao final de sua permanência na internação". O art. 4º diz que o modelo também
+contempla as informações do Conjunto Mínimo de Dados (CMD), e o art. 5º revoga a Portaria SAES/MS nº 701/2022, que
+tratava do modelo anterior. Para a visão de gestão, veja
+[Sumário de alta (gestão)](/fhir-ig/gestao/casos-de-uso/sumario-de-alta/).
+
+## Quando usar
+
+- **RNDS (`BRSumarioAlta`)**: para enviar à RNDS o sumário de uma internação encerrada.
+- **BR Core (`br-core-sumarioalta`)**: para trocar o sumário entre sistemas brasileiros fora da RNDS, por exemplo do
+  hospital para a unidade básica que vai acompanhar o paciente depois da alta.
+- **Consulta ambulatorial ou domiciliar**: use o
+  [Registro de Atendimento Clínico](/fhir-ig/desenvolvimento/casos-de-uso/atendimento-clinico/).
+
+<Aside type="caution" title="O perfil RNDS do SA está em rascunho">
+O `BRSumarioAlta` (versão 1.0.0, de 11 de dezembro de 2023) está com status `draft` no pacote da RNDS, assim como
+`BRResumoEvolucaoClinica`, `BRRestricaoFuncionalIncapacidadeSaude-1.0` e `BRObservacaoDescritiva-1.0`. O perfil é
+anterior à Portaria GM/MS nº 8.026/2025. Pelo art. 3º da portaria, as especificações técnicas de recebimento são
+publicadas no Portal de Serviços do DATASUS. Confira lá a versão vigente antes de ir para produção.
+</Aside>
+
+## Conteúdo mínimo e onde cada item vai
+
+O art. 2º da Portaria GM/MS nº 8.026/2025 lista o conteúdo mínimo. A tabela mostra onde cada item fica em cada perfil.
+
+| Item (art. 2º) | RNDS (`BRSumarioAlta`) | BR Core (`br-core-sumarioalta`) |
+|---|---|---|
+| I. Identificação do prontuário no sistema de origem | Sem elemento dedicado; o documento é identificado em `Bundle.identifier` | Sem elemento dedicado; `Bundle.identifier` (obrigatório no `br-core-bundle-documento`) |
+| II. Indivíduo (CPF ou CNS) | `Composition.subject.identifier` | `Composition.subject` → `br-core-patient` |
+| III. CNES do estabelecimento | `Composition.author.identifier`, `Encounter.serviceProvider` | `Encounter.serviceProvider`, `custodian` |
+| IV. Procedência | `Encounter.hospitalization.admitSource` (`BRProcedencia`) | idem, em `br-core-encounter` |
+| V. Caráter da internação | `Encounter.priority` (`BRCaraterAtendimento`) | idem |
+| VI. Data e hora da internação | `Encounter.period.start` | idem |
+| VII. Modalidade assistencial | `Composition.category` e `Encounter.class` (`BRModalidadeAssistencial`, `04` Atenção Hospitalar) | `Encounter.class` (`v3-ActCode#IMP`) |
+| VIII. Motivo da internação (CID) | seção `problemasDiagnosticosAvaliados` | seção `diagnosticosAdmissao` |
+| IX. Problemas e diagnósticos: código, categoria, presença na admissão, estado de resolução | `BRProblemaDiagnostico` (`code`, `category`, `clinicalStatus`) e `Encounter.diagnosis.use` | `br-core-condition` e `Encounter.diagnosis.use` |
+| X. Restrição funcional ou incapacidade | seção `restricaoFuncionalIncapacidadeSaude` | seção `capacidadeFuncional` |
+| XI. Procedimentos realizados | seção `procedimentosRealizados` | seção `procedimentosRealizados` |
+| XII. Resumo da evolução clínica | seção `resumoEvolucaoClinica` (`ClinicalImpression.summary`) | não há seção própria; use `Composition.section.text` ou uma seção adicional |
+| XIII. Alergias e reações adversas | seção `alergiaReacaoAdversa` | seção `alergiasIntolerancias` |
+| XIV. Prescrição de medicamento (conforme a Portaria GM/MS nº 6.100/2024) | seção `prescricaoAlta` | seção `prescricaoAlta` → `br-core-medicationrequest` |
+| XV. Data e hora do desfecho da alta | `Encounter.period.end` | idem |
+| XVI. Desfecho da internação | `Encounter.hospitalization.dischargeDisposition` (`BRMotivoDesfecho`) | idem |
+| XVII. Profissional da alta (CPF ou CNS e CBO) | `Encounter.participant` com `type` `alta` e extensão `BROcupacao-1.0` | `Encounter.participant` → `br-core-practitionerrole` |
+
+## Estrutura do documento RNDS
+
+Assim como o RAC, o `BRSumarioAlta` deriva do `BRConjuntoMinimoDados-1.1`. Ele herda as regras do CMD (uma entrada
+por seção, seções reconhecidas pelo perfil do recurso referenciado, paciente e autor por identificador) e acrescenta
+seções de internação. Diferente do RAC, cada seção do SA tem um `title` fixo, que pode ser enviado.
+
+```text
+Bundle (type = document)
+├── Composition  BRSumarioAlta           type = BRTipoDocumento#SA, category = 04 (Atenção Hospitalar)
+│   ├── informacoesContatoAssistencial      1..1  "Caracterização do atendimento e Informações da alta"   → Encounter
+│   ├── problemasDiagnosticosAvaliados      0..*  "Motivo da admissão, diagnósticos relevantes e ..."    → Condition
+│   ├── procedimentosRealizados             1..*  "Procedimento(s) realizado(s) ou solicitado(s)"        → Procedure
+│   ├── restricaoFuncionalIncapacidadeSaude 0..1  "Restrições funcionais e incapacidades em saúde"       → Condition
+│   ├── resumoEvolucaoClinica               1..1  "Resumo da Evolução Clínica"                           → ClinicalImpression
+│   ├── alergiaReacaoAdversa                0..*  "Alergias e/ou reações adversas na internação"         → AllergyIntolerance
+│   ├── prescricaoAlta                      0..1  "Prescrição da Alta"                                   → BRRegistroPrescricaoMedicamento
+│   ├── planoCuidados                       0..1  "Plano de cuidados, instruções e recomendações ..."    → CarePlan
+│   └── informacoesAdicionais               0..1  "Informações Adicionais/Complementares"                → Observation
+└── Encounter, Condition, Procedure, ClinicalImpression ...
+```
+
+## Perfil RNDS
+
+<ProfileHeader source="rnds" id="BRSumarioAlta" />
+<ProfileTable source="rnds" id="BRSumarioAlta" hideProhibited />
+
+### Recursos próprios do SA
+
+<ProfileHeader source="rnds" id="BRResumoEvolucaoClinica" />
+<ProfileTable source="rnds" id="BRResumoEvolucaoClinica" hideProhibited />
+
+<ProfileHeader source="rnds" id="BRRestricaoFuncionalIncapacidadeSaude-1.0" />
+<ProfileHeader source="rnds" id="BRObservacaoDescritiva-1.0" />
+<ProfileHeader source="rnds" id="BRPlanoCuidados-1.0" />
+
+O contato assistencial (`BRContatoAssistencial-1.0`), o problema ou diagnóstico (`BRProblemaDiagnostico`), o
+procedimento (`BRProcedimentoRealizado-1.0`) e a alergia (`BRAlergiaReacaoAdversa-1.0`) são os mesmos do RAC e estão
+detalhados em [Registro de Atendimento Clínico](/fhir-ig/desenvolvimento/casos-de-uso/atendimento-clinico/).
+
+## Perfil BR Core
+
+<ProfileHeader source="br-core" id="br-core-sumarioalta" />
+<ProfileTable source="br-core" id="br-core-sumarioalta" hideProhibited />
+
+O `br-core-sumarioalta` deriva de `br-core-composition` e exige **exatamente sete seções** (`section` 7..7), cada
+uma identificada pelo código LOINC em `section.code`:
+
+| Seção | LOINC | Recursos |
+|---|---|---|
+| `diagnosticosAdmissao` | `42347-5` | `br-core-condition` |
+| `alergiasIntolerancias` | `48765-2` | `br-core-allergyintolerance` |
+| `diagnosticosAvaliados` | `57852-6` | `br-core-condition` |
+| `procedimentosRealizados` | `47519-4` | `br-core-procedure` |
+| `prescricaoAlta` | `8654-6` | `br-core-medicationrequest` |
+| `planoCuidados` | `18776-5` | `br-core-careplan` |
+| `capacidadeFuncional` | `47420-5` | `br-core-capacidadefuncional` |
+
+As sete seções são obrigatórias, mas as entradas são opcionais (`entry` 0..*). Uma seção sem entradas precisa de
+`text` (invariante `cmp-1` do FHIR) e deve trazer `emptyReason`, por exemplo `nilknown` para "nenhuma alergia
+conhecida".
+
+A descrição do `br-core-sumarioalta` cita a Portaria SAES/MS nº 701/2022, revogada pela Portaria GM/MS nº 8.026/2025.
+Para saber o que o sumário precisa conter, use a lista do art. 2º da portaria vigente (tabela acima).
+
+<ProfileHeader source="br-core" id="br-core-careplan" />
+<ProfileHeader source="br-core" id="br-core-capacidadefuncional" />
+
+## Diferenças entre os dois perfis
+
+| Aspecto | RNDS (`BRSumarioAlta`) | BR Core (`br-core-sumarioalta`) |
+|---|---|---|
+| Base | `BRConjuntoMinimoDados-1.1` | `br-core-composition` |
+| Status no pacote | `draft` | `active` |
+| Identificação das seções | Perfil do recurso referenciado; `title` fixo | Código LOINC em `section.code` |
+| Entradas por seção | Uma | Várias |
+| Seções obrigatórias | Contato assistencial, procedimentos, resumo da evolução clínica | As sete, mesmo vazias |
+| Resumo da evolução clínica | Seção própria (`ClinicalImpression`) | Sem seção própria |
+| Diagnósticos | Uma seção, com o papel (admissão, alta) em `Encounter.diagnosis.use` | Seções separadas para admissão e avaliados |
+| Prescrição da alta | Identificador de um documento de prescrição | `br-core-medicationrequest` no próprio Bundle |
+| Paciente e autor | Identificadores (CNS/CPF e CNES) | Referências a `br-core-patient` e ao profissional |
+
+## Nuances brasileiras
+
+### O `title` do documento no perfil publicado
+
+O snapshot do `BRSumarioAlta` publicado no pacote da RNDS fixa `Composition.title` em "Conjunto Mínimo de Dados",
+valor herdado da estrutura do CMD. Com o perfil como está, o validador rejeita qualquer outro título, inclusive
+"Sumário de Alta". O exemplo desta página envia "Conjunto Mínimo de Dados" e identifica o documento pelo
+`Composition.type` (`BRTipoDocumento#SA`), que é o que distingue o SA dos demais documentos do CMD. Se uma versão nova
+do perfil liberar o título, prefira "Sumário de Alta".
+
+### Presença na admissão e estado de resolução
+
+O inciso IX do art. 2º pede, para cada diagnóstico, o indicador de presença na admissão e o estado de resolução:
+
+- **Presença na admissão**: `Encounter.diagnosis.use` na fatia `problemAndDiagnosis`, com o ValueSet
+  `BRPapelProblemaDiagnostico`. Ele combina códigos de `http://terminology.hl7.org/CodeSystem/diagnosis-role` (`AD`
+  diagnóstico de admissão, `DD` diagnóstico de alta, `CM` comorbidade, entre outros) com o CodeSystem
+  `BRPapelProblemaDiagnostico` (`NAD` não presente na admissão, `UNK` desconhecido). O pacote também traz a extensão
+  `BRIndicadorPresencaAdmissao-1.0` (booleana, em rascunho), aplicável a `Encounter.diagnosis.condition`.
+- **Estado de resolução**: `Condition.clinicalStatus`, com `active`, `resolved`, `remission` e os demais códigos do
+  ValueSet `BREstadoResolucaoDiagnosticoProblema-1.0`.
+- **Categoria**: principal ou secundário, pelo CodeSystem `BRCategoriaDiagnostico` (`01`, `02`).
+
+<TerminologyCard id="BRMotivoDesfecho" />
+
+### O profissional da alta
+
+O inciso XVII pede o profissional responsável pela alta. No RNDS, ele é um `Encounter.participant` com `type`
+`alta` (CodeSystem `BRResponsabilidadeParticipante`), o CPF ou o CNS em `individual.identifier` e a ocupação na
+extensão `BROcupacao-1.0`.
+
+### Prescrição da alta
+
+No RNDS, a seção `prescricaoAlta` aponta para `BRRegistroPrescricaoMedicamento`, o documento de prescrição de 2022, em
+rascunho. O inciso XIV manda seguir a Portaria GM/MS nº 6.100/2024, cujo documento atual é o REPM
+(`RNDSRegistroEletronicoPrescricaoMedicamentos`). Envie a prescrição da alta como REPM, conforme
+[Prescrição e dispensação](/fhir-ig/desenvolvimento/casos-de-uso/prescricao-e-dispensacao/), e só referencie a
+prescrição no SA quando a especificação vigente indicar como fazer. O exemplo RNDS desta página não preenche a seção,
+que é opcional.
+
+## Exemplos
+
+<Tabs>
+	<TabItem label="SA (RNDS)">
+
+Internação de urgência por pneumonia, com tratamento da Tabela SUS, resumo da evolução clínica e alta clínica.
+
+<FhirExample file="rnds/sumario-de-alta/sa-bundle.json" />
+
+	</TabItem>
+	<TabItem label="SA (BR Core)">
+
+A mesma internação no `br-core-bundle-documento` com `br-core-sumarioalta`: sete seções, duas delas vazias com
+`emptyReason`, prescrição da alta e plano de cuidados no próprio Bundle.
+
+<FhirExample file="sumario-de-alta/sumario-alta-br-core.json" />
+
+	</TabItem>
+</Tabs>
+
+## Erros comuns
+
+- **Mandar menos de sete seções no BR Core.** Seções sem conteúdo continuam obrigatórias: use `text` e `emptyReason`.
+- **Seção vazia sem `text`.** Viola a invariante `cmp-1` do FHIR.
+- **Esquecer o resumo da evolução clínica no RNDS.** A seção `resumoEvolucaoClinica` é `1..1`, e
+  `ClinicalImpression.summary` é obrigatório.
+- **Usar "Sumário de Alta" como `Composition.title` no RNDS.** O perfil publicado fixa "Conjunto Mínimo de Dados".
+- **Internação sem `Encounter.period.end`.** A data e a hora do desfecho da alta são conteúdo mínimo (inciso XV).
+- **Modalidade assistencial errada.** Internação hospitalar usa `04` (Atenção Hospitalar) em `Composition.category` e
+  `Encounter.class`.
+- **Tomar a Portaria SAES/MS nº 701/2022 como referência.** Ela foi revogada; a vigente é a GM/MS nº 8.026/2025.

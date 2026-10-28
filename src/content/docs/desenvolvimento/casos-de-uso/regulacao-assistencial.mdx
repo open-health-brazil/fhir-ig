@@ -1,0 +1,314 @@
+---
+title: Regulação assistencial
+description: Como representar solicitações, agendamentos e mudanças de status da regulação assistencial no documento RA da RNDS e nos perfis ServiceRequest e Appointment do BR Core.
+sidebar:
+  order: 3
+---
+
+import { Aside, Tabs, TabItem, Steps, Badge } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+import ProfileTable from '../../../../components/ProfileTable.astro';
+import FhirExample from '../../../../components/FhirExample.astro';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+A regulação assistencial organiza o acesso a procedimentos que dependem de autorização: uma consulta especializada,
+um exame de média ou alta complexidade, uma internação eletiva. Um estabelecimento solicita, uma central de regulação
+avalia e autoriza, e um estabelecimento executante agenda e realiza o atendimento.
+
+Na Rede Nacional de Dados em Saúde (RNDS), esse processo é registrado no documento **Regulação Assistencial (RA)**,
+código `RA` do CodeSystem `BRTipoDocumento`. No BR Core, os mesmos dados são representados com `ServiceRequest`,
+`Appointment`, `Schedule`, `Slot` e `HealthcareService`. Esta página mostra os dois formatos.
+
+<Aside type="note" title="Fonte das regras desta página">
+Até a data desta página, o [guia da RNDS](https://rnds-guia.saude.gov.br/) não publica modelo de informação nem modelo
+computacional para o RA, como faz para o REL e o RIA. As regras abaixo vêm dos perfis publicados pela RNDS no
+Simplifier (versão 1.0, de 4 de abril de 2023). Onde os perfis não decidem uma questão, a página diz isso e apresenta
+uma **modelagem recomendada**, identificada como tal.
+</Aside>
+
+## Quando usar
+
+- **RNDS (RA)**: quando um sistema de regulação ou de um estabelecimento de saúde registra na RNDS o andamento de uma
+  solicitação regulada.
+- **BR Core**: em integrações entre o sistema do estabelecimento solicitante, o sistema da central de regulação e o
+  sistema do executante (agenda, prontuário), que trocam pedidos, vagas e agendamentos entre si.
+
+Para a visão de gestão, veja [Regulação assistencial (gestão)](/fhir-ig/gestao/casos-de-uso/regulacao-assistencial/).
+
+## Estrutura do documento RA
+
+O RA é um `Bundle` do tipo `document`, enviado como os demais documentos da RNDS (veja
+[Envio de documentos](/fhir-ig/desenvolvimento/envio-de-documentos/)). Os perfis encadeiam os recursos assim:
+
+<Steps>
+
+1. **`Composition`** (`BRRegulacaoAssistencial`): identifica paciente, autor e modalidade assistencial e registra
+   **um** evento de status em `Composition.event`. Sua única seção aponta para o agendamento.
+2. **`Appointment`** (`BRAgendamentoRegulacaoAssistencial`): o agendamento do procedimento regulado. É a única entrada
+   da seção (1..1) e aponta para a solicitação em `basedOn` (1..1).
+3. **`ServiceRequest`** (`BRRequisicaoRegulacaoAssistencial`): a solicitação do procedimento, com solicitante,
+   executante, procedimento, caráter e motivo.
+4. **`Condition`** (`BRCID10Avaliado-1.0`), opcional: o motivo da solicitação em CID-10, referenciado por
+   `ServiceRequest.reasonReference` ou `Appointment.reasonReference`.
+
+</Steps>
+
+Como a seção exige o `Appointment` em todos os documentos, ele está presente mesmo quando a solicitação ainda não foi
+agendada. Nesse caso, ele vai sem data (`status` `proposed`, sem `start` e `end`).
+
+## Ciclo de vida
+
+O CodeSystem `BRStatusRegulacaoAssistencial` define sete status. O perfil da `Composition` cria uma fatia de `event`
+para cada um, e as definições dessas fatias dizem quem está envolvido:
+
+| Status (`event.code`) | Fatia | O que o perfil define | `event.detail` aceita |
+|---|---|---|---|
+| `pending` | `event:pending` | "Solicitação de um serviço, bem como o estabelecimento solicitante." | CNES ou referência à `ServiceRequest` |
+| `returned-to-requester` | `event:returned-to-requester` | "Devolução (feita por um estabelecimento regulador) de um serviço ao estabelecimento solicitante." | CNES |
+| `booked` | `event:booked` | "Agendamento de um serviço, bem como o estabelecimento executante." | CNES ou referência ao `Appointment` |
+| `attended` | `event:attended` | "Atendimento de um serviço, bem como o estabelecimento executante." | CNES ou referência ao `Appointment` |
+| `cancelled` | `event:cancelled` | Sem definição textual no perfil (display `Cancelled`). | CNES |
+| `absence` | `event:absence` | Sem definição textual no perfil (display `Absence`, ausência do paciente). | CNES ou referência ao `Appointment` |
+| `excluded` | `event:excluded` | Sem definição textual no perfil (display `Excluded`). | CNES |
+
+Em todas as fatias, `event.period.end` (obrigatório) é a "data e hora em que o status da solicitação de procedimento
+regulado foi alterado no sistema de origem dos dados", e `event.detail.identifier` é a "identificação única do
+estabelecimento que realizou a alteração do status [...] por meio do CNES".
+
+### Quem informa cada etapa
+
+Interpretando essas definições (os perfis não trazem uma regra explícita sobre isso), o fluxo típico é:
+
+| Etapa | Quem altera o status | Status |
+|---|---|---|
+| Solicitação | Estabelecimento solicitante | `pending` |
+| Devolução para complementar informações | Central de regulação (estabelecimento regulador) | `returned-to-requester` |
+| Autorização e agendamento | Central de regulação ou executante | `booked` |
+| Realização | Estabelecimento executante | `attended` |
+| Falta do paciente | Estabelecimento executante | `absence` |
+| Cancelamento ou exclusão | Quem cancelou ou excluiu | `cancelled`, `excluded` |
+
+O perfil não fixa quem deve **enviar** o documento à RNDS: `Composition.author` aceita qualquer estabelecimento de
+saúde (o comentário do perfil diz que, nesta versão, a RNDS só suporta documentos de estabelecimentos de saúde). O que o
+perfil registra é **quem alterou o status**, em `event.detail`. A central de regulação é identificada pelo CNES em
+`Appointment.supportingInformation:regulatoryOrganization`.
+
+### Um evento por documento
+
+`Composition.event` tem cardinalidade 1..1: cada documento RA carrega exatamente um status. O perfil não diz se uma
+mudança de status deve gerar um documento novo ou substituir o anterior. **Modelagem recomendada:** envie um documento
+novo para cada mudança de status, com o mesmo `ServiceRequest` (mesmos dados da solicitação) e o `Appointment`
+atualizado, e reserve `Composition.relatesTo` com `code` `replaces` para corrigir um documento enviado com erro, que é o
+uso que a RNDS documenta para os demais modelos.
+
+### Status do agendamento
+
+`Appointment.status` está vinculado ao ValueSet `BRStatusAgendamentoRegulacaoAssistencial`, que não está publicado nos
+pacotes disponíveis. Como `Appointment.status` é do tipo `code`, os valores só podem vir do ValueSet
+`appointmentstatus` do FHIR R4. **Modelagem recomendada** para manter o `Appointment` coerente com o evento:
+
+| Evento RA | `Appointment.status` | Observação |
+|---|---|---|
+| `pending` | `proposed` | sem `start`/`end` |
+| `returned-to-requester` | `proposed` | sem `start`/`end` |
+| `booked` | `booked` | `start`, `end` e `created` (data da autorização) preenchidos |
+| `attended` | `fulfilled` | |
+| `absence` | `noshow` | |
+| `cancelled` | `cancelled` | |
+| `excluded` | `cancelled` | |
+
+A regra `app-3` do FHIR R4 impede `start` e `end` vazios fora dos status `proposed`, `cancelled` e `waitlist`.
+
+## Perfis RNDS
+
+### Documento: Regulação Assistencial
+
+<ProfileHeader source="rnds" id="BRRegulacaoAssistencial" />
+<ProfileTable source="rnds" id="BRRegulacaoAssistencial" hideProhibited />
+
+### Solicitação: Requisição de Regulação Assistencial
+
+<ProfileHeader source="rnds" id="BRRequisicaoRegulacaoAssistencial" />
+<ProfileTable source="rnds" id="BRRequisicaoRegulacaoAssistencial" hideProhibited />
+
+### Agendamento: Agendamento de Regulação Assistencial
+
+<ProfileHeader source="rnds" id="BRAgendamentoRegulacaoAssistencial" />
+<ProfileTable source="rnds" id="BRAgendamentoRegulacaoAssistencial" hideProhibited />
+
+### Motivo da solicitação
+
+O motivo é uma `Condition` no perfil `BRCID10Avaliado-1.0`, que está em <Badge text="rascunho" variant="caution" /> no
+Simplifier da RNDS, embora seja referenciado pelos perfis ativos do RA.
+
+<ProfileHeader source="rnds" id="BRCID10Avaliado-1.0" />
+
+## Perfis BR Core
+
+O BR Core não tem um documento de regulação. Ele oferece os recursos para montar o fluxo de forma transacional: o
+pedido (`ServiceRequest`), a oferta de vagas (`HealthcareService`, `Schedule` e `Slot`) e o agendamento
+(`Appointment`).
+
+### Solicitação
+
+<ProfileHeader source="br-core" id="br-core-servicerequest" />
+<ProfileTable source="br-core" id="br-core-servicerequest" />
+
+### Agendamento
+
+<ProfileHeader source="br-core" id="br-core-appointment" />
+<ProfileTable source="br-core" id="br-core-appointment" />
+
+### Oferta de vagas
+
+`HealthcareService` descreve o serviço ofertado (por exemplo, o ambulatório de cardiologia de um estabelecimento),
+`Schedule` é a agenda desse serviço e `Slot` é cada horário dessa agenda. Um `Appointment` reserva um ou mais `Slot`.
+
+<ProfileHeader source="br-core" id="br-core-healthcareservice" />
+<ProfileHeader source="br-core" id="br-core-schedule" />
+<ProfileTable source="br-core" id="br-core-schedule" />
+<ProfileHeader source="br-core" id="br-core-slot" />
+<ProfileTable source="br-core" id="br-core-slot" />
+
+### Correspondência entre RNDS e BR Core
+
+| Informação | RNDS (RA) | BR Core |
+|---|---|---|
+| Status da regulação | `Composition.event` (um por documento) | `ServiceRequest.status` e `Appointment.status`; histórico via `Provenance` ou versões do recurso |
+| Intenção | `ServiceRequest.intent` fixo em `proposal` | `ServiceRequest.intent` (`proposal`, `order` etc.) |
+| Modalidade assistencial | `Composition.category`, `ServiceRequest.category`, `Appointment.serviceCategory` | `Appointment.serviceCategory`; em `ServiceRequest.category`, o BR Core sugere o subgrupo da Tabela SUS |
+| Procedimento | `ServiceRequest.code`, `Appointment.serviceType` | idem |
+| Caráter (eletivo/urgência) | `ServiceRequest.priority`, `Appointment.appointmentType` | `ServiceRequest.priority` |
+| Especialidade (CBO) | `ServiceRequest.performerType`, `Appointment.specialty` | idem |
+| Solicitante | `ServiceRequest.requester` (CNES) | `ServiceRequest.requester` (profissional, lotação ou organização) |
+| Executante | `ServiceRequest.performer` (CNES) | `ServiceRequest.performer`, `Appointment.participant` com tipo `ESE` |
+| Regulador | `Appointment.supportingInformation:regulatoryOrganization` (CNES) | `Appointment.participant` com tipo `ESR` |
+| Motivo | `reasonReference` para `BRCID10Avaliado-1.0` | `ServiceRequest.reasonCode` (CID-10) ou `reasonReference` |
+| Data agendada | `Appointment.start` e `end` | idem, mais `Appointment.slot` |
+
+## Terminologias
+
+<Tabs>
+	<TabItem label="Procedimentos (SIGTAP)">
+<TerminologyCard id="BRTabelaSUS" />
+	</TabItem>
+	<TabItem label="Modalidade assistencial">
+<TerminologyCard id="BRModalidadeAssistencial" />
+	</TabItem>
+	<TabItem label="Caráter do atendimento">
+<TerminologyCard id="BRCaraterAtendimento" />
+	</TabItem>
+	<TabItem label="Tipo de participante">
+<TerminologyCard id="BRTipoParticipante" />
+	</TabItem>
+	<TabItem label="Especialidade (CBO)">
+<TerminologyCard id="BRCBO" />
+	</TabItem>
+</Tabs>
+
+Os códigos de status do RA (`pending`, `returned-to-requester`, `booked`, `attended`, `cancelled`, `absence`,
+`excluded`) estão no CodeSystem legado `http://www.saude.gov.br/fhir/r4/CodeSystem/BRStatusRegulacaoAssistencial`.
+Para os procedimentos, veja [Tabela SUS (SIGTAP)](/fhir-ig/desenvolvimento/terminologias/tabela-sus-sigtap/); para a
+CBO, [CBO](/fhir-ig/desenvolvimento/terminologias/cbo/).
+
+## Nuances brasileiras
+
+### Modalidade assistencial: só duas opções
+
+`Composition.category`, `ServiceRequest.category` e `Appointment.serviceCategory` usam o ValueSet
+`BRModalidadeAssistencialMIRA`, que restringe o CodeSystem `BRModalidadeAssistencial` a dois códigos: `04` (Atenção
+Hospitalar) e `09` (Assistência Ambulatorial). Use o mesmo código nos três elementos.
+
+### Caráter: `routine` ou `urgent`
+
+O caráter da solicitação **não** usa o CodeSystem `BRCaraterAtendimento` (`01` Eletivo, `02` Urgência...). O ValueSet
+`BRCaraterAtendimentoMIRA` aponta para o CodeSystem do FHIR `http://hl7.org/fhir/request-priority`, com apenas
+`routine` (eletivo) e `urgent` (urgência). Em `ServiceRequest.priority`, que é do tipo `code`, vai só o código. Em
+`Appointment.appointmentType`, que é `CodeableConcept`, vai `system` + `code`:
+
+```json
+"appointmentType": {
+  "coding": [{ "system": "http://hl7.org/fhir/request-priority", "code": "routine" }]
+}
+```
+
+Se o seu sistema guarda o caráter no formato `BRCaraterAtendimento`, converta `01` para `routine` e `02` para `urgent`.
+O BR Core usa o mesmo ValueSet em `ServiceRequest.priority`.
+
+### Procedimento e especialidade
+
+`ServiceRequest.code` e `Appointment.serviceType` usam o ValueSet `BRProcedimentosNacionais-1.0`, que reúne a Tabela
+SUS (SIGTAP, CodeSystem `BRTabelaSUS`, 10 dígitos sem pontuação) e a tabela CBHPM/TUSS. A especialidade do executante
+vai em `ServiceRequest.performerType` e `Appointment.specialty`, com a Classificação Brasileira de Ocupações (CBO). Os
+perfis definem uma regra de negócio que o validador não verifica: se o procedimento pertence à forma de organização
+`03.01.01` da Tabela SUS (consultas, como `0301010072`), o código CBO é obrigatório.
+
+### Identificação por CNES, CPF ou CNS
+
+Como no restante da RNDS, nenhum `Patient` ou `Organization` vai no `Bundle`: paciente e estabelecimentos são
+identificados por `identifier`. O único `system` fixado pelos perfis do RA é o do estabelecimento regulador
+(`http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0`). **Modelagem recomendada:** use a
+mesma convenção nos demais identificadores, como fazem os perfis fixos do REL e do RIA:
+
+| Quem | `system` | `value` |
+|---|---|---|
+| Paciente | `http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0` | CNS ou CPF |
+| Estabelecimento (solicitante, executante, regulador, autor) | `http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0` | CNES |
+
+Quando o paciente não pode ser identificado, a `Composition` aceita a extensão `unidentifiedPatient`
+(`BRIndividuoNaoIdentificado-1.0`) em `subject`, com sexo, ano de nascimento e justificativa.
+
+### Recursos sem `id`
+
+Os perfis `BRRequisicaoRegulacaoAssistencial` e `BRAgendamentoRegulacaoAssistencial` proíbem `id` (cardinalidade
+máxima 0). O `ServiceRequest` e o `Appointment` são identificados apenas pelo `fullUrl` da `entry` (`urn:uuid:...`), e
+as referências entre eles usam esse `fullUrl`. No `ServiceRequest` também são proibidos `identifier`, `note` e
+`contained`; no `Appointment`, `identifier`, `contained`, `slot`, `minutesDuration` e `comment`.
+
+### Datas
+
+| Data | Elemento |
+|---|---|
+| Solicitação | `ServiceRequest.authoredOn` |
+| Autorização | `Appointment.created` |
+| Data e hora agendadas | `Appointment.start` e `Appointment.end` |
+| Execução | `ServiceRequest.occurrenceDateTime` |
+| Mudança de status | `Composition.event.period.end` |
+
+### No BR Core: participantes do agendamento
+
+O `Appointment` da RNDS só admite o paciente como participante (`participant` 0..1, tipo fixo `PCT`). No BR Core,
+`Appointment.participant` pode listar também os estabelecimentos, com os tipos do CodeSystem `BRTipoParticipante`
+(`ESS` solicitante, `ESE` executante, `ESR` regulador) e `actor` apontando para um `HealthcareService`.
+
+## Exemplos
+
+### RNDS: solicitação pendente
+
+Documento RA com o evento `pending`: uma Unidade Básica de Saúde (CNES fictício `9999999`) solicita consulta médica em
+atenção especializada (`0301010072`) com cardiologista (CBO `225120`), em caráter eletivo, por angina (CID-10 `I209`).
+O `Appointment` ainda não tem data.
+
+<FhirExample file="rnds/regulacao-assistencial/ra-solicitacao.json" />
+
+### BR Core: solicitação e agendamento
+
+`Bundle` `collection` com o `ServiceRequest` da mesma consulta e o `Appointment` já marcado pela central, com o
+paciente e o estabelecimento executante como participantes.
+
+<FhirExample file="regulacao-assistencial/regulacao-br-core.json" />
+
+## Erros comuns
+
+- **Mandar dois eventos na mesma `Composition`.** `event` é 1..1. Cada mudança de status é um documento.
+- **Omitir o `Appointment` na solicitação.** A seção exige uma entrada `BRAgendamentoRegulacaoAssistencial`, mesmo antes
+  do agendamento. Use `status` `proposed` sem datas.
+- **Preencher `id` no `ServiceRequest` ou no `Appointment`.** Os perfis proíbem; o validador rejeita e, em cascata,
+  deixa de reconhecer as referências da `Composition` e do `Appointment`.
+- **Usar `intent` diferente de `proposal`.** O valor é fixo no `BRRequisicaoRegulacaoAssistencial`.
+- **Usar `01`/`02` de `BRCaraterAtendimento` em `priority`.** O caráter é `routine` ou `urgent`.
+- **Usar modalidade fora de `04` e `09`.** O ValueSet MIRA aceita apenas essas duas.
+- **Esquecer a CBO em consultas.** Procedimentos da forma de organização `03.01.01` exigem `performerType` e
+  `specialty`.
+- **Formatar a CID-10 errado.** No CodeSystem legado `BRCID10` da RNDS, o código vai sem ponto (`I209`). No pacote de
+  terminologia usado pelo BR Core, com ponto (`I20.9`).

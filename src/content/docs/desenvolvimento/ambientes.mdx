@@ -1,0 +1,118 @@
+---
+title: Ambientes
+description: Endereços dos ambientes de homologação e produção da RNDS, o endpoint de cada UF e as boas práticas de rede e configuração.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+A Rede Nacional de Dados em Saúde (RNDS) oferece dois ambientes: homologação e produção. Cada um tem dois endereços, um
+para autenticação (Auth) e outro para os serviços FHIR (EHR). Os endereços desta página foram conferidos no
+[guia da RNDS](https://rnds-guia.saude.gov.br/docs/rnds/ambientes) em 28 de outubro de 2026.
+
+## Qual ambiente usar
+
+- **Homologação:** para desenvolvimento e testes. É único para todo o Brasil. O acesso é liberado quando o DATASUS
+  aprova a solicitação de acesso feita pelo gestor no Portal de Serviços.
+- **Produção:** para o envio real de dados. O acesso é liberado depois que o estabelecimento apresenta as evidências de
+  homologação e o DATASUS aprova a solicitação de produção. Veja
+  [Adesão e credenciamento](/fhir-ig/gestao/adesao-e-credenciamento/).
+
+<Aside type="caution">
+	O guia da RNDS é explícito: o ambiente de produção não deve ser usado para experimentar a integração. Todo teste vai para a
+	homologação.
+</Aside>
+
+## Endereços
+
+### Homologação
+
+| Função | Host | URL base |
+|---|---|---|
+| Auth | `ehr-auth-hmg.saude.gov.br` | `https://ehr-auth-hmg.saude.gov.br/api/token` |
+| EHR | `ehr-services.hmg.saude.gov.br` | `https://ehr-services.hmg.saude.gov.br/api/fhir/r4` |
+
+### Produção
+
+O endereço de autenticação é único. O endereço EHR é um por UF.
+
+| Função | Host |
+|---|---|
+| Auth (único) | `ehr-auth.saude.gov.br` |
+| EHR | `<uf>-ehr-services.saude.gov.br`, conforme a tabela abaixo |
+
+| UF | Estado | Host EHR de produção |
+|---|---|---|
+| AC | Acre | `ac-ehr-services.saude.gov.br` |
+| AL | Alagoas | `al-ehr-services.saude.gov.br` |
+| AP | Amapá | `ap-ehr-services.saude.gov.br` |
+| AM | Amazonas | `am-ehr-services.saude.gov.br` |
+| BA | Bahia | `ba-ehr-services.saude.gov.br` |
+| CE | Ceará | `ce-ehr-services.saude.gov.br` |
+| DF | Distrito Federal | `df-ehr-services.saude.gov.br` |
+| ES | Espírito Santo | `es-ehr-services.saude.gov.br` |
+| GO | Goiás | `go-ehr-services.saude.gov.br` |
+| MA | Maranhão | `ma-ehr-services.saude.gov.br` |
+| MT | Mato Grosso | `mt-ehr-services.saude.gov.br` |
+| MS | Mato Grosso do Sul | `ms-ehr-services.saude.gov.br` |
+| MG | Minas Gerais | `mg-ehr-services.saude.gov.br` |
+| PA | Pará | `pa-ehr-services.saude.gov.br` |
+| PB | Paraíba | `pb-ehr-services.saude.gov.br` |
+| PR | Paraná | `pr-ehr-services.saude.gov.br` |
+| PE | Pernambuco | `pe-ehr-services.saude.gov.br` |
+| PI | Piauí | `pi-ehr-services.saude.gov.br` |
+| RJ | Rio de Janeiro | `rj-ehr-services.saude.gov.br` |
+| RN | Rio Grande do Norte | `rn-ehr-services.saude.gov.br` |
+| RS | Rio Grande do Sul | `rs-ehr-services.saude.gov.br` |
+| RO | Rondônia | `ro-ehr-services.saude.gov.br` |
+| RR | Roraima | `rr-ehr-services.saude.gov.br` |
+| SC | Santa Catarina | `sc-ehr-services.saude.gov.br` |
+| SP | São Paulo | `sp-ehr-services.saude.gov.br` |
+| SE | Sergipe | `se-ehr-services.saude.gov.br` |
+| TO | Tocantins | `to-ehr-services.saude.gov.br` |
+
+Os serviços FHIR ficam sob o caminho `/api/fhir/r4`. Em Goiás, por exemplo, a URL base é
+`https://go-ehr-services.saude.gov.br/api/fhir/r4`.
+
+### O estado do CNES define o endpoint
+
+O guia da RNDS diz que cada estabelecimento, "conforme o CNES em questão, fará uso do estado correspondente". O exemplo do
+guia é um laboratório de Goiás (CNES 2337991), que usa `go-ehr-services.saude.gov.br`. Um laboratório de Minas Gerais usa
+obrigatoriamente `mg-ehr-services.saude.gov.br`.
+
+Na prática:
+
+- A UF que decide é a do estabelecimento identificado pelo Cadastro Nacional de Estabelecimentos de Saúde (CNES), e não
+  a do paciente nem a do servidor onde o seu sistema roda.
+- Um sistema que atende estabelecimentos em várias UFs (rede de laboratórios, empresa de software com clientes em
+  vários estados) escolhe o host por estabelecimento, a cada envio.
+- O token obtido no endereço Auth é o mesmo para qualquer UF. O que muda é só o host EHR.
+
+## Rede e firewall
+
+A solicitação de acesso feita no Portal de Serviços do DATASUS pede a faixa de IPs dos servidores que farão as
+chamadas. As recomendações a seguir são de engenharia (não são exigências publicadas pela RNDS):
+
+- **Saída com IP fixo.** Faça as chamadas a partir de IPs de saída estáveis (NAT com IP elástico, proxy de saída) e
+  informe esses IPs na solicitação. Em nuvem, IPs dinâmicos de funções serverless ou contêineres mudam sem aviso.
+- **Atualize o cadastro antes de migrar.** Uma troca de provedor, de região ou de NAT muda o IP de saída. Peça a
+  atualização ao DATASUS antes da migração.
+- **Libere a saída HTTPS (porta 443)** para `ehr-auth-hmg.saude.gov.br` e `ehr-services.hmg.saude.gov.br` em homologação, e
+  para `ehr-auth.saude.gov.br` e os hosts `<uf>-ehr-services.saude.gov.br` que você usa em produção.
+- **Libere por nome, não por IP.** Os IPs dos servidores da RNDS não são publicados. Regras de firewall baseadas em IP de
+  destino quebram quando a infraestrutura do Ministério muda.
+- **Não intercepte o TLS do serviço Auth.** Proxies corporativos que fazem inspeção de TLS substituem o certificado de
+  cliente e impedem a autenticação. Crie uma exceção para o host Auth.
+
+## Boas práticas de configuração
+
+- **Separe as configurações por ambiente.** Host Auth, host EHR, caminho do certificado e senha devem ser configuração,
+  nunca código. Um erro comum é publicar em produção com o host de homologação, ou o contrário.
+- **Mapeie UF para host em uma tabela.** Derive o host de produção da UF do estabelecimento. Não monte o host por
+  concatenação de texto vindo do usuário.
+- **Use o identificador do solicitante certo em cada ambiente.** O identificador do solicitante, atribuído pela RNDS no
+  credenciamento, entra no `Bundle.identifier.system` de cada documento. Veja
+  [Envio de documentos](/fhir-ig/desenvolvimento/envio-de-documentos/).
+- **Guarde o certificado em cofre de segredos.** O certificado A1 e a senha dão acesso à RNDS em nome do estabelecimento.
+  Veja [Autenticação](/fhir-ig/desenvolvimento/autenticacao/).
+- **Registre qual ambiente e qual host responderam.** Inclua o host e o id devolvido pela RNDS nos logs de cada envio. Isso
+  facilita a montagem das evidências de homologação e o suporte em produção.

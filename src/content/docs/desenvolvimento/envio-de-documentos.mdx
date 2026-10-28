@@ -1,0 +1,250 @@
+---
+title: Envio de documentos
+description: Como enviar um Bundle do tipo document à RNDS, ler a resposta, consultar dados, substituir um documento e tratar erros.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../components/ProfileHeader.astro';
+import ProfileTable from '../../../components/ProfileTable.astro';
+
+Todo dado clínico entra na Rede Nacional de Dados em Saúde (RNDS) como um documento: um `Bundle` do tipo `document`
+cuja primeira entrada é uma `Composition`. O Registro de Imunobiológico Administrado (RIA), o resultado de exame
+laboratorial (REL), o Registro de Atendimento Clínico (RAC) e os demais modelos seguem essa forma. Esta página trata do
+que é comum a todos eles. O conteúdo de cada documento está nas páginas de
+[casos de uso](/fhir-ig/desenvolvimento/casos-de-uso/imunizacao/).
+
+## Quando usar
+
+- **Envio à RNDS:** sempre que o seu sistema registrar um documento previsto por um modelo da RNDS. O endpoint é o mesmo
+  para todos os modelos.
+- **Troca entre sistemas pelo BR Core:** o BR Core define o perfil `br-core-bundle-documento` para documentos clínicos
+  fora da RNDS. As regras gerais (Composition primeiro, `fullUrl` em todas as entradas, `identifier` e `timestamp`) são as
+  mesmas.
+
+## O serviço de envio
+
+```http
+POST https://<host-ehr>/api/fhir/r4/Bundle
+Content-Type: application/json
+X-Authorization-Server: Bearer <access_token>
+Authorization: <CNS do profissional requisitante>
+
+{ "resourceType": "Bundle", "type": "document", ... }
+```
+
+O host é `ehr-services.hmg.saude.gov.br` em homologação e o host da UF do estabelecimento em produção (veja
+[Ambientes](/fhir-ig/desenvolvimento/ambientes/)). Os headers estão explicados em
+[Autenticação](/fhir-ig/desenvolvimento/autenticacao/). A
+[página de serviços do guia](https://rnds-guia.saude.gov.br/docs/rnds/servicos) usa o mesmo `POST /api/fhir/r4/Bundle`
+para enviar e para substituir um documento.
+
+## Regras gerais do Bundle documento
+
+### Perfil BR Core
+
+<ProfileHeader source="br-core" id="br-core-bundle-documento" />
+<ProfileTable source="br-core" id="br-core-bundle-documento" />
+
+Além das regras do FHIR para documentos (`bdl-9`: identificador com `system` e `value`; `bdl-10`: data; `bdl-11`:
+`Composition` como primeiro recurso), o perfil acrescenta duas invariantes:
+
+- `br-core-bdoc-1`: o `timestamp` do Bundle deve ser igual ou posterior à data da `Composition`.
+- `br-core-bdoc-2`: todas as entradas devem ter `fullUrl`.
+
+### Como a RNDS espera o Bundle
+
+A RNDS não publica um perfil de `Bundle`. As regras abaixo vêm do guia da RNDS e dos exemplos oficiais:
+
+| Elemento | Regra |
+|---|---|
+| `Bundle.type` | `document` |
+| `Bundle.identifier.system` | `http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-<identificador do solicitante>`. O identificador do solicitante é atribuído pela RNDS no credenciamento e não é o CNES ([guia](https://rnds-guia.saude.gov.br/docs/publico-alvo/gestor/identificador)). |
+| `Bundle.identifier.value` | Valor único por documento, gerado pelo seu sistema (o exemplo do guia usa um UUID). A RNDS recusa um valor repetido com `EHR-ERR866`. |
+| `Bundle.timestamp` | Data e hora de montagem do documento, com fuso horário (`2026-10-28T10:15:00-03:00`). |
+| `Bundle.entry[0]` | A `Composition` do modelo (RIA, REL, RAC...), com o perfil RNDS em `meta.profile`. |
+| `Bundle.entry.fullUrl` | Presente em todas as entradas. Use `urn:uuid:` seguido de um UUID. As referências internas (`Composition.section.entry`, `Observation.specimen`) apontam para esses `fullUrl`. |
+| `Composition.status` | `final`. Outro valor gera `EHR-ERR924`. |
+| `Composition.subject` e `author` | Referências lógicas por `identifier` (CNS ou CPF do paciente, CNES do estabelecimento), sem incluir o recurso no Bundle, salvo quando o modelo pede. |
+
+O esqueleto abaixo mostra só a estrutura. Os exemplos completos e validados estão nas páginas de cada caso de uso.
+
+```json
+{
+  "resourceType": "Bundle",
+  "meta": { "lastUpdated": "2026-10-28T10:15:00-03:00" },
+  "identifier": {
+    "system": "http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-<identificador do solicitante>",
+    "value": "b1f0c6f2-5d0e-4c43-9a51-6e6a0f4f7c21"
+  },
+  "type": "document",
+  "timestamp": "2026-10-28T10:15:00-03:00",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:4c9f1d0e-2a8b-4e7c-9f3a-1b2c3d4e5f60",
+      "resource": { "resourceType": "Composition", "status": "final", "...": "..." }
+    },
+    {
+      "fullUrl": "urn:uuid:7a8b9c0d-1e2f-4a3b-8c4d-5e6f7a8b9c0d",
+      "resource": { "resourceType": "Immunization", "...": "..." }
+    }
+  ]
+}
+```
+
+<Aside type="caution" title="Guarde o valor de Bundle.identifier">
+	O `identifier.value` é a chave do documento do ponto de vista do seu sistema. Ele é necessário para substituir o
+	documento depois. Gere-o uma vez, grave-o junto ao registro de origem e reutilize-o em retentativas do mesmo envio.
+</Aside>
+
+## Resposta de sucesso
+
+Quando o documento é aceito, a RNDS atribui a ele um identificador próprio. Segundo o
+[guia](https://rnds-guia.saude.gov.br/docs/publico-alvo/ti/homologar), esse identificador volta em dois headers da
+resposta, `location` e `content-location`, com o mesmo conteúdo. O id é o trecho depois da última barra:
+
+```text
+location: .../r4/Bundle/eb4fc099-e5e2-4895-9d3b-23a6de2d7324-r3x7
+```
+
+No exemplo, o id atribuído pela RNDS é `eb4fc099-e5e2-4895-9d3b-23a6de2d7324-r3x7`. Trate qualquer status 2xx com o header
+`location` como sucesso, extraia o id e grave-o. Ele é usado para substituir o documento e faz parte das evidências de
+homologação.
+
+```js
+const location = res.headers.get('location') ?? res.headers.get('content-location');
+const idRnds = location.slice(location.lastIndexOf('/') + 1);
+```
+
+## Consultas
+
+A [página de serviços do guia](https://rnds-guia.saude.gov.br/docs/rnds/servicos) lista estas consultas, todas com os
+mesmos headers de autenticação:
+
+| Método e caminho | Descrição no guia |
+|---|---|
+| `GET /api/fhir/r4/Patient` | Obter informações sobre paciente |
+| `GET /api/fhir/r4/Organization` | Obter informações sobre um estabelecimento de saúde ou outra organização |
+| `GET /api/fhir/r4/Practitioner` | Obter informações sobre profissional de saúde |
+| `GET /api/fhir/r4/PractitionerRole` | Obter informações sobre papéis desempenhados por profissionais de saúde |
+
+O guia mostra a leitura de um estabelecimento pelo CNES no caminho, como `GET /api/fhir/r4/Organization/2337991`, e de
+uma organização pelo CNPJ, como `GET /api/fhir/r4/Organization/01567601000143`. A consulta de profissional pelo CNS usa o
+mesmo padrão (`Practitioner/<CNS>`): para um CNS desconhecido, a RNDS responde
+`Resource Practitioner/<valor> is not known`. Os parâmetros de busca aceitos por `Patient` e `PractitionerRole` estão
+documentados na coleção Postman que o guia oferece em
+["Conheça os serviços"](https://rnds-guia.saude.gov.br/docs/publico-alvo/ti/conhecer).
+
+Consultar o estabelecimento e o profissional antes de enviar é uma forma barata de detectar CNES ou CNS errados e
+vínculos ausentes.
+
+## Substituição de um documento
+
+A API descrita no guia não tem operação de alteração nem de exclusão de documentos. Para corrigir um documento já
+enviado, envie um novo documento que o substitui. Segundo o
+[guia](https://rnds-guia.saude.gov.br/docs/rel/alterar-resultado):
+
+<Steps>
+
+1. Tenha em mãos os dois identificadores do documento original: o `Bundle.identifier.value` que o seu sistema gerou e o
+   id que a RNDS devolveu no header `location`.
+
+2. Monte o novo documento completo, com os dados corrigidos. O `Bundle.identifier` do novo Bundle deve ser **o mesmo** do
+   documento substituído.
+
+3. Na `Composition`, informe `relatesTo` com o código `replaces` e o id da RNDS do documento anterior:
+
+   ```json
+   "relatesTo": [
+     {
+       "code": "replaces",
+       "targetReference": { "reference": "Composition/eb4fc099-e5e2-4895-9d3b-23a6de2d7324-r3x7" }
+     }
+   ]
+   ```
+
+4. Envie com `POST /api/fhir/r4/Bundle` e grave o novo id devolvido em `location`. Uma substituição futura deve apontar
+   para esse novo id.
+
+</Steps>
+
+O guia descreve o procedimento no modelo de resultado de exame laboratorial, e a página de serviços usa o mesmo serviço
+para "Substituir resultado de exame". Confira na página de cada caso de uso se o perfil da `Composition` admite
+`relatesTo`.
+
+## Erros
+
+A RNDS devolve erros como `OperationOutcome`. O código da RNDS fica no início de `issue.diagnostics`, entre parênteses. Os
+erros abaixo estão documentados na [página de erros do guia](https://rnds-guia.saude.gov.br/docs/publico-alvo/ti/erros):
+
+| Código | HTTP | Mensagem (resumo) | Causa e correção |
+|---|---|---|---|
+| `EHR-ERR882` | 401 | O token de certificado usado para autorizar o acesso não é válido. JWT expired... | Token vencido (30 minutos). Obtenha outro e repita o envio. |
+| `EHR-ERR866` | 422 | O identifier informado já foi utilizado para cadastrar outro documento e não pode ser repetido. | `Bundle.identifier.value` repetido. Gere um valor novo para um documento novo. Se for retentativa de um envio que já deu certo, veja a seção seguinte. |
+| `EHR-ERR924` | 422 | Ao enviar um documento é obrigatório utilizar o status: final | `Composition.status` (ou o status exigido pelo modelo) diferente de `final`. |
+| `EHR-ERR881` | não informado | Você não possui autorização para utilizar esse sistema de origem: `http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-...` | O `Bundle.identifier.system` não usa o identificador do solicitante do seu credenciamento. |
+| `EHR-ERR906` | não informado | Profissional CNS ... não autorizado, pois não possui vínculo CBO autorizado em nenhum dos estabelecimentos autorizados para a credencial ... | O CNS do header `Authorization` não é de um profissional lotado, com ocupação autorizada, no estabelecimento da credencial. |
+| sem código | não informado | `Resource Practitioner/<valor> is not known` | Consulta por um CNS que a RNDS não conhece. |
+| sem código | não informado | `Invalid request: The FHIR endpoint on this server does not know how to handle GET operation[Organization/]` | Consulta sem o identificador no caminho. |
+
+Exemplo, reproduzido do guia:
+
+```json
+{
+  "resourceType": "OperationOutcome",
+  "issue": [
+    {
+      "severity": "error",
+      "code": "processing",
+      "diagnostics": "(EHR-ERR866) O identifier informado já foi utilizado para cadastrar outro documento e não pode ser repetido."
+    }
+  ]
+}
+```
+
+Leia `issue.diagnostics` de qualquer resposta de erro que traga um `OperationOutcome` e grave-o no log do envio. Valide o Bundle localmente antes de enviar, com o validador HL7 e os perfis da RNDS (veja
+[Visão geral](/fhir-ig/desenvolvimento/visao-geral/)), para que esses erros apareçam no desenvolvimento e não em produção.
+
+## Retentativas e idempotência
+
+As recomendações desta seção são de engenharia, não regras publicadas pela RNDS.
+
+- **Separe erros transitórios de erros definitivos.** Falhas de rede, tempo esgotado e respostas 5xx podem ser repetidas.
+  Respostas 4xx com `OperationOutcome` (como `EHR-ERR924`) indicam um problema no documento: repetir sem corrigir não
+  resolve.
+- **`EHR-ERR882` (401) merece uma única nova tentativa,** com um token novo.
+- **Use espera exponencial com limite.** Por exemplo, 1 s, 2 s, 4 s, 8 s, até um teto, com variação aleatória. Depois do
+  limite, mova o envio para uma fila de pendências e alerte a equipe.
+- **Reutilize o mesmo `Bundle.identifier.value` nas retentativas.** Se a primeira tentativa chegou à RNDS mas a resposta
+  se perdeu (tempo esgotado), a retentativa com o mesmo valor recebe `EHR-ERR866` em vez de criar um segundo documento.
+  Trate esse caso como "provavelmente já enviado": registre-o e confirme pelo id da RNDS antes de qualquer correção.
+- **Persista antes de enviar.** Grave o Bundle e o seu `identifier.value` antes do `POST`, e o id da RNDS logo depois da
+  resposta. Assim, uma queda do processo não gera documento duplicado nem perde o id.
+- **Respeite os prazos de envio do seu modelo.** Para dados de vacinação, por exemplo, a Portaria GM/MS nº 5.663/2024 fixa
+  prazos de envio (veja [Imunização](/fhir-ig/desenvolvimento/casos-de-uso/imunizacao/)). A fila de pendências precisa
+  ser monitorada para que esses prazos sejam cumpridos.
+
+## Evidências de homologação
+
+Para pedir acesso à produção, o estabelecimento entrega um PDF de evidências. Segundo o
+[guia](https://rnds-guia.saude.gov.br/docs/publico-alvo/ti/homologar), "o arquivo PDF contendo as evidências é
+obrigatório" e reúne:
+
+1. o conteúdo do Bundle enviado com sucesso ao ambiente de homologação;
+2. uma captura de tela do validador mostrando a validação sem erros desse Bundle;
+3. o identificador atribuído pela RNDS ao documento (o id do header `location`).
+
+O guia descreve as evidências com base em um resultado de exame laboratorial. Mascare no PDF os dados que identificam
+pessoas, como faz o exemplo do guia. Se o seu sistema registra cada envio com o Bundle, a resposta e o id da RNDS, montar
+esse PDF é imediato.
+
+## Erros comuns
+
+- **Composition fora da primeira posição.** O FHIR exige a `Composition` como primeira entrada de um documento.
+- **`fullUrl` ausente ou referências que não batem.** Toda entrada precisa de `fullUrl`, e cada referência interna precisa
+  apontar exatamente para um deles.
+- **Gerar um `identifier.value` novo a cada retentativa.** Cria documentos duplicados quando a primeira tentativa já tinha
+  sido aceita.
+- **Não guardar o id da RNDS.** Sem ele não é possível substituir o documento.
+- **Enviar ao host de outra UF.** O host de produção é o da UF do estabelecimento.
+- **Esquecer o fuso horário.** `timestamp` e as datas do documento precisam de fuso (`-03:00`), e o `timestamp` não pode
+  ser anterior à data da `Composition`.

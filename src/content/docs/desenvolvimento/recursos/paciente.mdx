@@ -1,0 +1,159 @@
+---
+title: Paciente
+description: Como representar o paciente (Patient) no BR Core e no perfil BRIndividuo da RNDS, com CPF, CNS e as extensões brasileiras.
+sidebar:
+  order: 1
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+import ProfileTable from '../../../../components/ProfileTable.astro';
+import FhirExample from '../../../../components/FhirExample.astro';
+
+O paciente é o sujeito de praticamente todo registro clínico. No Brasil ele existe em dois perfis com regras
+diferentes: o `br-core-patient` do BR Core e o `BRIndividuo-1.0` da RNDS. Esta página mostra os dois e explica como
+passar de um para o outro.
+
+## Quando usar
+
+- **BR Core (`br-core-patient`)**: em qualquer troca de dados entre sistemas brasileiros que siga o BR Core, como APIs
+  entre prontuários, regulação ou integrações estaduais e municipais.
+- **RNDS (`BRIndividuo-1.0`)**: quando o recurso `Patient` for enviado à RNDS. Na maioria dos documentos da RNDS (RIA,
+  resultado de exames, RAC), o paciente **não** vai como recurso: ele é referenciado pelo CNS ou CPF em
+  `Composition.subject.identifier`. Veja [Imunização](/fhir-ig/desenvolvimento/casos-de-uso/imunizacao/).
+
+## Perfil BR Core
+
+<ProfileHeader source="br-core" id="br-core-patient" />
+<ProfileTable source="br-core" id="br-core-patient" />
+
+## Perfil RNDS
+
+<ProfileHeader source="rnds" id="BRIndividuo-1.0" />
+<ProfileTable source="rnds" id="BRIndividuo-1.0" hideProhibited />
+
+O `BRIndividuo-1.0` tipa `Patient.identifier` com o perfil `BRDocumentoIndividuo-1.0`, que muda a forma de informar
+documentos:
+
+<ProfileTable source="rnds" id="BRDocumentoIndividuo-1.0" />
+
+## Nuances brasileiras
+
+### CPF ou CNS: pelo menos um é obrigatório
+
+O BR Core impõe a invariante `br-core-pat-2`: se o paciente não tiver CPF, o CNS é obrigatório. Segundo o próprio
+BR Core, a regra vem do art. 257, § 2º, da Portaria de Consolidação nº 1/2017, na redação da Portaria GM/MS
+nº 12.263/2026.
+
+```text
+identifier.where(system = 'https://saude.gov.br/fhir/sid/cpf').exists()
+  or identifier.where(system = 'https://saude.gov.br/fhir/sid/cns').exists()
+```
+
+Envie os dois sempre que tiver os dois. O CPF identifica o cidadão perante a Receita Federal. O CNS (Cartão Nacional
+de Saúde) é o identificador do cidadão no SUS e continua sendo o identificador usado nas referências dos documentos da
+RNDS.
+
+### O `type` de cada identificador é fixo
+
+No BR Core, cada fatia (slice) de identificador tem `type` fixo, retirado da tabela v2-0203 da HL7:
+
+| Documento | `system` | `type.coding.code` | `use` |
+|---|---|---|---|
+| CPF | `https://saude.gov.br/fhir/sid/cpf` | `TAX` | `official` (fixo) |
+| CNS | `https://saude.gov.br/fhir/sid/cns` | `HC` | `official` (definitivo) ou `temp` (provisório) |
+| Registro Nacional de Estrangeiro | `https://saude.gov.br/fhir/sid/rne` | `RNE` | `official` |
+| Passaporte | `http://hl7.org/fhir/sid/passport-BRA` | `PPN` | `official` |
+
+O `use` do CNS não é decorativo: a invariante `br-core-pat-3` só aceita `official` (CNS definitivo, que começa com 1
+ou 2) ou `temp` (CNS provisório, que começa com 7, 8 ou 9). Veja as regras de validação em
+[Identificadores](/fhir-ig/desenvolvimento/identificadores/).
+
+### `system` no BR Core, `type` na RNDS
+
+Os dois perfis representam o mesmo documento de formas incompatíveis:
+
+<Tabs>
+	<TabItem label="BR Core">
+
+```json
+{
+  "use": "official",
+  "type": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "HC" }] },
+  "system": "https://saude.gov.br/fhir/sid/cns",
+  "value": "200000000000003"
+}
+```
+
+	</TabItem>
+	<TabItem label="RNDS (BRIndividuo-1.0)">
+
+```json
+{
+  "use": "official",
+  "type": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "HC" }] },
+  "value": "200000000000003"
+}
+```
+
+	</TabItem>
+</Tabs>
+
+No `BRDocumentoIndividuo-1.0`, `Identifier.system` é **proibido** (cardinalidade máxima 0). O documento é identificado
+só pelo `type`, vinculado ao ValueSet `BRTipoDocumentoIndividuo-1.0` da RNDS. Ele usa os mesmos códigos v2-0203 do
+BR Core (`HC` para CNS, `TAX` para CPF, `PPN` para passaporte, `RRI` para RG, entre outros), mais os registros de
+conselhos do CodeSystem `BRTipoIdentificador`. Já nas **referências** feitas pelos documentos da RNDS
+(`Composition.subject`, `Immunization.patient`), o paciente é identificado por `identifier.system` +
+`identifier.value`, com a URI legada `http://rnds.saude.gov.br/fhir/r4/NamingSystem/cns` (ou `.../cpf`). Se você mantém
+um modelo interno único, converta para o formato certo na hora de serializar.
+
+### Raça/cor, etnia indígena e populações específicas
+
+O BR Core reaproveita extensões do IPS-BR (Sumário Internacional do Paciente) e acrescenta as suas:
+
+- `raca-br-ips` (Must Support): raça/cor nas categorias do IBGE (`01` Branca, `02` Preta, `03` Parda, `04` Amarela, `05`
+  Indígena, `99` Sem informação), no CodeSystem `BRRacaCor`.
+- `povo-indigena-br-ips`: etnia indígena, para pacientes com raça/cor `05` (Indígena).
+- `br-core-populacaotradicional`: povos e comunidades tradicionais do ValueSet `BRPopulacaoTradicional` (por exemplo,
+  povos quilombolas, ribeirinhos, povos de terreiro/matriz africana, pescadores artesanais).
+- `br-core-povoitinerante`: grupos do ValueSet `BRPovoItinerante` (situação de rua, ciganos, circenses, andarilhos,
+  acampados, assentados, trabalhadores de área adstrita).
+- `identidade-genero-br-ips` e `sexo-nascimento-br-ips`: identidade de gênero e sexo atribuído ao nascimento,
+  separados de `Patient.gender`.
+
+Na RNDS, raça/cor e etnia vão juntas na extensão complexa `BRRacaCorEtnia-1.0`, com as subextensões `race` e
+`indigenousEthnicity`.
+
+### Endereço e município
+
+O BR Core acrescenta a `Patient.address` as extensões `br-core-address-municipio` e `br-core-address-aldeia`. Para o
+município, use o `system` `https://terminologia.saude.gov.br/fhir/CodeSystem/BRDivisaoGeograficaBrasil` com o código
+oficial do IBGE de 7 dígitos (por exemplo, `3550308` para São Paulo), disponível na
+[tabela de códigos de municípios do IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php). O ValueSet
+`BRMunicipio` do pacote de terminologia enumera apenas UFs e regiões, então confira o código contra a tabela do IBGE no
+seu sistema. Os detalhes, incluindo a forma de 6 dígitos usada na RNDS, estão em
+[Municípios e países](/fhir-ig/desenvolvimento/terminologias/municipios-e-paises/).
+
+A RNDS exige `address.use`, `address.type` e a fatia `line:streetType` (tipo de logradouro), que o BR Core não exige.
+
+### O que a RNDS exige a mais
+
+Para enviar um `Patient` no perfil `BRIndividuo-1.0`, além do que o BR Core pede, são obrigatórios:
+
+- `active` e `birthDate`;
+- pelo menos uma extensão, sendo obrigatória a `birthCountry` (`BRPais-1.0`, país de nascimento);
+- `name` no perfil `BRNomeIndividuo-1.0`.
+
+## Exemplo (BR Core)
+
+<FhirExample file="recursos/paciente.json" />
+
+## Erros comuns
+
+- **Enviar CPF com máscara.** O `value` leva só os 11 dígitos, sem ponto e hífen.
+- **Usar `use: "usual"` no CNS.** A invariante `br-core-pat-3` rejeita: use `official` ou `temp`.
+- **Usar a URI legada no BR Core.** `http://rnds.saude.gov.br/fhir/r4/NamingSystem/cpf` é aceita pela RNDS em
+  referências, mas o BR Core fixa `https://saude.gov.br/fhir/sid/cpf`. Os dois apontam para o mesmo NamingSystem.
+- **Enviar `Identifier.system` no `BRIndividuo-1.0`.** O elemento é proibido nesse perfil.
+- **Confundir `gender` com identidade de gênero.** `Patient.gender` é o sexo administrativo. Identidade de gênero e
+  sexo ao nascimento têm extensões próprias.

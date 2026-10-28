@@ -1,0 +1,87 @@
+---
+title: Conjunto Mínimo de Dados
+description: O Conjunto Mínimo de Dados (CMD) da atenção à saúde, instituído pela Portaria GM/MS nº 11.952/2026, o que ele registra, quem envia e desde quando.
+sidebar:
+  order: 7
+---
+
+import { Aside, Badge, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+
+## O que é
+
+O **Conjunto Mínimo de Dados (CMD)** é o registro padronizado de cada **contato assistencial**, isto é, de cada
+atendimento de um cidadão em um estabelecimento de saúde, da admissão ao desfecho. Ele reúne quem foi atendido, onde,
+quais diagnósticos foram avaliados e quais procedimentos foram feitos.
+
+O modelo de informação foi instituído no SUS pela
+[Portaria GM/MS nº 11.952, de 13 de julho de 2026](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2026/prt11952_14_07_2026.html),
+que incluiu o art. 357-A e o Anexo XLI na Portaria de Consolidação nº 1/2017.
+
+### O que o CMD contém
+
+Segundo o Anexo XLI, o registro contém no mínimo:
+
+- **a pessoa:** o município de residência (ou o país, se ela não mora no Brasil) e o CPF. O Cartão Nacional de Saúde
+  (CNS) é aceito, em caráter excepcional, quando a pessoa não tem CPF. Para quem não pode ser identificado, o modelo
+  prevê dados alternativos;
+- **o contato assistencial:** o estabelecimento que atendeu, a forma de atendimento, o contratante terceiro, os dados
+  da admissão (data, procedência, modalidade assistencial e caráter), os dados do desfecho (data e motivo) e o CPF do
+  responsável pelo registro;
+- **os problemas e diagnósticos avaliados**, pela CID ou pela CIAP, com a versão da tabela, a categoria e se estavam
+  presentes na admissão;
+- **o diagnóstico oncológico**, com a data do exame que o confirmou, quando for o caso;
+- **os procedimentos realizados**, pela Tabela SUS, pela TUSS, pela CBHPM ou pela ICHI, com quantidade, forma de
+  financiamento, data, estabelecimento terceiro que executou, profissional executante (CPF, ocupação pela CBO e equipe
+  pelo INE, quando a legislação exigir) e autorização, quando aplicável;
+- **órteses, próteses e materiais especiais (OPM):** fornecedor, lote e número de série, ou o documento fiscal quando
+  não houver número de série.
+
+O [Sumário de Alta](/fhir-ig/gestao/casos-de-uso/sumario-de-alta/) também contempla as informações do CMD, conforme a
+Portaria GM/MS nº 8.026/2025.
+
+## Quem envia
+
+O art. 2º do Anexo XLI determina que as informações do CMD registradas em meio eletrônico, em todo o território
+nacional, sigam os padrões da portaria e sejam **enviadas regularmente à RNDS**. Isso alcança os estabelecimentos de
+saúde que registram atendimentos em sistema eletrônico, por meio do sistema que usam para isso.
+
+## Quando enviar e prazo
+
+A Portaria nº 11.952/2026 entrou em vigor na data da publicação (14 de julho de 2026) e tem **efeitos operacionais na
+RNDS e nos sistemas de informação a partir da competência seguinte** à publicação. "Competência" é o mês de referência
+usado pelo SUS para a produção e o faturamento dos serviços.
+
+A portaria não fixa um prazo em dias para cada envio. O envio deve ser regular, e as regras e especificações técnicas
+para o recebimento são publicadas pelo Departamento de Informática do SUS (DATASUS). O momento natural de envio é o
+desfecho do contato assistencial (a alta, a conclusão do atendimento).
+
+<Aside type="caution" title="Modelo técnico do SUS em rascunho">
+	O modelo de produção do CMD para o SUS no projeto da RNDS está com status <Badge text="rascunho" variant="caution" />.
+	O modelo do CMD para a saúde suplementar (ANS) está ativo. Confirme no
+	[Portal de Serviços do DATASUS](https://servicos-datasus.saude.gov.br/) a versão em vigor para o seu tipo de
+	estabelecimento antes de planejar a implantação.
+</Aside>
+
+## O que o estabelecimento precisa ter
+
+- **Sistema credenciado na RNDS**, homologado e com acesso à produção. Veja
+  [Adesão e credenciamento](/fhir-ig/gestao/adesao-e-credenciamento/).
+- **Cadastro no CNES atualizado.** O número do Cadastro Nacional de Estabelecimentos de Saúde (CNES) identifica onde o
+  atendimento ocorreu e quais estabelecimentos terceiros executaram procedimentos.
+- **Profissionais cadastrados no CNES**, com CPF, a ocupação (CBO) e a equipe (INE) corretos.
+- **Identificação do paciente** pelo CPF, com o município de residência. Use o CNS só quando a pessoa não tiver CPF.
+- **Diagnósticos e procedimentos codificados** pelas tabelas aceitas (CID ou CIAP; Tabela SUS, TUSS, CBHPM ou ICHI).
+- **Controle de OPM** com fornecedor, lote e número de série.
+
+## Modelos técnicos
+
+<ProfileHeader source="rnds" id="BRConjuntoMinimoDados-1.1" />
+<ProfileHeader source="rnds" id="BRConjuntoMinimoDadosANS-1.0.0" />
+
+## Próximos passos
+
+<CardGrid>
+	<LinkCard title="Página técnica: Conjunto Mínimo de Dados" description="Perfis, regras e exemplo para a equipe de TI." href="/fhir-ig/desenvolvimento/casos-de-uso/conjunto-minimo-de-dados/" />
+	<LinkCard title="Tabela SUS (SIGTAP)" description="Como os procedimentos são codificados." href="/fhir-ig/desenvolvimento/terminologias/tabela-sus-sigtap/" />
+</CardGrid>

@@ -1,0 +1,96 @@
+---
+title: Exames laboratoriais
+description: O envio de resultados de exames à RNDS (REL) e o novo modelo de laudo clínico (RELC), quem envia e o que o laboratório precisa ter.
+sidebar:
+  order: 2
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+
+## O que é
+
+O **Resultado de Exame Laboratorial (REL)** é o documento que o laboratório envia à Rede Nacional de Dados em Saúde
+(RNDS) com o resultado de um exame: qual exame foi feito, em qual amostra, por qual método, o resultado e a data. Foi o
+primeiro tipo de registro a circular na RNDS, a partir dos resultados de COVID-19 em 2020.
+
+Segundo a [página do REL no guia da RNDS](https://rnds-guia.saude.gov.br/docs/rel/objetivo-rel/), o modelo detalha os
+resultados de exames de COVID-19 e Monkeypox (mpox) feitos por laboratórios de análises clínicas, públicos ou
+privados. O objetivo é que os profissionais da atenção primária e especializada tenham o resultado para continuar o
+cuidado, e que o próprio cidadão também possa consultá-lo.
+
+### Laudo clínico: o RELC
+
+A [Portaria GM/MS nº 10.341, de 12 de março de 2026](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2026/prt10341_16_03_2026.html),
+criou um segundo modelo, o **Resultado de Exame com Laudo Clínico (RELC)**. Ele registra o laudo emitido por
+profissional habilitado ao realizar um exame, inclusive por telediagnóstico, para uso na assistência e na vigilância.
+O modelo prevê, quando for o caso, o equipamento usado e o endereço eletrônico para acessar o laudo digital e as imagens
+associadas. O conteúdo mínimo inclui:
+
+- o paciente, identificado pelo CPF ou pelo Cartão Nacional de Saúde (CNS);
+- o estabelecimento que emitiu o laudo e, se for o caso, o que executou o exame, pelo número do Cadastro Nacional de
+  Estabelecimentos de Saúde (CNES);
+- o profissional responsável pelo laudo, pelo CPF, com conselho, número, UF e ocupação;
+- a data e a hora do laudo e se o exame foi presencial ou por telessaúde;
+- o exame realizado, codificado pela tabela LOINC, pela Tabela SUS, pela CBHPM ou pela TUSS.
+
+## Quem envia
+
+- **REL:** laboratórios de análises clínicas, públicos ou privados, que realizam os exames contemplados pelo modelo.
+- **RELC:** estabelecimentos que emitem laudos de exames, inclusive serviços de telediagnóstico.
+
+O envio é feito pelo sistema do laboratório (o sistema de informação laboratorial ou o conector a ele ligado), que
+precisa estar credenciado na RNDS.
+
+## Quando enviar e prazo
+
+Não há, entre as normas verificadas por este site, um prazo vigente de envio do REL que se aplique a todos os exames.
+
+Como marco histórico, a
+[Portaria GM/MS nº 1.792/2020](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2020/prt1792_21_07_2020.html) tornou
+obrigatória a notificação de todos os resultados de testes de COVID-19 ao Ministério da Saúde em até 24 horas, por meio
+da RNDS. Foi essa regra que levou os laboratórios à RNDS. Consulte a vigência atual com a vigilância em saúde do seu
+estado ou município antes de basear a rotina nela.
+
+Para o RELC, a Portaria nº 10.341/2026 determina que os resultados de exame com laudo clínico realizados no país sigam
+o modelo e sejam **enviados regularmente** à RNDS. Ela não fixa um prazo em horas ou dias. As especificações técnicas
+para o recebimento são definidas e publicadas pelo DATASUS no
+[Portal de Serviços](https://servicos-datasus.saude.gov.br/).
+
+<Aside type="tip" title="Boa prática">
+	Mesmo sem prazo fixado, envie o resultado assim que ele for liberado. O valor do registro para o cuidado do paciente
+	é maior quanto antes ele estiver disponível.
+</Aside>
+
+## O que o estabelecimento precisa ter
+
+- **Sistema credenciado na RNDS**, homologado e com acesso à produção. As evidências de homologação descritas no guia da
+  RNDS usam justamente um resultado de exame. Veja [Adesão e credenciamento](/fhir-ig/gestao/adesao-e-credenciamento/).
+- **Cadastro no CNES atualizado.** O CNES do laboratório identifica o autor do documento e define o endereço estadual
+  da RNDS para onde o sistema envia.
+- **Profissionais cadastrados no CNES**, com CNS ou CPF e a ocupação (CBO) corretos, em especial o responsável técnico.
+- **Identificação do paciente** pelo CPF ou pelo CNS desde a coleta. Uma amostra sem identificação válida gera um
+  resultado que não pode ser enviado.
+- **Exames codificados.** O sistema precisa associar cada exame do laboratório ao código exigido pelo modelo (LOINC e
+  tabelas nacionais). Esse mapeamento é trabalho conjunto da equipe técnica do laboratório e da equipe de TI.
+
+## Modelos técnicos
+
+O modelo de produção vigente do REL na RNDS:
+
+<ProfileHeader source="rnds" id="BRResultadoExameLaboratorial-3.2.1" />
+
+Há também um modelo específico para testes rápidos de COVID-19:
+
+<ProfileHeader source="rnds" id="BRResultadoExameLaboratorial-TesteRapido-01.01" />
+
+As versões anteriores do REL (1.0, 1.1 e 2.0) estão descontinuadas e não devem ser usadas. Na data desta página, o
+modelo computacional do RELC ainda não aparecia entre os perfis da RNDS publicados no
+[Simplifier](https://simplifier.net/redenacionaldedadosemsaude).
+
+## Próximos passos
+
+<CardGrid>
+	<LinkCard title="Página técnica: Exames laboratoriais" description="Perfis, regras e exemplo validado para a equipe de TI." href="/fhir-ig/desenvolvimento/casos-de-uso/exames-laboratoriais/" />
+	<LinkCard title="Terminologia de exames" description="Como os exames são codificados." href="/fhir-ig/desenvolvimento/terminologias/exames-laboratoriais/" />
+</CardGrid>

@@ -1,0 +1,92 @@
+---
+title: Changelog
+description: Registro das mudanças de conteúdo e das versões dos pacotes oficiais usadas pelo Interop Saúde BR.
+---
+
+Este registro lista as mudanças relevantes para quem usa o site: versões de pacotes, páginas novas e correções de
+conteúdo. As mudanças de código e de layout ficam no
+[histórico do repositório](https://github.com/open-health-brazil/fhir-ig/commits/main).
+
+## 2026-10-28 — versão inicial
+
+Primeira publicação do site.
+
+### Versões em uso
+
+- HL7 FHIR R4 4.0.1.
+- BR Core `br.gov.saude.br-core.fhir` 1.7.1.
+- Terminologia `br.gov.saude.terminologia.fhir` 1.1.0 (o BR Core 1.7.1 declara a 1.2.0, que não foi publicada).
+- IPS-BR `br.gov.saude.ips.fhir` 1.0.0 (usado pelo validador, como dependência do BR Core).
+- Perfis de produção da RNDS: captura do projeto da RNDS no Simplifier em 28 de outubro de 2026, com 104
+  StructureDefinitions (4 deles aposentados).
+
+### Páginas publicadas
+
+**Gestão**
+
+- [O que é a RNDS](/fhir-ig/gestao/o-que-e-a-rnds/)
+- [Adesão e credenciamento](/fhir-ig/gestao/adesao-e-credenciamento/)
+- [Base legal e LGPD](/fhir-ig/gestao/base-legal-e-lgpd/)
+- Casos de uso: [Imunização](/fhir-ig/gestao/casos-de-uso/imunizacao/),
+  [Exames laboratoriais](/fhir-ig/gestao/casos-de-uso/exames-laboratoriais/),
+  [Regulação assistencial](/fhir-ig/gestao/casos-de-uso/regulacao-assistencial/),
+  [Prescrição e dispensação](/fhir-ig/gestao/casos-de-uso/prescricao-e-dispensacao/),
+  [Atendimento clínico](/fhir-ig/gestao/casos-de-uso/atendimento-clinico/),
+  [Sumário de alta](/fhir-ig/gestao/casos-de-uso/sumario-de-alta/),
+  [Conjunto Mínimo de Dados](/fhir-ig/gestao/casos-de-uso/conjunto-minimo-de-dados/)
+- [Glossário](/fhir-ig/gestao/glossario/)
+
+**Desenvolvimento**
+
+- [Visão geral](/fhir-ig/desenvolvimento/visao-geral/), [Ambientes](/fhir-ig/desenvolvimento/ambientes/),
+  [Autenticação](/fhir-ig/desenvolvimento/autenticacao/) e
+  [Envio de documentos](/fhir-ig/desenvolvimento/envio-de-documentos/)
+- [Identificadores](/fhir-ig/desenvolvimento/identificadores/)
+- [Terminologias](/fhir-ig/desenvolvimento/terminologias/): [CBO](/fhir-ig/desenvolvimento/terminologias/cbo/),
+  [CID-10](/fhir-ig/desenvolvimento/terminologias/cid-10/), [CIAP-2](/fhir-ig/desenvolvimento/terminologias/ciap-2/),
+  [Tabela SUS (SIGTAP)](/fhir-ig/desenvolvimento/terminologias/tabela-sus-sigtap/),
+  [Imunobiológicos](/fhir-ig/desenvolvimento/terminologias/imunobiologicos/),
+  [Exames laboratoriais](/fhir-ig/desenvolvimento/terminologias/exames-laboratoriais/),
+  [Conselhos profissionais](/fhir-ig/desenvolvimento/terminologias/conselhos-profissionais/),
+  [Municípios e países](/fhir-ig/desenvolvimento/terminologias/municipios-e-paises/)
+- Recursos base: [Paciente](/fhir-ig/desenvolvimento/recursos/paciente/),
+  [Profissional](/fhir-ig/desenvolvimento/recursos/profissional/),
+  [Lotação profissional](/fhir-ig/desenvolvimento/recursos/lotacao-profissional/),
+  [Estabelecimento](/fhir-ig/desenvolvimento/recursos/estabelecimento/)
+- Casos de uso: [Imunização](/fhir-ig/desenvolvimento/casos-de-uso/imunizacao/),
+  [Exames laboratoriais](/fhir-ig/desenvolvimento/casos-de-uso/exames-laboratoriais/),
+  [Regulação assistencial](/fhir-ig/desenvolvimento/casos-de-uso/regulacao-assistencial/),
+  [Prescrição e dispensação](/fhir-ig/desenvolvimento/casos-de-uso/prescricao-e-dispensacao/),
+  [Atendimento clínico](/fhir-ig/desenvolvimento/casos-de-uso/atendimento-clinico/),
+  [Sumário de alta](/fhir-ig/desenvolvimento/casos-de-uso/sumario-de-alta/),
+  [Conjunto Mínimo de Dados](/fhir-ig/desenvolvimento/casos-de-uso/conjunto-minimo-de-dados/)
+- [Mapeamento RNDS ↔ BR Core](/fhir-ig/desenvolvimento/mapeamento-rnds-br-core/),
+  [Orientações de implementação](/fhir-ig/desenvolvimento/orientacoes-de-implementacao/) e
+  [Evolução R5/R6](/fhir-ig/desenvolvimento/evolucao-r5-r6/)
+
+**Sobre**
+
+- [O projeto](/fhir-ig/sobre/), este changelog e [Como contribuir](/fhir-ig/sobre/como-contribuir/)
+
+### Infraestrutura
+
+- Tabelas de perfis, identificadores e terminologias geradas dos pacotes oficiais.
+- Exemplos em `examples/` validados com o validador oficial da HL7 a cada pull request.
+- Job semanal que abre um pull request quando o BR Core ou a terminologia publicam nova versão corrente.
+
+## Convenção para novas entradas
+
+- **Uma entrada por publicação**, da mais recente para a mais antiga, com o título no formato
+  `AAAA-MM-DD — resumo curto`.
+- **Agrupe por tipo**, usando só os grupos que tiverem itens:
+  - **Versões em uso**: pacote, versão anterior → versão nova, e o impacto (perfis adicionados, removidos ou
+    alterados).
+  - **Páginas novas**: com link.
+  - **Correções**: o que estava errado e o que mudou, com link para a página.
+  - **Mudanças de orientação**: quando uma recomendação mudou por causa de um artefato oficial novo (por exemplo, a
+    publicação da terminologia 1.2.0).
+- **Cite a fonte** de toda mudança regulatória ou de versão, com link.
+- **Atualizações automáticas de pacotes** ganham entrada no mesmo pull request aberto pelo job semanal, antes do
+  merge.
+- **Nova captura dos perfis da RNDS** ganha entrada com a data da captura e a lista de perfis novos, alterados e
+  aposentados.

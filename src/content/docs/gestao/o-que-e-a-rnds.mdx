@@ -1,0 +1,153 @@
+---
+title: O que é a RNDS
+description: A Rede Nacional de Dados em Saúde explicada para gestores, com a base legal, os documentos que ela recebe e o papel do BR Core e da terminologia.
+---
+
+import { Aside, Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+A Rede Nacional de Dados em Saúde (RNDS) é a plataforma do Ministério da Saúde que recebe, guarda e compartilha
+informações de saúde dos cidadãos entre estabelecimentos públicos e privados e órgãos de gestão. Quando uma sala de
+vacinação registra uma dose, ou um laboratório libera um resultado, o sistema do estabelecimento envia esse registro à
+RNDS. A partir daí, a informação pode ser consultada por outros profissionais que atendem o mesmo cidadão e pelo
+próprio cidadão.
+
+Esta página explica de onde a RNDS vem, quem a mantém, que tipos de registro ela recebe e como ela se relaciona com o
+BR Core e com a terminologia nacional.
+
+## O que diz a norma
+
+A RNDS foi instituída pela [Portaria GM/MS nº 1.434, de 28 de maio de 2020](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2020/prt1434_29_05_2020.html),
+que incluiu os artigos 254-A a 254-C na Portaria de Consolidação nº 1/2017 (a norma que reúne as regras gerais do SUS).
+Em linguagem simples, esses artigos determinam o seguinte:
+
+- **Art. 254-A.** A RNDS faz parte do Sistema Nacional de Informações em Saúde (SNIS). Ela é a plataforma nacional de
+  integração e interoperabilidade de informações em saúde entre estabelecimentos públicos e privados e órgãos de
+  gestão. O § 3º prevê que a integração aconteça de forma gradativa, até que a RNDS seja a **via única de
+  interoperabilidade nacional em saúde**.
+- **Art. 254-B.** Cabe ao Departamento de Informática do SUS (DATASUS) implementar a RNDS.
+- **Art. 254-C.** O acesso aos dados da RNDS segue a Lei Geral de Proteção de Dados (LGPD) e a Lei de Acesso à
+  Informação (LAI). Veja [Base legal e LGPD](/fhir-ig/gestao/base-legal-e-lgpd/).
+
+"Interoperabilidade" é a capacidade de dois sistemas diferentes trocarem informação e entenderem o que receberam sem
+digitação manual. "Via única" significa que, ao fim da transição, a troca nacional de dados de saúde deve passar pela
+RNDS, e não por canais paralelos. A vacinação já chegou a esse ponto: a
+[Portaria GM/MS nº 5.663/2024](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2024/prt5663_04_11_2024.html) determina
+que os sistemas de vacinação enviem as doses aplicadas **exclusivamente** à RNDS.
+
+### O papel do DATASUS
+
+O DATASUS é o órgão do Ministério da Saúde responsável pela parte técnica da RNDS. Na prática, é ele que:
+
+- mantém o [Portal de Serviços](https://servicos-datasus.saude.gov.br/), onde o gestor pede acesso à RNDS;
+- analisa as solicitações e libera o acesso aos ambientes de homologação e de produção;
+- publica os modelos técnicos de cada documento e o [guia da RNDS](https://rnds-guia.saude.gov.br/) para gestores e
+  equipes de tecnologia.
+
+As portarias que criam os modelos de informação repetem essa divisão. A
+[Portaria Conjunta nº 25/2023](https://bvsms.saude.gov.br/bvs/saudelegis/Saes/2023/poc0025_30_11_2023.html), por
+exemplo, define o conteúdo do registro de vacinação e atribui ao DATASUS o modelo computacional e a implantação técnica
+na RNDS.
+
+### Para onde a RNDS vai: a ESD28
+
+A Estratégia de Saúde Digital para o Brasil 2020-2028 (ESD28), instituída pela
+[Portaria GM/MS nº 3.632/2020](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2020/prt3632_22_12_2020.html), coloca a
+RNDS no centro da saúde digital do país. Segundo o art. 244-B, a visão da ESD28 é implementar a RNDS até 2028, para que
+ela seja reconhecida como a plataforma digital de inovação, informação e serviços de saúde.
+
+Para o gestor, isso indica a direção: cada vez mais registros vão circular pela RNDS, e novos tipos de documento serão
+incluídos ao longo do tempo. O próprio [guia da RNDS](https://rnds-guia.saude.gov.br/docs/publico-alvo/publico-alvo/)
+afirma que todos os estabelecimentos de saúde estarão integrados à RNDS com o passar do tempo.
+
+## O que circula na RNDS
+
+Cada tipo de informação tem um **modelo de informação**: um documento oficial que lista os dados mínimos que o registro
+precisa conter. Depois, o DATASUS publica o **modelo computacional**, que é a versão técnica do mesmo conteúdo, no
+formato que os sistemas usam para enviar os dados. A tabela abaixo resume os modelos e aponta a página de cada caso de
+uso.
+
+| Sigla | Nome | O que registra | Norma do modelo | Caso de uso |
+|---|---|---|---|---|
+| RIA | Registro de Imunobiológico Administrado | Cada dose de vacina aplicada, em rotina ou em campanha | [PC nº 25/2023](https://bvsms.saude.gov.br/bvs/saudelegis/Saes/2023/poc0025_30_11_2023.html) e [GM/MS nº 5.663/2024](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2024/prt5663_04_11_2024.html) | [Imunização](/fhir-ig/gestao/casos-de-uso/imunizacao/) |
+| REL | Resultado de Exame Laboratorial | Resultados de exames feitos por laboratórios de análises clínicas | Guia da RNDS | [Exames laboratoriais](/fhir-ig/gestao/casos-de-uso/exames-laboratoriais/) |
+| RELC | Resultado de Exame com Laudo Clínico | O laudo emitido por profissional habilitado, inclusive por telediagnóstico | [GM/MS nº 10.341/2026](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2026/prt10341_16_03_2026.html) | [Exames laboratoriais](/fhir-ig/gestao/casos-de-uso/exames-laboratoriais/) |
+| RA | Regulação Assistencial | Solicitação, agendamento e realização de procedimentos regulados | Guia e modelo computacional da RNDS | [Regulação assistencial](/fhir-ig/gestao/casos-de-uso/regulacao-assistencial/) |
+| RPM / REPM | Registro (Eletrônico) da Prescrição de Medicamentos | Os medicamentos prescritos por profissional habilitado | [GM/MS nº 6.100/2024](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2024/prt6100_18_12_2024.html) | [Prescrição e dispensação](/fhir-ig/gestao/casos-de-uso/prescricao-e-dispensacao/) |
+| RDM / REDFM | Registro (Eletrônico) de Dispensação ou Fornecimento de Medicamentos | A entrega do medicamento ao paciente pela farmácia ou serviço | [GM/MS nº 6.100/2024](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2024/prt6100_18_12_2024.html) | [Prescrição e dispensação](/fhir-ig/gestao/casos-de-uso/prescricao-e-dispensacao/) |
+| RAC | Registro de Atendimento Clínico | Os dados essenciais de uma consulta na atenção primária, especializada ou domiciliar | [SAES/MS nº 234/2022](https://bvsms.saude.gov.br/bvs/saudelegis/Saes/2022/prt0234_20_07_2022.html) | [Atendimento clínico](/fhir-ig/gestao/casos-de-uso/atendimento-clinico/) |
+| RATC | Registro de Atendimento via Teleconsultoria | A pergunta de um profissional e a orientação do teleconsultor | [GM/MS nº 10.341/2026](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2026/prt10341_16_03_2026.html) | [Atendimento clínico](/fhir-ig/gestao/casos-de-uso/atendimento-clinico/) |
+| SA | Sumário de Alta | O resumo da internação entregue na alta hospitalar | [GM/MS nº 8.026/2025](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2025/prt8026_28_08_2025.html) | [Sumário de alta](/fhir-ig/gestao/casos-de-uso/sumario-de-alta/) |
+| CMD | Conjunto Mínimo de Dados | Os dados de cada atendimento (contato assistencial), da admissão ao desfecho | [GM/MS nº 11.952/2026](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2026/prt11952_14_07_2026.html) | [Conjunto Mínimo de Dados](/fhir-ig/gestao/casos-de-uso/conjunto-minimo-de-dados/) |
+
+<Aside type="note" title="Siglas antigas e novas">
+	O guia da RNDS ainda usa as siglas RPM e RDM, da
+	[Portaria SAES/MS nº 50/2022](https://bvsms.saude.gov.br/bvs/saudelegis/Saes/2022/prt0050_11_02_2022.html). A
+	Portaria GM/MS nº 6.100/2024 instituiu os modelos atuais com os nomes REPM e REDFM. Os modelos computacionais
+	vigentes na RNDS seguem os nomes novos.
+</Aside>
+
+Instituir um modelo e obrigar o envio são coisas diferentes. Algumas portarias só definem o conteúdo do registro;
+outras também determinam que os dados sejam enviados à RNDS e em que prazo. Cada página de caso de uso diz exatamente o
+que a norma correspondente exige.
+
+## RNDS, BR Core e terminologia
+
+Três peças trabalham juntas. Uma forma simples de entender a relação entre elas é pensar em um serviço de correio.
+
+<CardGrid>
+	<Card title="RNDS: o destino" icon="setting">
+		A plataforma que recebe os documentos, confere se estão corretos, guarda e disponibiliza. Ela define os
+		formulários exatos que aceita (os perfis da RNDS) e exige credenciamento.
+	</Card>
+	<Card title="BR Core: a gramática comum" icon="open-book">
+		O guia nacional de perfis no padrão internacional HL7 FHIR, publicado pelo Ministério da Saúde em
+		[hl7.org.br](https://hl7.org.br/fhir/core/). Ele diz como representar paciente, profissional, estabelecimento,
+		vacina e outros dados em qualquer troca entre sistemas brasileiros, com ou sem a RNDS.
+	</Card>
+	<Card title="Terminologia: o vocabulário" icon="list-format">
+		As tabelas de códigos que todos usam para dizer a mesma coisa da mesma forma: ocupações (CBO), doenças (CID-10,
+		CIAP-2), procedimentos (Tabela SUS), vacinas, municípios.
+	</Card>
+</CardGrid>
+
+Na prática:
+
+- O sistema do seu estabelecimento precisa falar **FHIR**, o padrão técnico usado tanto pelo BR Core quanto pela RNDS.
+- Para **enviar à RNDS**, o sistema usa os perfis próprios da RNDS, publicados no
+  [Simplifier](https://simplifier.net/redenacionaldedadosemsaude). São eles que valem para o envio.
+- Para **trocar dados com outros sistemas** (um prontuário municipal, uma central de regulação estadual, um laboratório
+  parceiro), o BR Core é a referência nacional.
+- Os dois usam a **mesma terminologia**. Um código de vacina ou de ocupação é o mesmo nos dois.
+
+A equipe de tecnologia encontra o detalhamento técnico em
+[Visão geral técnica](/fhir-ig/desenvolvimento/visao-geral/) e em
+[Mapeamento RNDS ↔ BR Core](/fhir-ig/desenvolvimento/mapeamento-rnds-br-core/).
+
+## O que o cidadão ganha
+
+Segundo a [página da RNDS no portal do Ministério da Saúde](https://www.gov.br/saude/pt-br/composicao/seidigi/rnds),
+o histórico clínico passa a acompanhar o paciente entre serviços e cidades, o que favorece um cuidado contínuo. A mesma
+página informa que o cidadão consulta os seus dados que estão na RNDS, como atendimentos, vacinas e medicamentos, pelo
+aplicativo **Meu SUS Digital**, de forma segura e individualizada. O acesso aos dados dos pacientes é restrito a fins
+assistenciais e de gestão.
+
+Para o estabelecimento, isso significa que o registro enviado hoje é o que o paciente e o próximo profissional verão
+amanhã. Dados incompletos ou atrasados chegam incompletos ou atrasados a eles.
+
+## Quem precisa aderir
+
+O público-alvo da RNDS são os estabelecimentos de saúde do país, públicos e privados. A adesão começou pelos
+laboratórios, com os resultados de COVID-19, e vem se ampliando a cada novo modelo. Hoje, qualquer estabelecimento que
+aplica vacinas precisa de um sistema que envie as doses à RNDS, por força da Portaria GM/MS nº 5.663/2024.
+
+O estabelecimento não precisa desenvolver o sistema por conta própria. Ele pode usar um sistema público ou contratar um
+fornecedor. O que não muda é que **o credenciamento é do estabelecimento** e é pedido pelo seu gestor.
+
+## Próximos passos
+
+<CardGrid>
+	<LinkCard title="Adesão e credenciamento" description="O passo a passo para conectar o estabelecimento à RNDS." href="/fhir-ig/gestao/adesao-e-credenciamento/" />
+	<LinkCard title="Base legal e LGPD" description="As normas que regem a RNDS e como a LGPD se aplica ao envio." href="/fhir-ig/gestao/base-legal-e-lgpd/" />
+	<LinkCard title="Imunização" description="O registro de vacinação, com prazo de envio definido em portaria." href="/fhir-ig/gestao/casos-de-uso/imunizacao/" />
+	<LinkCard title="Glossário" description="Siglas e termos usados neste site, explicados em linguagem simples." href="/fhir-ig/gestao/glossario/" />
+</CardGrid>

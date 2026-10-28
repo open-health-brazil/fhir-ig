@@ -1,0 +1,554 @@
+---
+title: Mapeamento RNDS ↔ BR Core
+description: Correspondência entre cada perfil de produção da RNDS e o perfil equivalente do BR Core 1.7.1, com as diferenças que mudam a serialização e a tabela de conversão de URIs legadas.
+---
+
+import { Aside, Badge } from '@astrojs/starlight/components';
+import IdentifierTable from '../../../components/IdentifierTable.astro';
+
+A Rede Nacional de Dados em Saúde (RNDS) recebe documentos em perfis próprios, publicados no
+[projeto da RNDS no Simplifier](https://simplifier.net/redenacionaldedadosemsaude) com canônicas
+`http://www.saude.gov.br/fhir/r4/StructureDefinition/...`. O BR Core 1.7.1 define os perfis nacionais de uso geral,
+com canônica `https://br-core.saude.gov.br/fhir/StructureDefinition/...`. Esta página diz, para cada perfil RNDS, qual
+perfil BR Core cobre o mesmo conceito e o que muda quando você converte um no outro.
+
+Se você mantém um modelo de dados interno único e gera as duas saídas, use esta página como especificação da camada de
+serialização. A estratégia está descrita em
+[Orientações de implementação](/fhir-ig/desenvolvimento/orientacoes-de-implementacao/).
+
+## Como ler o mapeamento
+
+<Aside type="caution" title="Correspondência por recurso e finalidade, não por herança">
+Nenhum perfil RNDS de produção deriva do BR Core. Todos derivam diretamente do recurso base FHIR R4 (ou de outro perfil
+RNDS). A única exceção é o `RNDSPaciente`, em rascunho, que deriva do `br-core-patient` e não acrescenta restrições.
+Por isso, a correspondência abaixo é feita pelo **mesmo recurso FHIR usado para a mesma finalidade**. Um recurso válido
+em um perfil não é automaticamente válido no outro: confira as diferenças-chave de cada par.
+</Aside>
+
+A coluna **Correspondência** usa estes rótulos:
+
+- **Direta**: o BR Core tem um perfil para o mesmo conceito, no mesmo recurso.
+- **Genérica**: o BR Core tem um perfil do mesmo recurso, mas não especializado para esse documento ou caso (por
+  exemplo, `br-core-composition` para os documentos da RNDS que não têm Composition própria no BR Core).
+- **Por analogia**: o BR Core cobre o dado em outro elemento ou outro recurso. A orientação diz qual.
+- **Sem equivalente**: o BR Core 1.7.1 não cobre o conceito. Use o perfil RNDS ou o recurso base FHIR, conforme a
+  orientação.
+
+O status vem do próprio StructureDefinition capturado do Simplifier em 28 de outubro de 2026 (104 perfis). Os perfis
+marcados <Badge text="rascunho" variant="caution" /> têm `status: draft`: estão publicados, mas ainda podem mudar.
+
+<Aside title="Perfis aposentados (fora do mapeamento)">
+Quatro perfis da captura têm `status: retired` e não devem ser usados em envios novos:
+`BRResultadoExameLaboratorial-1.0`, `BRResultadoExameLaboratorial-1.1`, `BRResultadoExameLaboratorial-2.0` e
+`BRResultadoExameLaboratorial-TesteRapido-1.0`. Eles foram substituídos por `BRResultadoExameLaboratorial-3.2.1` e
+`BRResultadoExameLaboratorial-TesteRapido-01.01`.
+</Aside>
+
+## Indivíduo, profissional e estabelecimento
+
+| Perfil RNDS | Status | Recurso | BR Core 1.7.1 | Correspondência |
+|---|---|---|---|---|
+| `BRIndividuo-1.0` | ativo | `Patient` | `br-core-patient` | Direta |
+| `RNDSPaciente` | rascunho | `Patient` | `br-core-patient` | Direta (deriva do BR Core, sem restrições adicionais) |
+| `BRProfissional-1.0` | ativo | `Practitioner` | `br-core-practitioner` | Direta |
+| `RNDSProfissional` | ativo | `Practitioner` | `br-core-practitioner` | Direta |
+| `BRLotacaoProfissional-1.0` | ativo | `PractitionerRole` | `br-core-practitionerrole` | Direta |
+| `RNDSLotacaoProfissional` | ativo | `PractitionerRole` | `br-core-practitionerrole` | Direta |
+| `BREstabelecimentoSaude-1.0` | ativo | `Organization` | `br-core-organization` | Direta |
+| `RNDSEstabelecimentoSaude` | ativo | `Organization` | `br-core-organization` | Direta |
+| `BRPessoaJuridicaProfissionalLiberal-1.0` | ativo | `Organization` | `br-core-organization` (fatias `cnpj` e `cpf`) | Por analogia |
+| `BRLocalAtendimento-1.0` | rascunho | `Location` | `br-core-location` | Direta |
+
+### Diferenças-chave
+
+**Identificadores do paciente e do profissional (`BRIndividuo-1.0`, `BRProfissional-1.0` × BR Core).** Os dois perfis
+RNDS tipam `identifier` com o tipo de dado `BRDocumentoIndividuo-1.0`, em que `Identifier.system` é **proibido**
+(`0..0`) e o documento é identificado só por `type` (ValueSet `BRTipoDocumentoIndividuo-1.0`, obrigatório), com
+`use` e `value` obrigatórios e o órgão emissor em `assigner.display`. O BR Core faz o oposto: fatia `identifier` por
+`system`, que é obrigatório e fixo em cada fatia (`https://saude.gov.br/fhir/sid/cpf`, `.../cns`, `.../rne`,
+`http://hl7.org/fhir/sid/passport-BRA`). Ao converter, acrescente ou remova o `system` conforme o destino. Veja
+[Paciente](/fhir-ig/desenvolvimento/recursos/paciente/) e [Profissional](/fhir-ig/desenvolvimento/recursos/profissional/).
+
+**Sexo.** O BR Core vincula `Patient.gender` e `Practitioner.gender` ao ValueSet FHIR `administrative-gender`
+(`male`, `female`, `other`, `unknown`). Os perfis RNDS usam o ValueSet `BRSexo-1.0`, que enumera apenas `male`,
+`female` e `unknown`. Um `other` vindo do BR Core não tem representação no `BRIndividuo-1.0`: trate o caso na
+conversão (por exemplo, enviando `unknown` e registrando a identidade de gênero na extensão própria do BR Core, que
+não vai para a RNDS).
+
+**O que o `BRIndividuo-1.0` exige e proíbe a mais.** Obrigatórios: `active`, `birthDate`, `address.use`,
+`address.type`, a fatia `address.line:streetType` e a extensão `birthCountry` (`BRPais-1.0`). Proibidos:
+`maritalStatus`, `multipleBirth[x]`, `photo`, `contact`, `communication`, `generalPractitioner`,
+`managingOrganization` e `link`, todos permitidos no BR Core.
+
+**`RNDSProfissional` × `br-core-practitioner`.** Os dois fatiam `identifier` por `system`, mas os valores fixos
+diferem. O `RNDSProfissional` fixa `https://saude.gov.br/sid/cns`, `https://saude.gov.br/sid/cpf`,
+`https://saude.gov.br/sid/rms` e `https://saude.gov.br/sid/rqe` (sem o segmento `/fhir/`), enquanto o BR Core fixa
+`https://saude.gov.br/fhir/sid/cns` e `https://saude.gov.br/fhir/sid/cpf`. Os conselhos (CRM, CRF, CRO, COREN e
+outros) usam nos dois os ValueSets de sistemas do pacote de terminologia (`BRCRM`, `BRCRF`, `BRCRO`, `BRCOREN`,
+`BROutrosProfissionais`). Ao serializar para o `RNDSProfissional`, use exatamente o `system` que o perfil fixa.
+
+**Lotação (`BRLotacaoProfissional-1.0`, `RNDSLotacaoProfissional` × `br-core-practitionerrole`).** Os perfis RNDS
+vinculam `PractitionerRole.code` com força `required` ao ValueSet legado `BROcupacao-1.0` (CBO), e o
+`BRLotacaoProfissional-1.0` exige `period.start` e a extensão `BRAtendeSUS-1.0`. O
+`BRLotacaoProfissional-1.0` proíbe `identifier`, `specialty`, `location`, `healthcareService`, `telecom`,
+`availableTime`, `notAvailable`, `availabilityExceptions` e `endpoint`. O BR Core exige `period`, que o
+`RNDSLotacaoProfissional` deixa opcional. Veja [Lotação profissional](/fhir-ig/desenvolvimento/recursos/lotacao-profissional/).
+
+**Estabelecimento (`BREstabelecimentoSaude-1.0` × `br-core-organization`).** O BR Core exige `identifier` (com
+fatias `cnes`, `cpf`, `cnpj`, `dsei` e `poloBase`), `name`, `alias` e `address`. O `BREstabelecimentoSaude-1.0`
+**proíbe** `identifier`, `contact` e `endpoint`, e exige `active`, `type` (ValueSet `BRTipoEstabelecimentoSaude-1.0`),
+`alias`, `address`, `partOf` (a mantenedora, no perfil `BRPessoaJuridicaProfissionalLiberal-1.0`) e a extensão
+`BRAtendeSUS-1.0`. Na prática, os documentos da RNDS não enviam o recurso `Organization`: eles referenciam o
+estabelecimento pelo CNES em `Composition.author.identifier`. Veja
+[Estabelecimento](/fhir-ig/desenvolvimento/recursos/estabelecimento/).
+
+**`RNDSEstabelecimentoSaude` × `br-core-organization`.** O perfil exige a fatia `identifier:cnes` com `system` fixo
+`https://saude.gov.br/sid/cnes` (sem `/fhir/`), diferente do BR Core (`https://saude.gov.br/fhir/sid/cnes`). O BR Core
+exige `name`, `alias` e `address`, que o `RNDSEstabelecimentoSaude` deixa opcionais.
+
+**Pessoa jurídica ou profissional liberal.** O `BRPessoaJuridicaProfissionalLiberal-1.0` representa a mantenedora do
+estabelecimento e proíbe `identifier`, `telecom`, `address`, `partOf`, `contact` e `endpoint`; `type` é obrigatório e
+vinculado a `BRNaturezaJuridica-1.0`. No BR Core, a mantenedora é um `br-core-organization` com a fatia `cnpj` (ou
+`cpf`), referenciado em `Organization.partOf` do estabelecimento.
+
+**Local de atendimento (`BRLocalAtendimento-1.0`, rascunho).** Exige `mode` e proíbe quase todo o recurso
+(`identifier`, `type`, `address`, `position`, `managingOrganization`, `partOf`, entre outros). O `br-core-location`
+vincula `type` ao ValueSet `BRServicoEspecializado` e `physicalType` a `BRInstalacoesFisicas`.
+
+## Imunização
+
+| Perfil RNDS | Status | Recurso | BR Core 1.7.1 | Correspondência |
+|---|---|---|---|---|
+| `BRImunobiologicoAdministrado-3.0` | ativo | `Immunization` | `br-core-immunization` | Direta |
+| `BRImunobiologicoAdministrado-2.0` | ativo | `Immunization` | `br-core-immunization` | Direta |
+| `BRImunobiologicoAdministradoCampanha-2.0` | ativo | `Immunization` | `br-core-immunization` | Direta |
+| `BRImunobiologicoAdministradoCarga-2.0` | ativo | `Immunization` | `br-core-immunization` | Direta |
+| `BRRegistroImunobiologicoAdministradoRotina-2.0` | ativo | `Composition` | `br-core-composition` | Genérica |
+| `BRRegistroImunobiologicoAdministradoRotina-1.0` | ativo | `Composition` | `br-core-composition` | Genérica |
+| `BRRegistroImunobiologicoAdministradoCampanha-2.0` | ativo | `Composition` | `br-core-composition` | Genérica |
+| `BRRegistroImunobiologicoAdministradoCarga-2.0` | ativo | `Composition` | `br-core-composition` | Genérica |
+
+### Diferenças-chave
+
+**Terminologias: `required` na RNDS, `example` no BR Core.** No `BRImunobiologicoAdministrado-3.0`, `vaccineCode`,
+`site`, `route` e `protocolApplied.doseNumber[x]` têm binding `required` aos ValueSets legados
+`BRImunobiologico-1.0`, `BRLocalAplicacao-1.0`, `BRViaAdministracao-1.0` e `BRDose-1.0`. O `br-core-immunization`
+usa os ValueSets de mesmo conceito do pacote de terminologia (`BRImunobiologico`, `BRLocalAplicacao`,
+`BRViaAdministracao`, `BRDose`) com força `example`. Os códigos vêm da mesma tabela; o que muda é a URI do `system` (veja a
+[tabela de conversão](#conversão-de-uris-de-codesystem)).
+
+**Estratégia de vacinação.** Na RNDS ela vai na extensão `BREstrategiaVacinacao-1.0`, obrigatória em
+`protocolApplied`, e `reasonCode` é proibido. No BR Core, a estratégia vai em `Immunization.reasonCode`, com o
+ValueSet `BREstrategiaVacinacao`.
+
+**Extensões sem equivalente no BR Core.** `BRGrupoAtendimento` (1..1), `BRCondicaoMaternal` (obrigatória) e
+`BRContatoHanseniase` existem só na RNDS. O `br-core-immunization` proíbe `programEligibility` e `fundingSource`, e não
+define extensões para esses dados. Se precisar transportá-los numa troca BR Core, use as próprias extensões RNDS: o
+fatiamento de `Immunization.extension` não é fechado, e um receptor que não as conhece pode ignorá-las.
+
+**Pesquisa clínica.** `BREstrategiaVacinacaoPesquisa-1.0` (RNDS) e `br-core-pesquisaclinica` (BR Core) têm o mesmo
+contexto (`Immunization.protocolApplied`) e as mesmas três subextensões em texto (número do protocolo na Anvisa,
+versão do protocolo e número de registro da vacina). Troque apenas a URL da extensão.
+
+**Fabricante, local e profissional.** O `BRImunobiologicoAdministrado-3.0` informa `manufacturer` e `location` por
+`identifier` (`system` fixo `http://www.saude.gov.br/fhir/r4/CodeSystem/BRFabricantePNI` e
+`http://www.saude.gov.br/fhir/r4/CodeSystem/BRPais`, respectivamente) e `performer.actor` por referência a
+`BRProfissional-1.0`. O BR Core usa referências a `br-core-organization`, `br-core-location` e
+`br-core-practitioner`/`br-core-practitionerrole`/`br-core-organization`. `performer.function` é `0..1` na RNDS e
+`1..1` no BR Core (ValueSet `BROcupacao`, `extensible`).
+
+**Outras diferenças.** A RNDS fixa `status = completed` e proíbe `identifier` e `doseQuantity`. As versões
+`BRImunobiologicoAdministrado-2.0` e `Carga-2.0` também proíbem `location` e `reasonReference`; a
+`Campanha-2.0` proíbe ainda `site`, `route`, `reportOrigin` e `expirationDate`, que o BR Core exige em parte
+(`site` e `route` são `1..1` no BR Core).
+
+**Documento.** O BR Core não tem uma Composition específica de imunização. O documento RNDS é um Bundle `document`
+cuja Composition referencia o paciente por `subject.identifier` e o estabelecimento por `author.identifier`. Veja
+[Imunização](/fhir-ig/desenvolvimento/casos-de-uso/imunizacao/).
+
+## Exames laboratoriais
+
+| Perfil RNDS | Status | Recurso | BR Core 1.7.1 | Correspondência |
+|---|---|---|---|---|
+| `BRResultadoExameLaboratorial-3.2.1` | ativo | `Composition` | `br-core-composition` | Genérica |
+| `BRResultadoExameLaboratorial-TesteRapido-01.01` | ativo | `Composition` | `br-core-composition` | Genérica |
+| `BRDiagnosticoLaboratorioClinico-3.2.1` | ativo | `Observation` | `br-core-observation` (agrupado por `br-core-diagnosticreport`) | Direta |
+| `BRDiagnosticoCOVID19-TesteRapido-01.01` | ativo | `Observation` | `br-core-observation` | Direta |
+| `BRAmostraBiologica-1.0` | ativo | `Specimen` | `br-core-specimen` | Direta |
+
+### Diferenças-chave
+
+**O resultado como `Observation`.** O `BRDiagnosticoLaboratorioClinico-3.2.1` exige `category` (ValueSet
+`BRCategoriaExame-1.0`, `required`), `code` (`BRNomeExame-2.0`, `required`), `subject.identifier`, `effective[x]`,
+`issued`, `performer`, `value[x]`, `method`, `specimen` e `referenceRange`, e proíbe `identifier`, `basedOn`,
+`partOf`, `focus`, `encounter`, `dataAbsentReason`, `bodySite`, `device`, `hasMember`, `derivedFrom` e `component`. O
+`br-core-observation` deixa esses elementos opcionais, com `code` em binding `example`. No BR Core, um laudo com vários
+resultados é um `br-core-diagnosticreport` que agrupa as `Observation` em `result`; na RNDS, cada resultado vai
+direto na seção da Composition.
+
+**Teste rápido.** O `BRDiagnosticoCOVID19-TesteRapido-01.01` vincula `code` a `BRNomeExameTRCOVID19LOINC-1.0` e proíbe
+`category`, `issued`, `interpretation`, `method`, `specimen` e `referenceRange`.
+
+**Amostra.** O `BRAmostraBiologica-1.0` exige `type` (`BRTipoAmostra-1.0`) e proíbe quase todo o resto, inclusive
+`subject` e `collection`. O `br-core-specimen` usa o mesmo conceito (`BRTipoAmostra`, `required`) e, quando
+`collection` é informado, exige `collected[x]`, `quantity` e `method`.
+
+Veja [Exames laboratoriais](/fhir-ig/desenvolvimento/casos-de-uso/exames-laboratoriais/).
+
+## Regulação assistencial
+
+| Perfil RNDS | Status | Recurso | BR Core 1.7.1 | Correspondência |
+|---|---|---|---|---|
+| `BRRegulacaoAssistencial` | ativo | `Composition` | `br-core-composition` | Genérica |
+| `BRRequisicaoRegulacaoAssistencial` | ativo | `ServiceRequest` | `br-core-servicerequest` | Direta |
+| `BRAgendamentoRegulacaoAssistencial` | ativo | `Appointment` | `br-core-appointment` (e `br-core-schedule`/`br-core-slot` para a agenda) | Direta |
+
+### Diferenças-chave
+
+**Status e intenção próprios.** O `BRRequisicaoRegulacaoAssistencial` troca os ValueSets FHIR de `status` e `intent`
+pelos ValueSets RNDS `BRStatusRequisicaoRegulacaoAssistencial` e `BRIntencaoRegulacao`, ambos `required`. O mesmo
+vale para `Appointment.status` (`BRStatusAgendamentoRegulacaoAssistencial`). O BR Core usa `request-status`,
+`request-intent` e `appointmentstatus`. Mapeie os códigos explicitamente na conversão.
+
+**Classificação do pedido.** Na RNDS, `ServiceRequest.category` usa `BRModalidadeAssistencialMIRA`, `code` usa
+`BRProcedimentosNacionais-1.0` e `performerType` usa `BROcupacao-1.0`, todos `required`; `authoredOn` é obrigatório.
+O BR Core usa `BRCategoriaProcedimento` e `BRProcedimentosNacionais` como `example`.
+
+**Agendamento.** O `BRAgendamentoRegulacaoAssistencial` exige `serviceCategory`, `serviceType`, `appointmentType`,
+`basedOn`, `participant.type` e `participant.actor`, e proíbe `slot`, `priority`, `description`,
+`minutesDuration` e `requestedPeriod`, entre outros.
+
+Veja [Regulação assistencial](/fhir-ig/desenvolvimento/casos-de-uso/regulacao-assistencial/).
+
+## Medicamentos
+
+| Perfil RNDS | Status | Recurso | BR Core 1.7.1 | Correspondência |
+|---|---|---|---|---|
+| `RNDSPrescricaoMedicamento` | ativo | `MedicationRequest` | `br-core-medicationrequest` | Direta |
+| `BRPrescricaoMedicamento` | rascunho | `MedicationRequest` | `br-core-medicationrequest` | Direta |
+| `RNDSDispensacaoMedicamento` | ativo | `MedicationDispense` | `br-core-medicationdispense` | Direta |
+| `BRDispensacaoMedicamento` | rascunho | `MedicationDispense` | `br-core-medicationdispense` | Direta |
+| `RNDSMedicamento` | ativo | `Medication` | `br-core-medication` | Direta |
+| `BRMedicamento` | rascunho | `Medication` | `br-core-medication` | Direta |
+| `RNDSRegistroEletronicoPrescricaoMedicamentos` | ativo | `Composition` | `br-core-composition` | Genérica |
+| `BRRegistroPrescricaoMedicamento` | rascunho | `Composition` | `br-core-composition` | Genérica |
+| `RNDSRegistroEletronicoDispensacaoFornecimentoMedicamentos` | ativo | `Composition` | `br-core-composition` | Genérica |
+| `BRRegistroDispensacaoMedicamento` | rascunho | `Composition` | `br-core-composition` | Genérica |
+| `BREntregaSuprimentos` | ativo | `SupplyDelivery` | — | Sem equivalente: use o recurso base `SupplyDelivery` |
+| `BROrtesesProtesesMateriais` | ativo | `Device` | — | Sem equivalente: use o recurso base `Device` |
+
+### Diferenças-chave
+
+**Prescrição.** O `RNDSPrescricaoMedicamento` exige `groupIdentifier`, `subject.identifier` e `dosageInstruction`
+com `timing`, `route` e `doseAndRate`. O `br-core-medicationrequest` exige `dispenseRequest.validityPeriod` e proíbe
+`priority`. Em `reasonCode`, a RNDS usa `BRProblemaDiagnostico` (`preferred`) e o BR Core usa `BRCID10`
+(`example`).
+
+**Dispensação.** O `RNDSDispensacaoMedicamento` exige `identifier`, `authorizingPrescription` e `type`
+(`BRTipoDispensacaoRealizada`, `required`). O `br-core-medicationdispense` exige `category`, `quantity` e
+`receiver`. Na conversão RNDS → BR Core, esses três precisam vir do seu modelo interno.
+
+**Medicamento.** O `RNDSMedicamento` exige `code` (`BRTerminologiaMedicamento`, `required`) e vincula `form` a
+`BRUnidadeMedidaMedicamento`. O `br-core-medication` usa, como `example`, `medication-codes` para `code` e o ValueSet
+de formas farmacêuticas do IPS (`medicine-doseform`) para `form`.
+
+**Órteses, próteses e materiais.** `BREntregaSuprimentos` (`SupplyDelivery`) e `BROrtesesProtesesMateriais`
+(`Device`) não têm perfil no BR Core 1.7.1. Fora da RNDS, use os recursos base FHIR R4 com os mesmos códigos (CodeSystem
+`BROrtesesProtesesImplantaveis` do pacote de terminologia) e o paciente referenciado por um `br-core-patient`.
+
+Veja [Prescrição e dispensação](/fhir-ig/desenvolvimento/casos-de-uso/prescricao-e-dispensacao/).
+
+## Atendimento clínico
+
+| Perfil RNDS | Status | Recurso | BR Core 1.7.1 | Correspondência |
+|---|---|---|---|---|
+| `BRRegistroAtendimentoClinico` | rascunho | `Composition` | `br-core-registroatendimentoclinico` | Direta |
+| `BRContatoAssistencial-1.0` | ativo | `Encounter` | `br-core-encounter` | Direta |
+| `BRCondicaoSaude` | ativo | `Condition` | `br-core-condition` | Direta |
+| `BRProblemaDiagnostico` | rascunho | `Condition` | `br-core-condition` | Direta |
+| `BRCID10Avaliado-1.0` | rascunho | `Condition` | `br-core-condition` | Direta |
+| `BRCIAP2Avaliado-1.0` | rascunho | `Condition` | `br-core-condition` | Direta |
+| `BRRestricaoFuncionalIncapacidadeSaude-1.0` | rascunho | `Condition` | `br-core-capacidadefuncional` | Direta |
+| `BRProcedimentoRealizado-1.0` | ativo | `Procedure` | `br-core-procedure` | Direta |
+| `BRAlergiaReacaoAdversa-1.0` | rascunho | `AllergyIntolerance` | `br-core-allergyintolerance` | Direta |
+| `BRMedidaObservada` | rascunho | `Observation` | `br-core-vitalsigns` | Direta |
+| `BRObservacaoDescritiva-1.0` | rascunho | `Observation` | `br-core-observation` | Direta |
+| `BRPlanoCuidados-1.0` | rascunho | `CarePlan` | `br-core-careplan` | Direta |
+| `BRAtestado` | ativo | `CarePlan` | `br-core-careplan` | Por analogia (mesmo recurso, finalidade específica) |
+| `BRResumoEvolucaoClinica` | rascunho | `ClinicalImpression` | — | Sem equivalente: use o recurso base `ClinicalImpression` |
+
+### Diferenças-chave
+
+**`Encounter.class`.** O `BRContatoAssistencial-1.0` vincula `class` ao ValueSet `BRModalidadeAssistencial-1.0`
+(`required`). O `br-core-encounter` vincula ao ValueSet HL7 `v3-ActEncounterCode` (`extensible`). Os códigos são de
+sistemas diferentes: mantenha uma tabela de correspondência na camada de conversão. Também diferem `status`
+(`BREstadoContatoAssistencial-1.0` × `encounter-status`) e `priority` (`BRCaraterAtendimento-1.0`, `required`, ×
+`BRCaraterAtendimento`, `example`).
+
+**Cardinalidades do contato.** O `BRContatoAssistencial-1.0` exige `diagnosis` e `hospitalization`, e proíbe
+`identifier`, `statusHistory`, `classHistory`, `serviceType`, `episodeOfCare`, `basedOn`, `appointment`, `length`,
+`reasonCode` e `account`. O `br-core-encounter` exige `priority`, `period`, `serviceProvider` e, quando presentes,
+`participant.type`, `diagnosis.use`, `hospitalization.admitSource` e `hospitalization.dischargeDisposition`.
+
+**Diagnósticos.** Os perfis RNDS de `Condition` trocam `clinicalStatus` pelo ValueSet
+`BREstadoResolucaoDiagnosticoProblema-1.0` e `category` por `BRCategoriaDiagnostico` ou `BRCategoriaCondicao`,
+ambos `required`. O `BRCID10Avaliado-1.0` e o `BRCIAP2Avaliado-1.0` fixam o código em `BRCID10-1.0` e `BRCIAP2-1.0`.
+O `br-core-condition` mantém os ValueSets FHIR de `clinicalStatus` e `category` e usa `BRProblemaDiagnostico` como
+`example` para `code`.
+
+**Procedimentos.** O `BRProcedimentoRealizado-1.0` exige `performed[x]` e vincula `code` a
+`BRProcedimentosNacionais-1.0` (`required`). O `br-core-procedure` exige `performer`.
+
+**Alergias.** O `BRAlergiaReacaoAdversa-1.0` usa ValueSets RNDS para `verificationStatus`, `category` e
+`criticality`, no lugar dos ValueSets FHIR que o BR Core mantém. Converta os códigos explicitamente.
+
+**Medidas.** O `BRMedidaObservada` vincula `code` a `BRTipoObservacao-1.0` e proíbe `category`, `issued`,
+`performer` e `referenceRange`. O `br-core-vitalsigns` herda do perfil de sinais vitais do FHIR, exige `category`
+(`vital-signs`), `subject`, `effective[x]`, `issued` e `value[x]`, e vincula `code` ao ValueSet `BRSinaisVitais`.
+
+**Atestado.** O `BRAtestado` usa `CarePlan` com `status`, `intent` e `category` vinculados a ValueSets RNDS
+(`BREstadoAtestado`, `BRIntencaoAtestado`, `BRTipoAtestado`) e proíbe `description`, que o `br-core-careplan` exige.
+O BR Core não tem perfil específico de atestado.
+
+**Composition do atendimento.** O `BRRegistroAtendimentoClinico` deriva do `BRConjuntoMinimoDados-1.1`, fixa
+`type` em `RAC` (`BRTipoDocumento`) e organiza as seções `problemasDiagnosticosAvaliados` (obrigatória), `observacoes`,
+`alergiaReacaoAdversa`, `prescricao`, `planoCuidados`, `atestadoMedicoOdontologico` e `marcosDesenvolvimento`. O
+`br-core-registroatendimentoclinico` tem a seção obrigatória `diagnosticosAvaliados` e as opcionais
+`procedimentosRealizados`, `sinaisVitais`, `historiaObstetrica`, `aleitamentoMaterno`, `historiaSocial`,
+`alergiasIntolerancias`, `medicamentos`, `planoCuidados` e `capacidadeFuncional`.
+
+Veja [Atendimento clínico](/fhir-ig/desenvolvimento/casos-de-uso/atendimento-clinico/).
+
+## Sumário de alta
+
+| Perfil RNDS | Status | Recurso | BR Core 1.7.1 | Correspondência |
+|---|---|---|---|---|
+| `BRSumarioAlta` | rascunho | `Composition` | `br-core-sumarioalta` | Direta |
+
+### Diferenças-chave
+
+O `BRSumarioAlta` deriva do `BRConjuntoMinimoDados-1.1`. Ele exige `category` (`BRModalidadeAssistencial-1.0`),
+`subject` (por `identifier`) e `type.coding` (`BRTipoDocumento-1.0`), e proíbe `identifier`, `encounter`,
+`confidentiality`, `attester`, `custodian` e `event`. Suas seções são `informacoesContatoAssistencial`,
+`problemasDiagnosticosAvaliados`, `procedimentosRealizados`, `restricaoFuncionalIncapacidadeSaude`,
+`resumoEvolucaoClinica` (obrigatória), `alergiaReacaoAdversa`, `prescricaoAlta`, `planoCuidados` e
+`informacoesAdicionais`.
+
+O `br-core-sumarioalta` tem exatamente sete seções obrigatórias: `diagnosticosAdmissao`, `alergiasIntolerancias`,
+`diagnosticosAvaliados`, `procedimentosRealizados`, `prescricaoAlta`, `planoCuidados` e `capacidadeFuncional`. Uma
+seção sem conteúdo continua presente, com `emptyReason`. Veja
+[Sumário de alta](/fhir-ig/desenvolvimento/casos-de-uso/sumario-de-alta/).
+
+## Conjunto Mínimo de Dados e saúde suplementar (ANS)
+
+| Perfil RNDS | Status | Recurso | BR Core 1.7.1 | Correspondência |
+|---|---|---|---|---|
+| `BRConjuntoMinimoDados-1.1` | rascunho | `Composition` | `br-core-composition` | Genérica |
+| `BRConjuntoMinimoDadosANS-1.0.0` | ativo | `Composition` | `br-core-composition` | Genérica |
+| `BRContatoAssistencialANS-1.0.0` | ativo | `Encounter` | `br-core-encounter` | Direta |
+| `BRProblemaDiagnosticoANS` | rascunho | `Condition` | `br-core-condition` | Direta |
+| `BRProcedimentoRealizadoANS-1.0.0` | rascunho | `Procedure` | `br-core-procedure` | Direta |
+
+### Diferenças-chave
+
+Os perfis ANS repetem as regras dos perfis CMD correspondentes, com ValueSets próprios: o
+`BRProcedimentoRealizadoANS-1.0.0` vincula `code` a `BRProcedimentosANSeCarga` e o `BRContatoAssistencialANS-1.0.0`
+proíbe também `type`. O `BRConjuntoMinimoDadosANS-1.0.0` tem `author` restrito a `BRPessoaJuridicaProfissionalLiberal-1.0`
+e aceita paciente não identificado pela extensão `BRIndividuoNaoIdentificadoANS-1.0.0`. As diferenças de `Encounter`,
+`Condition` e `Procedure` em relação ao BR Core são as mesmas descritas em [Atendimento clínico](#atendimento-clínico).
+Veja [Conjunto Mínimo de Dados](/fhir-ig/desenvolvimento/casos-de-uso/conjunto-minimo-de-dados/).
+
+## Questionários
+
+| Perfil RNDS | Status | Recurso | BR Core 1.7.1 | Correspondência |
+|---|---|---|---|---|
+| `BRQuestionarioBase` | rascunho | `Questionnaire` | — | Sem equivalente: use o recurso base `Questionnaire` |
+| `BRQuestionarioResposta` | ativo | `QuestionnaireResponse` | — | Sem equivalente: use o recurso base `QuestionnaireResponse` |
+| `BRCodeSystemQuestionario` | ativo | `CodeSystem` | — | Sem equivalente: perfil de recurso de conformidade |
+| `BRValueSetQuestionario` | ativo | `ValueSet` | — | Sem equivalente: perfil de recurso de conformidade |
+
+O BR Core 1.7.1 não perfila questionários. Os quatro perfis RNDS sustentam, por exemplo, a seção
+`marcosDesenvolvimento` do `BRRegistroAtendimentoClinico`. Fora da RNDS, use `Questionnaire` e
+`QuestionnaireResponse` do FHIR R4 e referencie o paciente como `br-core-patient`.
+
+## Extensões
+
+| Extensão RNDS | Status | Contexto | Equivalente no BR Core 1.7.1 |
+|---|---|---|---|
+| `BRRacaCorEtnia-1.0` | ativo | `Patient` | `raca-br-ips` (raça/cor) + `povo-indigena-br-ips` (etnia), do IPS-BR, usadas pelo `br-core-patient` |
+| `BRPais-1.0` | ativo | `Patient` | Por analogia: `patient-birthPlace` (fatia `localNascimento`), em `valueAddress.country` |
+| `BRMunicipio-1.0` | ativo | `Patient` | Por analogia: `patient-birthPlace`, em `valueAddress.city`/`state`. A `br-core-address-municipio` só vale em `address` |
+| `BRNacionalidade` | ativo | `Patient` | Sem equivalente no BR Core: use a extensão FHIR `patient-nationality` |
+| `BRNaturalizacao-1.0` | ativo | `Patient` | Sem equivalente: use a extensão RNDS |
+| `BRParentesIndividuo-1.0` | ativo | `Patient` | Por analogia: `br-core-relatedperson` ou `Patient.contact` com `relationship` |
+| `BRIndividuoProtegido-1.0` | ativo | `Patient` | Sem equivalente em perfil (o modelo lógico `br-core-cadsus-ml` prevê o dado `dadosProtegidos`): use a extensão RNDS |
+| `BRQualidadeCadastroIndividuo-1.0` | ativo | `Patient` | Sem equivalente: use a extensão RNDS |
+| `BRJurisdicaoOrgaoEmissor-1.0` | ativo | `Patient.identifier` | Sem equivalente: use a extensão RNDS |
+| `BRIndividuoNaoIdentificado-1.0` | ativo | `Composition.subject` e outros | Sem equivalente: use a extensão RNDS |
+| `BRIndividuoNaoIdentificadoANS-1.0.0` | rascunho | `Composition.subject` e outros | Sem equivalente: use a extensão RNDS |
+| `BRAtendeSUS-1.0` | ativo | `Organization`, `PractitionerRole` | Sem equivalente: use a extensão RNDS |
+| `BRAdministradorTerceiro-1.0` | ativo | `Organization` | Sem equivalente: use a extensão RNDS (a `br-core-organization-memberof` representa vínculo, não administração terceirizada) |
+| `BROcupacao-1.0` | ativo | `Encounter.participant` | Por analogia: referencie um `br-core-practitionerrole`, cujo `code` é a CBO |
+| `BRIdentificacaoEquipe-1.0` | rascunho | `Encounter.participant`, `Procedure.performer` | Por analogia: `br-core-careteam` (rascunho), identificado pelo INE |
+| `BRResponsavelAtendimento` | rascunho | `Encounter.participant` | Por analogia: `Encounter.participant.type` (ValueSet `BRResponsabilidadeParticipante`) |
+| `BRFinanciamento-1.0` | rascunho | `Encounter.diagnosis.condition` | Sem equivalente: use a extensão RNDS |
+| `BRIndicadorPresencaAdmissao-1.0` | rascunho | `Encounter.reasonReference`, `Encounter.diagnosis.condition` | Sem equivalente: use a extensão RNDS |
+| `BROutrasInformacoes` | rascunho | `Encounter.hospitalization` | Sem equivalente: use a extensão RNDS |
+| `BREstadoResolucaoDiagnosticoProblema-1.0` | rascunho | `Condition` | Por analogia: `Condition.clinicalStatus` |
+| `BRGrupoAtendimento` | ativo | `Immunization` | Sem equivalente: use a extensão RNDS |
+| `BRCondicaoMaternal` | ativo | `Immunization` | Sem equivalente: use a extensão RNDS |
+| `BRContatoHanseniase` | ativo | `Immunization` | Sem equivalente: use a extensão RNDS |
+| `BREstrategiaVacinacao-1.0` | ativo | `Immunization.protocolApplied` | `Immunization.reasonCode` (ValueSet `BREstrategiaVacinacao`) |
+| `BREstrategiaVacinacaoPesquisa-1.0` | ativo | `Immunization.protocolApplied` | `br-core-pesquisaclinica` |
+| `BRIntervaloDoses` | rascunho | `MedicationRequest` | Por analogia: `dosageInstruction.timing.repeat` (`period` e `periodUnit`) |
+| `BRTurno` | rascunho | `MedicationRequest` | Por analogia: `dosageInstruction.timing.repeat.when` |
+| `BRDataPrescricao` | rascunho | `MedicationDispense` | Por analogia: `authoredOn` da prescrição referenciada em `authorizingPrescription` |
+| `BRValorMedicamento` | rascunho | `MedicationDispense` | Sem equivalente: use a extensão RNDS |
+| `BRCodigoSerialMedicamento` | rascunho | `Medication` | Por analogia: `Medication.identifier` |
+| `BRQuantidade-1.0` | rascunho | `Procedure` | Sem equivalente: use a extensão RNDS |
+| `BROrigemMedida` | rascunho | `Observation` | Sem equivalente: use a extensão RNDS |
+| `BRRoupasUsadasMedicao` | rascunho | `Observation` | Sem equivalente: use a extensão RNDS |
+| `BRPatogeno` | rascunho | `Observation` | Sem equivalente: use a extensão RNDS ou um `component` com o código do patógeno |
+
+"Use a extensão RNDS" significa: quando o dado precisa ir numa troca BR Core, envie a própria extensão RNDS (pela URL
+canônica `http://www.saude.gov.br/fhir/r4/StructureDefinition/...`). Os perfis do BR Core não fecham o fatiamento de
+`extension`, então o recurso continua válido, e um receptor que não conhece a extensão pode ignorá-la. As linhas "por
+analogia" indicam onde o FHIR ou o BR Core já têm lugar para o mesmo dado; confirme a semântica com o parceiro antes
+de converter.
+
+## Tipos de dados
+
+| Perfil RNDS | Status | Tipo | Equivalente no BR Core 1.7.1 |
+|---|---|---|---|
+| `BRDocumentoIndividuo-1.0` | ativo | `Identifier` | Fatias de `identifier` do `br-core-patient` e do `br-core-practitioner` (por `system`) |
+| `BRNomeIndividuo-1.0` | ativo | `HumanName` | `Patient.name`/`Practitioner.name` sem perfil de tipo |
+| `BREndereco-1.0` | ativo | `Address` | `address` com as extensões `br-core-address-municipio` e `br-core-address-aldeia` |
+| `BRMeioContato-1.0` | ativo | `ContactPoint` | `telecom` sem perfil de tipo |
+
+O ponto crítico é o `BRDocumentoIndividuo-1.0`: ele proíbe `Identifier.system`, enquanto o BR Core exige `system` em
+toda fatia. O BR Core 1.7.1 só define fatias para CPF, CNS, RNE e passaporte (paciente) e para CPF, CNS e conselhos
+(profissional). Documentos como RG, que o `BRTipoDocumentoIndividuo-1.0` aceita, não têm fatia nem `system` definido
+no BR Core: combine o `system` com o parceiro da troca antes de enviá-los.
+
+## Conversão de URIs de identificadores
+
+Os NamingSystems do pacote de terminologia registram, para cada identificador, a URI atual (usada pelo BR Core) e a
+URI legada (usada pela RNDS nas referências dos documentos). As duas apontam para o mesmo identificador.
+
+<IdentifierTable ids={['cpf', 'cns', 'cnes', 'cnpj', 'rne']} />
+
+Os registros de conselhos profissionais (`https://saude.gov.br/fhir/sid/crm-sp`, `.../coren-rj` e outros) não têm URI
+legada. Veja [Identificadores](/fhir-ig/desenvolvimento/identificadores/).
+
+## Conversão de URIs de CodeSystem
+
+A RNDS usa os CodeSystems com a URI legada `http://www.saude.gov.br/fhir/r4/CodeSystem/X`. O BR Core e o pacote de
+terminologia 1.1.0 usam `https://terminologia.saude.gov.br/fhir/CodeSystem/X`. A regra de conversão é sempre a mesma
+(trocar o prefixo), e o código não muda. A tabela abaixo foi gerada dos NamingSystems do pacote de terminologia, que
+declaram oficialmente as duas URIs. Três CodeSystems (`BRCID10`, `BRCIAP2` e `BRNomeExameLOINC`) também registram,
+como formas alternativas, o OID e a URI internacional da HL7 (`http://hl7.org/fhir/sid/icd-10`,
+`http://hl7.org/fhir/sid/icpc-2`, `http://loinc.org`).
+
+<Aside type="tip">
+A mesma regra vale para os ValueSets, com um cuidado: a RNDS acrescenta a versão ao nome
+(`http://www.saude.gov.br/fhir/r4/ValueSet/BROcupacao-1.0`), e o pacote de terminologia não
+(`https://terminologia.saude.gov.br/fhir/ValueSet/BROcupacao`). Os dois ValueSets não têm, necessariamente, o mesmo
+conteúdo: valide o código contra o ValueSet do perfil de destino.
+</Aside>
+
+| CodeSystem | URI legada (RNDS) | URI atual (terminologia) |
+|---|---|---|
+| `BRAlergenosCBARA` (BR Alérgenos CBARA) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRAlergenosCBARA` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRAlergenosCBARA` |
+| `BRAtendimentoPrestado` (Atendimento Prestado) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRAtendimentoPrestado` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRAtendimentoPrestado` |
+| `BRCategoriaDiagnostico` (Categoria do Diagnóstico) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCategoriaDiagnostico` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRCategoriaDiagnostico` |
+| `BRCBHPMTUSS` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBHPMTUSS` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBHPMTUSS` |
+| `BRCBO` (Classificação Brasileira de Ocupações - CBO) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO` |
+| `BRCIAP2` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCIAP2`<br />`2.16.840.1.113883.6.139`<br />`http://hl7.org/fhir/sid/icpc-2` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRCIAP2` |
+| `BRCID10` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCID10`<br />`2.16.840.1.113883.6.3`<br />`http://hl7.org/fhir/sid/icd-10` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10` |
+| `BRCondicaoMaternal` (Condição Maternal) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCondicaoMaternal` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRCondicaoMaternal` |
+| `BRDadoAusenteOuDesconhecido` (Classificação de dados ausentes ou desconhecidos - IPS) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRDadoAusenteOuDesconhecido` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRDadoAusenteOuDesconhecido` |
+| `BRDesfechoProcedimento` (Desfecho Procedimento) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRDesfechoProcedimento` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRDesfechoProcedimento` |
+| `BRDivisaoGeograficaBrasil` (Divisão Geográfica do Brasil) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRDivisaoGeograficaBrasil` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRDivisaoGeograficaBrasil` |
+| `BRDose` (Dose de Vacina) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRDose` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRDose` |
+| `BREstrategiaVacinacao` (Estratégia de Vacinação) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BREstrategiaVacinacao` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BREstrategiaVacinacao` |
+| `BREtniaIndigena` (Etnia Indígena) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BREtniaIndigena` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BREtniaIndigena` |
+| `BRFabricantePNI` (Fabricante do Imunobiológico) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRFabricantePNI` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRFabricantePNI` |
+| `BRFinanciamento` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRFinanciamento` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRFinanciamento` |
+| `BRFrequenciaUsoSubstancia` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRFrequenciaUsoSubstancia` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRFrequenciaUsoSubstancia` |
+| `BRGrupoAtendimento` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRGrupoAtendimento` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRGrupoAtendimento` |
+| `BRImunobiologico` (Imunobiológico) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRImunobiologico` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRImunobiologico` |
+| `BRInstalacoesFisicas` (Instalações Físicas) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRInstalacoesFisicas` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRInstalacoesFisicas` |
+| `BRJustificativaIndividuoNaoIdentificado` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRJustificativaIndividuoNaoIdentificado` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRJustificativaIndividuoNaoIdentificado` |
+| `BRLocalAfericao` (Local de Aferição) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRLocalAfericao` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRLocalAfericao` |
+| `BRLocalAplicacao` (Local de Aplicação) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRLocalAplicacao` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRLocalAplicacao` |
+| `BRLocalAtendimento` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRLocalAtendimento` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRLocalAtendimento` |
+| `BRMedDRA` (MedDRA) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedDRA` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRMedDRA` |
+| `BRMedicamento` (Medicamento) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedicamento` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRMedicamento` |
+| `BRModalidadeAssistencial` (Modalidade Assistencial) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeAssistencial` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRModalidadeAssistencial` |
+| `BRModalidadeFinanceira` (Modalidade Financeira) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeFinanceira` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRModalidadeFinanceira` |
+| `BRMotivoProcedimentoNaoRealizado` (Motivo Procedimento não Realizado) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRMotivoProcedimentoNaoRealizado` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRMotivoProcedimentoNaoRealizado` |
+| `BRNacionalidade` (Define a nacionalidade de um dado indivíduo.) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRNacionalidade` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRNacionalidade` |
+| `BRNomeExameGAL` (Exames do GAL) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRNomeExameGAL` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRNomeExameGAL` |
+| `BRNomeExameLOINC` (Exames LOINC) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRNomeExameLOINC`<br />`2.16.840.1.113883.6.1`<br />`http://loinc.org` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRNomeExameLOINC` |
+| `BRObmAMPP` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmAMPP` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmAMPP` |
+| `BRObmANVISA` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmANVISA` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmANVISA` |
+| `BRObmCATMAT` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmCATMAT` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmCATMAT` |
+| `BRObmEAN` (Terminologia de Produto Medicinal Virtual (VMP) na GS1.org) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmEAN` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmEAN` |
+| `BRObmVMP` (Produtos Medicinais Virtuais (VMPs)) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmVMP` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmVMP` |
+| `BRObmVTM` (Princípios Ativos Virtuais (VTMs)) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmVTM` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmVTM` |
+| `BROrgaoExpedidor` (Órgão Expedidor) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BROrgaoExpedidor` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BROrgaoExpedidor` |
+| `BRPais` (Países) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRPais` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRPais` |
+| `BRPapelProblemaDiagnostico` (Classificação do papel de um problema/diagnóstico) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRPapelProblemaDiagnostico` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRPapelProblemaDiagnostico` |
+| `BRParentesco` (Parentesco) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRParentesco` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRParentesco` |
+| `BRPosicaoIndividuo` (Posição do Indivíduo) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRPosicaoIndividuo` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRPosicaoIndividuo` |
+| `BRPovoItinerante` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRPovoItinerante` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRPovoItinerante` |
+| `BRPresenteAusente` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRPresenteAusente` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRPresenteAusente` |
+| `BRRacaCor` (Raça/Cor) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRRacaCor` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRRacaCor` |
+| `BRRegistroOrigem` (BR Registro de Origem) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRRegistroOrigem` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRRegistroOrigem` |
+| `BRResultadoQualitativoExame` (Resultado qualitativo do Exame) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRResultadoQualitativoExame` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRResultadoQualitativoExame` |
+| `BRServicoEspecializado` (Servico Especializado) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRServicoEspecializado` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRServicoEspecializado` |
+| `BRStatusAgendamentoRegulacaoAssistencial` (Status de agendamento de regulação assistencial.) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRStatusAgendamentoRegulacaoAssistencial` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRStatusAgendamentoRegulacaoAssistencial` |
+| `BRStatusRegulacaoAssistencial` (Status da regulação assistencial.) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRStatusRegulacaoAssistencial` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRStatusRegulacaoAssistencial` |
+| `BRSubgrupoTabelaSUS` (Subgrupo da Tabela SUS 1.1.0) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRSubgrupoTabelaSUS` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRSubgrupoTabelaSUS` |
+| `BRTabelaSUS` (Tabela de procedimentos, medicamentos e OPM do SUS) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS` |
+| `BRTerminologiaPatogeno` (Patógeno) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTerminologiaPatogeno` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTerminologiaPatogeno` |
+| `BRTerminologiaSuspeitaDiagnostica` (Terminologia para indicação de uma Suspeita Diagnóstica.) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTerminologiaSuspeitaDiagnostica` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTerminologiaSuspeitaDiagnostica` |
+| `BRTipoAleitamentoMaterno` (Tipo Aleitamento Materno) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoAleitamentoMaterno` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoAleitamentoMaterno` |
+| `BRTipoAmostraGAL` (Tipo de Amostra Biológica) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoAmostraGAL` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoAmostraGAL` |
+| `BRTipoDispensacaoRealizada` (Indica o tipo de dispensação que foi realizada) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDispensacaoRealizada` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoDispensacaoRealizada` |
+| `BRTipoDocumento` (Tipo de Documento) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDocumento` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoDocumento` |
+| `BRTipoEstabelecimentoSaude` (Tipo de Estabelecimento de Saúde) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoEstabelecimentoSaude` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoEstabelecimentoSaude` |
+| `BRTipoIdentificador` (Tipo de Identificador) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoIdentificador` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoIdentificador` |
+| `BRTipoLogradouro` (Tipo de Logradouro) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoLogradouro` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoLogradouro` |
+| `BRTipoObservacao` (Tipo de Observação) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoObservacao` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoObservacao` |
+| `BRTipoParticipante` (Tipo do Participante) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoParticipante` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoParticipante` |
+| `BRTipoResultadoAVIDEZ` (Tipo de Resultado AVIDEZ) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoAVIDEZ` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoAVIDEZ` |
+| `BRTipoResultadoDTNT` (Tipo de Resultado DTNT) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoDTNT` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoDTNT` |
+| `BRTipoResultadoHISPT` (Tipo de Resultado HISPT) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoHISPT` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoHISPT` |
+| `BRTipoResultadoPRAU` (Tipo de Resultado PRAU) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoPRAU` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoPRAU` |
+| `BRTipoResultadoPSNG` (Tipo de Resultado PSNG) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoPSNG` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoPSNG` |
+| `BRTipoResultadoRGNR` (Tipo de Resultado RGNR) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoRGNR` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoRGNR` |
+| `BRTipoResultadoRSBAC` (Tipo de Resultado RSBAC) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoRSBAC` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoRSBAC` |
+| `BRTipoResultadoRSCUL` (Tipo de Resultado RSCUL 1.0) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoRSCUL` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoResultadoRSCUL` |
+| `BRTipoSubstanciaUso` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoSubstanciaUso` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoSubstanciaUso` |
+| `BRTurno` (CodeSystem utilizado para definir o turno de um dia.) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTurno` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRTurno` |
+| `BRUnidadeMedida` (Unidade de Medida) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRUnidadeMedida` |
+| `BRUnidadeTempo` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeTempo` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRUnidadeTempo` |
+| `BRViaAdministracao` (Via de Administração) | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRViaAdministracao` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRViaAdministracao` |
+| `TipoConvenio` (Tipo de Convênio) | `http://www.saude.gov.br/fhir/r4/CodeSystem/TipoConvenio` | `https://terminologia.saude.gov.br/fhir/CodeSystem/TipoConvenio` |
+
+Seis CodeSystems do pacote de terminologia não têm URI legada, porque não existiam na RNDS: `BRConselhoProfissional`,
+`BRElegibilidadeImunobiologico`, `BRIBGE`, `BROrtesesProtesesImplantaveis`, `BRPopulacaoTradicional` e
+`BRProgramaSaude`.
+
+## Erros comuns
+
+- **Copiar o `meta.profile` de um formato para o outro.** Um recurso com `meta.profile` RNDS é validado contra as
+  regras RNDS, mesmo dentro de uma troca BR Core. Declare o perfil do destino.
+- **Converter só a URL do perfil.** Cardinalidades, ValueSets e a forma de identificar documentos mudam; aplique as
+  diferenças-chave do par.
+- **Usar a URI de CodeSystem do BR Core num envio à RNDS** (ou o contrário). O binding `required` dos perfis RNDS aponta
+  para os ValueSets legados, que usam os CodeSystems com a URI `http://www.saude.gov.br/fhir/r4/CodeSystem/...`.
+- **Esquecer de remover `Identifier.system`** ao gerar `BRIndividuo-1.0` ou `BRProfissional-1.0`.
+- **Usar um perfil aposentado.** Os perfis de resultado de exame `-1.0`, `-1.1`, `-2.0` e `TesteRapido-1.0` estão
+  `retired`.

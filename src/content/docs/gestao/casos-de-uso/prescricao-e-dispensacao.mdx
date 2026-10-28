@@ -1,0 +1,105 @@
+---
+title: Prescrição e dispensação
+description: Os registros eletrônicos de prescrição (REPM) e de dispensação ou fornecimento de medicamentos (REDFM) na RNDS, quem envia e como os prazos são definidos.
+sidebar:
+  order: 4
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+
+## O que é
+
+São dois registros ligados entre si:
+
+- **Registro Eletrônico da Prescrição de Medicamentos (REPM):** os medicamentos que um profissional habilitado
+  prescreveu a um paciente, com dose, via, frequência, duração e o motivo da prescrição.
+- **Registro Eletrônico de Dispensação ou Fornecimento de Medicamentos (REDFM):** a entrega do medicamento ao paciente,
+  seja a dispensação pelo farmacêutico, seja o fornecimento por outro profissional habilitado. Informa o que foi
+  entregue, a quantidade, o fabricante, o lote e a validade.
+
+Os dois foram instituídos na Rede Nacional de Dados em Saúde (RNDS) pela
+[Portaria GM/MS nº 6.100, de 17 de dezembro de 2024](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2024/prt6100_18_12_2024.html).
+Com eles, a farmácia pode localizar na RNDS a prescrição eletrônica do paciente, e o histórico de medicamentos passa a
+acompanhar o cidadão entre serviços.
+
+<Aside type="note" title="RPM e RDM">
+	O guia da RNDS ainda chama esses registros de RPM e RDM, siglas da
+	[Portaria SAES/MS nº 50/2022](https://bvsms.saude.gov.br/bvs/saudelegis/Saes/2022/prt0050_11_02_2022.html), que
+	instituiu a primeira versão dos modelos para medicamentos não sujeitos a controle especial. A Portaria GM/MS
+	nº 6.100/2024 é a norma atual, e os modelos de produção da RNDS seguem os nomes REPM e REDFM.
+</Aside>
+
+### O que cada registro contém
+
+Segundo a Portaria nº 6.100/2024, a **prescrição** contém no mínimo:
+
+- o paciente, pelo CPF ou pelo Cartão Nacional de Saúde (CNS), e o responsável, quando a lei exigir;
+- o prescritor, pelo CPF ou CNS, com sigla, UF e número do conselho profissional (ou o Registro Único do Ministério da
+  Saúde) e, quando exigido, o Registro de Qualificação de Especialista (RQE) e a especialidade;
+- o estabelecimento, pelo número do Cadastro Nacional de Estabelecimentos de Saúde (CNES), mesmo em atendimento por
+  telessaúde;
+- a data e a hora, e o motivo da prescrição pela CID ou pela CIAP;
+- o medicamento pela Ontologia Brasileira de Medicamentos (OBM), com via, dose, duração, frequência e orientações;
+- o número da receita no Sistema Nacional de Controle de Receituários (SNCR), para medicamento sujeito a controle
+  especial;
+- a assinatura eletrônica do prescritor.
+
+A **dispensação ou fornecimento** contém no mínimo o paciente, o estabelecimento (CNES), a data e a hora, o medicamento
+(OBM), a quantidade, o fabricante, o lote, a validade, o profissional responsável (com o registro no Conselho Regional
+de Farmácia, no caso do farmacêutico) e a sua ocupação (CBO), quem retirou ou comprou o medicamento e a assinatura
+eletrônica. Quando a prescrição está na RNDS, a dispensação aponta para ela. Quando não está, a dispensação repete os
+dados essenciais da prescrição. Atendimentos parciais ou recusados registram a justificativa.
+
+## Quem envia
+
+- **Prescrição:** o estabelecimento onde o profissional prescreveu, por meio do sistema de prontuário ou de prescrição
+  eletrônica.
+- **Dispensação ou fornecimento:** a farmácia ou o serviço que entregou o medicamento, por meio do seu sistema.
+
+A Portaria nº 6.100/2024 determina que as prescrições, dispensações e fornecimentos feitos **em meio eletrônico** em
+todo o território nacional sigam esses padrões e sejam enviados regularmente à RNDS.
+
+## Quando enviar e prazo
+
+A norma não fixa um prazo em horas ou dias. O art. 6º da Portaria nº 6.100/2024 diz que os prazos finais de implantação
+e de envio serão estabelecidos em **plano operativo pactuado de forma tripartite** (União, estados e municípios),
+depois que o Ministério da Saúde publicar os modelos de informação e computacionais no Portal de Serviços do
+Departamento de Informática do SUS (DATASUS).
+
+Na prática, envie a prescrição quando ela for assinada e a dispensação quando o medicamento for entregue. É isso que
+permite à farmácia encontrar a prescrição na RNDS.
+
+<Aside type="tip" title="Acompanhe a pactuação">
+	Como os prazos dependem do plano operativo, acompanhe as publicações da Comissão Intergestores Tripartite (CIT) e
+	do Portal de Serviços do DATASUS, e inclua os prazos no contrato com o fornecedor do sistema assim que forem
+	publicados.
+</Aside>
+
+## O que o estabelecimento precisa ter
+
+- **Sistema credenciado na RNDS**, homologado e com acesso à produção. Veja
+  [Adesão e credenciamento](/fhir-ig/gestao/adesao-e-credenciamento/).
+- **Cadastro no CNES atualizado** do estabelecimento prescritor ou dispensador.
+- **Profissionais cadastrados no CNES**, com CNS ou CPF, a ocupação (CBO) e o registro no conselho profissional
+  corretos.
+- **Assinatura eletrônica** dos profissionais que prescrevem e dispensam, exigida pela portaria.
+- **Catálogo de medicamentos codificado** pela OBM no sistema.
+- **Identificação do paciente** pelo CPF ou pelo CNS.
+
+## Modelos técnicos
+
+Os documentos de produção da RNDS que seguem a Portaria nº 6.100/2024:
+
+<ProfileHeader source="rnds" id="RNDSRegistroEletronicoPrescricaoMedicamentos" />
+<ProfileHeader source="rnds" id="RNDSRegistroEletronicoDispensacaoFornecimentoMedicamentos" />
+
+Os modelos anteriores, `BRRegistroPrescricaoMedicamento` e `BRRegistroDispensacaoMedicamento`, estão em rascunho no
+projeto da RNDS e não correspondem à norma atual.
+
+## Próximos passos
+
+<CardGrid>
+	<LinkCard title="Página técnica: Prescrição e dispensação" description="Perfis, regras e exemplo validado para a equipe de TI." href="/fhir-ig/desenvolvimento/casos-de-uso/prescricao-e-dispensacao/" />
+	<LinkCard title="Base legal e LGPD" description="Todas as normas da RNDS em um quadro." href="/fhir-ig/gestao/base-legal-e-lgpd/" />
+</CardGrid>

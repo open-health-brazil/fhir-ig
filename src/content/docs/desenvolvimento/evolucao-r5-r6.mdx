@@ -1,0 +1,165 @@
+---
+title: Evolução R5/R6
+description: Por que o BR Core e a RNDS usam FHIR R4 4.0.1, o que muda no R5 para os recursos usados no Brasil, o estado do R6 e como preparar o seu sistema.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Tudo o que este site documenta usa o HL7 FHIR R4, versão 4.0.1. A especificação já tem versões mais novas: o R5
+(5.0.0) está publicado, e o R6 está em votação. Esta página explica a situação de cada versão, o que muda nos
+recursos mais usados no Brasil e como escrever hoje um sistema que migre com menos esforço.
+
+## Por que R4 hoje
+
+Os artefatos brasileiros são todos R4 4.0.1:
+
+| Artefato | Versão FHIR declarada |
+|---|---|
+| BR Core 1.7.1 (`br.gov.saude.br-core.fhir`) | 4.0.1 |
+| Terminologia 1.1.0 (`br.gov.saude.terminologia.fhir`) | 4.0.1 |
+| IPS-BR 1.0.0 (`br.gov.saude.ips.fhir`) | 4.0.1 |
+| Perfis de produção da RNDS (captura de 28 de outubro de 2026) | 4.0.1 (92 perfis) e 4.0.0 (12 perfis) |
+
+Os serviços da RNDS também são versionados como R4 no próprio caminho: `/api/fhir/r4/...`, segundo o
+[guia da RNDS](https://rnds-guia.saude.gov.br/docs/rnds/servicos/).
+
+Há um motivo técnico para o R4 continuar sendo a base dos guias nacionais pelo mundo. Segundo o
+[histórico de versões do FHIR](https://hl7.org/fhir/history.html), o R4 foi a primeira versão com conteúdo normativo,
+enquanto o R5 (publicado em 26 de março de 2023) é uma versão *trial use* (STU). As regras de compatibilidade entre
+versões do FHIR só se aplicam a conteúdo normativo
+([Managing Multiple FHIR Versions](https://hl7.org/fhir/R5/versions.html)).
+
+Você não precisa fazer nada de diferente por causa do R5: implemente em R4 4.0.1, como pedem o BR Core e a RNDS.
+
+## O que muda no R5 nos recursos usados no Brasil
+
+A lista abaixo foi conferida na [página de diferenças R4 → R5](https://hl7.org/fhir/R5/diff.html) da especificação.
+Ela cobre as mudanças que afetam os perfis brasileiros, não todas as mudanças.
+
+### `Encounter`
+
+- `Encounter.class` passa de `Coding` (`1..1`) para `CodeableConcept` (`0..*`). No Brasil, isso afeta diretamente o
+  `br-core-encounter` (que usa `v3-ActEncounterCode`) e o `BRContatoAssistencial-1.0` (que usa
+  `BRModalidadeAssistencial-1.0`).
+- `Encounter.period` vira `Encounter.actualPeriod`, e surgem `plannedStartDate` e `plannedEndDate`.
+- `Encounter.hospitalization` é renomeado para `Encounter.admission`.
+- `Encounter.statusHistory` e `Encounter.classHistory` saem do recurso e vão para o novo recurso `EncounterHistory`.
+- `Encounter.reasonCode` é substituído por `Encounter.reason`.
+- Os códigos de `status` mudam: saem `arrived`, `triaged`, `onleave` e `finished`; entram `on-hold`, `discharged`,
+  `completed` e `discontinued`.
+
+### `Immunization`
+
+- `reasonCode` e `reasonReference` são substituídos por `reason`. No BR Core, é em `reasonCode` que vai a estratégia de
+  vacinação.
+- `education` é removido. O BR Core já o proíbe.
+- `protocolApplied.doseNumber[x]` vira `protocolApplied.doseNumber`.
+- `programEligibility` deixa de ser `CodeableConcept` e passa a ser um elemento com `program` e `programStatus`.
+
+### Medicamentos (`MedicationRequest`, `MedicationDispense`, `MedicationStatement`)
+
+- `medication[x]` (escolha entre `CodeableConcept` e `Reference(Medication)`) vira `medication`, do tipo
+  `CodeableReference`, que aceita código, referência ou os dois.
+- Em `MedicationRequest`, `reasonCode` é substituído por `reason`.
+- Em `MedicationDispense`, `context` é substituído por `encounter`, e `statusReason[x]` é removido.
+
+### `Observation`
+
+- Entra `Observation.triggeredBy`, para indicar a observação que motivou esta (com `observation` e `type`
+  obrigatórios).
+
+### `Patient` e `Practitioner`
+
+- Em `Patient`, `communication.language` passa a ter binding `required`.
+- Em `Practitioner`, `communication` deixa de ser `CodeableConcept` e passa a ser um elemento com `language`
+  (obrigatório) e `preferred`.
+
+### `Composition`
+
+- `Composition.confidentiality` e `Composition.event.code` são removidos.
+- `Composition.relatesTo` passa a ser do tipo `RelatedArtifact`. Isso afeta o fluxo de substituição de documentos da
+  RNDS, que usa `relatesTo.code = replaces`.
+- `Composition.attester.mode` passa a ser `CodeableConcept`.
+- `Composition.identifier` e `Composition.subject` passam a aceitar mais de um valor.
+- `Composition.status` ganha novos códigos (`registered`, `partial`, `corrected`, `appended`, `cancelled`,
+  `deprecated`, `unknown`).
+
+### `Bundle`
+
+- `Bundle.type` ganha `subscription-notification`.
+- `Bundle.link.relation` passa de `string` para `code`, com binding `required` às relações de link da IANA.
+- Entra `Bundle.issues`.
+
+### `Subscription` e tópicos
+
+- O R5 reformula as assinaturas: `Subscription.criteria` e `Subscription.channel` são removidos, `topic` passa a ser
+  obrigatório e entram `filterBy` e os recursos `SubscriptionTopic` e `SubscriptionStatus`.
+- Para usar esse modelo em R4, a HL7 publica o guia
+  [Subscriptions R5 Backport](https://hl7.org/fhir/uv/subscriptions-backport/) (`hl7.fhir.uv.subscriptions-backport`).
+  Nem o BR Core nem a RNDS usam assinaturas hoje.
+
+## O estado do R6
+
+Segundo a [lista de publicações do FHIR](https://hl7.org/fhir/package-list.json), consultada em 28 de outubro de 2026:
+
+- A versão oficial corrente continua sendo a **R5 (5.0.0)**.
+- O R6 ainda **não tem versão final**. A publicação mais recente é a `6.0.0-ballot5`, de 17 de julho de 2026, segundo
+  ciclo de votação completa do R6, acompanhada do `6.0.0-snapshot1` ("R6 Snapshot", setembro de 2026).
+- Segundo a [introdução do ballot](https://hl7.org/fhir/6.0.0-ballot5/ballot-intro.html), essa votação é normativa
+  para toda a especificação, e um novo ciclo de votação ainda vai acontecer antes da publicação final. A página não
+  dá data para a versão final.
+
+<Aside type="note">
+Não planeje migração para R6 com base em uma data de publicação. Acompanhe o
+[diretório de versões do FHIR](https://hl7.org/fhir/history.html) e, principalmente, as versões do BR Core e as
+comunicações da RNDS: são elas que definem quando o Brasil muda de versão.
+</Aside>
+
+## Como se preparar
+
+### Isole o FHIR numa camada de mapeamento
+
+A mesma estratégia que atende BR Core e RNDS ao mesmo tempo (um modelo interno e um serializador por destino,
+descrita em [Orientações de implementação](/fhir-ig/desenvolvimento/orientacoes-de-implementacao/#um-modelo-interno-duas-serializações))
+também resolve a troca de versão: quando surgir um BR Core em outra versão do FHIR, você escreve um novo serializador,
+sem mexer no modelo nem na regra de negócio.
+
+### Modele os conceitos que o R5 separou
+
+- Guarde o motivo de uma vacinação ou prescrição como uma lista de "código ou referência", não como dois campos
+  independentes. Isso se converte direto em `reason` (R5) e em `reasonCode`/`reasonReference` (R4).
+- Guarde o medicamento como "código, referência ou ambos", que é o `CodeableReference` do R5.
+- Guarde a modalidade do atendimento (`Encounter.class`) como conceito com sistema de códigos, não como um único
+  código fixo.
+- Guarde o histórico de status do atendimento separado do atendimento.
+
+### Evite elementos removidos no R5
+
+Se você tem escolha, não dependa de elementos que deixam de existir: `Immunization.education`,
+`Composition.confidentiality`, `Composition.event.code`, `Encounter.statusHistory`, `Encounter.classHistory` e
+`MedicationDispense.statusReason[x]`. Quando um perfil brasileiro exigir um deles, cumpra o perfil, mas não construa
+regra de negócio em cima.
+
+### Extensões entre versões
+
+O FHIR define uma URL de extensão para cada elemento de cada versão, no padrão
+`http://hl7.org/fhir/[versão]/StructureDefinition/extension-[caminho]`
+([Managing Multiple FHIR Versions](https://hl7.org/fhir/R5/versions.html)). Com isso, um sistema R4 pode carregar um
+dado que só existe no R5, por exemplo `http://hl7.org/fhir/5.0/StructureDefinition/extension-Observation.triggeredBy`.
+A especificação considera erro usar uma extensão entre versões na própria versão de origem.
+
+As definições dessas extensões estão publicadas no registro de pacotes FHIR:
+`hl7.fhir.uv.xver-r5.r4` ("Extensions for Using Data Elements from FHIR R5 in FHIR R4") e
+`hl7.fhir.xver-extensions`, que o validador HL7 carrega por padrão.
+
+Use extensões entre versões só em trocas bilaterais em que o parceiro concordou com elas. A RNDS valida contra os
+próprios perfis, e o BR Core não prevê essas extensões.
+
+## Erros comuns
+
+- **Implementar em R5 porque é a versão "atual".** O BR Core e a RNDS são R4 4.0.1. Um recurso R5 não é válido nos
+  perfis brasileiros.
+- **Misturar R4B com R4.** O R4B (4.3.0) é uma versão separada. Os pacotes brasileiros declaram 4.0.1.
+- **Tratar o R6 como publicado.** Até 28 de outubro de 2026, o R6 tem apenas versões de votação e snapshot.
+- **Copiar elementos R5 com o nome R5 em recursos R4** (por exemplo, `Encounter.actualPeriod`). O validador rejeita
+  elementos desconhecidos. Use a extensão entre versões ou o elemento R4 equivalente.

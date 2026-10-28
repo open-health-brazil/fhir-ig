@@ -1,0 +1,117 @@
+---
+title: Exames laboratoriais
+description: LOINC e as tabelas de exames da RNDS (nome do exame, amostra, resultado qualitativo e categoria) no BR Core e no resultado de exame laboratorial.
+sidebar:
+  order: 6
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+<TerminologyCard id="BRNomeExameLOINC" />
+
+## O que é
+
+O nome do exame laboratorial é codificado com o Logical Observation Identifiers Names and Codes (LOINC), a terminologia
+internacional para exames e observações. O código LOINC tem dígitos, hífen e um dígito verificador: `94507-1` é a pesquisa
+de anticorpos IgG contra SARS-CoV-2 em soro ou plasma por imunoensaio.
+
+No resultado de exame laboratorial (REL) da RNDS, o exame vem acompanhado de outras tabelas nacionais:
+
+| CodeSystem | Uso | Exemplo |
+|---|---|---|
+| `BRNomeExameLOINC` | Nome do exame, com códigos LOINC e descrição em português | `94507-1` |
+| `BRNomeExameGAL` | Nome do exame no Gerenciador de Ambiente Laboratorial (GAL), para exames sem código LOINC | `COVID` |
+| `BRTipoAmostraGAL` | Tipo de amostra biológica | `SGHEM` (sangue), `SWNAS` (swab nasal) |
+| `BRResultadoQualitativoExame` | Resultado qualitativo | `1` (detectável), `2` (não detectável), `3` (inconclusivo) |
+| `BRSubgrupoTabelaSUS` | Categoria do exame | `0202` (diagnóstico em laboratório clínico), `0214` (diagnóstico por teste rápido) |
+
+## Quem mantém e fonte oficial
+
+- **LOINC:** mantido pelo Regenstrief Institute, que publica a tabela completa e o navegador de códigos em
+  [loinc.org](https://loinc.org/).
+- **Tabelas da RNDS:** o Ministério da Saúde publica os CodeSystems legados no Simplifier.net, por exemplo
+  [`BRNomeExameLOINC`](https://fhir.simplifier.net/RedeNacionaldeDadosemSaude/CodeSystem/BRNomeExameLOINC) (296 códigos),
+  [`BRTipoAmostraGAL`](https://fhir.simplifier.net/RedeNacionaldeDadosemSaude/CodeSystem/BRTipoAmostraGAL) (51 códigos) e
+  [`BRResultadoQualitativoExame`](https://fhir.simplifier.net/RedeNacionaldeDadosemSaude/CodeSystem/BRResultadoQualitativoExame),
+  todos conferidos em 28 de outubro de 2026.
+
+O `BRNomeExameLOINC` é um recorte do LOINC com descrições em português. O código é o mesmo do LOINC internacional.
+
+## Onde é usado
+
+| Perfil | Elemento | Binding |
+|---|---|---|
+| RNDS `BRDiagnosticoLaboratorioClinico-3.2.1` | `Observation.code` | `BRNomeExame-2.0` (required): `BRNomeExameLOINC` e `BRNomeExameGAL`, URIs legadas |
+| RNDS `BRDiagnosticoLaboratorioClinico-3.2.1` | `Observation.category` | `BRCategoriaExame-1.0` (required): subgrupos da Tabela SUS |
+| RNDS `BRDiagnosticoLaboratorioClinico-3.2.1` | `Observation.value[x]` (qualitativo) | `BRResultadoQualitativoExame-2.0` (required) |
+| RNDS `BRAmostraBiologica-1.0` | `Specimen.type` | `BRTipoAmostra-1.0` (required): v2-0487 e `BRTipoAmostraGAL` |
+| `br-core-observation`, `br-core-diagnosticreport` | `code` | os exemplos oficiais usam `http://loinc.org` diretamente |
+| `br-core-specimen` | `Specimen.type` | `BRTipoAmostra` (required) |
+
+Veja o documento completo em [Exames laboratoriais](/fhir-ig/desenvolvimento/casos-de-uso/exames-laboratoriais/).
+
+## LOINC no BR Core e na RNDS
+
+| Destino | `system` do exame | Observação |
+|---|---|---|
+| BR Core | `http://loinc.org` | A URI internacional do LOINC, como nos exemplos oficiais do BR Core. |
+| RNDS | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRNomeExameLOINC` | O binding é `required` e não inclui `http://loinc.org`. |
+
+O NamingSystem `BRNomeExameLOINC` do pacote de terminologia registra `http://loinc.org` como URI alternativa. Para a RNDS,
+porém, use a URI que o ValueSet do perfil inclui.
+
+## Situação dos ValueSets
+
+- O ValueSet `BRNomeExameLOINC` do pacote 1.1.0 enumera 449 códigos, mais do que os 296 do CodeSystem legado da RNDS. Os
+  dois não coincidem. Para o REL, a lista que vale é a da RNDS.
+- O ValueSet `BRNomeExame` do pacote enumera 159 códigos com o system `http://loinc.org` e 2 do GAL.
+- Nenhuma das listas cobre todo o LOINC. No REL da RNDS, o binding `required` só aceita os códigos da lista da RNDS.
+  No BR Core, use o LOINC completo de [loinc.org](https://loinc.org/), com o `display` oficial do LOINC.
+
+<Aside type="tip">
+	Mantenha no seu sistema um mapeamento do código interno de cada exame para o LOINC, revisado pelo responsável técnico do
+	laboratório. A escolha do LOINC depende do analito, da amostra, do método e da escala, e um mapeamento errado muda o
+	significado do resultado.
+</Aside>
+
+## Exemplo de Coding
+
+<Tabs>
+	<TabItem label="RNDS (REL)">
+
+```json
+{
+  "coding": [
+    {
+      "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRNomeExameLOINC",
+      "code": "94507-1"
+    }
+  ]
+}
+```
+
+	</TabItem>
+	<TabItem label="BR Core">
+
+```json
+{
+  "coding": [
+    {
+      "system": "http://loinc.org",
+      "code": "94507-1"
+    }
+  ]
+}
+```
+
+	</TabItem>
+</Tabs>
+
+## Erros comuns
+
+- **Mandar `http://loinc.org` para a RNDS.** O binding do REL é `required` e só inclui as URIs legadas da RNDS.
+- **Mandar o código LOINC sem o dígito verificador** (`94507` em vez de `94507-1`).
+- **Usar o nome do exame do GAL quando há LOINC.** O `BRNomeExameGAL` existe para exames que não têm código no recorte
+  LOINC da RNDS.
+- **Confundir categoria com nome do exame.** A categoria é o subgrupo da Tabela SUS (`0202`), não o exame.

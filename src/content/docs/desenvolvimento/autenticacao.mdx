@@ -1,0 +1,300 @@
+---
+title: Autenticação
+description: Como obter e renovar o token de acesso da RNDS com o certificado ICP-Brasil e quais headers enviar em cada chamada aos serviços FHIR.
+---
+
+import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+A autenticação na RNDS tem duas etapas. Primeiro, o seu sistema obtém um token de acesso no serviço Auth, usando o
+certificado digital do estabelecimento como certificado de cliente TLS. Depois, envia esse token e o Cartão Nacional de
+Saúde (CNS) do profissional requisitante em headers de cada chamada aos serviços FHIR (EHR). As regras desta página vêm
+do [guia da RNDS](https://rnds-guia.saude.gov.br/docs/publico-alvo/ti/conhecer) e da sua
+[página de serviços](https://rnds-guia.saude.gov.br/docs/rnds/servicos).
+
+## O certificado digital
+
+Segundo o [guia da RNDS](https://rnds-guia.saude.gov.br/docs/publico-alvo/gestor/certificado):
+
+- o estabelecimento é reconhecido pela RNDS pelo **e-CNPJ** do próprio estabelecimento ou pelo **e-CPF** do seu gestor;
+- o certificado precisa ser **ICP-Brasil**;
+- ele pode ser do tipo **A1** (arquivo `.pfx` protegido por senha);
+- o certificado informado na solicitação de acesso **deve ser o mesmo** usado na autenticação. A RNDS identifica o
+  estabelecimento por ele.
+
+O A1 é um arquivo, e por isso funciona em servidores. O A3 fica em token ou cartão físico, o que dificulta o uso por um
+serviço que roda sem operador.
+
+<Aside type="tip" title="Como saber quais autoridades certificadoras o Auth aceita">
+	O servidor Auth informa, no handshake TLS, a lista de autoridades certificadoras aceitas para o certificado de cliente.
+	Para ver a lista, rode `openssl s_client -connect ehr-auth-hmg.saude.gov.br:443` e procure "Acceptable client
+	certificate CA names". Em 28 de outubro de 2026, a lista trazia autoridades da cadeia ICP-Brasil.
+</Aside>
+
+## Fluxo
+
+<Steps>
+
+1. **Obtenha o token.** Faça `GET https://<host-auth>/api/token` em uma conexão TLS com o certificado do estabelecimento
+   como certificado de cliente. É `GET`, não `POST`, e não leva corpo nem o header `Authorization`.
+
+2. **Leia a resposta.** Em caso de sucesso, a RNDS devolve um JSON como este (o guia mostra o mesmo formato):
+
+   ```json
+   {
+     "access_token": "eyJ... (sequência com mais de 2.000 caracteres)",
+     "scope": "read write",
+     "token_type": "jwt",
+     "expires_in": 1800000
+   }
+   ```
+
+3. **Guarde o token por até 30 minutos.** O guia diz que o token tem "validade por 30 minutos" e que deve ser reutilizado
+   nesse período. Note que o exemplo do guia traz `expires_in` igual a `1800000`, que corresponde a 30 minutos em
+   **milissegundos**, e não em segundos como no OAuth 2.0. Não multiplique esse valor por 1.000.
+
+4. **Chame os serviços EHR com dois headers.** Toda requisição ao endereço EHR leva:
+
+   | Header | Valor |
+   |---|---|
+   | `X-Authorization-Server` | `Bearer ` seguido do `access_token` (com um espaço depois de `Bearer`) |
+   | `Authorization` | CNS do profissional de saúde em nome do qual a requisição é feita |
+
+   As chamadas ao EHR **não** usam o certificado de cliente. Segundo o guia, o serviço de token "é o único serviço que usa
+   diretamente o certificado digital".
+
+5. **Renove antes de expirar.** Peça um novo token um pouco antes dos 30 minutos (por exemplo, com 1 minuto de folga).
+   Se uma chamada voltar com `EHR-ERR882`, descarte o token, obtenha outro e repita a chamada uma vez.
+
+</Steps>
+
+### Quem é o "requisitante"
+
+O header `Authorization` não leva um token: leva o CNS de um profissional de saúde. Segundo o guia, esse profissional
+precisa estar **lotado no estabelecimento** em questão. A RNDS confere esse vínculo: quando o profissional não tem vínculo
+com ocupação (CBO) autorizada nos estabelecimentos da credencial, ela devolve `EHR-ERR906`.
+
+Use o CNS do profissional responsável pelo registro sempre que o sistema souber quem é. Se o envio for automático (um
+lote noturno, por exemplo), defina com o gestor qual profissional lotado no estabelecimento responde pelo envio, e
+registre essa decisão.
+
+### Token para contexto de atendimento
+
+A [página de serviços do guia](https://rnds-guia.saude.gov.br/docs/rnds/servicos) lista também
+`POST /api/contexto-atendimento`, descrito como "Obtém token para contexto de atendimento". O guia não detalha o corpo
+da requisição nem a resposta desse serviço. Para enviar documentos, o token de `GET /api/token` é o que o guia descreve.
+Antes de usar o serviço de contexto de atendimento, consulte a coleção Postman oferecida pelo guia e o DATASUS.
+
+## Exemplos de código
+
+Os exemplos abaixo são **ilustrativos**. Eles usam o ambiente de homologação. Em produção, troque o host Auth por
+`ehr-auth.saude.gov.br` e o host EHR pelo da UF do estabelecimento (veja [Ambientes](/fhir-ig/desenvolvimento/ambientes/)).
+
+<Tabs>
+	<TabItem label="curl">
+
+O curl precisa do certificado e da chave em PEM. Converta o `.pfx` com o OpenSSL:
+
+```sh
+# Certificado (sem a chave)
+openssl pkcs12 -in certificado.pfx -clcerts -nokeys -out cert.pem
+# Chave privada (sem senha: proteja o arquivo)
+openssl pkcs12 -in certificado.pfx -nocerts -nodes -out key.pem
+chmod 600 key.pem
+```
+
+Se o OpenSSL 3 recusar o arquivo com um erro de algoritmo não suportado, o `.pfx` foi gerado com cifras antigas.
+Acrescente `-legacy` aos dois comandos.
+
+```sh
+# 1. Token (único passo com certificado de cliente)
+TOKEN=$(curl -sS --fail --cert cert.pem --key key.pem \
+  https://ehr-auth-hmg.saude.gov.br/api/token | jq -r .access_token)
+
+# 2. Consulta de estabelecimento pelo CNES
+curl -sS https://ehr-services.hmg.saude.gov.br/api/fhir/r4/Organization/2337991 \
+  -H "X-Authorization-Server: Bearer $TOKEN" \
+  -H "Authorization: 102345678900005"
+```
+
+	</TabItem>
+	<TabItem label="Node.js">
+
+Usa o pacote [`undici`](https://www.npmjs.com/package/undici) (`npm install undici`), que aceita o `.pfx` diretamente
+nas opções de conexão TLS.
+
+```js
+import { readFileSync } from 'node:fs';
+import { Agent, fetch } from 'undici';
+
+const AUTH_URL = 'https://ehr-auth-hmg.saude.gov.br/api/token';
+const EHR_URL = 'https://ehr-services.hmg.saude.gov.br/api/fhir/r4';
+
+// Certificado de cliente usado só na chamada ao serviço Auth.
+const authAgent = new Agent({
+  connect: {
+    pfx: readFileSync(process.env.RNDS_PFX_PATH),
+    passphrase: process.env.RNDS_PFX_PASSWORD,
+  },
+});
+
+let cache = { token: null, expiraEm: 0 };
+
+export async function obterToken() {
+  // Renova com 1 minuto de folga antes dos 30 minutos de validade.
+  if (cache.token && Date.now() < cache.expiraEm - 60_000) return cache.token;
+  const res = await fetch(AUTH_URL, { dispatcher: authAgent });
+  if (!res.ok) throw new Error(`Auth respondeu HTTP ${res.status}: ${await res.text()}`);
+  const { access_token } = await res.json();
+  cache = { token: access_token, expiraEm: Date.now() + 30 * 60_000 };
+  return access_token;
+}
+
+export async function enviarBundle(bundle, cnsRequisitante) {
+  return fetch(`${EHR_URL}/Bundle`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Authorization-Server': `Bearer ${await obterToken()}`,
+      Authorization: cnsRequisitante,
+    },
+    body: JSON.stringify(bundle),
+  });
+}
+```
+
+	</TabItem>
+	<TabItem label="Python">
+
+Usa o pacote `requests`, que recebe o certificado e a chave em PEM (converta o `.pfx` como no exemplo do curl).
+
+```python
+import time
+
+import requests
+
+AUTH_URL = "https://ehr-auth-hmg.saude.gov.br/api/token"
+EHR_URL = "https://ehr-services.hmg.saude.gov.br/api/fhir/r4"
+
+# PEM extraídos do PFX com openssl (veja o exemplo com curl).
+CERT = ("/caminho/seguro/cert.pem", "/caminho/seguro/key.pem")
+
+_cache = {"token": None, "expira_em": 0.0}
+
+
+def obter_token() -> str:
+    # Renova com 1 minuto de folga antes dos 30 minutos de validade.
+    if _cache["token"] and time.time() < _cache["expira_em"] - 60:
+        return _cache["token"]
+    resp = requests.get(AUTH_URL, cert=CERT, timeout=30)
+    resp.raise_for_status()
+    _cache["token"] = resp.json()["access_token"]
+    _cache["expira_em"] = time.time() + 30 * 60
+    return _cache["token"]
+
+
+def enviar_bundle(bundle: dict, cns_requisitante: str) -> requests.Response:
+    return requests.post(
+        f"{EHR_URL}/Bundle",
+        json=bundle,
+        headers={
+            "X-Authorization-Server": f"Bearer {obter_token()}",
+            "Authorization": cns_requisitante,
+        },
+        timeout=60,
+    )
+```
+
+	</TabItem>
+	<TabItem label="Java">
+
+Usa só a biblioteca padrão (Java 11 ou superior). O `.pfx` é lido como keystore PKCS12.
+
+```java
+import java.io.InputStream;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.security.KeyStore;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+
+public class RndsToken {
+    public static void main(String[] args) throws Exception {
+        char[] senha = System.getenv("RNDS_PFX_PASSWORD").toCharArray();
+
+        KeyStore keyStore = KeyStore.getInstance("PKCS12");
+        try (InputStream in = Files.newInputStream(Path.of(System.getenv("RNDS_PFX_PATH")))) {
+            keyStore.load(in, senha);
+        }
+        KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        kmf.init(keyStore, senha);
+
+        SSLContext ssl = SSLContext.getInstance("TLS");
+        ssl.init(kmf.getKeyManagers(), null, null); // null: usa o truststore padrão da JVM
+
+        HttpClient authClient = HttpClient.newBuilder().sslContext(ssl).build();
+        HttpRequest req = HttpRequest.newBuilder(URI.create("https://ehr-auth-hmg.saude.gov.br/api/token"))
+                .GET()
+                .build();
+        HttpResponse<String> resp = authClient.send(req, HttpResponse.BodyHandlers.ofString());
+        System.out.println(resp.statusCode());
+        System.out.println(resp.body()); // JSON com access_token, token_type, expires_in
+    }
+}
+```
+
+Se a JVM falhar com `PKIX path building failed`, ela não confia na autoridade que emitiu o certificado **do servidor**
+da RNDS. O [guia](https://rnds-guia.saude.gov.br/docs/publico-alvo/ti/autenticacao) explica como importar o certificado
+dessa autoridade no truststore com o `keytool`. A autoridade citada no guia é de 2020; descubra a atual com
+`openssl s_client -connect ehr-auth-hmg.saude.gov.br:443 -showcerts`.
+
+	</TabItem>
+</Tabs>
+
+## Segurança do certificado
+
+O certificado e a senha permitem enviar e consultar dados na RNDS em nome do estabelecimento. As recomendações abaixo
+são práticas de engenharia:
+
+- Guarde o `.pfx` e a senha em um cofre de segredos (por exemplo, o do seu provedor de nuvem), nunca no repositório nem
+  em imagem de contêiner.
+- Se precisar da chave em PEM sem senha (curl, Python), gere-a só no servidor que faz as chamadas, com permissão `600`.
+- Concentre a obtenção do token em um único componente. Os demais recebem só o token, que expira em 30 minutos.
+- Acompanhe a data de validade do certificado. Um A1 vencido interrompe o envio. Renove com antecedência e lembre que,
+  pelo guia, o certificado usado na autenticação precisa ser o mesmo informado na solicitação de acesso: combine a troca
+  com o gestor, que atualiza o cadastro no Portal de Serviços.
+- Nunca registre o `access_token` em log. Registre só o horário de emissão.
+
+## Erros comuns
+
+- **Certificado diferente do cadastrado.** O guia exige que o certificado da autenticação seja o mesmo informado na
+  solicitação de acesso. Um certificado renovado, de outro CNPJ ou de outro gestor não é reconhecido.
+- **Certificado fora da cadeia ICP-Brasil.** A RNDS só aceita certificados ICP-Brasil. Certificados autoassinados ou de
+  outras cadeias falham no handshake.
+- **Mandar o certificado de cliente para o EHR e esquecer os headers.** O guia define os dois headers como obrigatórios
+  em toda chamada ao EHR. O valor de `X-Authorization-Server` é `Bearer `, com espaço, seguido do token.
+- **Token expirado (`EHR-ERR882`).** Depois de 30 minutos, a RNDS responde HTTP 401 com um `OperationOutcome` como este,
+  reproduzido do [guia](https://rnds-guia.saude.gov.br/docs/publico-alvo/ti/erros):
+
+  ```json
+  {
+    "resourceType": "OperationOutcome",
+    "issue": [{
+      "severity": "error",
+      "code": "security",
+      "diagnostics": "(EHR-ERR882) O token de certificado usado para autorizar o acesso não é válido. JWT expired at 2020-08-19T23:54:28Z. Current time: 2020-08-20T11:00:27Z, a difference of 39959356 milliseconds. Allowed clock skew: 0 milliseconds."
+    }]
+  }
+  ```
+
+  A mensagem informa "Allowed clock skew: 0 milliseconds": a RNDS não tolera diferença de relógio. Mantenha o relógio do
+  servidor sincronizado (NTP) e renove o token com folga.
+- **CNS do requisitante ausente ou errado.** O header `Authorization` é obrigatório nas chamadas ao EHR e precisa ser o CNS
+  de um profissional lotado no estabelecimento. Um profissional sem vínculo autorizado gera `EHR-ERR906`.
+- **Tratar `expires_in` como segundos.** O valor de exemplo do guia (`1800000`) está em milissegundos. Lido como segundos,
+  ele daria 20 dias de validade, e o sistema continuaria usando um token vencido.
+- **Pedir um token por requisição.** Funciona, mas sobrecarrega o serviço Auth e deixa cada envio mais lento. Reaproveite
+  o token enquanto ele valer.

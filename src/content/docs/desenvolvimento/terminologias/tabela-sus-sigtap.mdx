@@ -1,0 +1,106 @@
+---
+title: Tabela SUS (SIGTAP)
+description: Como codificar procedimentos com a Tabela de Procedimentos, Medicamentos e OPM do SUS, com a fonte oficial no SIGTAP.
+sidebar:
+  order: 4
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+<TerminologyCard id="BRTabelaSUS" />
+
+## O que é
+
+A Tabela de Procedimentos, Medicamentos e Órteses, Próteses e Materiais Especiais (OPM) do SUS, conhecida como Tabela SUS
+ou Tabela Unificada, codifica os procedimentos que o SUS reconhece. O código do procedimento tem **10 dígitos**. Os dois
+primeiros indicam o grupo e os dois seguintes o subgrupo: `0301010064` (consulta médica em atenção primária) pertence ao
+subgrupo `0301` (consultas, atendimentos e acompanhamentos), e `0211020036` (eletrocardiograma) ao subgrupo `0211`
+(métodos diagnósticos em especialidades).
+
+O pacote de terminologia tem CodeSystems para os níveis da tabela:
+
+| CodeSystem | Nível | Exemplo |
+|---|---|---|
+| `BRTabelaSUS` | Procedimento (10 dígitos) | `0301010064` |
+| `BRSubgrupoTabelaSUS` | Grupo + subgrupo (4 dígitos) | `0202` (diagnóstico em laboratório clínico) |
+| `BRFormaOrganizacaoTabelaSUS` | Forma de organização | — |
+
+## Quem mantém e fonte oficial
+
+A tabela é mantida pelo Ministério da Saúde e publicada no
+[SIGTAP](http://sigtap.datasus.gov.br/tabela-unificada/app/sec/inicio.jsp) (Sistema de Gerenciamento da Tabela de
+Procedimentos, Medicamentos e OPM do SUS). O SIGTAP oferece consulta e download por competência (mês), e publica notas
+técnicas mensais com as inclusões, alterações e exclusões de procedimentos.
+
+Para os documentos da RNDS, a RNDS publica no Simplifier.net o CodeSystem legado
+[`http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS`](https://fhir.simplifier.net/RedeNacionaldeDadosemSaude/CodeSystem/BRTabelaSUS)
+(5.039 códigos em 28 de outubro de 2026). Como a tabela muda todo mês, o SIGTAP é a referência para saber se um
+procedimento está vigente na competência do atendimento.
+
+## Onde é usado
+
+| Perfil | Elemento | Binding |
+|---|---|---|
+| `br-core-procedure` | `Procedure.code` | exemplos oficiais usam `BRTabelaSUS` |
+| `br-core-servicerequest` | `ServiceRequest.code` | exemplos oficiais usam `BRTabelaSUS` |
+| `br-core-careplan` | `CarePlan.activity.detail.code` | `BRSubgrupoTabelaSUS` (required) |
+| RNDS `BRProcedimentoRealizado-1.0` | `Procedure.code` | `BRProcedimentosNacionais-1.0` (required): Tabela SUS ou CBHPM/TUSS, URIs legadas |
+| RNDS `BRDiagnosticoLaboratorioClinico-3.2.1` | `Observation.category` | `BRCategoriaExame-1.0` (required): subgrupos da Tabela SUS |
+
+## Situação dos ValueSets
+
+- O ValueSet `BRTabelaSUS` do pacote 1.1.0 inclui o CodeSystem inteiro, sem enumerar códigos. Como o CodeSystem é
+  `not-present`, o validador não confere nenhum código de procedimento. Outros ValueSets do pacote
+  (ofertas de cuidado integrado, as OCI, e dispositivos médicos) enumeram, juntos, 213 procedimentos.
+- O ValueSet `BRSubgrupoTabelaSUS` enumera 59 subgrupos. O CodeSystem legado da RNDS tem 66: faltam no pacote `0311`,
+  `0804` e os subgrupos do grupo `09`. Como o binding em `CarePlan.activity.detail.code` é `required`, um subgrupo que não
+  está no ValueSet gera erro de validação no BR Core.
+
+Como implementar corretamente: carregue a tabela do SIGTAP da competência vigente e valide o procedimento contra ela,
+considerando a data do atendimento. Para subgrupos, use os 4 primeiros dígitos do código do procedimento.
+
+## Exemplo de Coding
+
+<Tabs>
+	<TabItem label="BR Core">
+
+```json
+{
+  "coding": [
+    {
+      "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS",
+      "code": "0301010064",
+      "display": "Consulta médica em atenção primária"
+    }
+  ]
+}
+```
+
+	</TabItem>
+	<TabItem label="RNDS">
+
+```json
+{
+  "coding": [
+    {
+      "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS",
+      "code": "0301010064"
+    }
+  ]
+}
+```
+
+	</TabItem>
+</Tabs>
+
+## Erros comuns
+
+- **Escrever `BRSubGrupoTabelaSUS` (com G maiúsculo).** Alguns exemplos oficiais do BR Core 1.7.1 usam essa grafia, mas a
+  canônica do CodeSystem é `https://terminologia.saude.gov.br/fhir/CodeSystem/BRSubgrupoTabelaSUS`. URLs diferenciam
+  maiúsculas de minúsculas.
+- **Mandar o código com máscara** (`03.01.01.006-4`). O `code` leva só os 10 dígitos.
+- **Usar um procedimento que saiu da tabela.** Valide contra a competência da data do atendimento, não contra uma cópia
+  antiga.
+- **Usar código de 10 dígitos onde se espera subgrupo.** `CarePlan.activity.detail.code` e a categoria do exame na RNDS
+  usam o subgrupo (4 dígitos).

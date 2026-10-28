@@ -1,0 +1,91 @@
+---
+title: Imunização
+description: O registro de cada dose de vacina aplicada (RIA), quem envia, o prazo de 24 horas ou 15 dias e o que o estabelecimento precisa ter.
+sidebar:
+  order: 1
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+
+## O que é
+
+O Registro de Imunobiológico Administrado (RIA) é o registro de cada dose de vacina aplicada a um cidadão. Ele informa,
+entre outros dados, quem foi vacinado, qual vacina, qual dose, o lote, a data, o estabelecimento e o profissional que
+aplicou. "Imunobiológico" é o termo técnico que abrange vacinas, soros e imunoglobulinas.
+
+O conteúdo do RIA foi definido pela
+[Portaria Conjunta SAES/SVSA/SEIDIGI nº 25, de 27 de novembro de 2023](https://bvsms.saude.gov.br/bvs/saudelegis/Saes/2023/poc0025_30_11_2023.html),
+que institui o modelo de informação e atribui ao Departamento de Informática do SUS (DATASUS) a implantação técnica na
+Rede Nacional de Dados em Saúde (RNDS).
+
+Com o registro na RNDS, a dose aparece no histórico de vacinação do cidadão, que pode consultá-lo no aplicativo Meu SUS
+Digital, e fica disponível para outros serviços e para a vigilância.
+
+## Quem envia
+
+Todo estabelecimento de saúde que aplica vacinas, público ou privado, por meio do sistema que usa para registrar a
+vacinação. A [Portaria GM/MS nº 5.663, de 31 de outubro de 2024](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2024/prt5663_04_11_2024.html),
+incluiu o art. 312-A na Portaria de Consolidação nº 1/2017 e determinou que os sistemas de registro de vacinação do país
+enviem os dados das doses aplicadas **exclusivamente** à RNDS, conforme o modelo do RIA vigente.
+
+Isso vale para o sistema que o estabelecimento usar: um sistema público disponibilizado pelo Ministério da Saúde ou
+pela secretaria, ou um sistema próprio ou contratado. No segundo caso, o sistema precisa estar credenciado na RNDS.
+
+A mesma portaria descontinuou a integração pela antiga LEDI (o formato de integração com o e-SUS APS) para dados de
+vacinação. Se o seu sistema ainda envia vacinas por esse caminho, ele precisa migrar para a RNDS.
+
+## Quando enviar e prazo
+
+| Situação da sala de vacinação | Prazo para enviar à RNDS |
+|---|---|
+| Com conectividade (acesso à internet) | Em até **24 horas** |
+| Sem conectividade | Em até **15 dias** |
+
+Os prazos são da Portaria GM/MS nº 5.663/2024, que entrou em vigor 120 dias após a publicação.
+
+O ideal é que o sistema envie automaticamente logo após o registro da dose. Assim, uma falha de envio é percebida a
+tempo de ser corrigida dentro do prazo.
+
+### Rotina, campanha e registros anteriores
+
+A RNDS tem modelos diferentes conforme a situação da aplicação. O sistema escolhe o modelo certo, mas o gestor deve saber
+que eles existem:
+
+- **Rotina:** doses do calendário de vacinação.
+- **Campanha:** doses aplicadas em campanhas de vacinação.
+- **Carga:** registros de rotina transferidos da base do Sistema de Informação em Saúde para a Atenção Básica (SISAB)
+  para a RNDS.
+
+## O que o estabelecimento precisa ter
+
+- **Sistema credenciado na RNDS**, homologado e com acesso à produção. Veja
+  [Adesão e credenciamento](/fhir-ig/gestao/adesao-e-credenciamento/).
+- **Cadastro no CNES atualizado.** O número do Cadastro Nacional de Estabelecimentos de Saúde (CNES) identifica onde a
+  dose foi aplicada.
+- **Profissionais cadastrados no CNES**, com CNS ou CPF e a ocupação (CBO) corretos. O registro identifica o
+  vacinador.
+- **Identificação do cidadão** pelo CPF ou pelo Cartão Nacional de Saúde (CNS). Confira o documento na recepção ou na
+  sala de vacinação.
+- **Dados do imunobiológico** completos: vacina, dose, lote e fabricante, conferidos no momento da aplicação.
+- **Rotina de acompanhamento.** Alguém deve verificar diariamente se houve envios recusados pela RNDS e encaminhar a
+  correção.
+
+<Aside type="caution" title="Correções">
+	Um registro errado não se apaga. O sistema envia uma nova versão que substitui a anterior. Por isso, corrija o dado no
+	sistema do estabelecimento e peça à equipe de TI que reenvie, em vez de criar um novo registro de dose.
+</Aside>
+
+## Modelos técnicos
+
+Para referência da equipe de TI, estes são os modelos de produção da RNDS para a vacinação:
+
+<ProfileHeader source="rnds" id="BRRegistroImunobiologicoAdministradoRotina-2.0" />
+<ProfileHeader source="rnds" id="BRRegistroImunobiologicoAdministradoCampanha-2.0" />
+
+## Próximos passos
+
+<CardGrid>
+	<LinkCard title="Página técnica: Imunização" description="Perfis, regras e exemplo validado para a equipe de TI." href="/fhir-ig/desenvolvimento/casos-de-uso/imunizacao/" />
+	<LinkCard title="Adesão e credenciamento" description="Como credenciar o estabelecimento na RNDS." href="/fhir-ig/gestao/adesao-e-credenciamento/" />
+</CardGrid>

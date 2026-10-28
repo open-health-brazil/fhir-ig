@@ -1,0 +1,107 @@
+---
+title: Conselhos profissionais
+description: O CodeSystem BRConselhoProfissional e os ValueSets de conselhos regionais usados para identificar o registro profissional no BR Core e na RNDS.
+sidebar:
+  order: 7
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+<TerminologyCard id="BRConselhoProfissional" />
+
+## O que é
+
+O CodeSystem `BRConselhoProfissional` lista os conselhos regionais das profissões de saúde. Ele é diferente das outras
+tabelas em dois pontos:
+
+- **É o único CodeSystem completo do pacote de terminologia 1.1.0** (`content = complete`), com 197 conselhos. O validador
+  confere esses códigos sem servidor de terminologia.
+- **Os códigos são URIs.** Cada código é o `system` do registro naquele conselho, por exemplo
+  `https://saude.gov.br/fhir/sid/crm-sp`. O CodeSystem existe para que os perfis possam restringir, por binding, qual
+  `Identifier.system` é aceito em cada fatia de identificador.
+
+O status do CodeSystem e dos ValueSets de conselhos no pacote 1.1.0 é `draft` (rascunho).
+
+## Quem mantém e fonte oficial
+
+A lista é mantida pelo Ministério da Saúde no próprio pacote de terminologia, que é a fonte oficial dos códigos. Não há
+outra tabela a consultar: use o pacote. O número de inscrição de cada profissional, por sua vez, é emitido pelo conselho
+regional correspondente.
+
+## ValueSets
+
+| ValueSet | Conselhos | Códigos |
+|---|---|---|
+| `BRCRM` | Medicina | 27 |
+| `BRCOREN` | Enfermagem | 27 |
+| `BRCRF` | Farmácia | 27 |
+| `BRCRO` | Odontologia | 27 |
+| `BROutrosProfissionais` | Psicologia, Nutrição, Fisioterapia e Terapia Ocupacional, Fonoaudiologia, Serviço Social | 89 |
+
+A lista completa, por conselho, está em [Identificadores](/fhir-ig/desenvolvimento/identificadores/). As URIs dos ValueSets
+coincidem com as dos NamingSystems do pacote 1.1.0, inclusive para conselhos com jurisdição em várias UFs
+(`crefito-pa-am-to-rr-ap`, `crn-pa-ac-am-ap-ro-rr`).
+
+## Onde é usado
+
+| Perfil | Fatia de `identifier` | Binding em `identifier.system` | `type` |
+|---|---|---|---|
+| `br-core-practitioner` | `identificadorMedico` | `BRCRM` (required) | `MD` |
+| | `identificadorEnfermeiro` | `BRCOREN` | `RN` |
+| | `identificadorFarmaceutico` | `BRCRF` | `RPH` |
+| | `identificadorOdontologo` | `BRCRO` | `DDS` |
+| | `identificadorOutrosProfissionais` | `BROutrosProfissionais` (required) | `RI` |
+| RNDS `RNDSProfissional` | `crm`, `coren`, `crf`, `cro`, `identificadorOutrosProfissionais` | os mesmos ValueSets (required) | `MD`, `RN`, `RPH`, `DDS`, `LN` |
+
+O perfil `BRProfissional-1.0` da RNDS, mais antigo, não usa `system`: identifica o conselho pelo `type` (`MD`, `RN`, `DDS` ou
+códigos `BRACRF`, `BRACRP` etc. do `BRTipoIdentificador`) e a UF pela extensão `BRJurisdicaoOrgaoEmissor-1.0`. Veja
+[Identificadores](/fhir-ig/desenvolvimento/identificadores/).
+
+## Exemplo
+
+O conselho aparece como `system` do identificador, e não como `Coding`:
+
+<Tabs>
+	<TabItem label="BR Core">
+
+```json
+{
+  "use": "official",
+  "type": { "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "MD" }] },
+  "system": "https://saude.gov.br/fhir/sid/crm-sp",
+  "value": "100003-SP"
+}
+```
+
+O valor `100003-SP` segue o formato dos exemplos oficiais do BR Core. O perfil não fixa o formato do número.
+
+	</TabItem>
+	<TabItem label="Coding do conselho">
+
+Quando for preciso codificar o próprio conselho (por exemplo, em uma lista de conselhos de um cadastro), o código é a URI:
+
+```json
+{
+  "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRConselhoProfissional",
+  "code": "https://saude.gov.br/fhir/sid/crm-sp",
+  "display": "CRM-SP"
+}
+```
+
+	</TabItem>
+</Tabs>
+
+<Aside type="note">
+	Conselhos que não estão no CodeSystem (por exemplo, Biomedicina, Educação Física ou Medicina Veterinária) não têm `system`
+	no pacote 1.1.0. No BR Core, a fatia `identificadorOutrosProfissionais` só aceita os conselhos do ValueSet
+	`BROutrosProfissionais`. Como o `identifier` do `br-core-practitioner` é fatiado de forma aberta, informe esses registros
+	fora das fatias, com o `system` que o próprio conselho ou o seu cadastro definir.
+</Aside>
+
+## Erros comuns
+
+- **Escolher o conselho pela UF de atendimento.** O `system` é o do conselho que emitiu a inscrição.
+- **Colocar a URI do conselho em `Coding.system`.** A URI do conselho é o código; o system é o do CodeSystem
+  `BRConselhoProfissional`.
+- **Usar a sigla como código** (`CRM-SP`). A sigla é o `display`; o código é a URI completa.

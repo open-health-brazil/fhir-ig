@@ -1,0 +1,193 @@
+---
+title: Terminologias
+description: CodeSystems, ValueSets e NamingSystems brasileiros, canônicas novas e legadas, e como validar códigos quando o pacote oficial não traz a lista completa.
+sidebar:
+  order: 0
+---
+
+import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Documentos clínicos brasileiros usam tabelas nacionais: a Classificação Brasileira de Ocupações (CBO), a CID-10, a CIAP-2,
+a Tabela de Procedimentos do SUS (SIGTAP), os imunobiológicos do Programa Nacional de Imunizações, os municípios do IBGE.
+O Ministério da Saúde publica essas tabelas em FHIR no pacote de terminologia `br.gov.saude.terminologia.fhir`, versão
+1.1.0, com canônica `https://terminologia.saude.gov.br/fhir`. Esta seção explica como usar esse pacote e o que fazer
+onde ele não traz os códigos.
+
+## CodeSystem, ValueSet e NamingSystem
+
+| Artefato | O que é | Onde aparece no recurso | Exemplo |
+|---|---|---|---|
+| CodeSystem | A tabela de códigos em si, identificada por uma URL canônica | `Coding.system` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO` |
+| ValueSet | Um recorte de um ou mais CodeSystems, usado em bindings dos perfis | No `binding` do elemento (não aparece no recurso) | `https://terminologia.saude.gov.br/fhir/ValueSet/BROcupacao` |
+| NamingSystem | Registro de um sistema de códigos ou de identificadores, com suas URIs (preferida e legadas) | `Identifier.system` (para identificadores) | `https://saude.gov.br/fhir/sid/cpf` |
+
+O que você coloca no recurso é sempre o `system` do CodeSystem e o `code`. O ValueSet só diz quais códigos o perfil aceita
+naquele elemento, com uma força de binding (`required`, `extensible`, `preferred` ou `example`).
+
+## Canônicas novas e legadas
+
+Cada CodeSystem do pacote tem a canônica nova e, quase sempre, uma URI legada usada pelos perfis de produção da RNDS:
+
+| Uso | URI | Exemplo |
+|---|---|---|
+| BR Core e novas integrações | `https://terminologia.saude.gov.br/fhir/CodeSystem/<id>` | `https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10` |
+| Perfis de produção da RNDS | `http://www.saude.gov.br/fhir/r4/CodeSystem/<id>` | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCID10` |
+
+As duas URIs identificam a mesma tabela (o NamingSystem do pacote registra a legada como alternativa), mas um validador as
+trata como sistemas diferentes. Use a URI que o perfil de destino espera: a nova no BR Core, a legada nos documentos
+enviados à RNDS. O formato do código também pode mudar entre as duas publicações. A CID-10, por exemplo, tem ponto na
+publicação nova (`B34.2`) e não tem na legada (`B342`). Cada página desta seção mostra essas diferenças.
+
+## O pacote não traz os códigos da maioria das tabelas
+
+Dos 92 CodeSystems do pacote 1.1.0, **91 têm `content = not-present`**: o CodeSystem define a URL, mas não lista os códigos.
+O único completo é o `BRConselhoProfissional`. Os códigos aparecem, quando aparecem, enumerados dentro dos ValueSets, e
+muitas vezes de forma parcial:
+
+- `BROcupacao` enumera 1.000 das 2.714 ocupações da CBO, e a CID-10 em `BRCID10` também para em 1.000 códigos. O limite
+  redondo indica uma exportação truncada.
+- `BRMunicipio` traz só regiões e UFs, com São Paulo como `34` em vez de `35`.
+- `BRTabelaSUS` inclui o CodeSystem inteiro sem enumerar nada; como o CodeSystem não tem códigos, nenhum código pode ser
+  conferido.
+
+Por isso, o ValueSet do pacote **não é** a fonte de verdade dos códigos. A fonte é a tabela oficial de quem mantém cada
+classificação, indicada em cada página desta seção.
+
+## Como validar códigos na prática
+
+Não há servidor de terminologia público brasileiro verificado que responda `$validate-code` para essas tabelas. O
+validador HL7 roda, neste projeto, com `-tx n/a` (sem servidor). Nessa configuração, um código de CodeSystem
+`not-present` gera só um aviso ("could not be found, so the code cannot be validated"). Um código errado passa.
+
+A validação, então, é responsabilidade do seu sistema:
+
+1. **Carregue a tabela oficial no seu banco.** Use a fonte indicada em cada página (CBO do Ministério do Trabalho e Emprego,
+   SIGTAP, IBGE etc.) e atualize-a no ritmo de publicação da fonte.
+2. **Valide o código na entrada do dado,** no cadastro ou no prontuário, e não só na hora do envio.
+3. **Para os documentos da RNDS, use também os CodeSystems legados completos.** A RNDS publica no Simplifier.net os
+   CodeSystems de produção, com os códigos, em
+   `https://fhir.simplifier.net/RedeNacionaldeDadosemSaude/CodeSystem/<id>` (por exemplo,
+   [BRCBO](https://fhir.simplifier.net/RedeNacionaldeDadosemSaude/CodeSystem/BRCBO), com 2.714 códigos, conferido em 28 de
+   outubro de 2026). O [guia da RNDS](https://rnds-guia.saude.gov.br/docs/rnds/definicoes) aponta o Simplifier.net como
+   local de publicação das definições.
+4. **Rode o validador HL7 com os perfis** para pegar erros de estrutura, cardinalidade e system errado, sabendo que ele não
+   confere os códigos dessas tabelas.
+
+<Aside type="caution" title="Binding required com CodeSystem vazio">
+	Quando o binding é `required` e o ValueSet enumera códigos (como `BRMunicipio`), o validador recusa um `system` que
+	não esteja no ValueSet, mesmo que o código esteja certo. Cada página indica o `system` que passa na validação.
+</Aside>
+
+## Tabelas desta seção
+
+<CardGrid>
+	<LinkCard title="CBO" description="Ocupações (Ministério do Trabalho e Emprego)" href="/fhir-ig/desenvolvimento/terminologias/cbo/" />
+	<LinkCard title="CID-10" description="Diagnósticos (OMS, publicação do DATASUS)" href="/fhir-ig/desenvolvimento/terminologias/cid-10/" />
+	<LinkCard title="CIAP-2" description="Motivos de consulta e problemas na atenção primária" href="/fhir-ig/desenvolvimento/terminologias/ciap-2/" />
+	<LinkCard title="Tabela SUS (SIGTAP)" description="Procedimentos, medicamentos e OPM do SUS" href="/fhir-ig/desenvolvimento/terminologias/tabela-sus-sigtap/" />
+	<LinkCard title="Imunobiológicos" description="Vacinas e soros do PNI" href="/fhir-ig/desenvolvimento/terminologias/imunobiologicos/" />
+	<LinkCard title="Exames laboratoriais" description="LOINC e as tabelas de exames da RNDS" href="/fhir-ig/desenvolvimento/terminologias/exames-laboratoriais/" />
+	<LinkCard title="Conselhos profissionais" description="CRM, COREN, CRF, CRO e demais conselhos" href="/fhir-ig/desenvolvimento/terminologias/conselhos-profissionais/" />
+	<LinkCard title="Municípios e países" description="Códigos do IBGE e tabela de países" href="/fhir-ig/desenvolvimento/terminologias/municipios-e-paises/" />
+</CardGrid>
+
+## Todos os CodeSystems do pacote 1.1.0
+
+A canônica de cada um é `https://terminologia.saude.gov.br/fhir/CodeSystem/<id>`. A coluna do meio mostra quantos códigos
+distintos os ValueSets do pacote enumeram para aquele CodeSystem (é o máximo que um validador consegue conferir sem
+servidor de terminologia). A tabela foi gerada a partir do pacote.
+
+| CodeSystem | Códigos enumerados nos ValueSets | URI legada (RNDS) |
+|---|---|---|
+| `BRAlergenosCBARA` | 1 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRAlergenosCBARA` |
+| `BRAtendimentoPrestado` | 7 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRAtendimentoPrestado` |
+| `BRBaseLegalLGPD` | 10 | — |
+| `BRCaraterAtendimento` | 7 | — |
+| `BRCategoriaDiagnostico` | 2 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCategoriaDiagnostico` |
+| `BRCBHPMTUSS` | nenhum | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBHPMTUSS` |
+| `BRCBO` | 1000 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO` |
+| `BRCIAP2` | 686 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCIAP2`<br/>`http://hl7.org/fhir/sid/icpc-2` |
+| `BRCID10` | 2039 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCID10`<br/>`http://hl7.org/fhir/sid/icd-10` |
+| `BRConclusaoColposcopia` | 5 | — |
+| `BRcondicao-amostra` | nenhum | — |
+| `BRCondicaoMaternal` | 3 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRCondicaoMaternal` |
+| `BRCondutaColposcopia` | 6 | — |
+| `BRCondutaTeleconsultoria` | 5 | — |
+| `BRConselhoProfissional` | 197 (CodeSystem completo) | — |
+| `BRDadoAusenteOuDesconhecido` | 2 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRDadoAusenteOuDesconhecido` |
+| `BRDesfechoProcedimento` | 4 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRDesfechoProcedimento` |
+| `BRDireitoTitularDados` | 9 | — |
+| `BRDivisaoGeograficaBrasil` | 33 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRDivisaoGeograficaBrasil` |
+| `BRDose` | 82 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRDose` |
+| `BRElegibilidadeImunobiologico` | 2 | — |
+| `BREstadoCivil` | nenhum | — |
+| `BREstrategiaVacinacao` | 13 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BREstrategiaVacinacao` |
+| `BREtniaIndigena` | 399 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BREtniaIndigena` |
+| `BRExameHPVCEPHEID` | 2 | — |
+| `BRFabricantePNI` | 81 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRFabricantePNI` |
+| `BRFinalidadeTratamentoDados` | 6 | — |
+| `BRFormaOrganizacaoTabelaSUS` | nenhum (ValueSet inclui o CodeSystem inteiro) | — |
+| `BRHPVInterpretacao` | 11 | — |
+| `BRIBGE` | nenhum | — |
+| `BRIdentidadeGenero` | nenhum | — |
+| `BRImunobiologico` | 111 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRImunobiologico` |
+| `BRInstalacoesFisicas` | 43 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRInstalacoesFisicas` |
+| `BRJustificativaIndividuoNaoIdentificado` | 6 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRJustificativaIndividuoNaoIdentificado` |
+| `BRLocalAfericao` | 10 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRLocalAfericao` |
+| `BRLocalAplicacao` | 24 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRLocalAplicacao` |
+| `BRMedDRA` | 28 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedDRA` |
+| `BRMedicamento` | 908 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRMedicamento` |
+| `BRModalidadeAssistencial` | 9 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeAssistencial` |
+| `BRModalidadeFinanceira` | 2 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeFinanceira` |
+| `BRModalidadeTelessaude` | 8 | — |
+| `BRMotivoDesfecho` | 10 | — |
+| `BRMotivoProcedimentoNaoRealizado` | 7 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRMotivoProcedimentoNaoRealizado` |
+| `BRMotivoRealizacaoExame` | 7 | — |
+| `BRMotivoTeleconsultoria` | 4 | — |
+| `BRNomeExameGAL` | 2 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRNomeExameGAL` |
+| `BRNomeExameLOINC` | 449 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRNomeExameLOINC`<br/>`http://loinc.org` |
+| `BRObmAMPP` | nenhum | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmAMPP` |
+| `BRObmANVISA` | nenhum | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmANVISA` |
+| `BRObmCATMAT` | 1000 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmCATMAT` |
+| `BRObmEAN` | nenhum | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmEAN` |
+| `BRObmVMP` | nenhum | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmVMP` |
+| `BRObmVTM` | nenhum | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmVTM` |
+| `BROrgaoExpedidor` | 42 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BROrgaoExpedidor` |
+| `BROrtesesProtesesImplantaveis` | 25 | — |
+| `BRPais` | 345 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRPais` |
+| `BRParentesco` | 2 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRParentesco` |
+| `BRPopulacaoTradicional` | 28 | — |
+| `BRPosicaoIndividuo` | 5 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRPosicaoIndividuo` |
+| `BRPovoItinerante` | 7 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRPovoItinerante` |
+| `BRProcedencia` | 5 | — |
+| `BRProgramaSaude` | 76 | — |
+| `BRRacaCor` | 6 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRRacaCor` |
+| `BRRegistroOrigem` | 2 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRRegistroOrigem` |
+| `BRResponsabilidadeParticipante` | 5 | — |
+| `BRResultadoQualitativoExame` | 3 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRResultadoQualitativoExame` |
+| `BRServicoEspecializado` | 71 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRServicoEspecializado` |
+| `BRSubgrupoTabelaSUS` | 59 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRSubgrupoTabelaSUS` |
+| `BRTabelaSUS` | 213 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS` |
+| `BRTerminologiaPatogeno` | 7 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTerminologiaPatogeno` |
+| `BRTipoAleitamentoMaterno` | 5 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoAleitamentoMaterno` |
+| `BRTipoAmostraGAL` | 48 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoAmostraGAL` |
+| `BRTipoDadoPessoalLGPD` | 3 | — |
+| `BRTipoDeficiencia` | 5 | — |
+| `BRTipoDocumento` | 9 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDocumento` |
+| `BRTipoEstabelecimentoSaude` | 39 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoEstabelecimentoSaude` |
+| `BRTipoIdentificador` | 28 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoIdentificador` |
+| `BRTipoLogradouro` | 2 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoLogradouro` |
+| `BRTipoObservacao` | 9 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoObservacao` |
+| `BRTipoParticipante` | 4 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoParticipante` |
+| `BRTipoResultadoAVIDEZ` | 3 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoAVIDEZ` |
+| `BRTipoResultadoDTNT` | 3 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoDTNT` |
+| `BRTipoResultadoHISPT` | 3 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoHISPT` |
+| `BRTipoResultadoPRAU` | 3 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoPRAU` |
+| `BRTipoResultadoPSNG` | 3 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoPSNG` |
+| `BRTipoResultadoRGNR` | 3 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoRGNR` |
+| `BRTipoResultadoRSBAC` | 3 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoRSBAC` |
+| `BRTipoResultadoRSCUL` | 3 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoRSCUL` |
+| `BRTipoTeleconsultoria` | 2 | — |
+| `BRUnidadeMedida` | 76 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida` |
+| `BRViaAdministracao` | 70 | `http://www.saude.gov.br/fhir/r4/CodeSystem/BRViaAdministracao` |
+| `TipoConvenio` | 5 | `http://www.saude.gov.br/fhir/r4/CodeSystem/TipoConvenio` |

@@ -1,0 +1,131 @@
+---
+title: Como contribuir
+description: Como relatar erros, sugerir conteúdo, rodar o projeto localmente, adicionar exemplos validados e enviar pull requests ao Interop Saúde BR.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+O Interop Saúde BR é aberto a contribuições de quem implementa, gerencia ou estuda interoperabilidade em saúde no
+Brasil. Esta página explica como relatar um problema, como propor uma mudança e como rodar o projeto na sua máquina.
+
+Antes de escrever conteúdo, leia o [guia de estilo](https://github.com/open-health-brazil/fhir-ig/blob/main/GUIA-DE-ESTILO.md)
+e o [CONTRIBUTING.md](https://github.com/open-health-brazil/fhir-ig/blob/main/CONTRIBUTING.md) do repositório.
+
+## Abrir uma issue
+
+Use as [issues do repositório](https://github.com/open-health-brazil/fhir-ig/issues) para dois tipos de pedido:
+
+- **Erro de conteúdo.** Algo no site está errado ou desatualizado: um código, uma cardinalidade, um link, um passo do
+  credenciamento, um exemplo que não valida. Informe a página, o trecho e a fonte que mostra o valor correto (link para
+  o pacote, o guia da RNDS ou a portaria).
+- **Sugestão.** Um tema que falta, um caso de uso, um exemplo, uma explicação que poderia ser mais clara. Diga quem
+  se beneficia (gestor ou desenvolvedor) e, se souber, onde está a fonte oficial.
+
+### Requisitos regulatórios: só com fonte
+
+O site não afirma obrigação, prazo, portaria, endpoint ou fluxo operacional sem fonte primária verificada (gov.br,
+Biblioteca Virtual em Saúde, Planalto, guia da RNDS, HL7 Brasil). Se você sabe de uma regra, mas não encontrou a fonte
+publicada:
+
+1. abra a issue mesmo assim, descrevendo o que sabe e onde ouviu;
+2. peça o rótulo `pendente-verificacao`.
+
+Itens com esse rótulo não entram no site até que alguém encontre e cite a fonte. Isso vale também para pull requests:
+um PR que afirma requisito regulatório sem link para a fonte não é aceito.
+
+## Fluxo de pull request
+
+<Steps>
+
+1. Faça um fork do repositório e crie uma branch a partir de `main`.
+
+2. Faça a mudança. Altere só o que o pedido exige e siga o guia de estilo (português do Brasil, segunda pessoa, termos
+   FHIR em código, distinção explícita entre BR Core e RNDS).
+
+3. Se mudou exemplos, rode `npm run fhir:validate` e confirme **zero erros**.
+
+4. Rode `npm run dev` e confira as páginas alteradas no navegador.
+
+5. Faça commits no padrão [Conventional Commits](https://www.conventionalcommits.org/), com a mensagem em inglês:
+
+   ```text
+   docs: add CBO lookup guidance to professional page
+   fix: correct CNS use code in patient example
+   feat: add regulation use case example
+   chore: update pinned FHIR packages
+   ```
+
+6. Abra o pull request contra `main`, descrevendo o que mudou, por quê e qual é a fonte. A integração contínua valida os
+   exemplos e gera o site, incluindo a checagem de links internos. Os dois precisam passar.
+
+</Steps>
+
+## Rodar localmente
+
+Você precisa do Node.js 22.18 ou mais recente. Para validar exemplos, também de Java ou Docker.
+
+```sh
+git clone https://github.com/open-health-brazil/fhir-ig.git
+cd fhir-ig
+npm install
+npm run dev
+```
+
+O site sobe em `http://localhost:4321/fhir-ig/`.
+
+| Comando | O que faz |
+|---|---|
+| `npm install` | Instala as dependências. |
+| `npm run dev` | Sobe o servidor de desenvolvimento com recarga automática. |
+| `npm run fhir:update` | Baixa os pacotes fixados em `fhir-packages.json` (BR Core, terminologia, IPS-BR) e regenera `src/data/generated/`. |
+| `npm run fhir:validate` | Valida os exemplos de `examples/` com o validador oficial da HL7 (Java local ou Docker). |
+| `npm run fhir:vendor-rnds` | Captura de novo os perfis da RNDS do Simplifier para `vendor/rnds/`. |
+| `npm run fhir:check-updates` | Mostra se algum publicador marcou uma versão nova como corrente. |
+
+<Aside type="caution">
+Não edite os arquivos de `src/data/generated/` à mão. Eles são sobrescritos por `npm run fhir:generate`. Para mudar
+uma versão de pacote, edite `fhir-packages.json` e rode `npm run fhir:update`.
+</Aside>
+
+Depois de `npm run fhir:vendor-rnds`, rode `npm run fhir:generate` e revise o diff de `vendor/rnds/` e de
+`src/data/generated/`: perfis novos, alterados ou aposentados precisam de entrada no
+[changelog](/fhir-ig/sobre/changelog/) e, às vezes, de mudanças nas páginas.
+
+## Adicionar um exemplo
+
+<Steps>
+
+1. Crie o arquivo JSON:
+   - formato BR Core: `examples/<dominio>/<nome>.json`, com `meta.profile` na canônica
+     `https://br-core.saude.gov.br/fhir/StructureDefinition/...`;
+   - formato de produção da RNDS: `examples/rnds/<dominio>/<nome>.json`, normalmente um `Bundle` do tipo `document`
+     com `meta.profile` nas canônicas `http://www.saude.gov.br/fhir/r4/StructureDefinition/...`.
+
+2. Use somente dados fictícios. CPF e CNS precisam ter dígitos verificadores válidos, e nomes e endereços devem ser
+   obviamente fictícios ("Rua Fictícia"). Reaproveite os identificadores que outros exemplos já usam, para manter a
+   coerência entre páginas.
+
+3. Valide só o seu arquivo, para ir mais rápido:
+
+   ```sh
+   sh scripts/validate-examples.sh examples/<dominio>/<nome>.json
+   ```
+
+   A meta é zero erros. Avisos de CodeSystem não encontrado, de narrativa (`dom-6`) e de binding `extensible` são
+   aceitos. Veja o motivo em
+   [Orientações de implementação](/fhir-ig/desenvolvimento/orientacoes-de-implementacao/#validar-localmente).
+
+4. Inclua o exemplo na página com o componente `FhirExample`, usando o caminho relativo a `examples/`:
+
+   ```mdx
+   <FhirExample file="<dominio>/<nome>.json" />
+   ```
+
+</Steps>
+
+Não crie exemplos para perfis RNDS com `status: retired`. Para perfis em `draft`, deixe o status claro na página.
+
+## Licença das contribuições
+
+Ao contribuir, você concorda que a sua contribuição seja publicada sob a mesma licença do projeto,
+[CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/deed.pt-br). Veja [O projeto](/fhir-ig/sobre/).

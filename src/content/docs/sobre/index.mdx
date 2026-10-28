@@ -1,0 +1,128 @@
+---
+title: O projeto
+description: O que é o Interop Saúde BR, como o conteúdo é produzido e mantido, quais versões dos artefatos oficiais ele usa e sob qual licença é publicado.
+---
+
+import { Aside, Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import meta from '../../../data/generated/meta.json';
+
+O Interop Saúde BR é uma documentação aberta sobre interoperabilidade em saúde no Brasil com HL7 FHIR. Ele reúne em um
+só lugar o que um gestor precisa saber para aderir à Rede Nacional de Dados em Saúde (RNDS) e o que um desenvolvedor
+precisa para produzir dados no padrão do BR Core e enviar documentos válidos à RNDS.
+
+## Natureza do projeto
+
+Este site é uma **proposta comunitária, independente e não oficial**. Ele não é mantido pelo Ministério da Saúde nem
+pelo Departamento de Informática do SUS (DATASUS), e não substitui as publicações oficiais. Em caso de divergência,
+prevalecem:
+
+- o [BR Core](https://hl7.org.br/fhir/core/), o guia de perfis FHIR do Brasil;
+- o [guia da RNDS](https://rnds-guia.saude.gov.br/) e os perfis publicados no
+  [projeto da RNDS no Simplifier](https://simplifier.net/redenacionaldedadosemsaude);
+- as portarias do Ministério da Saúde, citadas com link em cada página que trata de obrigações.
+
+A intenção dos mantenedores é propor este material ao Ministério da Saúde como base para uma documentação unificada,
+mantida de forma aberta. Por isso o conteúdo segue regras estritas: nenhuma obrigação regulatória é afirmada sem fonte
+primária, e as páginas técnicas sempre distinguem o que vale para o BR Core do que vale para a RNDS.
+
+## Como o conteúdo é produzido
+
+<CardGrid>
+	<Card title="Dados gerados dos pacotes oficiais" icon="seti:json">
+		As tabelas de perfis, identificadores e terminologias são geradas automaticamente a partir dos pacotes FHIR
+		oficiais e da captura dos perfis da RNDS. Nada é digitado à mão.
+	</Card>
+	<Card title="Exemplos validados" icon="approve-check">
+		Todo exemplo JSON do site passa pelo validador oficial da HL7, contra o BR Core e os perfis de produção da RNDS,
+		a cada alteração. Um exemplo com erro bloqueia a publicação.
+	</Card>
+	<Card title="Atualização semanal" icon="rocket">
+		Toda segunda-feira, um job automático verifica se saiu versão nova do BR Core ou da terminologia e, se saiu,
+		abre um pull request com os dados regenerados.
+	</Card>
+	<Card title="Fontes citadas" icon="open-book">
+		Afirmações regulatórias e operacionais (portarias, prazos, endpoints, fluxos) só entram com link para a fonte
+		primária: gov.br, Biblioteca Virtual em Saúde, Planalto, guia da RNDS ou HL7 Brasil.
+	</Card>
+</CardGrid>
+
+### O fluxo de dados
+
+1. O script `npm run fhir:fetch` baixa os pacotes fixados em `fhir-packages.json` (BR Core, terminologia e IPS-BR)
+   dos sites dos publicadores, porque eles não estão no registro público de pacotes FHIR.
+2. Os perfis da RNDS, que não são publicados como pacote, são capturados da API FHIR do Simplifier por
+   `npm run fhir:vendor-rnds` e versionados no repositório, em `vendor/rnds/`.
+3. O script `npm run fhir:generate` transforma os pacotes e a captura nos arquivos JSON de `src/data/generated/`, que
+   alimentam as tabelas do site.
+4. O script `npm run fhir:validate` valida todos os exemplos de `examples/` com o validador HL7.
+
+### A atualização automática
+
+O workflow
+[`update-packages.yml`](https://github.com/open-health-brazil/fhir-ig/blob/main/.github/workflows/update-packages.yml)
+roda toda segunda-feira às 6h (horário de Brasília) e também pode ser disparado à mão. Ele:
+
+1. compara as versões fixadas com a versão que cada publicador marca como corrente (`current`) na sua lista de
+   pacotes, e não com a versão mais alta listada;
+2. só atualiza quando o tarball da nova versão está de fato disponível para download;
+3. regenera os dados e abre um pull request com a lista de mudanças e os avisos do gerador.
+
+Antes do merge, um mantenedor revisa o diff dos dados gerados, confere a validação dos exemplos, revisa as páginas
+afetadas e registra a mudança no [changelog](/fhir-ig/sobre/changelog/).
+
+A captura dos perfis da RNDS não é automática: ela é feita sob demanda, porque a RNDS não publica versões numeradas
+dos seus perfis.
+
+## Versões em uso
+
+Versão do FHIR: **{meta.fhirVersion}** (R4).
+
+<table>
+	<thead>
+		<tr>
+			<th>Pacote</th>
+			<th>Versão</th>
+		</tr>
+	</thead>
+	<tbody>
+		{meta.packages.map((p) => (
+			<tr>
+				<td><code>{p.id}</code></td>
+				<td>{p.version}</td>
+			</tr>
+		))}
+		<tr>
+			<td>Perfis da RNDS (captura do Simplifier)</td>
+			<td>{meta.rnds.count} perfis, capturados em {meta.rnds.capturedAt}</td>
+		</tr>
+	</tbody>
+</table>
+
+<Aside type="note" title="Terminologia 1.1.0 no lugar da 1.2.0">
+O BR Core 1.7.1 declara dependência da terminologia 1.2.0, que não foi publicada. O projeto usa a 1.1.0, a versão
+corrente. Veja como reproduzir isso em
+[Orientações de implementação](/fhir-ig/desenvolvimento/orientacoes-de-implementacao/#a-dependência-de-terminologia-120).
+</Aside>
+
+## Licença
+
+O conteúdo produzido por este projeto (textos, exemplos e código) é dedicado ao domínio público sob a
+[CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/deed.pt-br). Você pode copiar, adaptar e
+republicar sem pedir autorização, inclusive para fins comerciais e inclusive como base de uma documentação oficial.
+
+Os artefatos de terceiros mantêm as licenças e os termos de uso dos seus publicadores:
+
+- o BR Core, a terminologia e o IPS-BR são publicados pelos seus autores sob CC0 (campo `license` de cada pacote);
+- os perfis da RNDS copiados em `vendor/rnds/` são do Ministério da Saúde e continuam sob os termos do publicador
+  original, no [projeto da RNDS no Simplifier](https://simplifier.net/redenacionaldedadosemsaude). A CC0 deste
+  projeto não se aplica a eles.
+
+## Repositório
+
+O código-fonte, os exemplos e o histórico de mudanças estão em
+[github.com/open-health-brazil/fhir-ig](https://github.com/open-health-brazil/fhir-ig).
+
+<CardGrid>
+	<LinkCard title="Como contribuir" description="Abrir issues, propor mudanças e rodar o projeto localmente." href="/fhir-ig/sobre/como-contribuir/" />
+	<LinkCard title="Changelog" description="O que mudou em cada versão do conteúdo e dos pacotes." href="/fhir-ig/sobre/changelog/" />
+</CardGrid>

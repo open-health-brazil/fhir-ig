@@ -1,0 +1,109 @@
+---
+title: Imunobiológicos
+description: Tabela de imunobiológicos (vacinas, soros e imunoglobulinas) usada no RIA da RNDS e no BR Core, com a fonte oficial e os códigos que faltam no pacote.
+sidebar:
+  order: 5
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+<TerminologyCard id="BRImunobiologico" />
+
+## O que é
+
+A tabela de imunobiológicos lista as vacinas, soros e imunoglobulinas registrados pelo Programa Nacional de Imunizações
+(PNI). O código é numérico e curto, sem relação com o nome comercial: `15` é a BCG, `9` a hepatite B, `87` a vacina
+COVID-19 Pfizer (Comirnaty). É o código que vai em `Immunization.vaccineCode` no Registro de Imunobiológico Administrado
+(RIA).
+
+O registro de vacinação usa ainda outras tabelas do mesmo domínio, todas no pacote de terminologia com URI legada da RNDS:
+
+| CodeSystem | Conteúdo |
+|---|---|
+| `BRImunobiologico` | Imunobiológico administrado |
+| `BRFabricantePNI` | Fabricante do imunobiológico |
+| `BRDose` | Dose (1ª dose, reforço, dose única...) |
+| `BRLocalAplicacao` | Local de aplicação |
+| `BRViaAdministracao` | Via de administração |
+| `BREstrategiaVacinacao` | Estratégia de vacinação (rotina, campanha...) |
+| `BRGrupoAtendimento` | Grupo de atendimento do vacinado |
+
+## Quem mantém e fonte oficial
+
+A tabela é mantida pelo Ministério da Saúde, no âmbito do PNI, e usada pelo Sistema de Informação do PNI
+([SI-PNI](https://sipni.datasus.gov.br/)). Para a integração com a RNDS, a fonte em formato FHIR é o CodeSystem legado
+publicado pela RNDS no Simplifier.net:
+[`http://www.saude.gov.br/fhir/r4/CodeSystem/BRImunobiologico`](https://fhir.simplifier.net/RedeNacionaldeDadosemSaude/CodeSystem/BRImunobiologico),
+com 118 códigos em 28 de outubro de 2026. As tabelas de fabricante, dose, local, via e estratégia estão publicadas no
+mesmo endereço, trocando o id no final da URL.
+
+## Onde é usado
+
+| Perfil | Elemento | Binding |
+|---|---|---|
+| RNDS `BRImunobiologicoAdministrado-3.0` | `Immunization.vaccineCode` | `BRImunobiologico-1.0` (required), URI legada |
+| RNDS `BRImunobiologicoAdministrado-3.0` | `manufacturer`, `site`, `route`, `protocolApplied.doseNumber[x]` | `BRFabricanteImunobiologico-1.0`, `BRLocalAplicacao-1.0`, `BRViaAdministracao-1.0`, `BRDose-1.0` (required) |
+| `br-core-immunization` | `Immunization.vaccineCode` | `BRImunobiologico` (example) |
+
+Veja o documento completo em [Imunização](/fhir-ig/desenvolvimento/casos-de-uso/imunizacao/).
+
+## O ValueSet do pacote está desatualizado
+
+O ValueSet `BRImunobiologico` do pacote de terminologia 1.1.0 enumera **111 códigos**. O CodeSystem legado da RNDS tem
+118. Os códigos `112` a `118` existem só na publicação da RNDS. Entre eles estão a vacina chikungunya (`113`), os
+anticorpos nirsevimabe 0,5 ml e 1,0 ml (`115` e `116`) e o item `117`, "INF3-alta dosagem".
+
+Como implementar corretamente:
+
+- Para o RIA, valide contra o CodeSystem legado da RNDS, que é o que o perfil de produção usa.
+- No BR Core, o binding é `example`. Use o mesmo código numérico com o system novo, inclusive para os códigos `112` a
+  `118`.
+- Atualize a sua tabela quando o PNI incorporar um imunobiológico novo. O binding do RIA é `required`: um código fora
+  da tabela da RNDS não está conforme ao perfil.
+
+<Aside type="caution">
+	O código do imunobiológico não é o número do lote nem o código do produto na Anvisa. Lote e fabricante têm elementos
+	próprios (`lotNumber` e `manufacturer`).
+</Aside>
+
+## Exemplo de Coding
+
+<Tabs>
+	<TabItem label="RNDS (RIA)">
+
+```json
+{
+  "coding": [
+    {
+      "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRImunobiologico",
+      "code": "15"
+    }
+  ]
+}
+```
+
+	</TabItem>
+	<TabItem label="BR Core">
+
+```json
+{
+  "coding": [
+    {
+      "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRImunobiologico",
+      "code": "15",
+      "display": "BCG"
+    }
+  ]
+}
+```
+
+	</TabItem>
+</Tabs>
+
+## Erros comuns
+
+- **Usar códigos da CVX ou da SNOMED CT no RIA.** O binding da RNDS é `required` e aceita só a tabela nacional.
+- **Validar contra o ValueSet do pacote.** Ele não tem os códigos mais recentes.
+- **Confundir imunobiológico com estratégia.** "Campanha" e "rotina" são estratégias (`BREstrategiaVacinacao`), não
+  produtos diferentes.

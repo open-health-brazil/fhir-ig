@@ -1,0 +1,265 @@
+---
+title: Registro de Atendimento Clínico (RAC)
+description: Como montar o documento RAC da RNDS a partir do Conjunto Mínimo de Dados e como representar a mesma consulta no perfil br-core-registroatendimentoclinico.
+sidebar:
+  order: 5
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+import ProfileHeader from '../../../../components/ProfileHeader.astro';
+import ProfileTable from '../../../../components/ProfileTable.astro';
+import FhirExample from '../../../../components/FhirExample.astro';
+import TerminologyCard from '../../../../components/TerminologyCard.astro';
+
+O Registro de Atendimento Clínico (RAC) é o documento que resume uma consulta: quem foi atendido, onde, por quem, com
+qual caráter, quais problemas ou diagnósticos foram avaliados, quais procedimentos foram feitos e como o atendimento
+terminou. Segundo o [guia da RNDS](https://rnds-guia.saude.gov.br/docs/rac/mi-rac/), ele cobre a consulta realizada
+"no âmbito da atenção básica, especializada ou domiciliar" e pode trazer aferições, exames, procedimentos, pequenas
+cirurgias e desfecho.
+
+O modelo de informação foi instituído pela
+[Portaria SAES/MS nº 234, de 18 de julho de 2022](https://bvsms.saude.gov.br/bvs/saudelegis/Saes/2022/prt0234_20_07_2022.html),
+de adoção obrigatória nas esferas pública, suplementar e privada, sem prazo fixado na própria portaria. A
+[Portaria GM/MS nº 10.341, de 12 de março de 2026](https://bvsms.saude.gov.br/bvs/saudelegis/gm/2026/prt10341_16_03_2026.html),
+que instituiu o modelo de teleconsultoria (RATC), determina que o atendimento por teleconsultoria seja concluído com um
+RAC. Para a visão de gestão, veja
+[Atendimento clínico (gestão)](/fhir-ig/gestao/casos-de-uso/atendimento-clinico/).
+
+## Quando usar
+
+- **RNDS (`BRRegistroAtendimentoClinico`)**: para enviar à RNDS o registro de uma consulta ou atendimento
+  ambulatorial, domiciliar ou de atenção básica.
+- **BR Core (`br-core-registroatendimentoclinico`)**: para trocar o mesmo conteúdo entre sistemas brasileiros fora da
+  RNDS, como um resumo de consulta enviado do prontuário da unidade básica para o ambulatório de especialidade.
+- **Internação**: o documento de saída de uma internação é o
+  [Sumário de Alta](/fhir-ig/desenvolvimento/casos-de-uso/sumario-de-alta/), não o RAC.
+
+<Aside type="caution" title="O perfil RNDS do RAC está em rascunho">
+O `BRRegistroAtendimentoClinico` (versão 2.1, de 25 de julho de 2023) e vários recursos que ele referencia
+(`BRProblemaDiagnostico`, `BRMedidaObservada`, `BRAlergiaReacaoAdversa-1.0`, `BRPlanoCuidados-1.0`) estão com status
+`draft` no pacote da RNDS. O documento é validável, e o exemplo desta página passa sem erros no validador oficial, mas
+o conteúdo pode mudar. Antes de entrar em produção, confirme a versão vigente no
+[Portal de Serviços do DATASUS](https://servicos-datasus.saude.gov.br) e no ambiente de homologação
+([Ambientes](/fhir-ig/desenvolvimento/ambientes/)).
+</Aside>
+
+## Estrutura do documento RNDS
+
+O `BRRegistroAtendimentoClinico` não deriva diretamente de `Composition`: a sua base é o
+[`BRConjuntoMinimoDados-1.1`](/fhir-ig/desenvolvimento/casos-de-uso/conjunto-minimo-de-dados/). Por isso o RAC herda
+toda a estrutura do Conjunto Mínimo de Dados (CMD) e acrescenta seções clínicas.
+
+```text
+Bundle (type = document)
+├── Composition  BRRegistroAtendimentoClinico    type = BRTipoDocumento#RAC
+│   │                                            category = BRModalidadeAssistencial (ex.: 01 Atenção Básica)
+│   ├── section informacoesContatoAssistencial   1..1 → Encounter (BRContatoAssistencial-1.0)
+│   ├── section problemasDiagnosticosAvaliados   1..* → Condition (BRProblemaDiagnostico)
+│   ├── section procedimentosRealizados          1..* → Procedure (BRProcedimentoRealizado-1.0)
+│   ├── section informacoesOPM                   0..* → SupplyDelivery (BREntregaSuprimentos)
+│   ├── section observacoes                      0..* → Observation (BRMedidaObservada)
+│   ├── section alergiaReacaoAdversa             0..* → AllergyIntolerance (BRAlergiaReacaoAdversa-1.0)
+│   ├── section prescricao                       0..1 → identificador de um REPM (BRRegistroPrescricaoMedicamento)
+│   ├── section planoCuidados                    0..1 → CarePlan (BRPlanoCuidados-1.0)
+│   ├── section atestadoMedicoOdontologico       0..* → CarePlan (BRAtestado)
+│   └── section marcosDesenvolvimento            0..1 → QuestionnaireResponse (BRQuestionarioResposta)
+├── Encounter, Condition, Procedure ...          (um recurso por entrada de seção)
+```
+
+Pontos que diferem do padrão FHIR mais comum:
+
+- **Cada seção tem exatamente uma entrada.** `section.entry` é `1..1` em quase todas as seções. Dois diagnósticos
+  avaliados são duas seções `problemasDiagnosticosAvaliados`, cada uma com um `Condition`.
+- **As seções não têm `title` nem `code`.** No CMD, `section.title`, `section.code` e `section.text` são proibidos. As
+  seções são reconhecidas pelo perfil do recurso referenciado (discriminador `profile` em `entry.resolve()`). Por isso
+  cada recurso precisa declarar o perfil RNDS em `meta.profile`.
+- **O paciente não vai como recurso.** `Composition.subject` (e o `subject` de cada recurso) traz só `identifier` com o
+  CNS ou o CPF. `reference` é proibido.
+- **O autor é o estabelecimento**, identificado só pelo CNES em `Composition.author.identifier`.
+
+## Perfil RNDS do documento
+
+<ProfileHeader source="rnds" id="BRRegistroAtendimentoClinico" />
+<ProfileTable source="rnds" id="BRRegistroAtendimentoClinico" hideProhibited />
+
+As restrições herdadas (tipo, categoria, paciente, autor e as seções do CMD) estão no perfil base, documentado em
+[Conjunto Mínimo de Dados](/fhir-ig/desenvolvimento/casos-de-uso/conjunto-minimo-de-dados/).
+
+## Recursos referenciados
+
+### Contato assistencial
+
+O `Encounter` concentra a caracterização do atendimento: modalidade assistencial em `class`, caráter em `priority`,
+procedência em `hospitalization.admitSource`, desfecho em `hospitalization.dischargeDisposition`, profissionais em
+`participant` e o estabelecimento em `serviceProvider`.
+
+<ProfileHeader source="rnds" id="BRContatoAssistencial-1.0" />
+<ProfileTable source="rnds" id="BRContatoAssistencial-1.0" hideProhibited />
+
+### Problema ou diagnóstico avaliado
+
+<ProfileHeader source="rnds" id="BRProblemaDiagnostico" />
+<ProfileTable source="rnds" id="BRProblemaDiagnostico" hideProhibited />
+
+O pacote também publica dois perfis de `Condition` mais antigos, ambos em rascunho, que separam a terminologia:
+`BRCID10Avaliado-1.0` (código obrigatoriamente da CID-10, categoria principal ou secundária pelo CodeSystem
+`BRCategoriaDiagnostico`, `onsetDateTime` opcional) e `BRCIAP2Avaliado-1.0` (código da Classificação Internacional de
+Atenção Primária, CIAP-2). Nenhuma seção do RAC aponta para eles. Como a seção é reconhecida pelo perfil
+`BRProblemaDiagnostico`, é ele que o recurso deve declarar.
+
+<ProfileHeader source="rnds" id="BRCID10Avaliado-1.0" />
+<ProfileHeader source="rnds" id="BRCIAP2Avaliado-1.0" />
+
+### Procedimento realizado
+
+<ProfileHeader source="rnds" id="BRProcedimentoRealizado-1.0" />
+<ProfileTable source="rnds" id="BRProcedimentoRealizado-1.0" hideProhibited />
+
+### Seções clínicas opcionais
+
+<ProfileHeader source="rnds" id="BRMedidaObservada" />
+<ProfileHeader source="rnds" id="BRAlergiaReacaoAdversa-1.0" />
+<ProfileHeader source="rnds" id="BRPlanoCuidados-1.0" />
+<ProfileHeader source="rnds" id="BRAtestado" />
+
+- **Observações (`BRMedidaObservada`)**: sinais vitais e medidas corporais. O tipo vem do ValueSet
+  `BRTipoObservacao-1.0`. Extensões opcionais registram a origem da medida (`BROrigemMedida`) e as roupas usadas na
+  pesagem (`BRRoupasUsadasMedicao`).
+- **Alergias e reações adversas (`BRAlergiaReacaoAdversa-1.0`)**: categoria do agente obrigatória, agente pelo ValueSet
+  `BRAlergenos-1.0` e manifestações pela terminologia MedDRA (`BRReacoesAdversasMedDRA-1.0`).
+- **Prescrição**: a seção `prescricao` não inclui a prescrição no Bundle. Ela aponta, por `entry.identifier`
+  (`system` + `value`), para uma prescrição enviada separadamente. Veja
+  [Prescrição e dispensação](/fhir-ig/desenvolvimento/casos-de-uso/prescricao-e-dispensacao/).
+- **Plano de cuidados, atestado e marcos do desenvolvimento**: `CarePlan` e `QuestionnaireResponse` nos perfis indicados.
+
+## Perfil BR Core
+
+<ProfileHeader source="br-core" id="br-core-registroatendimentoclinico" />
+<ProfileTable source="br-core" id="br-core-registroatendimentoclinico" hideProhibited />
+
+O `br-core-registroatendimentoclinico` deriva de `br-core-composition` e segue o estilo dos sumários clínicos
+internacionais: seções identificadas por código LOINC, várias entradas por seção e referências literais aos recursos.
+
+| Seção BR Core | LOINC | Card. | Recursos |
+|---|---|---|---|
+| `diagnosticosAvaliados` | `11450-4` | 1..* | `br-core-condition` |
+| `procedimentosRealizados` | `47519-4` | 0..1 | `br-core-procedure` |
+| `sinaisVitais` | `8716-3` | 0..1 | `br-core-vitalsigns` |
+| `historiaObstetrica` | `10162-6` | 0..1 | `br-core-observationpregnancystatus`, `br-core-observationpregnancyoutcome` |
+| `aleitamentoMaterno` | `63895-7` | 0..1 | `br-core-observationbreastfeedingstatus` |
+| `historiaSocial` | `29762-2` | 0..1 | uso de álcool, tabaco e outras substâncias |
+| `alergiasIntolerancias` | `48765-2` | 0..1 | `br-core-allergyintolerance` |
+| `medicamentos` | `10160-0` | 0..1 | `MedicationStatement`, `MedicationRequest`, `MedicationAdministration`, `MedicationDispense` |
+| `planoCuidados` | `18776-5` | 0..1 | `br-core-careplan` |
+| `capacidadeFuncional` | `47420-5` | 0..1 | `br-core-capacidadefuncional` |
+
+O documento vai num `Bundle` no perfil `br-core-bundle-documento`, com a `Composition` como primeira entrada e todos os
+recursos referenciados nas entradas seguintes.
+
+<ProfileHeader source="br-core" id="br-core-bundle-documento" />
+
+Recursos BR Core usados no exemplo:
+
+<ProfileHeader source="br-core" id="br-core-encounter" />
+<ProfileHeader source="br-core" id="br-core-condition" />
+<ProfileHeader source="br-core" id="br-core-procedure" />
+<ProfileHeader source="br-core" id="br-core-observation" />
+<ProfileHeader source="br-core" id="br-core-allergyintolerance" />
+
+### Do RAC da RNDS para o BR Core
+
+| Informação | RNDS (`BRRegistroAtendimentoClinico`) | BR Core |
+|---|---|---|
+| Tipo de documento | `BRTipoDocumento#RAC` | LOINC em `Composition.type` (o exemplo usa `34108-1`, Outpatient Note) |
+| Modalidade assistencial | `Composition.category` e `Encounter.class` (`BRModalidadeAssistencial`) | `Encounter.class` (`v3-ActCode`, ex. `AMB`) |
+| Paciente | `subject.identifier` (CNS/CPF) | `subject.reference` para `br-core-patient` |
+| Autor | CNES do estabelecimento | Profissional, lotação ou organização (`author` 1..*) |
+| Seções | Uma entrada por seção, identificadas pelo perfil do recurso | Várias entradas por seção, identificadas pelo LOINC |
+| Diagnóstico | `BRProblemaDiagnostico`, CID-10 sem ponto (`I10`, `J039`) | `br-core-condition`; os exemplos oficiais do BR Core escrevem a CID-10 com ponto (`R06.0`) |
+
+## Nuances brasileiras
+
+### Caracterização do atendimento
+
+Os códigos que caracterizam o contato vêm de tabelas nacionais, com o mesmo conteúdo nas canônicas legadas da RNDS
+(`http://www.saude.gov.br/fhir/r4/CodeSystem/...`) e no pacote de terminologia:
+
+| Informação | Elemento | CodeSystem | Exemplos |
+|---|---|---|---|
+| Modalidade assistencial | `Encounter.class`, `Composition.category` | `BRModalidadeAssistencial` | `01` Atenção Básica, `02` Atenção Domiciliar, `07` Ambulatorial Especializada |
+| Caráter do atendimento | `Encounter.priority` | `BRCaraterAtendimento` | `03` Consulta agendada, `05` Demanda espontânea: consulta no dia |
+| Procedência | `Encounter.hospitalization.admitSource` | `BRProcedencia` | `09` Demanda espontânea, `11` Retorno, `12` Demanda referenciada |
+| Desfecho | `Encounter.hospitalization.dischargeDisposition` | `BRMotivoDesfecho` | `01` Alta clínica, `03` Encaminhamento, `08` Retorno |
+| Papel do profissional | `Encounter.participant.type` | `BRResponsabilidadeParticipante` | `atendimento`, `admissao`, `alta` |
+
+`hospitalization` é obrigatório no `BRContatoAssistencial-1.0` mesmo numa consulta ambulatorial: é ali que a RNDS
+guarda procedência e desfecho.
+
+<TerminologyCard id="BRModalidadeAssistencial" />
+<TerminologyCard id="BRCaraterAtendimento" />
+
+### O procedimento entra duas vezes
+
+Todo procedimento aparece na seção `procedimentosRealizados` e também em `Encounter.diagnosis`, na fatia `procedure`,
+que exige a extensão `BRFinanciamento-1.0` na referência (`diagnosis.condition.extension`). É por ela que se informa a
+forma de financiamento (CodeSystem `BRFinanciamento`: `01` Federal SUS, `03` Plano de Saúde Privado, `04` Particular,
+entre outros). O `BRContatoAssistencial-1.0` exige ao menos um procedimento.
+
+Cada `Procedure` também precisa da extensão `BRQuantidade-1.0` (quantas vezes o procedimento foi feito), do código da
+Tabela de Procedimentos do SUS (SIGTAP) ou da tabela TUSS (ValueSet `BRProcedimentosNacionais-1.0`) e de
+`performedDateTime`. Veja [Tabela SUS (SIGTAP)](/fhir-ig/desenvolvimento/terminologias/tabela-sus-sigtap/).
+
+### Diagnóstico: CID-10 ou CIAP-2
+
+O ValueSet `BRProblemaDiagnostico` aceita códigos da CID-10 e da CIAP-2 (CodeSystems legados `BRCID10` e `BRCIAP2`).
+A CID-10 vai sem ponto na RNDS (`J039`, não `J03.9`). O estado do problema usa `clinicalStatus` (ValueSet
+`BREstadoResolucaoDiagnosticoProblema-1.0`: `active`, `recurrence`, `relapse`, `inactive`, `remission`, `resolved`).
+Veja [CID-10](/fhir-ig/desenvolvimento/terminologias/cid-10/) e [CIAP-2](/fhir-ig/desenvolvimento/terminologias/ciap-2/).
+
+### Paciente não identificado
+
+Quando o paciente não pode ser identificado por CPF ou CNS, o CMD prevê a extensão `BRIndividuoNaoIdentificado-1.0`
+em `Composition.subject` (e no `subject` dos demais recursos), com sexo, ano de nascimento estimado, justificativa
+(CodeSystem `BRJustificativaIndividuoNaoIdentificado`, por exemplo `01` Indivíduo acidentado grave) e operador
+responsável.
+
+### Profissionais por identificador
+
+`Encounter.participant.individual` e `Procedure.performer.actor` são referências lógicas: só `identifier`, com o CPF
+ou o CNS do profissional, sem incluir `Practitioner` no Bundle. A ocupação vai na extensão `BROcupacao-1.0` do
+participante e em `Procedure.performer.function`, ambas com códigos da CBO.
+
+## Exemplos
+
+<Tabs>
+	<TabItem label="RAC (RNDS)">
+
+Consulta de demanda espontânea numa unidade básica, com hipertensão avaliada e consulta médica na atenção primária
+como procedimento.
+
+<FhirExample file="rnds/atendimento-clinico/rac-bundle.json" />
+
+	</TabItem>
+	<TabItem label="RAC (BR Core)">
+
+A mesma situação, como consulta de retorno, no `br-core-bundle-documento` com `br-core-registroatendimentoclinico`.
+
+<FhirExample file="atendimento-clinico/rac-br-core.json" />
+
+	</TabItem>
+</Tabs>
+
+## Erros comuns
+
+- **Pôr dois diagnósticos na mesma seção.** No RNDS, cada seção tem uma única entrada. Repita a seção.
+- **Preencher `section.title` ou `section.code` no RNDS.** O CMD proíbe os dois. A seção é reconhecida pelo perfil do
+  recurso.
+- **Esquecer o `meta.profile` dos recursos.** Sem ele, o validador não consegue casar a entrada com nenhuma seção e
+  acusa "Unable to find a profile match".
+- **Omitir `hospitalization` numa consulta.** Procedência e desfecho são obrigatórios no contato assistencial.
+- **Procedimento sem financiamento.** A fatia `procedure` de `Encounter.diagnosis` exige a extensão
+  `BRFinanciamento-1.0`.
+- **CID-10 com ponto no RNDS.** Os CodeSystems legados usam o código sem ponto.
+- **Usar o CNES fictício `9999999`.** As invariantes da RNDS rejeitam identificadores com todos os dígitos iguais; os
+  exemplos usam `9990001`.
+- **Montar o documento de internação como RAC.** Internação termina em Sumário de Alta.

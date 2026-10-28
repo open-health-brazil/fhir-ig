@@ -1,0 +1,356 @@
+---
+title: Orientações de implementação
+description: Como obter os pacotes, validar localmente e lidar com as particularidades dos artefatos do BR Core, da terminologia e da RNDS ao implementar.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+import TerminologyCard from '../../../components/TerminologyCard.astro';
+
+Esta página reúne o que você precisa saber para implementar com os artefatos oficiais como eles estão publicados hoje:
+de onde baixar cada pacote, como validar sem depender de serviços externos e como tratar os pontos em que o dado
+oficial precisa ser complementado por outra fonte. Cada orientação diz o que fazer e onde está a fonte oficial.
+
+As versões citadas são as usadas por este site: BR Core 1.7.1, terminologia 1.1.0, IPS-BR 1.0.0 e a captura dos
+perfis RNDS de 28 de outubro de 2026.
+
+## Obter os pacotes
+
+### BR Core, terminologia e IPS-BR
+
+Os pacotes brasileiros não estão no registro público de pacotes FHIR (packages.fhir.org). Cada publicador mantém o
+tarball e a lista de versões no próprio site:
+
+| Pacote | Versão | Tarball | Lista de versões |
+|---|---|---|---|
+| `br.gov.saude.br-core.fhir` | 1.7.1 | `https://hl7.org.br/fhir/core/v1.7.1/package.tgz` | `https://hl7.org.br/fhir/core/package-list.json` |
+| `br.gov.saude.terminologia.fhir` | 1.1.0 | `https://terminologia.saude.gov.br/fhir/v1.1.0/package.tgz` | `https://terminologia.saude.gov.br/fhir/package-list.json` |
+| `br.gov.saude.ips.fhir` | 1.0.0 | `https://hl7.org.br/fhir/ips/v1.0.0/package.tgz` | `https://hl7.org.br/fhir/ips/package-list.json` |
+
+Fixe a versão que a lista marca com `"current": true`. A lista do BR Core pode conter versões mais novas do que a
+corrente (em 28 de outubro de 2026, ela lista a 1.7.2, mas marca a 1.7.1 como corrente).
+
+### A dependência de terminologia 1.2.0
+
+O BR Core 1.7.1 declara dependência de `br.gov.saude.terminologia.fhir#1.2.0`. Essa versão não foi publicada: o
+tarball `https://terminologia.saude.gov.br/fhir/v1.2.0/package.tgz` responde 404. A versão publicada mais recente é a
+1.1.0.
+
+Ferramentas que resolvem dependências pelo cache local de pacotes (validador HL7, IG Publisher, SUSHI) vão procurar a
+1.2.0. A solução é instalar a 1.1.0 também sob o nome da 1.2.0 (um *alias* no cache):
+
+<Steps>
+
+1. Baixe e extraia a terminologia 1.1.0 no cache de pacotes FHIR, que fica em `~/.fhir/packages/`:
+
+   ```sh
+   mkdir -p ~/.fhir/packages/br.gov.saude.terminologia.fhir#1.1.0
+   curl -fsSL https://terminologia.saude.gov.br/fhir/v1.1.0/package.tgz \
+     | tar -xz -C ~/.fhir/packages/br.gov.saude.terminologia.fhir#1.1.0
+   ```
+
+2. Copie a pasta com o nome da versão declarada:
+
+   ```sh
+   cp -r ~/.fhir/packages/br.gov.saude.terminologia.fhir#1.1.0 \
+         ~/.fhir/packages/br.gov.saude.terminologia.fhir#1.2.0
+   ```
+
+3. Faça o mesmo para o BR Core 1.7.1 e o IPS-BR 1.0.0, extraindo cada tarball em
+   `~/.fhir/packages/<id>#<versão>/`. O IPS-BR depende da terminologia 1.0.0, publicada no mesmo padrão de URL
+   (`https://terminologia.saude.gov.br/fhir/v1.0.0/package.tgz`).
+
+</Steps>
+
+Este projeto automatiza esses passos no script
+[`scripts/prepare-validator-cache.ts`](https://github.com/open-health-brazil/fhir-ig/blob/main/scripts/prepare-validator-cache.ts):
+ele percorre as dependências `br.gov.saude.*`, baixa a versão exata quando o tarball existe e, quando não existe,
+cria o alias para a versão fixada em `fhir-packages.json` e emite um aviso.
+
+Quando a terminologia 1.2.0 for publicada, troque o alias pelo pacote real. O job semanal deste projeto detecta a
+publicação (veja [O projeto](/fhir-ig/sobre/)).
+
+### Perfis da RNDS
+
+A RNDS não publica um pacote versionado. Os perfis de produção ficam no
+[projeto da RNDS no Simplifier](https://simplifier.net/redenacionaldedadosemsaude), que também expõe uma API FHIR. Você
+pode baixar todos os StructureDefinitions por ela:
+
+```sh
+curl -H 'Accept: application/fhir+json' \
+  'https://fhir.simplifier.net/RedeNacionaldeDadosemSaude/StructureDefinition?_count=200'
+```
+
+O projeto do Simplifier também guarda uma cópia antiga de perfis do BR Core. Filtre pelos StructureDefinitions cuja
+`url` começa com `http://www.saude.gov.br/fhir/r4/` e use o pacote oficial do BR Core para os demais. É o que faz o
+script `npm run fhir:vendor-rnds` deste projeto, que grava os 104 perfis em `vendor/rnds/` com um `manifest.json`.
+
+## Validar localmente
+
+Use o validador oficial da HL7 (`validator_cli.jar`, publicado em
+[github.com/hapifhir/org.hl7.fhir.core](https://github.com/hapifhir/org.hl7.fhir.core/releases)). Ele roda em Java (este projeto usa
+o Java 21).
+
+```sh
+java -jar validator_cli.jar exemplo.json \
+  -version 4.0.1 \
+  -ig br.gov.saude.br-core.fhir#1.7.1 \
+  -tx n/a
+```
+
+Para validar contra os perfis da RNDS, passe também a pasta com os StructureDefinitions baixados (`-ig ./rnds/`) ou
+um pacote local que os contenha.
+
+### Por que `-tx n/a`
+
+Com `-tx n/a`, o validador não consulta servidor de terminologia. Ele confere os códigos contra os ValueSets que estão
+nos pacotes carregados e, quando o CodeSystem não está disponível, emite um **aviso** ("could not be found, so the
+code cannot be validated"), não um erro. Isso é o comportamento adequado aqui porque 91 dos 92 CodeSystems do pacote de
+terminologia são publicados com `content: not-present` (só os metadados, sem os códigos). Os códigos estão nos 114
+ValueSets que os enumeram.
+
+Na prática, um resultado bom tem **zero erros**. Avisos de CodeSystem não encontrado, de narrativa ausente (`dom-6`) e
+de binding `extensible` são esperados.
+
+### Como este projeto valida
+
+O script [`scripts/validate-examples.sh`](https://github.com/open-health-brazil/fhir-ig/blob/main/scripts/validate-examples.sh)
+(executado por `npm run fhir:validate`) faz, em ordem:
+
+<Steps>
+
+1. Baixa os pacotes fixados em `fhir-packages.json` para `.fhir-cache/`.
+2. Monta um cache de validador isolado com `prepare-validator-cache.ts`, incluindo o alias da terminologia 1.2.0 e um
+   pacote local `rnds.vendor#1.0.0` com os perfis de `vendor/rnds/`.
+3. Baixa o `validator_cli.jar` se ainda não estiver em cache.
+4. Roda o validador com `-version 4.0.1 -ig br.gov.saude.br-core.fhir#1.7.1 -ig rnds.vendor#1.0.0 -tx n/a`, com
+   Java local ou, na falta dele, em um contêiner Docker `eclipse-temurin:21-jre`.
+5. Resume a saída e falha se houver qualquer erro.
+
+</Steps>
+
+O mesmo script roda na integração contínua a cada pull request.
+
+## Gerar o snapshot dos perfis RNDS
+
+A maior parte dos perfis RNDS é publicada só com o `differential`: dos 104 StructureDefinitions capturados, apenas 11
+trazem `snapshot`. O validador gera o snapshot sozinho ao carregar o perfil, então isso não afeta a validação. Se a sua
+ferramenta precisa do snapshot (geração de código, formulários, documentação), gere-o com o próprio validador:
+
+```sh
+java -jar validator_cli.jar snapshot StructureDefinition-BRMeioContato-1.0.json \
+  -defn StructureDefinition-BRMeioContato-1.0.json \
+  -version 4.0.1 -tx n/a \
+  -output BRMeioContato-1.0.snapshot.json
+```
+
+Quando o perfil depende de outros perfis RNDS (tipos de dados, extensões ou um perfil base como o
+`BRConjuntoMinimoDados-1.1`), acrescente `-ig` com a pasta que contém todos eles. O IG Publisher da HL7 também gera
+snapshots, se você empacotar os perfis em um guia próprio.
+
+## Códigos de município (IBGE)
+
+O BR Core informa o município em `address` pela extensão `br-core-address-municipio`, vinculada ao ValueSet
+`BRMunicipio`. Esse ValueSet, no pacote de terminologia 1.1.0, enumera apenas UFs e regiões (com códigos de dois
+dígitos, do CodeSystem `BRDivisaoGeograficaBrasil`). Os municípios não estão listados.
+
+Para o município, use o código IBGE de 7 dígitos, da
+[tabela oficial de códigos de municípios do IBGE](https://www.ibge.gov.br/explica/codigos-dos-municipios.php), com o
+mesmo CodeSystem que o ValueSet usa:
+
+```json
+{
+  "url": "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-address-municipio",
+  "valueCodeableConcept": {
+    "coding": [
+      {
+        "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRDivisaoGeograficaBrasil",
+        "code": "3550308",
+        "display": "São Paulo"
+      }
+    ]
+  }
+}
+```
+
+Validado com `-tx n/a`, esse trecho gera apenas o aviso de CodeSystem não encontrado. Como o validador não confere o
+código, valide-o você mesmo contra a tabela do IBGE (7 dígitos, o último é dígito verificador). Ao usar as UFs do
+ValueSet, confira o código contra a tabela do IBGE: o código da UF de São Paulo é 35. Veja
+[Municípios e países](/fhir-ig/desenvolvimento/terminologias/municipios-e-paises/).
+
+## Ocupações (CBO)
+
+O ValueSet `BROcupacao` do pacote de terminologia enumera 1.000 das 2.714 ocupações da Classificação Brasileira de
+Ocupações (CBO). O CodeSystem `BRCBO` é publicado sem os códigos (`not-present`).
+
+<TerminologyCard id="BRCBO" />
+
+Use a CBO completa, publicada pelo Ministério do Trabalho e Emprego em [cbo.mte.gov.br](https://cbo.mte.gov.br/), com
+o `system` `https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO` (ou, em envios à RNDS, a URI legada
+`http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO`). Nos perfis BR Core que usam CBO (por exemplo,
+`Immunization.performer.function`), o binding é `extensible` ou mais fraco, então um código fora dos 1.000 listados
+continua válido. Veja [CBO](/fhir-ig/desenvolvimento/terminologias/cbo/).
+
+### `Schedule.specialty` no BR Core
+
+O `br-core-schedule` vincula `Schedule.specialty` ao ValueSet `http://www.saude.gov.br/fhir/r4/ValueSet/BROcupacao-1.0`,
+que é a URI legada da RNDS (confira em `StructureDefinition-br-core-schedule.json`, no pacote). Esse ValueSet não está
+em nenhum pacote que o BR Core carrega, então o validador avisa que não o encontrou. O binding é `preferred`, então o
+aviso não impede a validação.
+
+Como fazer: preencha `Schedule.specialty` com códigos CBO e o `system`
+`https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO`, o mesmo que você usa no restante do BR Core. Não troque
+para a URI legada de CodeSystem só por causa desse binding.
+
+## Valores de referência em `Observation`
+
+No BR Core 1.7.1, o `br-core-observation` restringe `Observation.referenceRange.modifierExtension` a `1..1`, sem
+indicar um perfil de extensão, e exige `referenceRange.text` (`1..1`). Confira no `differential` de
+`StructureDefinition-br-core-observation.json`, no pacote. O efeito é que qualquer `Observation.referenceRange`
+preenchido falha na validação: sem a extensão modificadora, falta um elemento obrigatório; com uma extensão
+modificadora inventada, o recurso deixa de ser seguro para receptores que não a conhecem. A restrição vale só para o
+`referenceRange` da raiz: `Observation.component.referenceRange` não tem essa regra.
+
+Como fazer, enquanto a restrição estiver no pacote:
+
+- **Painéis (vários analitos, como um lipidograma):** informe cada analito em `component`, com o valor de referência
+  em `component.referenceRange` (`low`, `high` e `text`). É o padrão do exemplo oficial do BR Core
+  (`Observation-52ba1c80-5d2c-4faf-8c90-f4363e20d7bb.json`, no pacote).
+- **Um único analito:** não preencha `Observation.referenceRange`. Informe o resultado em relação à referência por
+  `Observation.interpretation` (por exemplo, normal, alto ou baixo) e descreva o intervalo de referência em texto em
+  `Observation.note`.
+
+Isso não vale para a RNDS: o `BRDiagnosticoLaboratorioClinico-3.2.1` exige `referenceRange` e não tem a restrição de
+`modifierExtension`. Veja [Exames laboratoriais](/fhir-ig/desenvolvimento/casos-de-uso/exames-laboratoriais/).
+
+## Must Support
+
+O BR Core 1.7.1 marca poucos elementos como Must Support. Nos 50 StructureDefinitions do pacote, só 27 elementos do
+`differential` têm `mustSupport: true`, distribuídos em 9 perfis:
+
+| Perfil | Elementos Must Support |
+|---|---|
+| `br-core-patient` | `extension:raca`, `identifier:cpf` |
+| `br-core-bundle-documento` (rascunho) | `identifier` (e `system`, `value`), `type`, `timestamp`, `entry` (e `fullUrl`, `resource`), `entry:composicao`, `signature` |
+| `br-core-appointment` | `identifier`, `status` |
+| `br-core-schedule` | `actor` |
+| `br-core-consent` | `extension:baseLegalLGPD` |
+| `br-core-observationsubstanceuse` | `category`, `code`, `effective[x]`, `value[x]`, `dataAbsentReason` |
+| `br-core-observationpregnancyoutcome` | `code`, `subject`, `issued`, `dataAbsentReason` |
+| `br-core-observationbreastfeedingstatus` | `issued` |
+| `br-core-observationpregnancyedd` | `issued` |
+
+O `br-core-vitalsigns` herda ainda os elementos Must Support do perfil de sinais vitais do FHIR.
+
+Os perfis da RNDS fazem o contrário: 599 elementos com Must Support em 58 dos 104 perfis.
+
+Como interpretar no BR Core:
+
+- **A obrigação vem da cardinalidade e das invariantes.** Um elemento com `min` 1 ou exigido por uma invariante (como
+  `br-core-pat-2`, CPF ou CNS) precisa estar presente, com ou sem Must Support.
+- **A ausência de Must Support não torna o elemento irrelevante.** Na especificação FHIR, o significado de Must
+  Support é definido por cada guia. Sem uma regra no BR Core, trate os elementos que o perfil restringe (binding,
+  fatias, cardinalidade) como os que o seu sistema deve saber produzir e ler.
+- **Envie o que você tem.** Se o seu sistema registra um dado que o perfil prevê, envie-o. Se o receptor exige um
+  elemento que o perfil deixa opcional, isso é um acordo entre as partes, não uma regra do BR Core.
+
+## Interações suportadas (sem CapabilityStatement)
+
+O pacote do BR Core 1.7.1 não contém CapabilityStatement: ele define perfis, mas não diz quais operações REST um
+servidor BR Core deve oferecer. Defina as interações no acordo de integração com o parceiro.
+
+Para a RNDS, as interações estão listadas no guia oficial, em
+[Serviços](https://rnds-guia.saude.gov.br/docs/rnds/servicos/):
+
+| Método | Caminho | Uso |
+|---|---|---|
+| `GET` | `/api/token` | Obter o token de acesso (serviço de autenticação) |
+| `POST` | `/api/contexto-atendimento` | Obter token para contexto de atendimento |
+| `GET` | `/api/fhir/r4/Patient` | Consultar paciente |
+| `GET` | `/api/fhir/r4/Organization` | Consultar estabelecimento ou organização |
+| `GET` | `/api/fhir/r4/Practitioner` | Consultar profissional |
+| `GET` | `/api/fhir/r4/PractitionerRole` | Consultar lotação de profissional |
+| `POST` | `/api/fhir/r4/Bundle` | Enviar ou substituir um documento |
+
+Trate essa lista como o contrato. Não presuma que outras interações FHIR (busca de `Immunization`, `_history`,
+`$validate`) estejam disponíveis. Veja [Envio de documentos](/fhir-ig/desenvolvimento/envio-de-documentos/) e
+[Autenticação](/fhir-ig/desenvolvimento/autenticacao/).
+
+## Canônicas legadas e novas
+
+Há duas famílias de URIs para a mesma coisa:
+
+| O quê | URI legada (RNDS) | URI nova (BR Core e terminologia) |
+|---|---|---|
+| Perfis | `http://www.saude.gov.br/fhir/r4/StructureDefinition/...` | `https://br-core.saude.gov.br/fhir/StructureDefinition/...` |
+| CodeSystems | `http://www.saude.gov.br/fhir/r4/CodeSystem/X` | `https://terminologia.saude.gov.br/fhir/CodeSystem/X` |
+| ValueSets | `http://www.saude.gov.br/fhir/r4/ValueSet/X-1.0` | `https://terminologia.saude.gov.br/fhir/ValueSet/X` |
+| Identificadores | `http://rnds.saude.gov.br/fhir/r4/NamingSystem/cpf` | `https://saude.gov.br/fhir/sid/cpf` |
+
+Onde cada uma é aceita:
+
+- **Envio à RNDS:** use as URIs legadas. Os perfis RNDS vinculam os elementos codificados com força `required` aos
+  ValueSets legados, que usam os CodeSystems legados.
+- **Troca BR Core:** use as URIs novas. As fatias de identificadores do BR Core fixam o `system` novo, e os ValueSets do
+  BR Core são os do pacote de terminologia.
+- **Perfis RNDS recentes** (`RNDSProfissional`, `RNDSEstabelecimentoSaude`) fixam identificadores em
+  `https://saude.gov.br/sid/...`, sem o segmento `/fhir/`. Nesses perfis, use exatamente o valor fixado.
+
+A correspondência completa, gerada dos NamingSystems oficiais, está em
+[Mapeamento RNDS ↔ BR Core](/fhir-ig/desenvolvimento/mapeamento-rnds-br-core/#conversão-de-uris-de-codesystem).
+
+## Versão no nome do perfil RNDS
+
+Os perfis da RNDS carregam a versão no último segmento da URL canônica: `BRIndividuo-1.0`,
+`BRImunobiologicoAdministrado-3.0`, `BRResultadoExameLaboratorial-3.2.1`,
+`BRDiagnosticoCOVID19-TesteRapido-01.01`. Cada versão é um perfil distinto, e várias podem estar ativas ao mesmo tempo
+(por exemplo, `BRImunobiologicoAdministrado-2.0` e `-3.0`, ou `BRRegistroImunobiologicoAdministradoRotina-1.0` e
+`-2.0`). Alguns perfis mais novos não têm versão no nome (`RNDSProfissional`, `BRRegulacaoAssistencial`).
+
+Como fazer:
+
+- Em `meta.profile`, use a canônica exata, com o sufixo de versão. Não acrescente `|versão` ao fim.
+- Escolha a versão pelo modelo de informação vigente do documento (por exemplo, o RIA de rotina usa
+  `BRImunobiologicoAdministrado-3.0`, que cita a Portaria Conjunta SAES/SVSA/SEIDIGI nº 25/2023 na descrição).
+- Não use perfis com `status: retired`. Trate perfis `draft` como sujeitos a mudança e acompanhe o Simplifier antes
+  de entrar em produção.
+
+No BR Core, a versão fica fora da URL (`https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient`) e é
+dada pela versão do pacote.
+
+## Um modelo interno, duas serializações
+
+A forma mais estável de atender ao BR Core e à RNDS ao mesmo tempo é manter **um modelo de dados interno** e
+serializar para cada formato na borda do sistema.
+
+<Steps>
+
+1. **Modele pelo conceito, não pelo perfil.** Guarde CPF, CNS e CNES como identificadores tipados, códigos com o
+   CodeSystem de origem (por exemplo, "CBO 225125") e não a URI. Guarde também os dados que só um dos lados usa
+   (grupo de atendimento da vacinação, identidade de gênero).
+
+2. **Escreva um serializador por destino.** O serializador BR Core aplica as URIs novas, as fatias com `system` e as
+   referências entre recursos. O serializador RNDS aplica as URIs legadas, remove `Identifier.system` onde o perfil
+   proíbe, usa as extensões RNDS e monta o Bundle `document` com a Composition do modelo de informação.
+
+3. **Centralize as tabelas de conversão.** URIs de CodeSystem e de identificadores, mapeamento de códigos que mudam
+   de ValueSet (por exemplo, `Encounter.class`) e o perfil de destino de cada recurso. Use a página de
+   [mapeamento](/fhir-ig/desenvolvimento/mapeamento-rnds-br-core/) como especificação.
+
+4. **Valide as duas saídas na integração contínua.** Gere um exemplo de cada formato a partir dos mesmos dados de
+   teste e passe os dois pelo validador, como este projeto faz com `examples/` e `examples/rnds/`.
+
+</Steps>
+
+Essa separação também prepara o sistema para versões futuras do FHIR. Veja [Evolução R5/R6](/fhir-ig/desenvolvimento/evolucao-r5-r6/).
+
+## Erros comuns
+
+- **Procurar o BR Core no packages.fhir.org.** Ele não está lá. Baixe o tarball de `hl7.org.br`.
+- **Deixar a ferramenta falhar na terminologia 1.2.0.** Crie o alias para a 1.1.0.
+- **Tratar aviso de CodeSystem não encontrado como erro.** Com `-tx n/a`, ele é esperado. Erros são outra coisa.
+- **Usar o ValueSet `BRMunicipio` como lista de municípios.** Ele só tem UFs e regiões. Use a tabela do IBGE.
+- **Restringir a CBO aos 1.000 códigos do `BROcupacao`.** Use a CBO completa do MTE.
+- **Preencher `Observation.referenceRange` num `br-core-observation`.** Use `component.referenceRange` ou
+  `interpretation` + `note`.
+- **Misturar URIs legadas e novas no mesmo recurso.** Escolha pelo perfil de destino.
+- **Omitir o sufixo de versão no `meta.profile` RNDS.** `BRIndividuo` não existe; o perfil é `BRIndividuo-1.0`.
