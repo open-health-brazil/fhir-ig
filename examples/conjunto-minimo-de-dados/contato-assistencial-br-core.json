@@ -1,0 +1,88 @@
+{
+  "resourceType": "Encounter",
+  "id": "cmd-contato",
+  "meta": {
+    "profile": [
+      "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-encounter"
+    ]
+  },
+  "status": "finished",
+  "class": {
+    "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+    "code": "AMB",
+    "display": "ambulatory"
+  },
+  "priority": {
+    "coding": [
+      {
+        "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCaraterAtendimento",
+        "code": "03",
+        "display": "Consulta agendada"
+      }
+    ]
+  },
+  "subject": {
+    "reference": "Patient/paciente-exemplo"
+  },
+  "participant": [
+    {
+      "type": [
+        {
+          "coding": [
+            {
+              "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRResponsabilidadeParticipante",
+              "code": "atendimento",
+              "display": "Profissional responsável pelo atendimento clínico Contato Assistencial"
+            }
+          ]
+        }
+      ],
+      "individual": {
+        "reference": "PractitionerRole/lotacao-exemplo"
+      }
+    }
+  ],
+  "period": {
+    "start": "2026-10-21T10:30:00-03:00",
+    "end": "2026-10-21T11:00:00-03:00"
+  },
+  "hospitalization": {
+    "admitSource": {
+      "coding": [
+        {
+          "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRProcedencia",
+          "code": "12",
+          "display": "Demanda referenciada"
+        }
+      ]
+    },
+    "dischargeDisposition": {
+      "coding": [
+        {
+          "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMotivoDesfecho",
+          "code": "01",
+          "display": "Alta clínica"
+        }
+      ]
+    }
+  },
+  "serviceProvider": {
+    "reference": "Organization/estabelecimento-exemplo"
+  },
+  "diagnosis": [
+    {
+      "condition": {
+        "reference": "Condition/cmd-diagnostico"
+      },
+      "use": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/diagnosis-role",
+            "code": "DD",
+            "display": "Discharge diagnosis"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "resourceType": "MedicationRequest",
+  "id": "prescricao-exemplo",
+  "meta": {
+    "profile": ["https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationrequest"]
+  },
+  "identifier": [
+    {
+      "system": "https://prontuario.exemplo.org/prescricao-item",
+      "value": "PRESC-2026-000123-1"
+    }
+  ],
+  "status": "active",
+  "intent": "order",
+  "medicationCodeableConcept": {
+    "coding": [
+      {
+        "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmVMP",
+        "code": "@brasil12898180271",
+        "display": "Amoxicilina 500 mg cápsula"
+      }
+    ],
+    "text": "Amoxicilina 500 mg cápsula"
+  },
+  "subject": { "reference": "Patient/paciente-exemplo" },
+  "authoredOn": "2026-10-20T10:00:00-03:00",
+  "requester": { "reference": "PractitionerRole/lotacao-exemplo" },
+  "reasonCode": [
+    {
+      "coding": [
+        {
+          "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10",
+          "code": "J03.9",
+          "display": "Amigdalite aguda não especificada"
+        }
+      ]
+    }
+  ],
+  "groupIdentifier": {
+    "system": "https://prontuario.exemplo.org/prescricao",
+    "value": "PRESC-2026-000123"
+  },
+  "dosageInstruction": [
+    {
+      "sequence": 1,
+      "text": "Tomar 1 cápsula por via oral a cada 8 horas, durante 7 dias.",
+      "timing": {
+        "repeat": {
+          "boundsDuration": {
+            "value": 7,
+            "unit": "dias",
+            "system": "http://unitsofmeasure.org",
+            "code": "d"
+          },
+          "frequency": 1,
+          "period": 8,
+          "periodUnit": "h"
+        }
+      },
+      "route": {
+        "coding": [
+          {
+            "system": "http://standardterms.edqm.eu",
+            "code": "20053000",
+            "display": "Oral use"
+          }
+        ]
+      },
+      "doseAndRate": [
+        {
+          "doseQuantity": {
+            "value": 1,
+            "unit": "Cápsula",
+            "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRUnidadeMedida",
+            "code": "13"
+          }
+        }
+      ]
+    }
+  ],
+  "dispenseRequest": {
+    "validityPeriod": {
+      "start": "2026-10-20",
+      "end": "2026-11-19"
+    },
+    "quantity": {
+      "value": 21,
+      "unit": "Cápsula",
+      "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRUnidadeMedida",
+      "code": "13"
+    }
+  }
+}

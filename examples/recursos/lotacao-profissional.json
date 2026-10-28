@@ -1,0 +1,34 @@
+{
+  "resourceType": "PractitionerRole",
+  "id": "lotacao-exemplo",
+  "meta": {
+    "profile": [
+      "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole"
+    ]
+  },
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Carlos Exemplo Souza, enfermeiro (CBO 223505), lotado na UBS Exemplo (CNES 9999999) desde 1º de fevereiro de 2024.</p></div>"
+  },
+  "active": true,
+  "period": {
+    "start": "2024-02-01"
+  },
+  "practitioner": {
+    "reference": "Practitioner/profissional-exemplo"
+  },
+  "organization": {
+    "reference": "Organization/estabelecimento-exemplo"
+  },
+  "code": [
+    {
+      "coding": [
+        {
+          "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO",
+          "code": "223505",
+          "display": "ENFERMEIRO"
+        }
+      ]
+    }
+  ]
+}

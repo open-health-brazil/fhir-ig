@@ -1,0 +1,41 @@
+{
+  "resourceType": "Organization",
+  "id": "estabelecimento-exemplo",
+  "meta": {
+    "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSEstabelecimentoSaude"]
+  },
+  "identifier": [
+    {
+      "use": "official",
+      "type": {
+        "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "PRN" }]
+      },
+      "system": "https://saude.gov.br/sid/cnes",
+      "value": "9990001"
+    }
+  ],
+  "active": true,
+  "type": [
+    {
+      "coding": [
+        {
+          "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoEstabelecimentoSaude",
+          "code": "2",
+          "display": "CENTRO DE SAUDE/UNIDADE BASICA"
+        }
+      ]
+    }
+  ],
+  "name": "UBS Exemplo",
+  "alias": ["Secretaria Municipal de Saúde de Exemplo - UBS Exemplo"],
+  "address": [
+    {
+      "use": "work",
+      "line": ["Avenida Fictícia, 500"],
+      "city": "São Paulo",
+      "state": "SP",
+      "postalCode": "01000-000",
+      "country": "BRA"
+    }
+  ]
+}

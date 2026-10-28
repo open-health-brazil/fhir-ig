@@ -1,0 +1,80 @@
+{
+  "resourceType": "Practitioner",
+  "id": "profissional-exemplo",
+  "meta": {
+    "profile": [
+      "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner"
+    ]
+  },
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Carlos Exemplo Souza, enfermeiro (CBO 223505), COREN-SP 000000.</p></div>"
+  },
+  "identifier": [
+    {
+      "use": "official",
+      "type": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "TAX"
+          }
+        ]
+      },
+      "system": "https://saude.gov.br/fhir/sid/cpf",
+      "value": "39053344705"
+    },
+    {
+      "use": "official",
+      "type": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "HC"
+          }
+        ]
+      },
+      "system": "https://saude.gov.br/fhir/sid/cns",
+      "value": "102345678900005"
+    },
+    {
+      "use": "official",
+      "type": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "RN"
+          }
+        ]
+      },
+      "system": "https://saude.gov.br/fhir/sid/coren-sp",
+      "value": "000000"
+    }
+  ],
+  "active": true,
+  "name": [
+    {
+      "use": "official",
+      "text": "Carlos Exemplo Souza",
+      "family": "Souza",
+      "given": [
+        "Carlos",
+        "Exemplo"
+      ]
+    }
+  ],
+  "gender": "male",
+  "qualification": [
+    {
+      "code": {
+        "coding": [
+          {
+            "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO",
+            "code": "223505",
+            "display": "ENFERMEIRO"
+          }
+        ]
+      }
+    }
+  ]
+}

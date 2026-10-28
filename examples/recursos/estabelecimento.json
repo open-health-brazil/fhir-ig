@@ -1,0 +1,56 @@
+{
+  "resourceType": "Organization",
+  "id": "estabelecimento-exemplo",
+  "meta": {
+    "profile": [
+      "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+    ]
+  },
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>UBS Exemplo (CNES 9999999), centro de saúde/unidade básica em São Paulo, SP.</p></div>"
+  },
+  "identifier": [
+    {
+      "use": "official",
+      "type": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "PRN"
+          }
+        ]
+      },
+      "system": "https://saude.gov.br/fhir/sid/cnes",
+      "value": "9999999"
+    }
+  ],
+  "active": true,
+  "type": [
+    {
+      "coding": [
+        {
+          "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoEstabelecimentoSaude",
+          "code": "2",
+          "display": "CENTRO DE SAUDE/UNIDADE BASICA"
+        }
+      ]
+    }
+  ],
+  "name": "UBS Exemplo",
+  "alias": [
+    "Secretaria Municipal de Saúde de Exemplo - UBS Exemplo"
+  ],
+  "address": [
+    {
+      "use": "work",
+      "line": [
+        "Avenida Fictícia, 500"
+      ],
+      "city": "São Paulo",
+      "state": "SP",
+      "postalCode": "01000-000",
+      "country": "BRA"
+    }
+  ]
+}

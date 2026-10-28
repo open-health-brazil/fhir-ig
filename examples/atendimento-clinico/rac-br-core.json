@@ -1,0 +1,539 @@
+{
+  "resourceType": "Bundle",
+  "id": "3b8a9f9c-126a-4a77-a789-66b4ec18e6fb",
+  "meta": {
+    "profile": [
+      "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-bundle-documento"
+    ]
+  },
+  "identifier": {
+    "system": "urn:ietf:rfc:3986",
+    "value": "urn:uuid:3b8a9f9c-126a-4a77-a789-66b4ec18e6fb"
+  },
+  "type": "document",
+  "timestamp": "2026-10-21T09:50:00-03:00",
+  "entry": [
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/Composition/rac-composicao",
+      "resource": {
+        "resourceType": "Composition",
+        "id": "rac-composicao",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-registroatendimentoclinico"
+          ]
+        },
+        "status": "final",
+        "type": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "34108-1",
+              "display": "Outpatient Note"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/paciente-exemplo"
+        },
+        "encounter": {
+          "reference": "Encounter/rac-contato"
+        },
+        "date": "2026-10-21T09:45:00-03:00",
+        "author": [
+          {
+            "reference": "PractitionerRole/lotacao-exemplo"
+          }
+        ],
+        "title": "Registro de Atendimento Clínico",
+        "custodian": {
+          "reference": "Organization/estabelecimento-exemplo"
+        },
+        "section": [
+          {
+            "title": "Diagnósticos avaliados",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "11450-4",
+                  "display": "Problem list - Reported"
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "Condition/rac-diagnostico"
+              }
+            ]
+          },
+          {
+            "title": "Procedimentos realizados",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "47519-4",
+                  "display": "History of Procedures Document"
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "Procedure/rac-procedimento"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/Patient/paciente-exemplo",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "paciente-exemplo",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient"
+          ]
+        },
+        "extension": [
+          {
+            "url": "https://ips.saude.gov.br/fhir/StructureDefinition/raca-br-ips",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRRacaCor",
+                  "code": "03",
+                  "display": "Parda"
+                }
+              ]
+            }
+          }
+        ],
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "TAX"
+                }
+              ]
+            },
+            "system": "https://saude.gov.br/fhir/sid/cpf",
+            "value": "52998224725"
+          },
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "HC"
+                }
+              ]
+            },
+            "system": "https://saude.gov.br/fhir/sid/cns",
+            "value": "200000000000003"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "official",
+            "text": "Joana Exemplo da Silva",
+            "family": "da Silva",
+            "given": [
+              "Joana",
+              "Exemplo"
+            ]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+55 11 99999-0000",
+            "use": "mobile"
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1990-04-12",
+        "address": [
+          {
+            "use": "home",
+            "line": [
+              "Rua Fictícia, 100",
+              "Apto 12"
+            ],
+            "city": "São Paulo",
+            "state": "SP",
+            "postalCode": "01000-000",
+            "country": "BRA"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/PractitionerRole/lotacao-exemplo",
+      "resource": {
+        "resourceType": "PractitionerRole",
+        "id": "lotacao-exemplo",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Carlos Exemplo Souza, enfermeiro (CBO 223505), lotado na UBS Exemplo (CNES 9999999) desde 1º de fevereiro de 2024.</p></div>"
+        },
+        "active": true,
+        "period": {
+          "start": "2024-02-01"
+        },
+        "practitioner": {
+          "reference": "Practitioner/profissional-exemplo"
+        },
+        "organization": {
+          "reference": "Organization/estabelecimento-exemplo"
+        },
+        "code": [
+          {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO",
+                "code": "225142",
+                "display": "MEDICO DA ESTRATEGIA DE SAUDE DA FAMILIA"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/Practitioner/profissional-exemplo",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "profissional-exemplo",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Carlos Exemplo Souza, enfermeiro (CBO 223505), COREN-SP 000000.</p></div>"
+        },
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "TAX"
+                }
+              ]
+            },
+            "system": "https://saude.gov.br/fhir/sid/cpf",
+            "value": "39053344705"
+          },
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "HC"
+                }
+              ]
+            },
+            "system": "https://saude.gov.br/fhir/sid/cns",
+            "value": "102345678900005"
+          },
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MD"
+                }
+              ]
+            },
+            "system": "https://saude.gov.br/fhir/sid/crm-sp",
+            "value": "000000"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "official",
+            "text": "Carlos Exemplo Souza",
+            "family": "Souza",
+            "given": [
+              "Carlos",
+              "Exemplo"
+            ]
+          }
+        ],
+        "gender": "male",
+        "qualification": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO",
+                  "code": "223505",
+                  "display": "ENFERMEIRO"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/Organization/estabelecimento-exemplo",
+      "resource": {
+        "resourceType": "Organization",
+        "id": "estabelecimento-exemplo",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>UBS Exemplo (CNES 9999999), centro de saúde/unidade básica em São Paulo, SP.</p></div>"
+        },
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PRN"
+                }
+              ]
+            },
+            "system": "https://saude.gov.br/fhir/sid/cnes",
+            "value": "9999999"
+          }
+        ],
+        "active": true,
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoEstabelecimentoSaude",
+                "code": "2",
+                "display": "CENTRO DE SAUDE/UNIDADE BASICA"
+              }
+            ]
+          }
+        ],
+        "name": "UBS Exemplo",
+        "alias": [
+          "Secretaria Municipal de Saúde de Exemplo - UBS Exemplo"
+        ],
+        "address": [
+          {
+            "use": "work",
+            "line": [
+              "Avenida Fictícia, 500"
+            ],
+            "city": "São Paulo",
+            "state": "SP",
+            "postalCode": "01000-000",
+            "country": "BRA"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/Encounter/rac-contato",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "rac-contato",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-encounter"
+          ]
+        },
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "AMB",
+          "display": "ambulatory"
+        },
+        "priority": {
+          "coding": [
+            {
+              "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCaraterAtendimento",
+              "code": "04",
+              "display": "Consulta agendada programada: cuidado continuado"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/paciente-exemplo"
+        },
+        "participant": [
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRResponsabilidadeParticipante",
+                    "code": "atendimento",
+                    "display": "Profissional responsável pelo atendimento clínico Contato Assistencial"
+                  }
+                ]
+              }
+            ],
+            "individual": {
+              "reference": "PractitionerRole/lotacao-exemplo"
+            }
+          }
+        ],
+        "period": {
+          "start": "2026-10-21T09:00:00-03:00",
+          "end": "2026-10-21T09:40:00-03:00"
+        },
+        "hospitalization": {
+          "admitSource": {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRProcedencia",
+                "code": "11",
+                "display": "Retorno"
+              }
+            ]
+          },
+          "dischargeDisposition": {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMotivoDesfecho",
+                "code": "08",
+                "display": "Retorno"
+              }
+            ]
+          }
+        },
+        "serviceProvider": {
+          "reference": "Organization/estabelecimento-exemplo"
+        },
+        "diagnosis": [
+          {
+            "condition": {
+              "reference": "Condition/rac-diagnostico"
+            },
+            "use": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/diagnosis-role",
+                  "code": "CM",
+                  "display": "Comorbidity diagnosis"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/Condition/rac-diagnostico",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "rac-diagnostico",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-condition"
+          ]
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCategoriaDiagnostico",
+                "code": "01",
+                "display": "Principal"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10",
+              "code": "I10",
+              "display": "Hipertensão essencial (primária)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/paciente-exemplo"
+        },
+        "encounter": {
+          "reference": "Encounter/rac-contato"
+        }
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/Procedure/rac-procedimento",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "rac-procedimento",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-procedure"
+          ]
+        },
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS",
+              "code": "0301010064",
+              "display": "CONSULTA MÉDICA EM ATENÇÃO PRIMÁRIA"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/paciente-exemplo"
+        },
+        "encounter": {
+          "reference": "Encounter/rac-contato"
+        },
+        "performedDateTime": "2026-10-21T09:00:00-03:00",
+        "performer": [
+          {
+            "actor": {
+              "reference": "PractitionerRole/lotacao-exemplo"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

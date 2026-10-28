@@ -1,0 +1,83 @@
+{
+  "resourceType": "Immunization",
+  "id": "imunizacao-exemplo",
+  "meta": {
+    "profile": [
+      "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-immunization"
+    ]
+  },
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Vacina hepatite B (HepB), 1ª dose, aplicada em 20 de outubro de 2026 por via intramuscular no deltoide esquerdo. Lote LOTE-EXEMPLO-01. Estratégia: rotina.</p></div>"
+  },
+  "status": "completed",
+  "vaccineCode": {
+    "coding": [
+      {
+        "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRImunobiologico",
+        "code": "9",
+        "display": "HepB"
+      }
+    ]
+  },
+  "patient": {
+    "reference": "Patient/paciente-exemplo"
+  },
+  "occurrenceDateTime": "2026-10-20T09:30:00-03:00",
+  "primarySource": true,
+  "manufacturer": {
+    "display": "BUTANTAN"
+  },
+  "lotNumber": "LOTE-EXEMPLO-01",
+  "expirationDate": "2027-06-30",
+  "site": {
+    "coding": [
+      {
+        "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRLocalAplicacao",
+        "code": "2",
+        "display": "Deltóide Esquerdo"
+      }
+    ]
+  },
+  "route": {
+    "coding": [
+      {
+        "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRViaAdministracao",
+        "code": "10890",
+        "display": "Intramuscular"
+      }
+    ]
+  },
+  "performer": [
+    {
+      "function": {
+        "coding": [
+          {
+            "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO",
+            "code": "223505",
+            "display": "ENFERMEIRO"
+          }
+        ]
+      },
+      "actor": {
+        "reference": "PractitionerRole/lotacao-exemplo"
+      }
+    }
+  ],
+  "reasonCode": [
+    {
+      "coding": [
+        {
+          "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BREstrategiaVacinacao",
+          "code": "1",
+          "display": "Rotina"
+        }
+      ]
+    }
+  ],
+  "protocolApplied": [
+    {
+      "doseNumberString": "1"
+    }
+  ]
+}

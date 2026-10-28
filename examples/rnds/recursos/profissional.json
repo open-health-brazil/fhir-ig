@@ -1,0 +1,40 @@
+{
+  "resourceType": "Practitioner",
+  "id": "profissional-exemplo",
+  "meta": {
+    "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSProfissional"]
+  },
+  "identifier": [
+    {
+      "type": {
+        "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "PHO" }]
+      },
+      "system": "https://saude.gov.br/sid/cns",
+      "value": "102345678900005"
+    },
+    {
+      "type": {
+        "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "TAX" }]
+      },
+      "system": "https://saude.gov.br/sid/cpf",
+      "value": "39053344705"
+    },
+    {
+      "type": {
+        "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "RN" }]
+      },
+      "system": "https://saude.gov.br/fhir/sid/coren-sp",
+      "value": "000000"
+    }
+  ],
+  "active": true,
+  "name": [
+    {
+      "use": "official",
+      "text": "Carlos Exemplo Souza",
+      "family": "Souza",
+      "given": ["Carlos", "Exemplo"]
+    }
+  ],
+  "gender": "male"
+}

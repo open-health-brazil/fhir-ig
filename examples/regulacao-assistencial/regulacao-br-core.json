@@ -1,0 +1,168 @@
+{
+  "resourceType": "Bundle",
+  "id": "regulacao-br-core-exemplo",
+  "type": "collection",
+  "timestamp": "2026-10-25T16:20:00-03:00",
+  "entry": [
+    {
+      "fullUrl": "https://exemplo.org/fhir/ServiceRequest/solicitacao-cardiologia-exemplo",
+      "resource": {
+        "resourceType": "ServiceRequest",
+        "id": "solicitacao-cardiologia-exemplo",
+        "meta": {
+          "profile": ["https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-servicerequest"]
+        },
+        "identifier": [
+          {
+            "system": "https://regulacao-exemplo.org/solicitacoes",
+            "value": "SOL-2026-000321"
+          }
+        ],
+        "status": "active",
+        "intent": "order",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRModalidadeAssistencial",
+                "code": "09",
+                "display": "Assistência Ambulatorial"
+              },
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRSubgrupoTabelaSUS",
+                "code": "0301",
+                "display": "Consultas / Atendimentos / Acompanhamentos"
+              }
+            ]
+          }
+        ],
+        "priority": "routine",
+        "code": {
+          "coding": [
+            {
+              "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS",
+              "code": "0301010072",
+              "display": "CONSULTA MEDICA EM ATENÇÃO ESPECIALIZADA"
+            }
+          ]
+        },
+        "subject": { "reference": "Patient/paciente-exemplo" },
+        "authoredOn": "2026-10-22T10:00:00-03:00",
+        "requester": { "reference": "PractitionerRole/lotacao-exemplo" },
+        "performerType": {
+          "coding": [
+            {
+              "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO",
+              "code": "225120",
+              "display": "MEDICO CARDIOLOGISTA"
+            }
+          ]
+        },
+        "reasonCode": [
+          {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10",
+                "code": "I20.9",
+                "display": "Angina pectoris, não especificada"
+              }
+            ]
+          }
+        ],
+        "note": [
+          { "text": "Dor precordial aos esforços há três meses. Eletrocardiograma em anexo no prontuário." }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://exemplo.org/fhir/Appointment/agendamento-cardiologia-exemplo",
+      "resource": {
+        "resourceType": "Appointment",
+        "id": "agendamento-cardiologia-exemplo",
+        "meta": {
+          "profile": ["https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-appointment"]
+        },
+        "identifier": [
+          {
+            "system": "https://regulacao-exemplo.org/agendamentos",
+            "value": "AGD-2026-000654"
+          }
+        ],
+        "status": "booked",
+        "serviceCategory": [
+          {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRModalidadeAssistencial",
+                "code": "09",
+                "display": "Assistência Ambulatorial"
+              }
+            ]
+          }
+        ],
+        "serviceType": [
+          {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS",
+                "code": "0301010072",
+                "display": "CONSULTA MEDICA EM ATENÇÃO ESPECIALIZADA"
+              }
+            ]
+          }
+        ],
+        "specialty": [
+          {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO",
+                "code": "225120",
+                "display": "MEDICO CARDIOLOGISTA"
+              }
+            ]
+          }
+        ],
+        "start": "2026-11-10T08:00:00-03:00",
+        "end": "2026-11-10T08:30:00-03:00",
+        "created": "2026-10-25T16:20:00-03:00",
+        "basedOn": [
+          { "reference": "https://exemplo.org/fhir/ServiceRequest/solicitacao-cardiologia-exemplo" }
+        ],
+        "participant": [
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoParticipante",
+                    "code": "PCT",
+                    "display": "Paciente"
+                  }
+                ]
+              }
+            ],
+            "actor": { "reference": "Patient/paciente-exemplo" },
+            "required": "required",
+            "status": "accepted"
+          },
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoParticipante",
+                    "code": "ESE",
+                    "display": "Estabelecimento de saúde executante"
+                  }
+                ]
+              }
+            ],
+            "actor": { "reference": "HealthcareService/ambulatorio-cardiologia-exemplo" },
+            "required": "required",
+            "status": "accepted"
+          }
+        ]
+      }
+    }
+  ]
+}

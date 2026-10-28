@@ -1,0 +1,290 @@
+{
+  "resourceType": "Bundle",
+  "id": "rel-resultado-exemplo",
+  "identifier": {
+    "system": "http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-99",
+    "value": "LAB-2026-000123"
+  },
+  "type": "document",
+  "timestamp": "2026-10-21T15:10:00-03:00",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a01",
+      "resource": {
+        "resourceType": "Composition",
+        "id": "6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a01",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/BRResultadoExameLaboratorial-3.2.1"]
+        },
+        "status": "final",
+        "type": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDocumento",
+              "code": "REL"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "200000000000003"
+          }
+        },
+        "date": "2026-10-21T15:10:00-03:00",
+        "author": [
+          {
+            "identifier": {
+              "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+              "value": "9999999"
+            }
+          }
+        ],
+        "title": "Resultado de Exame Laboratorial",
+        "section": [
+          {
+            "entry": [
+              { "reference": "urn:uuid:6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a02" },
+              { "reference": "urn:uuid:6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a03" },
+              { "reference": "urn:uuid:6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a05" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a02",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a02",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/BRCondicaoSaude"]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTerminologiaSuspeitaDiagnostica",
+              "code": "B342",
+              "display": "Infecção por coronavírus de localização não especificada"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "200000000000003"
+          }
+        },
+        "stage": [
+          {
+            "assessment": [
+              { "reference": "urn:uuid:6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a03" },
+              { "reference": "urn:uuid:6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a05" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a03",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a03",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/BRDiagnosticoLaboratorioClinico-3.2.1"]
+        },
+        "extension": [
+          {
+            "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPatogeno",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTerminologiaPatogeno",
+                  "code": "07"
+                }
+              ]
+            }
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRSubgrupoTabelaSUS",
+                "code": "0202"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRNomeExameLOINC",
+              "code": "94309-2"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "200000000000003"
+          }
+        },
+        "effectiveDateTime": "2026-10-20T09:15:00-03:00",
+        "issued": "2026-10-21T14:40:00-03:00",
+        "performer": [
+          {
+            "identifier": {
+              "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+              "value": "9999999"
+            }
+          }
+        ],
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoResultadoDTNT",
+              "code": "1"
+            }
+          ]
+        },
+        "note": [
+          { "text": "Amostra processada em duplicata." }
+        ],
+        "method": {
+          "text": "RT-PCR em tempo real"
+        },
+        "specimen": {
+          "reference": "urn:uuid:6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a04"
+        },
+        "referenceRange": [
+          {
+            "text": "Não detectável"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a04",
+      "resource": {
+        "resourceType": "Specimen",
+        "id": "6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a04",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAmostraBiologica-1.0"]
+        },
+        "type": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoAmostraGAL",
+              "code": "SNOF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a05",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a05",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/BRDiagnosticoLaboratorioClinico-3.2.1"]
+        },
+        "extension": [
+          {
+            "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRPatogeno",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTerminologiaPatogeno",
+                  "code": "07"
+                }
+              ]
+            }
+          }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRSubgrupoTabelaSUS",
+                "code": "0202"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRNomeExameLOINC",
+              "code": "94505-5"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "200000000000003"
+          }
+        },
+        "effectiveDateTime": "2026-10-20T09:20:00-03:00",
+        "issued": "2026-10-21T14:55:00-03:00",
+        "performer": [
+          {
+            "identifier": {
+              "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+              "value": "9999999"
+            }
+          }
+        ],
+        "valueQuantity": {
+          "value": 12.4,
+          "unit": "U/mL",
+          "system": "http://unitsofmeasure.org",
+          "code": "[arb'U]/mL"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRResultadoQualitativoExame",
+                "code": "1"
+              }
+            ]
+          }
+        ],
+        "method": {
+          "text": "Quimioluminescência"
+        },
+        "specimen": {
+          "reference": "urn:uuid:6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a06"
+        },
+        "referenceRange": [
+          {
+            "text": "Não reagente: inferior a 1,0 U/mL. Reagente: igual ou superior a 1,0 U/mL."
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a06",
+      "resource": {
+        "resourceType": "Specimen",
+        "id": "6f1c2a4e-3b7d-4c1e-9a52-0d8e7f3b1a06",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAmostraBiologica-1.0"]
+        },
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0487",
+              "code": "SER"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

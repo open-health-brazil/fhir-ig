@@ -1,0 +1,772 @@
+{
+  "resourceType": "Bundle",
+  "id": "4c78c865-4375-4743-b7a6-1ec1d7eb53ef",
+  "meta": {
+    "profile": [
+      "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-bundle-documento"
+    ]
+  },
+  "identifier": {
+    "system": "urn:ietf:rfc:3986",
+    "value": "urn:uuid:4c78c865-4375-4743-b7a6-1ec1d7eb53ef"
+  },
+  "type": "document",
+  "timestamp": "2026-10-25T14:00:00-03:00",
+  "entry": [
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/Composition/sa-composicao",
+      "resource": {
+        "resourceType": "Composition",
+        "id": "sa-composicao",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-sumarioalta"
+          ]
+        },
+        "status": "final",
+        "type": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "18842-5",
+              "display": "Discharge summary"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/paciente-exemplo"
+        },
+        "encounter": {
+          "reference": "Encounter/sa-internacao"
+        },
+        "date": "2026-10-25T13:30:00-03:00",
+        "author": [
+          {
+            "reference": "PractitionerRole/lotacao-exemplo"
+          }
+        ],
+        "title": "Sumário de Alta",
+        "custodian": {
+          "reference": "Organization/estabelecimento-exemplo"
+        },
+        "section": [
+          {
+            "title": "Diagnósticos da admissão",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "42347-5",
+                  "display": "Admission diagnosis (narrative)"
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "Condition/sa-diagnostico"
+              }
+            ]
+          },
+          {
+            "title": "Alergias e intolerâncias",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "48765-2",
+                  "display": "Allergies and adverse reactions Document"
+                }
+              ]
+            },
+            "text": {
+              "status": "generated",
+              "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Nenhuma alergia conhecida.</p></div>"
+            },
+            "emptyReason": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/list-empty-reason",
+                  "code": "nilknown",
+                  "display": "Nil Known"
+                }
+              ]
+            }
+          },
+          {
+            "title": "Diagnósticos avaliados",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "57852-6",
+                  "display": "Problem list Narrative - Reported"
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "Condition/sa-diagnostico"
+              }
+            ]
+          },
+          {
+            "title": "Procedimentos realizados",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "47519-4",
+                  "display": "History of Procedures Document"
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "Procedure/sa-procedimento"
+              }
+            ]
+          },
+          {
+            "title": "Prescrição da alta",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "8654-6",
+                  "display": "Hospital discharge medications Narrative"
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "MedicationRequest/sa-prescricao-alta"
+              }
+            ]
+          },
+          {
+            "title": "Plano de cuidados",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "18776-5",
+                  "display": "Plan of care note"
+                }
+              ]
+            },
+            "entry": [
+              {
+                "reference": "CarePlan/sa-plano-cuidados"
+              }
+            ]
+          },
+          {
+            "title": "Capacidade funcional",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "47420-5",
+                  "display": "Functional status assessment note"
+                }
+              ]
+            },
+            "text": {
+              "status": "generated",
+              "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Sem restrição funcional na alta.</p></div>"
+            },
+            "emptyReason": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/list-empty-reason",
+                  "code": "unavailable",
+                  "display": "Unavailable"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/Patient/paciente-exemplo",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "paciente-exemplo",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-patient"
+          ]
+        },
+        "extension": [
+          {
+            "url": "https://ips.saude.gov.br/fhir/StructureDefinition/raca-br-ips",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRRacaCor",
+                  "code": "03",
+                  "display": "Parda"
+                }
+              ]
+            }
+          }
+        ],
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "TAX"
+                }
+              ]
+            },
+            "system": "https://saude.gov.br/fhir/sid/cpf",
+            "value": "52998224725"
+          },
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "HC"
+                }
+              ]
+            },
+            "system": "https://saude.gov.br/fhir/sid/cns",
+            "value": "200000000000003"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "official",
+            "text": "Joana Exemplo da Silva",
+            "family": "da Silva",
+            "given": [
+              "Joana",
+              "Exemplo"
+            ]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+55 11 99999-0000",
+            "use": "mobile"
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1990-04-12",
+        "address": [
+          {
+            "use": "home",
+            "line": [
+              "Rua Fictícia, 100",
+              "Apto 12"
+            ],
+            "city": "São Paulo",
+            "state": "SP",
+            "postalCode": "01000-000",
+            "country": "BRA"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/PractitionerRole/lotacao-exemplo",
+      "resource": {
+        "resourceType": "PractitionerRole",
+        "id": "lotacao-exemplo",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitionerrole"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Carlos Exemplo Souza, enfermeiro (CBO 223505), lotado na UBS Exemplo (CNES 9999999) desde 1º de fevereiro de 2024.</p></div>"
+        },
+        "active": true,
+        "period": {
+          "start": "2024-02-01"
+        },
+        "practitioner": {
+          "reference": "Practitioner/profissional-exemplo"
+        },
+        "organization": {
+          "reference": "Organization/estabelecimento-exemplo"
+        },
+        "code": [
+          {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO",
+                "code": "225125",
+                "display": "MEDICO CLINICO"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/Practitioner/profissional-exemplo",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "profissional-exemplo",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-practitioner"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Carlos Exemplo Souza, enfermeiro (CBO 223505), COREN-SP 000000.</p></div>"
+        },
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "TAX"
+                }
+              ]
+            },
+            "system": "https://saude.gov.br/fhir/sid/cpf",
+            "value": "39053344705"
+          },
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "HC"
+                }
+              ]
+            },
+            "system": "https://saude.gov.br/fhir/sid/cns",
+            "value": "102345678900005"
+          },
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MD"
+                }
+              ]
+            },
+            "system": "https://saude.gov.br/fhir/sid/crm-sp",
+            "value": "000000"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "official",
+            "text": "Carlos Exemplo Souza",
+            "family": "Souza",
+            "given": [
+              "Carlos",
+              "Exemplo"
+            ]
+          }
+        ],
+        "gender": "male",
+        "qualification": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCBO",
+                  "code": "223505",
+                  "display": "ENFERMEIRO"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/Organization/estabelecimento-exemplo",
+      "resource": {
+        "resourceType": "Organization",
+        "id": "estabelecimento-exemplo",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-organization"
+          ]
+        },
+        "text": {
+          "status": "generated",
+          "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>UBS Exemplo (CNES 9999999), centro de saúde/unidade básica em São Paulo, SP.</p></div>"
+        },
+        "identifier": [
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "PRN"
+                }
+              ]
+            },
+            "system": "https://saude.gov.br/fhir/sid/cnes",
+            "value": "9999999"
+          }
+        ],
+        "active": true,
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTipoEstabelecimentoSaude",
+                "code": "2",
+                "display": "CENTRO DE SAUDE/UNIDADE BASICA"
+              }
+            ]
+          }
+        ],
+        "name": "UBS Exemplo",
+        "alias": [
+          "Secretaria Municipal de Saúde de Exemplo - UBS Exemplo"
+        ],
+        "address": [
+          {
+            "use": "work",
+            "line": [
+              "Avenida Fictícia, 500"
+            ],
+            "city": "São Paulo",
+            "state": "SP",
+            "postalCode": "01000-000",
+            "country": "BRA"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/Encounter/sa-internacao",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "sa-internacao",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-encounter"
+          ]
+        },
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "IMP",
+          "display": "inpatient encounter"
+        },
+        "priority": {
+          "coding": [
+            {
+              "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCaraterAtendimento",
+              "code": "02",
+              "display": "Urgência"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/paciente-exemplo"
+        },
+        "participant": [
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRResponsabilidadeParticipante",
+                    "code": "alta",
+                    "display": "Profissional que realizou a alta do indivíduo no Contato Assistencial"
+                  }
+                ]
+              }
+            ],
+            "individual": {
+              "reference": "PractitionerRole/lotacao-exemplo"
+            }
+          }
+        ],
+        "period": {
+          "start": "2026-10-22T20:30:00-03:00",
+          "end": "2026-10-25T13:00:00-03:00"
+        },
+        "hospitalization": {
+          "admitSource": {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRProcedencia",
+                "code": "09",
+                "display": "Demanda espontânea"
+              }
+            ]
+          },
+          "dischargeDisposition": {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRMotivoDesfecho",
+                "code": "01",
+                "display": "Alta clínica"
+              }
+            ]
+          }
+        },
+        "serviceProvider": {
+          "reference": "Organization/estabelecimento-exemplo"
+        },
+        "diagnosis": [
+          {
+            "condition": {
+              "reference": "Condition/sa-diagnostico"
+            },
+            "use": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/diagnosis-role",
+                  "code": "AD",
+                  "display": "Admission diagnosis"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/Condition/sa-diagnostico",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "sa-diagnostico",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-condition"
+          ]
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "verificationStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
+              "code": "confirmed"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCategoriaDiagnostico",
+                "code": "01",
+                "display": "Principal"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10",
+              "code": "J18.9",
+              "display": "Pneumonia não especificada"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/paciente-exemplo"
+        },
+        "encounter": {
+          "reference": "Encounter/sa-internacao"
+        }
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/Procedure/sa-procedimento",
+      "resource": {
+        "resourceType": "Procedure",
+        "id": "sa-procedimento",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-procedure"
+          ]
+        },
+        "status": "completed",
+        "code": {
+          "coding": [
+            {
+              "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS",
+              "code": "0303140151",
+              "display": "TRATAMENTO DE PNEUMONIAS OU INFLUENZA (GRIPE)"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "Patient/paciente-exemplo"
+        },
+        "encounter": {
+          "reference": "Encounter/sa-internacao"
+        },
+        "performedDateTime": "2026-10-22T21:00:00-03:00",
+        "performer": [
+          {
+            "actor": {
+              "reference": "PractitionerRole/lotacao-exemplo"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/MedicationRequest/sa-prescricao-alta",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "sa-prescricao-alta",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-medicationrequest"
+          ]
+        },
+        "identifier": [
+          {
+            "system": "https://prontuario.exemplo.org/prescricao-item",
+            "value": "PRESC-ALTA-2026-000321-1"
+          }
+        ],
+        "status": "active",
+        "intent": "order",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRObmVMP",
+              "code": "@brasil12898180271",
+              "display": "Amoxicilina 500 mg cápsula"
+            }
+          ],
+          "text": "Amoxicilina 500 mg cápsula"
+        },
+        "subject": {
+          "reference": "Patient/paciente-exemplo"
+        },
+        "authoredOn": "2026-10-25T12:30:00-03:00",
+        "requester": {
+          "reference": "PractitionerRole/lotacao-exemplo"
+        },
+        "reasonCode": [
+          {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRCID10",
+                "code": "J18.9",
+                "display": "Pneumonia não especificada"
+              }
+            ]
+          }
+        ],
+        "groupIdentifier": {
+          "system": "https://prontuario.exemplo.org/prescricao",
+          "value": "PRESC-ALTA-2026-000321"
+        },
+        "dosageInstruction": [
+          {
+            "sequence": 1,
+            "text": "Tomar 1 cápsula por via oral a cada 8 horas, por mais 4 dias.",
+            "timing": {
+              "repeat": {
+                "boundsDuration": {
+                  "value": 4,
+                  "unit": "dias",
+                  "system": "http://unitsofmeasure.org",
+                  "code": "d"
+                },
+                "frequency": 1,
+                "period": 8,
+                "periodUnit": "h"
+              }
+            },
+            "route": {
+              "coding": [
+                {
+                  "system": "http://standardterms.edqm.eu",
+                  "code": "20053000",
+                  "display": "Oral use"
+                }
+              ]
+            },
+            "doseAndRate": [
+              {
+                "doseQuantity": {
+                  "value": 1,
+                  "unit": "Cápsula",
+                  "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRUnidadeMedida",
+                  "code": "13"
+                }
+              }
+            ]
+          }
+        ],
+        "dispenseRequest": {
+          "validityPeriod": {
+            "start": "2026-10-25",
+            "end": "2026-11-24"
+          },
+          "quantity": {
+            "value": 12,
+            "unit": "Cápsula",
+            "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRUnidadeMedida",
+            "code": "13"
+          }
+        },
+        "encounter": {
+          "reference": "Encounter/sa-internacao"
+        }
+      }
+    },
+    {
+      "fullUrl": "https://interop-saude-br.exemplo.org/fhir/CarePlan/sa-plano-cuidados",
+      "resource": {
+        "resourceType": "CarePlan",
+        "id": "sa-plano-cuidados",
+        "meta": {
+          "profile": [
+            "https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-careplan"
+          ]
+        },
+        "status": "active",
+        "intent": "plan",
+        "description": "Seguimento na atenção primária após internação por pneumonia.",
+        "subject": {
+          "reference": "Patient/paciente-exemplo"
+        },
+        "activity": [
+          {
+            "detail": {
+              "status": "scheduled",
+              "description": "Consulta de retorno na unidade básica de saúde para reavaliação clínica.",
+              "scheduledString": "Em 7 dias após a alta"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

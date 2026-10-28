@@ -1,0 +1,21 @@
+{
+  "resourceType": "PractitionerRole",
+  "id": "lotacao-exemplo",
+  "meta": {
+    "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSLotacaoProfissional"]
+  },
+  "active": true,
+  "period": { "start": "2024-02-01" },
+  "practitioner": { "reference": "Practitioner/profissional-exemplo" },
+  "organization": { "reference": "Organization/estabelecimento-exemplo" },
+  "code": [
+    {
+      "coding": [
+        {
+          "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO",
+          "code": "223505"
+        }
+      ]
+    }
+  ]
+}

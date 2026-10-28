@@ -1,0 +1,126 @@
+{
+  "resourceType": "Bundle",
+  "identifier": {
+    "system": "http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-99",
+    "value": "2026-10-20-0002"
+  },
+  "type": "document",
+  "timestamp": "2026-10-20T09:45:00-03:00",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:5b7d1e2a-9c3f-4a6b-8e0d-1f2a3b4c5d03",
+      "resource": {
+        "resourceType": "Composition",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegistroImunobiologicoAdministradoCampanha-2.0"
+          ]
+        },
+        "status": "final",
+        "type": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDocumento",
+              "code": "RIA"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://rnds.saude.gov.br/fhir/r4/NamingSystem/cns",
+            "value": "200000000000003"
+          }
+        },
+        "date": "2026-10-20T09:45:00-03:00",
+        "author": [
+          {
+            "identifier": {
+              "system": "http://rnds.saude.gov.br/fhir/r4/NamingSystem/cnes",
+              "value": "9999999"
+            }
+          }
+        ],
+        "title": "Registro de Imunobiologico Administrado na Campanha",
+        "section": [
+          {
+            "entry": [
+              {
+                "reference": "urn:uuid:c2e9a7f1-6d4b-4f3a-b8c1-2e5d7a9f0b04"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:c2e9a7f1-6d4b-4f3a-b8c1-2e5d7a9f0b04",
+      "resource": {
+        "resourceType": "Immunization",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRImunobiologicoAdministradoCampanha-2.0"
+          ]
+        },
+        "extension": [
+          {
+            "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRGrupoAtendimento",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRGrupoAtendimento",
+                  "code": "000201"
+                }
+              ]
+            }
+          },
+          {
+            "url": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRCondicaoMaternal",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCondicaoMaternal",
+                  "code": "1"
+                }
+              ]
+            }
+          }
+        ],
+        "status": "completed",
+        "vaccineCode": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRImunobiologico",
+              "code": "33"
+            }
+          ]
+        },
+        "patient": {
+          "identifier": {
+            "system": "http://rnds.saude.gov.br/fhir/r4/NamingSystem/cns",
+            "value": "200000000000003"
+          }
+        },
+        "occurrenceDateTime": "2026-10-20T09:30:00-03:00",
+        "manufacturer": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRFabricantePNI",
+            "value": "152"
+          }
+        },
+        "lotNumber": "LOTE-FLU-EXEMPLO",
+        "performer": [
+          {
+            "actor": {
+              "reference": "Practitioner/102345678900005"
+            }
+          }
+        ],
+        "protocolApplied": [
+          {
+            "doseNumberString": "9"
+          }
+        ]
+      }
+    }
+  ]
+}

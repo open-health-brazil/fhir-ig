@@ -1,0 +1,227 @@
+{
+  "resourceType": "Bundle",
+  "id": "resultado-glicose-exemplo",
+  "type": "collection",
+  "timestamp": "2026-10-21T11:00:00-03:00",
+  "entry": [
+    {
+      "fullUrl": "https://exemplo.org/fhir/DiagnosticReport/laudo-glicose-exemplo",
+      "resource": {
+        "resourceType": "DiagnosticReport",
+        "id": "laudo-glicose-exemplo",
+        "meta": {
+          "profile": ["https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-diagnosticreport"]
+        },
+        "identifier": [
+          {
+            "system": "https://laboratorio-exemplo.org/laudos",
+            "value": "LAB-2026-000456"
+          }
+        ],
+        "basedOn": [
+          { "reference": "https://exemplo.org/fhir/ServiceRequest/pedido-glicose-exemplo" }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRServicoEspecializado",
+                "code": "145",
+                "display": "SERVICO DE DIAGNOSTICO DE LABORATORIO CLINICO"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2345-7",
+              "display": "Glucose [Mass/volume] in Serum or Plasma"
+            },
+            {
+              "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS",
+              "code": "0202010473",
+              "display": "DOSAGEM DE GLICOSE"
+            }
+          ],
+          "text": "Glicose (jejum)"
+        },
+        "subject": { "reference": "Patient/paciente-exemplo" },
+        "effectiveDateTime": "2026-10-21T07:30:00-03:00",
+        "issued": "2026-10-21T10:45:00-03:00",
+        "performer": [
+          { "reference": "Organization/estabelecimento-exemplo" }
+        ],
+        "resultsInterpreter": [
+          { "reference": "PractitionerRole/lotacao-exemplo" }
+        ],
+        "specimen": [
+          { "reference": "https://exemplo.org/fhir/Specimen/amostra-soro-exemplo" }
+        ],
+        "result": [
+          { "reference": "https://exemplo.org/fhir/Observation/glicose-exemplo" }
+        ],
+        "conclusion": "Glicemia de jejum dentro do intervalo de referência."
+      }
+    },
+    {
+      "fullUrl": "https://exemplo.org/fhir/Observation/glicose-exemplo",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "glicose-exemplo",
+        "meta": {
+          "profile": ["https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-observation"]
+        },
+        "basedOn": [
+          { "reference": "https://exemplo.org/fhir/ServiceRequest/pedido-glicose-exemplo" }
+        ],
+        "status": "final",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                "code": "laboratory",
+                "display": "Laboratory"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "2345-7",
+              "display": "Glucose [Mass/volume] in Serum or Plasma"
+            }
+          ],
+          "text": "Glicose"
+        },
+        "subject": { "reference": "Patient/paciente-exemplo" },
+        "effectiveDateTime": "2026-10-21T07:30:00-03:00",
+        "issued": "2026-10-21T10:45:00-03:00",
+        "performer": [
+          { "reference": "Organization/estabelecimento-exemplo" }
+        ],
+        "valueQuantity": {
+          "value": 92,
+          "unit": "mg/dL",
+          "system": "http://unitsofmeasure.org",
+          "code": "mg/dL"
+        },
+        "interpretation": [
+          {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                "code": "N",
+                "display": "Normal"
+              }
+            ]
+          }
+        ],
+        "note": [
+          { "text": "Valor de referência para jejum de 8 horas: 70 a 99 mg/dL." }
+        ],
+        "method": {
+          "text": "Enzimático (hexoquinase)"
+        },
+        "specimen": { "reference": "https://exemplo.org/fhir/Specimen/amostra-soro-exemplo" }
+      }
+    },
+    {
+      "fullUrl": "https://exemplo.org/fhir/Specimen/amostra-soro-exemplo",
+      "resource": {
+        "resourceType": "Specimen",
+        "id": "amostra-soro-exemplo",
+        "meta": {
+          "profile": ["https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-specimen"]
+        },
+        "accessionIdentifier": {
+          "system": "https://laboratorio-exemplo.org/amostras",
+          "value": "AM-2026-000789"
+        },
+        "status": "available",
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0487",
+              "code": "SER",
+              "display": "Serum"
+            }
+          ]
+        },
+        "subject": { "reference": "Patient/paciente-exemplo" },
+        "request": [
+          { "reference": "https://exemplo.org/fhir/ServiceRequest/pedido-glicose-exemplo" }
+        ],
+        "collection": {
+          "collectedDateTime": "2026-10-21T07:30:00-03:00",
+          "quantity": {
+            "value": 4,
+            "unit": "mL",
+            "system": "http://unitsofmeasure.org",
+            "code": "mL"
+          },
+          "method": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0488",
+                "code": "VENIP",
+                "display": "Venipuncture"
+              }
+            ],
+            "text": "Punção venosa"
+          },
+          "fastingStatusCodeableConcept": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/v2-0916",
+                "code": "F",
+                "display": "Patient was fasting prior to the procedure."
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "fullUrl": "https://exemplo.org/fhir/ServiceRequest/pedido-glicose-exemplo",
+      "resource": {
+        "resourceType": "ServiceRequest",
+        "id": "pedido-glicose-exemplo",
+        "meta": {
+          "profile": ["https://br-core.saude.gov.br/fhir/StructureDefinition/br-core-servicerequest"]
+        },
+        "status": "completed",
+        "intent": "order",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRSubgrupoTabelaSUS",
+                "code": "0202",
+                "display": "Diagnóstico em laboratório clínico"
+              }
+            ]
+          }
+        ],
+        "priority": "routine",
+        "code": {
+          "coding": [
+            {
+              "system": "https://terminologia.saude.gov.br/fhir/CodeSystem/BRTabelaSUS",
+              "code": "0202010473",
+              "display": "DOSAGEM DE GLICOSE"
+            }
+          ]
+        },
+        "subject": { "reference": "Patient/paciente-exemplo" },
+        "authoredOn": "2026-10-18T14:00:00-03:00",
+        "requester": { "reference": "PractitionerRole/lotacao-exemplo" }
+      }
+    }
+  ]
+}

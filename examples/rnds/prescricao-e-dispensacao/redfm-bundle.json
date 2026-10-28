@@ -1,0 +1,212 @@
+{
+  "resourceType": "Bundle",
+  "identifier": {
+    "system": "http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-99999",
+    "value": "redfm-2026-000456"
+  },
+  "type": "document",
+  "timestamp": "2026-10-20T15:40:00-03:00",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:9a753e32-baf1-4b4b-8d43-9a20c9039414",
+      "resource": {
+        "resourceType": "Composition",
+        "id": "9a753e32-baf1-4b4b-8d43-9a20c9039414",
+        "meta": {
+          "profile": [
+            "http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSRegistroEletronicoDispensacaoFornecimentoMedicamentos"
+          ]
+        },
+        "status": "final",
+        "type": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDocumento",
+              "code": "RDM"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://rnds.saude.gov.br/fhir/r4/NamingSystem/cns",
+            "value": "200000000000003"
+          }
+        },
+        "date": "2026-10-20",
+        "author": [
+          {
+            "identifier": {
+              "system": "http://rnds.saude.gov.br/fhir/r4/NamingSystem/cnes",
+              "value": "9990001"
+            }
+          }
+        ],
+        "title": "Registro Eletrônico de Dispensação ou Fornecimento de Medicamentos",
+        "section": [
+          {
+            "title": "Medicamentos Dispensados",
+            "code": {
+              "coding": [{ "system": "http://loinc.org", "code": "56445-0" }]
+            },
+            "entry": [{ "reference": "urn:uuid:98fdeeb3-4e30-47ae-97bc-7453a827825d" }]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:98fdeeb3-4e30-47ae-97bc-7453a827825d",
+      "resource": {
+        "resourceType": "MedicationDispense",
+        "id": "98fdeeb3-4e30-47ae-97bc-7453a827825d",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSDispensacaoMedicamento"]
+        },
+        "identifier": [
+          {
+            "system": "http://www.saude.gov.br/fhir/r4/NamingSystem/dispensed-item-id",
+            "value": "DISP-2026-000456-1"
+          }
+        ],
+        "status": "completed",
+        "medicationReference": { "reference": "urn:uuid:0ada6612-53ed-4185-9639-d2ef183f00b7" },
+        "subject": {
+          "identifier": {
+            "system": "http://rnds.saude.gov.br/fhir/r4/NamingSystem/cns",
+            "value": "200000000000003"
+          }
+        },
+        "performer": [
+          {
+            "actor": { "reference": "urn:uuid:98050141-f696-4888-b39a-adb0011b980c" }
+          }
+        ],
+        "authorizingPrescription": [
+          {
+            "id": "in-rnds",
+            "identifier": {
+              "system": "http://www.saude.gov.br/fhir/r4/NamingSystem/prescription-item-id",
+              "value": "PRESC-2026-000123-1"
+            }
+          }
+        ],
+        "type": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDispensacaoRealizada",
+              "code": "fully-dispensing"
+            }
+          ]
+        },
+        "quantity": {
+          "value": 1,
+          "unit": "Caixa",
+          "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRUnidadeMedida",
+          "code": "12"
+        },
+        "whenHandedOver": "2026-10-20T15:30:00-03:00",
+        "receiver": [
+          {
+            "identifier": {
+              "system": "http://rnds.saude.gov.br/fhir/r4/NamingSystem/cns",
+              "value": "200000000000003"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:0ada6612-53ed-4185-9639-d2ef183f00b7",
+      "resource": {
+        "resourceType": "Medication",
+        "id": "0ada6612-53ed-4185-9639-d2ef183f00b7",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSMedicamento"]
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRObmAMPP",
+              "code": "@brasil16481197685",
+              "display": "Amoxicilina 500 mg cápsula (Aché Laboratórios Farmacêuticos S.A) x 21 cápsulas"
+            }
+          ]
+        },
+        "status": "active",
+        "batch": {
+          "lotNumber": "LOTE-EXEMPLO-02",
+          "expirationDate": "2027-08-31"
+        }
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:98050141-f696-4888-b39a-adb0011b980c",
+      "resource": {
+        "resourceType": "PractitionerRole",
+        "id": "98050141-f696-4888-b39a-adb0011b980c",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSLotacaoProfissional"]
+        },
+        "active": true,
+        "practitioner": { "reference": "urn:uuid:9a2c2b53-b60b-45f4-a897-4a4f56f794a9" },
+        "organization": { "reference": "urn:uuid:2c7d6538-4ecd-4529-8f12-56ffcacc662b" },
+        "code": [
+          {
+            "coding": [
+              {
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO",
+                "code": "223405",
+                "display": "FARMACEUTICO"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:9a2c2b53-b60b-45f4-a897-4a4f56f794a9",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "9a2c2b53-b60b-45f4-a897-4a4f56f794a9",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSProfissional"]
+        },
+        "identifier": [
+          {
+            "type": {
+              "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "TAX" }]
+            },
+            "system": "https://saude.gov.br/sid/cpf",
+            "value": "11144477735"
+          },
+          {
+            "type": {
+              "coding": [{ "system": "http://terminology.hl7.org/CodeSystem/v2-0203", "code": "RPH" }]
+            },
+            "system": "https://saude.gov.br/fhir/sid/crf-sp",
+            "value": "000000"
+          }
+        ],
+        "active": true,
+        "name": [{ "text": "Fernanda Exemplo Lima" }]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:2c7d6538-4ecd-4529-8f12-56ffcacc662b",
+      "resource": {
+        "resourceType": "Organization",
+        "id": "2c7d6538-4ecd-4529-8f12-56ffcacc662b",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/RNDSEstabelecimentoSaude"]
+        },
+        "identifier": [
+          {
+            "use": "official",
+            "system": "https://saude.gov.br/sid/cnes",
+            "value": "9990001"
+          }
+        ],
+        "name": "UBS Exemplo"
+      }
+    }
+  ]
+}

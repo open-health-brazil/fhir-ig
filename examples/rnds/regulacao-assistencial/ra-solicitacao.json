@@ -1,0 +1,260 @@
+{
+  "resourceType": "Bundle",
+  "id": "ra-solicitacao-exemplo",
+  "identifier": {
+    "system": "http://www.saude.gov.br/fhir/r4/NamingSystem/BRRNDS-99",
+    "value": "REG-2026-000321"
+  },
+  "type": "document",
+  "timestamp": "2026-10-22T10:05:00-03:00",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:9b2d4e61-7a3c-4f08-8d15-2c6e9a0f4b01",
+      "resource": {
+        "resourceType": "Composition",
+        "id": "9b2d4e61-7a3c-4f08-8d15-2c6e9a0f4b01",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRegulacaoAssistencial"]
+        },
+        "status": "final",
+        "type": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoDocumento",
+              "code": "RA"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeAssistencial",
+                "code": "09"
+              }
+            ]
+          }
+        ],
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "200000000000003"
+          }
+        },
+        "date": "2026-10-22T10:05:00-03:00",
+        "author": [
+          {
+            "identifier": {
+              "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+              "value": "9999999"
+            }
+          }
+        ],
+        "title": "Regulação Assistencial",
+        "event": [
+          {
+            "code": [
+              {
+                "coding": [
+                  {
+                    "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRStatusRegulacaoAssistencial",
+                    "code": "pending"
+                  }
+                ]
+              }
+            ],
+            "period": {
+              "end": "2026-10-22T10:00:00-03:00"
+            },
+            "detail": [
+              {
+                "identifier": {
+                  "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+                  "value": "9999999"
+                }
+              },
+              {
+                "reference": "urn:uuid:9b2d4e61-7a3c-4f08-8d15-2c6e9a0f4b03"
+              }
+            ]
+          }
+        ],
+        "section": [
+          {
+            "entry": [
+              { "reference": "urn:uuid:9b2d4e61-7a3c-4f08-8d15-2c6e9a0f4b02" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:9b2d4e61-7a3c-4f08-8d15-2c6e9a0f4b02",
+      "resource": {
+        "resourceType": "Appointment",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/BRAgendamentoRegulacaoAssistencial"]
+        },
+        "status": "proposed",
+        "serviceCategory": [
+          {
+            "coding": [
+              {
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeAssistencial",
+                "code": "09"
+              }
+            ]
+          }
+        ],
+        "serviceType": [
+          {
+            "coding": [
+              {
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS",
+                "code": "0301010072"
+              }
+            ]
+          }
+        ],
+        "specialty": [
+          {
+            "coding": [
+              {
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO",
+                "code": "225120"
+              }
+            ]
+          }
+        ],
+        "appointmentType": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/request-priority",
+              "code": "routine"
+            }
+          ]
+        },
+        "basedOn": [
+          { "reference": "urn:uuid:9b2d4e61-7a3c-4f08-8d15-2c6e9a0f4b03" }
+        ],
+        "participant": [
+          {
+            "type": [
+              {
+                "coding": [
+                  {
+                    "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTipoParticipante",
+                    "code": "PCT"
+                  }
+                ]
+              }
+            ],
+            "actor": {
+              "identifier": {
+                "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+                "value": "200000000000003"
+              }
+            },
+            "status": "needs-action"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:9b2d4e61-7a3c-4f08-8d15-2c6e9a0f4b03",
+      "resource": {
+        "resourceType": "ServiceRequest",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/BRRequisicaoRegulacaoAssistencial"]
+        },
+        "status": "active",
+        "intent": "proposal",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRModalidadeAssistencial",
+                "code": "09"
+              }
+            ]
+          }
+        ],
+        "priority": "routine",
+        "code": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRTabelaSUS",
+              "code": "0301010072"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "200000000000003"
+          }
+        },
+        "authoredOn": "2026-10-22T10:00:00-03:00",
+        "requester": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BREstabelecimentoSaude-1.0",
+            "value": "9999999"
+          }
+        },
+        "performerType": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCBO",
+              "code": "225120"
+            }
+          ]
+        },
+        "reasonReference": [
+          { "reference": "urn:uuid:9b2d4e61-7a3c-4f08-8d15-2c6e9a0f4b04" }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:9b2d4e61-7a3c-4f08-8d15-2c6e9a0f4b04",
+      "resource": {
+        "resourceType": "Condition",
+        "id": "9b2d4e61-7a3c-4f08-8d15-2c6e9a0f4b04",
+        "meta": {
+          "profile": ["http://www.saude.gov.br/fhir/r4/StructureDefinition/BRCID10Avaliado-1.0"]
+        },
+        "clinicalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              "code": "active"
+            }
+          ]
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCategoriaDiagnostico",
+                "code": "01"
+              }
+            ]
+          }
+        ],
+        "code": {
+          "coding": [
+            {
+              "system": "http://www.saude.gov.br/fhir/r4/CodeSystem/BRCID10",
+              "code": "I209"
+            }
+          ]
+        },
+        "subject": {
+          "identifier": {
+            "system": "http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0",
+            "value": "200000000000003"
+          }
+        }
+      }
+    }
+  ]
+}
