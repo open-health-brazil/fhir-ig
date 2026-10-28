@@ -1,0 +1,27 @@
+---
+// Shown on every page through the Banner override. Keep the wording explicit:
+// this site is a community proposal and must never read as an official channel.
+---
+
+<div class="isb-disclaimer" role="note" data-pagefind-ignore>
+	<strong>Proposta comunitária, não oficial.</strong>
+	Este site não é mantido pelo Ministério da Saúde nem pelo DATASUS. Para informação oficial, consulte o
+	<a href="https://servicos-datasus.saude.gov.br/">Portal de Serviços do DATASUS</a> e o
+	<a href="https://hl7.org.br/fhir/core/">BR Core</a>.
+</div>
+
+<style>
+	.isb-disclaimer {
+		padding: 0.5rem var(--sl-nav-pad-x);
+		background: var(--isb-notice-bg);
+		color: var(--isb-notice-text);
+		border-bottom: 1px solid var(--isb-notice-border);
+		font-size: var(--sl-text-sm);
+		text-align: center;
+		text-wrap: balance;
+	}
+	.isb-disclaimer a {
+		color: inherit;
+		text-decoration: underline;
+	}
+</style>

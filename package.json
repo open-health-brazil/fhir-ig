@@ -1,0 +1,28 @@
+{
+  "name": "interop-saude-br",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "fhir:fetch": "node scripts/fetch-packages.ts",
+    "fhir:vendor-rnds": "node scripts/vendor-rnds.ts",
+    "fhir:generate": "node scripts/generate-data.ts",
+    "fhir:update": "npm run fhir:fetch && npm run fhir:generate",
+    "fhir:check-updates": "node scripts/check-updates.ts",
+    "fhir:validate": "sh scripts/validate-examples.sh"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "0.42.7",
+    "astro": "7.4.4",
+    "sharp": "0.35.5",
+    "starlight-links-validator": "0.27.0"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "license": "CC0-1.0",
+  "private": true
+}
