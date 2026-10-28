@@ -1,0 +1,24 @@
+name: Erro de conteúdo
+description: Algo no site está incorreto ou desatualizado.
+labels: [conteudo]
+body:
+  - type: input
+    id: pagina
+    attributes:
+      label: Página
+      description: Link da página com o problema.
+    validations:
+      required: true
+  - type: textarea
+    id: problema
+    attributes:
+      label: O que está errado
+    validations:
+      required: true
+  - type: textarea
+    id: fonte
+    attributes:
+      label: Fonte que mostra o correto
+      description: Link para portaria, guia oficial, pacote FHIR ou outra fonte primária.
+    validations:
+      required: true
