@@ -371,6 +371,10 @@ mobile-starlight-toc .dropdown {
 .sl-markdown-content tr:nth-child(2n) td {
 	background: transparent;
 }
+/* Long canonical URLs would otherwise push the table past the column. */
+.sl-markdown-content td code {
+	overflow-wrap: anywhere;
+}
 @media (max-width: 50rem) {
 	.sl-markdown-content table {
 		display: block;

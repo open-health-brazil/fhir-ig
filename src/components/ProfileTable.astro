@@ -34,6 +34,9 @@ const value = (e: ProfileElement) => {
 
 <div class:list={['isb-table-wrap', 'not-content', { 'isb-via2': isRnds }]}>
 	<table class="isb-profile-table">
+		<colgroup>
+			<col class="c-el" /><col class="c-card" /><col class="c-type" /><col class="c-ms" /><col class="c-bind" /><col />
+		</colgroup>
 		<thead>
 			<tr>
 				<th>Elemento</th>
@@ -52,7 +55,7 @@ const value = (e: ProfileElement) => {
 							<code><Breakable text={label(e)} after=".:" /></code>
 						</td>
 						<td class="nowrap">{card(e)}</td>
-						<td>{types(e)}</td>
+						<td><Breakable text={types(e)} after="(|," /></td>
 						<td>{e.mustSupport ? 'S' : ''}</td>
 						<td>
 							{e.binding && (
@@ -93,10 +96,35 @@ const value = (e: ProfileElement) => {
 		border: 1px solid var(--isb-form-ink);
 		margin-top: 1rem;
 	}
+	/* Fixed column widths keep every column inside the content column on desktop;
+	   below 34rem the wrapper scrolls instead. */
 	.isb-profile-table {
 		width: 100%;
+		min-width: 34rem;
+		table-layout: fixed;
 		border-collapse: collapse;
 		font-size: var(--sl-text-xs);
+	}
+	.c-el {
+		width: 25%;
+	}
+	.c-card {
+		width: 3.75rem;
+	}
+	.c-type {
+		width: 18%;
+	}
+	.c-ms {
+		width: 2.5rem;
+	}
+	.c-bind {
+		width: 16%;
+	}
+	td {
+		overflow-wrap: break-word;
+	}
+	td:last-child {
+		hyphens: auto;
 	}
 	th {
 		position: sticky;
@@ -131,10 +159,7 @@ const value = (e: ProfileElement) => {
 		font-weight: 600;
 	}
 	td code {
-		overflow-wrap: anywhere;
-	}
-	td:first-child code {
-		overflow-wrap: normal;
+		overflow-wrap: break-word;
 	}
 	.isb-via2 {
 		border-color: var(--isb-via2-ink);
