@@ -1,4 +1,5 @@
 ---
+import Breakable from './Breakable.astro';
 import { namingSystems } from '../data/fhir';
 
 interface Props {
@@ -19,7 +20,7 @@ const rows = Astro.props.ids.map((id) => {
 			<tr>
 				<th>Identificador</th>
 				<th><code>system</code> no BR Core</th>
-				<th>URI legada (RNDS)</th>
+				<th class="via2">URI legada (RNDS)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,8 +28,8 @@ const rows = Astro.props.ids.map((id) => {
 				rows.map((ns) => (
 					<tr>
 						<td>{ns.description ?? ns.name}</td>
-						<td><code>{ns.preferred}</code></td>
-						<td>{ns.legacy.length ? ns.legacy.map((u) => <code>{u}</code>) : '—'}</td>
+						<td><code><Breakable text={ns.preferred} /></code></td>
+						<td class="via2">{ns.legacy.length ? ns.legacy.map((u) => <code><Breakable text={u} /></code>) : '—'}</td>
 					</tr>
 				))
 			}
@@ -40,8 +41,7 @@ const rows = Astro.props.ids.map((id) => {
 <style>
 	.isb-table-wrap {
 		overflow-x: auto;
-		border: 1px solid var(--sl-color-gray-5);
-		border-radius: 0.5rem;
+		border: 1px solid var(--isb-form-ink);
 		margin-top: 1rem;
 	}
 	table {
@@ -52,16 +52,36 @@ const rows = Astro.props.ids.map((id) => {
 	th,
 	td {
 		text-align: left;
-		padding: 0.4rem 0.6rem;
+		padding: 0.5rem 0.75rem;
 		vertical-align: top;
-		border-bottom: 1px solid var(--sl-color-hairline);
+		border-bottom: 1px solid var(--isb-hair);
+		border-inline-end: 1px solid var(--isb-hair);
 	}
 	th {
-		background: var(--sl-color-gray-6);
+		background: var(--isb-paper-2);
+		border-bottom-color: var(--isb-form-ink);
+		font-family: var(--isb-font-display);
+		font-stretch: 78%;
+		font-weight: 650;
+		font-size: 0.6875rem;
+		letter-spacing: 0.07em;
+		text-transform: uppercase;
+		color: var(--isb-form-ink);
+	}
+	th code {
+		font-size: inherit;
+		text-transform: none;
+		letter-spacing: 0;
+	}
+	.via2 {
+		background: var(--isb-via2);
+		color: var(--isb-via2-ink);
 	}
 	td code {
 		display: block;
-		overflow-wrap: anywhere;
+		overflow-wrap: break-word;
+		font-family: var(--__sl-font-mono);
+		font-size: var(--sl-text-xs);
 	}
 	.isb-table-caption {
 		font-size: var(--sl-text-xs);

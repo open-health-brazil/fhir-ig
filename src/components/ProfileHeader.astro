@@ -1,5 +1,5 @@
 ---
-import { Badge } from '@astrojs/starlight/components';
+import Breakable from './Breakable.astro';
 import { getProfile, lastSegment, sourceLabel, sourceLink, type ProfileSource } from '../data/fhir';
 
 interface Props {
@@ -8,66 +8,135 @@ interface Props {
 }
 
 const profile = getProfile(Astro.props.source, Astro.props.id);
-const statusVariant = profile.status === 'active' ? 'success' : profile.status === 'draft' ? 'caution' : 'danger';
+// RNDS profiles are printed on the canary second copy (2ª via); BR Core on the first.
+const isRnds = profile.source.kind !== 'package';
 const statusLabel = { active: 'ativo', draft: 'rascunho', retired: 'descontinuado' }[profile.status] ?? profile.status;
 ---
 
-<div class="isb-profile-header not-content">
+<div class:list={['isb-profile-header', 'not-content', { 'isb-via2': isRnds }]}>
 	<div class="isb-profile-title">
 		<strong>{profile.title ?? profile.name}</strong>
-		<Badge text={sourceLabel(profile)} variant={profile.source.kind === 'package' ? 'note' : 'tip'} />
-		<Badge text={statusLabel} variant={statusVariant} />
+		<span class="isb-label">{isRnds ? '2ª via' : '1ª via'} · {sourceLabel(profile)}</span>
 	</div>
 	<dl>
-		<dt>Canônica</dt>
-		<dd><code>{profile.url}</code></dd>
-		{profile.version && (
-			<>
-				<dt>Versão do artefato</dt>
-				<dd><code>{profile.version}</code></dd>
-			</>
-		)}
-		<dt>Recurso</dt>
-		<dd><code>{profile.type}</code> (deriva de <code>{lastSegment(profile.baseDefinition)}</code>)</dd>
-		<dt>Fonte</dt>
-		<dd><a href={sourceLink(profile)}>{profile.source.kind === 'package' ? 'Página do perfil no BR Core' : 'Perfil no Simplifier'}</a></dd>
+		<div class="wide">
+			<dt class="isb-label">Canônica</dt>
+			<dd><code><Breakable text={profile.url} /></code></dd>
+		</div>
+		<div>
+			<dt class="isb-label">Status</dt>
+			<dd><span class:list={['isb-status', profile.status]}>{statusLabel}</span></dd>
+		</div>
+		{
+			profile.version && (
+				<div>
+					<dt class="isb-label">Versão do artefato</dt>
+					<dd><code>{profile.version}</code></dd>
+				</div>
+			)
+		}
+		<div>
+			<dt class="isb-label">Recurso</dt>
+			<dd><code>{profile.type}</code></dd>
+		</div>
+		<div>
+			<dt class="isb-label">Deriva de</dt>
+			<dd><code>{lastSegment(profile.baseDefinition)}</code></dd>
+		</div>
+		<div class="wide">
+			<dt class="isb-label">Fonte</dt>
+			<dd><a href={sourceLink(profile)}>{isRnds ? 'Perfil no Simplifier' : 'Página do perfil no BR Core'}</a></dd>
+		</div>
 	</dl>
 </div>
 
 <style>
 	.isb-profile-header {
-		border: 1px solid var(--sl-color-gray-5);
-		border-radius: 0.5rem;
-		padding: 1rem;
-		margin-block: 1rem;
+		--card-paper: var(--isb-paper);
+		border: 1px solid var(--isb-form-ink);
+		background: var(--card-paper);
+		margin-block: 1.25rem;
+	}
+	.isb-via2 {
+		--card-paper: var(--isb-via2);
 	}
 	.isb-profile-title {
 		display: flex;
 		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.5rem;
-		margin-bottom: 0.75rem;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0.25rem 1rem;
+		padding: 0.625rem 0.875rem;
+		background: var(--isb-data-ink);
+		color: var(--isb-paper);
+	}
+	.isb-profile-title strong {
+		font-family: var(--isb-font-display);
+		font-weight: 700;
+		font-size: var(--sl-text-base);
+		color: inherit;
+	}
+	.isb-profile-title .isb-label {
+		color: var(--isb-via2);
+	}
+	.isb-via2 .isb-profile-title .isb-label {
+		color: var(--isb-paper);
 	}
 	dl {
 		display: grid;
-		grid-template-columns: max-content 1fr;
-		gap: 0.25rem 1rem;
+		grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
 		margin: 0;
 		font-size: var(--sl-text-sm);
 	}
-	dt {
-		color: var(--isb-muted);
+	dl > div {
+		padding: 0.5rem 0.875rem 0.625rem;
+		border-bottom: 1px solid var(--isb-hair);
+		border-inline-end: 1px solid var(--isb-hair);
+		margin-bottom: -1px;
+	}
+	dl > .wide {
+		grid-column: 1 / -1;
 	}
 	dd {
-		margin: 0;
-		overflow-wrap: anywhere;
+		margin: 0.3rem 0 0;
+		overflow-wrap: break-word;
+		color: var(--isb-data-ink);
 	}
-	@media (max-width: 40rem) {
-		dl {
-			grid-template-columns: 1fr;
-		}
-		dd {
-			margin-bottom: 0.5rem;
-		}
+	.isb-via2 dd {
+		color: var(--isb-via2-ink);
+	}
+	.isb-via2 .isb-label {
+		color: var(--isb-via2-ink);
+	}
+	code {
+		padding: 0;
+		background: none;
+		font-family: var(--__sl-font-mono);
+		font-size: var(--sl-text-xs);
+	}
+	a {
+		color: inherit;
+		text-decoration-color: var(--isb-form-ink);
+		text-underline-offset: 0.2em;
+	}
+	.isb-status {
+		display: inline-block;
+		border: 1.5px solid currentColor;
+		padding: 0.1rem 0.4rem;
+		font-family: var(--isb-font-display);
+		font-stretch: 80%;
+		font-weight: 700;
+		font-size: 0.75rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		transform: rotate(-2deg);
+		color: var(--isb-stamp-ok);
+	}
+	.isb-status.draft {
+		color: var(--isb-stamp-draft);
+	}
+	.isb-status.retired {
+		color: var(--isb-stamp-retired);
+		text-decoration: line-through;
 	}
 </style>

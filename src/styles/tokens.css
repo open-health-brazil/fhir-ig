@@ -1,46 +1,78 @@
 /*
  * Design tokens for Interop Saúde BR.
- * All brand colours live here so the whole palette can be swapped (for example
- * for the gov.br Design System, if the project is ever adopted officially).
- * The palette is deliberately neutral (teal/slate) and does not imitate gov.br.
+ * All brand colours and fonts live here so the whole identity can be swapped (for
+ * example for the gov.br Design System, if the project is ever adopted officially).
+ * theme.css and the components only reference these variables.
+ *
+ * The identity borrows from Brazilian carbonless health forms: warm paper, one
+ * "form ink" for structure (rules, field labels, where the reader is), black "data
+ * ink" for content, and a canary second copy (2ª via) that marks everything RNDS.
+ * Dark mode is carbon paper. It deliberately does not imitate gov.br.
  */
 
-:root {
-	--sl-color-accent-low: #0b2e2c;
-	--sl-color-accent: #1f8a80;
-	--sl-color-accent-high: #b8ece5;
-	--sl-color-white: #ffffff;
-	--sl-color-gray-1: #eceef2;
-	--sl-color-gray-2: #c0c2c7;
-	--sl-color-gray-3: #888b96;
-	--sl-color-gray-4: #545861;
-	--sl-color-gray-5: #353841;
-	--sl-color-gray-6: #24272f;
-	--sl-color-black: #17181c;
+@import '@fontsource-variable/archivo/wdth.css';
+@import '@fontsource-variable/atkinson-hyperlegible-next';
+@import '@fontsource-variable/jetbrains-mono';
 
-	--isb-notice-bg: #3d2f0a;
-	--isb-notice-text: #fbe7b2;
-	--isb-notice-border: #8a6a16;
+/* Dark: carbon paper. */
+:root {
+	--sl-font: 'Atkinson Hyperlegible Next Variable';
+	--sl-font-mono: 'JetBrains Mono Variable';
+	--isb-font-display: 'Archivo Variable', var(--__sl-font);
+
+	--sl-color-accent-low: #3d2220;
+	--sl-color-accent: #f0846e;
+	--sl-color-accent-high: #ffc6b8;
+	--sl-color-white: #f4f1e8;
+	--sl-color-gray-1: #e6e2d6;
+	--sl-color-gray-2: #d2cec2;
+	--sl-color-gray-3: #a19d93;
+	--sl-color-gray-4: #6e6b76;
+	--sl-color-gray-5: #3c3a47;
+	--sl-color-gray-6: #272531;
+	--sl-color-black: #1a1922;
+
+	--isb-paper: var(--sl-color-black);
+	--isb-paper-2: #21202b;
+	--isb-data-ink: var(--sl-color-white);
+	--isb-form-ink: var(--sl-color-accent);
+	--isb-hair: color-mix(in srgb, var(--isb-form-ink) 38%, transparent);
+	--isb-hair-soft: color-mix(in srgb, var(--isb-form-ink) 18%, transparent);
+	--isb-via2: #37311a;
+	--isb-via2-ink: #f1df8c;
 	--isb-muted: var(--sl-color-gray-3);
-	--isb-table-stripe: color-mix(in srgb, var(--sl-color-gray-6) 60%, transparent);
+	--isb-table-stripe: color-mix(in srgb, var(--sl-color-gray-6) 55%, transparent);
+
+	--isb-stamp-ok: #86cf9f;
+	--isb-stamp-draft: #e7b75a;
+	--isb-stamp-retired: #ff9a8a;
+
+	--isb-notice-bg: var(--isb-paper-2);
+	--isb-notice-text: var(--sl-color-gray-1);
+	--isb-notice-border: var(--isb-form-ink);
 }
 
+/* Light: white first copy (1ª via). */
 :root[data-theme='light'] {
-	--sl-color-accent-low: #c9f0eb;
-	--sl-color-accent: #146b63;
-	--sl-color-accent-high: #0b3a36;
-	--sl-color-white: #17181c;
-	--sl-color-gray-1: #24272f;
-	--sl-color-gray-2: #353841;
-	--sl-color-gray-3: #545861;
-	--sl-color-gray-4: #888b96;
-	--sl-color-gray-5: #c0c2c7;
-	--sl-color-gray-6: #eceef2;
-	--sl-color-gray-7: #f5f6f8;
-	--sl-color-black: #ffffff;
+	--sl-color-accent-low: #f5e1db;
+	--sl-color-accent: #b3352a;
+	--sl-color-accent-high: #7e241c;
+	--sl-color-white: #18171c;
+	--sl-color-gray-1: #26252b;
+	--sl-color-gray-2: #37363c;
+	--sl-color-gray-3: #5c5a54;
+	--sl-color-gray-4: #8b887f;
+	--sl-color-gray-5: #d3cfc3;
+	--sl-color-gray-6: #ebe8de;
+	--sl-color-gray-7: #f4f2ea;
+	--sl-color-black: #fbfaf6;
 
-	--isb-notice-bg: #fff6dc;
-	--isb-notice-text: #4a3806;
-	--isb-notice-border: #e3c260;
+	--isb-paper-2: #f4f2ea;
+	--isb-via2: #f6eaa8;
+	--isb-via2-ink: #5e4c08;
 	--isb-table-stripe: var(--sl-color-gray-7);
+
+	--isb-stamp-ok: #2b6a3d;
+	--isb-stamp-draft: #855600;
+	--isb-stamp-retired: #9c2a1f;
 }

@@ -3,6 +3,25 @@ title: Interop Saúde BR
 description: Documentação sobre interoperabilidade em saúde no Brasil com HL7 FHIR, BR Core e a Rede Nacional de Dados em Saúde (RNDS).
 template: splash
 hero:
+  image:
+    html: |
+      <figure class="isb-vias" aria-label="O mesmo identificador CNS do paciente no BR Core e na RNDS">
+        <div class="isb-sheet isb-sheet--core">
+          <p class="isb-sheet-head"><span>1ª via</span><span>BR Core</span></p>
+          <dl>
+            <div><dt>Perfil</dt><dd>br-core-patient</dd></div>
+            <div><dt>Identificador CNS</dt><dd>https://saude.gov.br/<wbr>fhir/<wbr>sid/<wbr>cns</dd></div>
+          </dl>
+        </div>
+        <div class="isb-sheet isb-sheet--rnds">
+          <p class="isb-sheet-head"><span>2ª via</span><span>RNDS</span></p>
+          <dl>
+            <div><dt>Perfil</dt><dd>BRIndividuo-1.0</dd></div>
+            <div><dt>Identificador CNS</dt><dd>http://rnds.saude.gov.br/<wbr>fhir/<wbr>r4/<wbr>NamingSystem/<wbr>cns</dd></div>
+          </dl>
+        </div>
+        <figcaption>O mesmo paciente, duas vias: cada página diz qual se aplica.</figcaption>
+      </figure>
   tagline: Como trocar dados de saúde no Brasil com HL7 FHIR, do credenciamento na RNDS ao Bundle validado.
   actions:
     - text: Sou gestor

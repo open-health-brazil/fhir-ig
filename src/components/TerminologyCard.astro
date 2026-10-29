@@ -1,5 +1,6 @@
 ---
 import { Aside } from '@astrojs/starlight/components';
+import Breakable from './Breakable.astro';
 import { meta, terminologies } from '../data/fhir';
 
 interface Props {
@@ -15,26 +16,36 @@ const termVersion = meta.packages.find((p) => p.id === 'br.gov.saude.terminologi
 ---
 
 <div class="isb-term not-content">
+	<div class="isb-term-title">
+		<strong>{cs.title ?? cs.name}</strong>
+		<span class="isb-label">CodeSystem</span>
+	</div>
 	<dl>
-		<dt>Nome</dt>
-		<dd>{cs.title ?? cs.name}</dd>
-		<dt>Canônica (CodeSystem)</dt>
-		<dd><code>{cs.url}</code></dd>
-		<dt>URIs legadas</dt>
-		<dd>{cs.legacy.length ? cs.legacy.map((u) => <code>{u}</code>) : '—'}</dd>
-		<dt>Conteúdo no pacote</dt>
-		<dd>
-			<code>{cs.content}</code>
-			{cs.count !== null && cs.content === 'complete' && ` (${cs.count} códigos)`}
-		</dd>
+		<div class="wide">
+			<dt class="isb-label">Canônica</dt>
+			<dd><code><Breakable text={cs.url} /></code></dd>
+		</div>
+		<div class="wide via2">
+			<dt class="isb-label">URIs legadas (RNDS)</dt>
+			<dd>{cs.legacy.length ? cs.legacy.map((u) => <code><Breakable text={u} /></code>) : '—'}</dd>
+		</div>
+		<div>
+			<dt class="isb-label">Conteúdo no pacote</dt>
+			<dd>
+				<code>{cs.content}</code>
+				{cs.count !== null && cs.content === 'complete' && ` (${cs.count} códigos)`}
+			</dd>
+		</div>
+		<div>
+			<dt class="isb-label">Página no guia de terminologia</dt>
+			<dd><a href={`https://terminologia.saude.gov.br/fhir/CodeSystem-${cs.id}.html`}>CodeSystem-{cs.id}</a></dd>
+		</div>
 		{valueSets.length > 0 && (
-			<>
-				<dt>ValueSets que o usam</dt>
-				<dd>{valueSets.map((v) => <code>{v.url}</code>)}</dd>
-			</>
+			<div class="wide">
+				<dt class="isb-label">ValueSets que o usam</dt>
+				<dd>{valueSets.map((v) => <code><Breakable text={v.url} /></code>)}</dd>
+			</div>
 		)}
-		<dt>Página no guia de terminologia</dt>
-		<dd><a href={`https://terminologia.saude.gov.br/fhir/CodeSystem-${cs.id}.html`}>CodeSystem-{cs.id}</a></dd>
 	</dl>
 </div>
 {
@@ -49,31 +60,65 @@ const termVersion = meta.packages.find((p) => p.id === 'br.gov.saude.terminologi
 
 <style>
 	.isb-term {
-		border: 1px solid var(--sl-color-gray-5);
-		border-radius: 0.5rem;
-		padding: 1rem;
-		margin-block: 1rem;
+		border: 1px solid var(--isb-form-ink);
+		background: var(--isb-paper);
+		margin-block: 1.25rem;
+	}
+	.isb-term-title {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0.25rem 1rem;
+		padding: 0.625rem 0.875rem;
+		background: var(--isb-data-ink);
+		color: var(--isb-paper);
+	}
+	.isb-term-title strong {
+		font-family: var(--isb-font-display);
+		font-weight: 700;
+		color: inherit;
+	}
+	.isb-term-title .isb-label {
+		color: var(--isb-via2);
 	}
 	dl {
 		display: grid;
-		grid-template-columns: max-content 1fr;
-		gap: 0.35rem 1rem;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
 		margin: 0;
 		font-size: var(--sl-text-sm);
 	}
-	dt {
-		color: var(--isb-muted);
+	dl > div {
+		padding: 0.5rem 0.875rem 0.625rem;
+		border-bottom: 1px solid var(--isb-hair);
+		border-inline-end: 1px solid var(--isb-hair);
+		margin-bottom: -1px;
+	}
+	dl > .wide {
+		grid-column: 1 / -1;
+	}
+	dl > .via2 {
+		background: var(--isb-via2);
+	}
+	.via2 dd,
+	.via2 .isb-label {
+		color: var(--isb-via2-ink);
 	}
 	dd {
-		margin: 0;
+		margin: 0.3rem 0 0;
+		color: var(--isb-data-ink);
 	}
 	dd code {
 		display: block;
-		overflow-wrap: anywhere;
+		padding: 0;
+		background: none;
+		overflow-wrap: break-word;
+		font-family: var(--__sl-font-mono);
+		font-size: var(--sl-text-xs);
 	}
-	@media (max-width: 40rem) {
-		dl {
-			grid-template-columns: 1fr;
-		}
+	a {
+		color: inherit;
+		text-decoration-color: var(--isb-form-ink);
+		text-underline-offset: 0.2em;
 	}
 </style>

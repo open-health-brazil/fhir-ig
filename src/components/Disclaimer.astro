@@ -4,24 +4,50 @@
 ---
 
 <div class="isb-disclaimer" role="note" data-pagefind-ignore>
-	<strong>Proposta comunitária, não oficial.</strong>
-	Este site não é mantido pelo Ministério da Saúde nem pelo DATASUS. Para informação oficial, consulte o
-	<a href="https://servicos-datasus.saude.gov.br/">Portal de Serviços do DATASUS</a> e o
-	<a href="https://hl7.org.br/fhir/core/">BR Core</a>.
+	<strong class="isb-stamp">Não oficial</strong>
+	<span>
+		Proposta comunitária. Este site não é mantido pelo Ministério da Saúde nem pelo DATASUS. Para informação
+		oficial, consulte o{' '}
+		<a href="https://servicos-datasus.saude.gov.br/">Portal de Serviços do DATASUS</a> e o{' '}
+		<a href="https://hl7.org.br/fhir/core/">BR Core</a>.
+	</span>
 </div>
 
 <style>
 	.isb-disclaimer {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.875rem;
 		padding: 0.5rem var(--sl-nav-pad-x);
 		background: var(--isb-notice-bg);
 		color: var(--isb-notice-text);
-		border-bottom: 1px solid var(--isb-notice-border);
-		font-size: var(--sl-text-sm);
-		text-align: center;
-		text-wrap: balance;
+		border-bottom: 1px dashed var(--isb-notice-border);
+		font-size: var(--sl-text-xs);
+		line-height: 1.45;
+		text-wrap: pretty;
+	}
+	.isb-stamp {
+		flex: none;
+		border: 1.5px solid var(--isb-form-ink);
+		padding: 0.2rem 0.4rem;
+		font-family: var(--isb-font-display);
+		font-stretch: 78%;
+		font-weight: 700;
+		font-size: 0.6875rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--isb-form-ink);
+		transform: rotate(-2deg);
 	}
 	.isb-disclaimer a {
 		color: inherit;
-		text-decoration: underline;
+		text-decoration-color: var(--isb-form-ink);
+		text-underline-offset: 0.2em;
+	}
+	@media (max-width: 40rem) {
+		.isb-disclaimer {
+			justify-content: flex-start;
+		}
 	}
 </style>

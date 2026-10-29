@@ -1,4 +1,5 @@
 ---
+import Breakable from './Breakable.astro';
 import { getProfile, lastSegment, sourceLabel, type ProfileElement, type ProfileSource } from '../data/fhir';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 
 const { source, id, only, hideProhibited = false } = Astro.props;
 const profile = getProfile(source, id);
+const isRnds = profile.source.kind !== 'package';
 
 const elements = profile.elements.filter(
 	(e) => (!only || e.id === only || e.id.startsWith(`${only}.`) || e.id.startsWith(`${only}:`)) && !(hideProhibited && e.max === '0'),
@@ -30,7 +32,7 @@ const value = (e: ProfileElement) => {
 };
 ---
 
-<div class="isb-table-wrap not-content">
+<div class:list={['isb-table-wrap', 'not-content', { 'isb-via2': isRnds }]}>
 	<table class="isb-profile-table">
 		<thead>
 			<tr>
@@ -47,7 +49,7 @@ const value = (e: ProfileElement) => {
 				elements.map((e) => (
 					<tr class:list={{ prohibited: e.max === '0', slice: !!e.sliceName }}>
 						<td style={`padding-left: ${0.5 + depth(e) * 0.9}rem`}>
-							<code>{label(e)}</code>
+							<code><Breakable text={label(e)} after=".:" /></code>
 						</td>
 						<td class="nowrap">{card(e)}</td>
 						<td>{types(e)}</td>
@@ -80,11 +82,15 @@ const value = (e: ProfileElement) => {
 
 <style>
 	.isb-table-wrap {
+		/* Right-edge shade appears only while more columns are hidden to the right. */
+		background:
+			linear-gradient(to left, var(--isb-paper) 1rem, transparent) right / 2.5rem 100% no-repeat local,
+			linear-gradient(to left, color-mix(in srgb, var(--isb-data-ink) 18%, transparent), transparent) right / 1rem 100% no-repeat scroll,
+			var(--isb-paper);
 		overflow-x: auto;
 		max-height: 36rem;
 		overflow-y: auto;
-		border: 1px solid var(--sl-color-gray-5);
-		border-radius: 0.5rem;
+		border: 1px solid var(--isb-form-ink);
 		margin-top: 1rem;
 	}
 	.isb-profile-table {
@@ -95,15 +101,25 @@ const value = (e: ProfileElement) => {
 	th {
 		position: sticky;
 		top: 0;
-		background: var(--sl-color-gray-6);
+		background: var(--isb-paper-2);
 		text-align: left;
-		padding: 0.4rem 0.5rem;
-		border-bottom: 1px solid var(--sl-color-gray-5);
+		padding: 0.5rem 0.5rem;
+		border-bottom: 1px solid var(--isb-form-ink);
+		font-family: var(--isb-font-display);
+		font-stretch: 78%;
+		font-weight: 650;
+		font-size: 0.6875rem;
+		letter-spacing: 0.07em;
+		text-transform: uppercase;
+		color: var(--isb-form-ink);
 	}
 	td {
-		padding: 0.3rem 0.5rem;
+		padding: 0.35rem 0.5rem;
 		vertical-align: top;
-		border-bottom: 1px solid var(--sl-color-hairline);
+		border-bottom: 1px solid var(--isb-hair-soft);
+	}
+	td code {
+		font-family: var(--__sl-font-mono);
 	}
 	tr:nth-child(even) td {
 		background: var(--isb-table-stripe);
@@ -112,10 +128,21 @@ const value = (e: ProfileElement) => {
 		opacity: 0.5;
 	}
 	tr.slice > td:first-child code {
-		color: var(--sl-color-accent-high);
+		font-weight: 600;
 	}
 	td code {
 		overflow-wrap: anywhere;
+	}
+	td:first-child code {
+		overflow-wrap: normal;
+	}
+	.isb-via2 {
+		border-color: var(--isb-via2-ink);
+	}
+	.isb-via2 th {
+		background: var(--isb-via2);
+		color: var(--isb-via2-ink);
+		border-bottom-color: var(--isb-via2-ink);
 	}
 	.nowrap {
 		white-space: nowrap;

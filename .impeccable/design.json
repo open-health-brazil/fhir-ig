@@ -1,0 +1,577 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-29T09:41:41+00:00",
+  "title": "Design System: Interop Saúde BR",
+  "extensions": {
+    "colorMeta": {
+      "form-ink": {
+        "role": "primary",
+        "displayName": "Dropout Form Red",
+        "canonical": "#b3352a",
+        "tonalRamp": [
+          "#220000",
+          "#4c0302",
+          "#781b14",
+          "#a63429",
+          "#ce584a",
+          "#ea8476",
+          "#fcb5aa",
+          "#fee9e6"
+        ]
+      },
+      "form-ink-deep": {
+        "role": "primary",
+        "displayName": "Deep Form Red",
+        "canonical": "#7e241c",
+        "tonalRamp": [
+          "#1f0000",
+          "#44110c",
+          "#6d2922",
+          "#984339",
+          "#be6559",
+          "#dc8d81",
+          "#f9b6ac",
+          "#fee9e5"
+        ]
+      },
+      "data-ink": {
+        "role": "neutral",
+        "displayName": "Data Ink",
+        "canonical": "#18171c",
+        "tonalRamp": [
+          "#0b0b0d",
+          "#252428",
+          "#424146",
+          "#616066",
+          "#828187",
+          "#a5a4a9",
+          "#c9c8cd",
+          "#eeeef1"
+        ]
+      },
+      "body-ink": {
+        "role": "neutral",
+        "displayName": "Body Ink",
+        "canonical": "#37363c",
+        "tonalRamp": [
+          "#0b0b0d",
+          "#252428",
+          "#424146",
+          "#616066",
+          "#828188",
+          "#a5a4aa",
+          "#c9c8cd",
+          "#eeeef2"
+        ]
+      },
+      "muted-ink": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "#5c5a54",
+        "tonalRamp": [
+          "#0c0b09",
+          "#262522",
+          "#43423d",
+          "#63615b",
+          "#84827c",
+          "#a7a5a0",
+          "#cac9c5",
+          "#efeeeb"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "canonical": "#fbfaf6",
+        "tonalRamp": [
+          "#0b0b0a",
+          "#252523",
+          "#43423f",
+          "#62615e",
+          "#83827f",
+          "#a6a5a2",
+          "#cac9c7",
+          "#efeeec"
+        ]
+      },
+      "paper-2": {
+        "role": "neutral",
+        "displayName": "Second Sheet",
+        "canonical": "#f4f2ea",
+        "tonalRamp": [
+          "#0c0b09",
+          "#262521",
+          "#43423d",
+          "#63615b",
+          "#84827c",
+          "#a6a59f",
+          "#cac9c4",
+          "#efeeea"
+        ]
+      },
+      "via2": {
+        "role": "secondary",
+        "displayName": "Canary Second Copy",
+        "canonical": "#f6eaa8",
+        "tonalRamp": [
+          "#100b00",
+          "#2c2501",
+          "#4b4213",
+          "#6c6228",
+          "#8e834a",
+          "#afa676",
+          "#d1caa2",
+          "#f5f0d0"
+        ]
+      },
+      "via2-ink": {
+        "role": "secondary",
+        "displayName": "Canary Copy Ink",
+        "canonical": "#5e4c08",
+        "tonalRamp": [
+          "#110a00",
+          "#2e2401",
+          "#4e4113",
+          "#716029",
+          "#93814b",
+          "#b3a476",
+          "#d5c9a3",
+          "#f8eed0"
+        ]
+      },
+      "stamp-ok": {
+        "role": "tertiary",
+        "displayName": "Stamp Green",
+        "canonical": "#2b6a3d",
+        "tonalRamp": [
+          "#001002",
+          "#082d14",
+          "#1f4d2c",
+          "#376f45",
+          "#589266",
+          "#82b38c",
+          "#add5b5",
+          "#d9f8de"
+        ]
+      },
+      "stamp-draft": {
+        "role": "tertiary",
+        "displayName": "Stamp Ochre",
+        "canonical": "#855600",
+        "tonalRamp": [
+          "#160700",
+          "#361f00",
+          "#5c3a00",
+          "#825712",
+          "#a6783a",
+          "#c59d6a",
+          "#e4c399",
+          "#ffebd4"
+        ]
+      },
+      "stamp-retired": {
+        "role": "tertiary",
+        "displayName": "Stamp Red",
+        "canonical": "#9c2a1f",
+        "tonalRamp": [
+          "#220000",
+          "#4a0804",
+          "#742018",
+          "#a2392d",
+          "#c95d4e",
+          "#e68779",
+          "#fdb4a8",
+          "#fee9e5"
+        ]
+      },
+      "carbon-form-ink": {
+        "role": "primary",
+        "displayName": "Carbon Dropout Form Red (dark mode)",
+        "canonical": "#f0846e",
+        "tonalRamp": [
+          "#200000",
+          "#460e05",
+          "#702719",
+          "#9c402f",
+          "#c2624f",
+          "#e08b7a",
+          "#fdb5a5",
+          "#fee9e5"
+        ]
+      },
+      "carbon-data-ink": {
+        "role": "neutral",
+        "displayName": "Carbon Data Ink (dark mode)",
+        "canonical": "#f4f1e8",
+        "tonalRamp": [
+          "#0c0b08",
+          "#262521",
+          "#44423c",
+          "#63615a",
+          "#85827b",
+          "#a7a59e",
+          "#cbc9c3",
+          "#f0eeea"
+        ]
+      },
+      "carbon-body-ink": {
+        "role": "neutral",
+        "displayName": "Carbon Body Ink (dark mode)",
+        "canonical": "#d2cec2",
+        "tonalRamp": [
+          "#0c0b07",
+          "#27251f",
+          "#44423a",
+          "#646157",
+          "#868278",
+          "#a8a59c",
+          "#ccc9c1",
+          "#f0eee8"
+        ]
+      },
+      "carbon-muted-ink": {
+        "role": "neutral",
+        "displayName": "Carbon Muted Ink (dark mode)",
+        "canonical": "#a19d93",
+        "tonalRamp": [
+          "#0c0b08",
+          "#272520",
+          "#44423b",
+          "#646158",
+          "#868279",
+          "#a8a59d",
+          "#ccc9c2",
+          "#f0eee9"
+        ]
+      },
+      "carbon-paper": {
+        "role": "neutral",
+        "displayName": "Carbon Warm Paper (dark mode)",
+        "canonical": "#1a1922",
+        "tonalRamp": [
+          "#0b0b0f",
+          "#25242a",
+          "#424149",
+          "#61606a",
+          "#82818c",
+          "#a5a4ad",
+          "#c9c8d0",
+          "#eeeef4"
+        ]
+      },
+      "carbon-paper-2": {
+        "role": "neutral",
+        "displayName": "Carbon Second Sheet (dark mode)",
+        "canonical": "#21202b",
+        "tonalRamp": [
+          "#0b0a0f",
+          "#25242b",
+          "#41414a",
+          "#61606c",
+          "#82818d",
+          "#a4a4af",
+          "#c8c8d1",
+          "#eeedf5"
+        ]
+      },
+      "carbon-via2": {
+        "role": "secondary",
+        "displayName": "Carbon Canary Second Copy (dark mode)",
+        "canonical": "#37311a",
+        "tonalRamp": [
+          "#0e0b04",
+          "#292517",
+          "#474230",
+          "#67614b",
+          "#89836b",
+          "#aba591",
+          "#cec9b8",
+          "#f2efe1"
+        ]
+      },
+      "carbon-via2-ink": {
+        "role": "secondary",
+        "displayName": "Carbon Canary Copy Ink (dark mode)",
+        "canonical": "#f1df8c",
+        "tonalRamp": [
+          "#110b00",
+          "#2c2500",
+          "#4d4207",
+          "#71610c",
+          "#928237",
+          "#b3a669",
+          "#d5ca98",
+          "#f8efc8"
+        ]
+      },
+      "carbon-stamp-ok": {
+        "role": "tertiary",
+        "displayName": "Carbon Stamp Green (dark mode)",
+        "canonical": "#86cf9f",
+        "tonalRamp": [
+          "#001103",
+          "#022e16",
+          "#174e2f",
+          "#2e7149",
+          "#519369",
+          "#7db48f",
+          "#a9d6b7",
+          "#d6f9e0"
+        ]
+      },
+      "carbon-stamp-draft": {
+        "role": "tertiary",
+        "displayName": "Carbon Stamp Ochre (dark mode)",
+        "canonical": "#e7b75a",
+        "tonalRamp": [
+          "#140800",
+          "#332200",
+          "#573d00",
+          "#7b5b15",
+          "#a47a1f",
+          "#c39f5b",
+          "#e3c58e",
+          "#feecce"
+        ]
+      },
+      "carbon-stamp-retired": {
+        "role": "tertiary",
+        "displayName": "Carbon Stamp Red (dark mode)",
+        "canonical": "#ff9a8a",
+        "tonalRamp": [
+          "#1f0000",
+          "#44110c",
+          "#6c2a21",
+          "#984438",
+          "#bd6658",
+          "#db8e81",
+          "#f8b6ab",
+          "#fee9e5"
+        ]
+      }
+    },
+    "derivedColors": [
+      {
+        "name": "hair",
+        "value": "color-mix(in srgb, var(--isb-form-ink) 38%, transparent)",
+        "purpose": "Inner field dividers, table cell rules, perforation dots, code frame border."
+      },
+      {
+        "name": "hair-soft",
+        "value": "color-mix(in srgb, var(--isb-form-ink) 18%, transparent)",
+        "purpose": "Profile table row rules, Starlight hairlines."
+      },
+      {
+        "name": "inline-code-tint",
+        "value": "color-mix(in srgb, var(--isb-form-ink) 9%, transparent)",
+        "purpose": "Inline code ground."
+      }
+    ],
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Home hero title only."
+      },
+      "headline": {
+        "displayName": "Page Title",
+        "purpose": "Page h1 on every doc page; balanced wrap."
+      },
+      "title": {
+        "displayName": "Section Title",
+        "purpose": "h2, under a full form-ink rule."
+      },
+      "subtitle": {
+        "displayName": "Subsection",
+        "purpose": "h3."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running prose in a 45rem column."
+      },
+      "label": {
+        "displayName": "Field Label",
+        "purpose": "Uppercase condensed caps in form ink above every field value, table headers, aside titles."
+      },
+      "stamp": {
+        "displayName": "Stamp",
+        "purpose": "Uppercase status stamps and badges."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Code, canonical URLs, sidebar and document numbers; tabular numerals."
+      }
+    },
+    "shadows": [
+      {
+        "name": "copy-lift",
+        "value": "0 0.75rem 1.5rem -0.75rem color-mix(in srgb, var(--isb-data-ink) 35%, transparent)",
+        "purpose": "Only the top sheet of an overlapping pair of copies (home hero)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "All transitions and the hero sheet slide."
+      },
+      {
+        "name": "duration-state",
+        "value": "160ms",
+        "purpose": "Background and colour changes on buttons, link cards, arrow nudge."
+      },
+      {
+        "name": "hero-slide",
+        "value": "700ms, 150ms delay",
+        "purpose": "RNDS hero sheet slides into place once; disabled under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "40rem"
+      },
+      {
+        "name": "md",
+        "value": "50rem"
+      },
+      {
+        "name": "lg",
+        "value": "72rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main call to action (home hero). Data ink, square, fills with form ink on hover.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Sou gestor <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 1.42 1.42l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z\"/></svg></a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 1.25rem; border: 1px solid var(--isb-data-ink); border-radius: 0; background: var(--isb-data-ink); color: var(--isb-paper); font-family: var(--isb-font-display); font-stretch: 95%; font-weight: 700; letter-spacing: 0.01em; text-decoration: none; transition: background-color 160ms cubic-bezier(0.16, 1, 0.3, 1), color 160ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-primary:hover { background: var(--isb-form-ink); border-color: var(--isb-form-ink); } .ds-btn-primary:focus-visible { outline: 2px solid var(--isb-form-ink); outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Second action beside the primary. Paper ground in a form-ink frame.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"#\">Sou desenvolvedor</a>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; padding: 0.9rem 1.25rem; border: 1px solid var(--isb-form-ink); border-radius: 0; background: transparent; color: var(--isb-data-ink); font-family: var(--isb-font-display); font-stretch: 95%; font-weight: 700; letter-spacing: 0.01em; text-decoration: none; transition: background-color 160ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-secondary:hover { background: var(--isb-paper-2); } .ds-btn-secondary:focus-visible { outline: 2px solid var(--isb-form-ink); outline-offset: 2px; }"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": null,
+      "description": "Header search trigger: borderless, dotted form-ink underline that turns solid on hover.",
+      "html": "<button class=\"ds-search\" type=\"button\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M21.71 20.29 18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42-1.42ZM11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z\"/></svg><span>Pesquisar</span><kbd>Ctrl K</kbd></button>",
+      "css": ".ds-search { display: inline-flex; align-items: center; gap: 0.5rem; min-width: 16rem; padding: 0.4rem 0.25rem; border: 0; border-bottom: 1px dotted var(--isb-form-ink); border-radius: 0; background: transparent; color: var(--sl-color-gray-3); font: inherit; cursor: pointer; } .ds-search span { flex: 1; text-align: start; } .ds-search:hover { border-bottom-style: solid; color: var(--isb-data-ink); } .ds-search:focus-visible { outline: 2px solid var(--isb-form-ink); outline-offset: 2px; } .ds-search kbd { border: 1px solid var(--isb-hair); border-radius: 0; padding: 0 0.3rem; font-family: var(--sl-font-mono); font-size: 0.75rem; }"
+    },
+    {
+      "name": "Numbered Sidebar",
+      "kind": "nav",
+      "refersTo": "sidebar-item-current",
+      "description": "Form index: mono form-ink counters, paper-2 hover, data-ink bar with canary number for the current page.",
+      "html": "<nav class=\"ds-nav\"><p class=\"ds-nav-group\">Desenvolvimento</p><a href=\"#\"><span>2.4</span>Envio de documentos</a><a href=\"#\"><span>2.5</span>Identificadores</a><a href=\"#\" aria-current=\"page\"><span>2.7.1</span>Paciente</a><a href=\"#\"><span>2.7.2</span>Profissional</a></nav>",
+      "css": ".ds-nav { display: grid; width: 18rem; border-inline-end: 1px solid var(--isb-form-ink); padding-inline-end: 0.75rem; } .ds-nav-group { margin: 0 0 0.25rem; font-family: var(--isb-font-display); font-stretch: 90%; font-weight: 700; font-size: 0.875rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--isb-data-ink); } .ds-nav a { display: flex; align-items: baseline; gap: 0.625rem; padding: 0.25rem 0.5rem; color: var(--sl-color-gray-2); text-decoration: none; font-size: 0.875rem; } .ds-nav a span { flex: none; min-width: 2.5rem; font-family: var(--sl-font-mono); font-size: 0.6875rem; color: var(--isb-form-ink); } .ds-nav a:hover { color: var(--isb-data-ink); background: var(--isb-paper-2); } .ds-nav a:focus-visible { outline: 2px solid var(--isb-form-ink); outline-offset: 2px; } .ds-nav a[aria-current='page'] { background: var(--isb-data-ink); color: var(--isb-paper); font-weight: 700; } .ds-nav a[aria-current='page'] span { color: var(--isb-via2); }"
+    },
+    {
+      "name": "Status Stamp",
+      "kind": "chip",
+      "refersTo": "stamp",
+      "description": "Status as a tilted outlined stamp: ativo, rascunho, descontinuado.",
+      "html": "<span class=\"ds-stamp\">ativo</span> <span class=\"ds-stamp ds-stamp-draft\">rascunho</span> <span class=\"ds-stamp ds-stamp-retired\">descontinuado</span>",
+      "css": ".ds-stamp { display: inline-block; margin: 0.25rem; border: 1.5px solid currentColor; padding: 0.1rem 0.4rem; font-family: var(--isb-font-display); font-stretch: 80%; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--isb-stamp-ok); transform: rotate(-2deg); } .ds-stamp-draft { color: var(--isb-stamp-draft); } .ds-stamp-retired { color: var(--isb-stamp-retired); text-decoration: line-through; }"
+    },
+    {
+      "name": "Profile Field Block (1ª via)",
+      "kind": "card",
+      "refersTo": "field-cell",
+      "description": "BR Core profile header: data-ink title bar, labelled cells divided by hairlines.",
+      "html": "<div class=\"ds-field-block\"><div class=\"ds-fb-head\"><strong>Paciente (BR Core)</strong><span class=\"ds-label\">1ª via · BR Core</span></div><dl><div class=\"ds-wide\"><dt class=\"ds-label\">Canônica</dt><dd><code>https://hl7.org.br/fhir/core/StructureDefinition/br-core-patient</code></dd></div><div><dt class=\"ds-label\">Status</dt><dd>ativo</dd></div><div><dt class=\"ds-label\">Recurso</dt><dd><code>Patient</code></dd></div><div><dt class=\"ds-label\">Deriva de</dt><dd><code>Patient</code></dd></div></dl></div>",
+      "css": ".ds-field-block { border: 1px solid var(--isb-form-ink); background: var(--isb-paper); } .ds-fb-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.25rem 1rem; padding: 0.625rem 0.875rem; background: var(--isb-data-ink); color: var(--isb-paper); } .ds-fb-head strong { font-family: var(--isb-font-display); font-weight: 700; } .ds-fb-head .ds-label { color: var(--isb-via2); } .ds-field-block dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); margin: 0; font-size: 0.875rem; } .ds-field-block dl > div { padding: 0.5rem 0.875rem 0.625rem; border-bottom: 1px solid var(--isb-hair); border-inline-end: 1px solid var(--isb-hair); margin-bottom: -1px; } .ds-field-block .ds-wide { grid-column: 1 / -1; } .ds-field-block dd { margin: 0.3rem 0 0; color: var(--isb-data-ink); overflow-wrap: anywhere; } .ds-field-block code { font-family: var(--sl-font-mono); font-size: 0.8125rem; } .ds-label { font-family: var(--isb-font-display); font-stretch: 78%; font-weight: 650; font-size: 0.6875rem; line-height: 1.2; letter-spacing: 0.07em; text-transform: uppercase; color: var(--isb-form-ink); }"
+    },
+    {
+      "name": "Profile Field Block (2ª via, RNDS)",
+      "kind": "card",
+      "refersTo": "field-cell-via2",
+      "description": "RNDS profile header printed on the canary second copy.",
+      "html": "<div class=\"ds-field-block2\"><div class=\"ds-fb2-head\"><strong>BRIndividuo</strong><span class=\"ds-label2\">2ª via · RNDS</span></div><dl><div class=\"ds-wide2\"><dt class=\"ds-label2\">Canônica</dt><dd><code>http://www.saude.gov.br/fhir/r4/StructureDefinition/BRIndividuo-1.0</code></dd></div><div><dt class=\"ds-label2\">Versão do artefato</dt><dd><code>1.0</code></dd></div><div><dt class=\"ds-label2\">Recurso</dt><dd><code>Patient</code></dd></div></dl></div>",
+      "css": ".ds-field-block2 { border: 1px solid var(--isb-form-ink); background: var(--isb-via2); } .ds-fb2-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.25rem 1rem; padding: 0.625rem 0.875rem; background: var(--isb-data-ink); color: var(--isb-paper); } .ds-fb2-head strong { font-family: var(--isb-font-display); font-weight: 700; } .ds-fb2-head .ds-label2 { color: var(--isb-paper); } .ds-field-block2 dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); margin: 0; font-size: 0.875rem; } .ds-field-block2 dl > div { padding: 0.5rem 0.875rem 0.625rem; border-bottom: 1px solid var(--isb-hair); border-inline-end: 1px solid var(--isb-hair); margin-bottom: -1px; } .ds-wide2 { grid-column: 1 / -1; } .ds-field-block2 dd { margin: 0.3rem 0 0; color: var(--isb-via2-ink); overflow-wrap: anywhere; } .ds-field-block2 code { font-family: var(--sl-font-mono); font-size: 0.8125rem; } .ds-label2 { font-family: var(--isb-font-display); font-stretch: 78%; font-weight: 650; font-size: 0.6875rem; line-height: 1.2; letter-spacing: 0.07em; text-transform: uppercase; color: var(--isb-via2-ink); }"
+    },
+    {
+      "name": "Form Table",
+      "kind": "custom",
+      "refersTo": "table-header",
+      "description": "Ruled table: form-ink frame, label headers on paper-2, hairline cells, RNDS column on via2.",
+      "html": "<div class=\"ds-table-wrap\"><table class=\"ds-table\"><thead><tr><th>Identificador</th><th>system no BR Core</th><th class=\"ds-via2\">URI legada (RNDS)</th></tr></thead><tbody><tr><td>CNS</td><td><code>https://saude.gov.br/fhir/sid/cns</code></td><td class=\"ds-via2\"><code>http://rnds.saude.gov.br/fhir/r4/NamingSystem/cns</code></td></tr><tr><td>CPF</td><td><code>https://saude.gov.br/fhir/sid/cpf</code></td><td class=\"ds-via2\"><code>http://rnds.saude.gov.br/fhir/r4/NamingSystem/cpf</code></td></tr></tbody></table></div>",
+      "css": ".ds-table-wrap { overflow-x: auto; border: 1px solid var(--isb-form-ink); } .ds-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; } .ds-table th, .ds-table td { text-align: left; padding: 0.5rem 0.75rem; vertical-align: top; border-bottom: 1px solid var(--isb-hair); border-inline-end: 1px solid var(--isb-hair); } .ds-table th { background: var(--isb-paper-2); border-bottom-color: var(--isb-form-ink); font-family: var(--isb-font-display); font-stretch: 78%; font-weight: 650; font-size: 0.6875rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--isb-form-ink); } .ds-table .ds-via2 { background: var(--isb-via2); color: var(--isb-via2-ink); } .ds-table code { font-family: var(--sl-font-mono); font-size: 0.8125rem; overflow-wrap: anywhere; }"
+    },
+    {
+      "name": "Link Card Row",
+      "kind": "card",
+      "refersTo": null,
+      "description": "Link cards as a ruled list: soft bottom rule, paper-2 hover, sliding form-ink arrow.",
+      "html": "<a class=\"ds-linkcard\" href=\"#\"><span><strong>Identificadores</strong><small>CPF, CNS, CNES, CNPJ e registros de conselho.</small></span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M17.92 11.62a1 1 0 0 0-.21-.33l-5-5a1 1 0 0 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1 1 0 0 0 1.42 1.42l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z\"/></svg></a>",
+      "css": ".ds-linkcard { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem 0.25rem 1.125rem; border-top: 1px solid var(--isb-form-ink); border-bottom: 1px solid var(--isb-hair); text-decoration: none; transition: background-color 160ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-linkcard strong { display: block; font-family: var(--isb-font-display); font-weight: 700; font-size: 1.125rem; color: var(--isb-data-ink); } .ds-linkcard small { color: var(--sl-color-gray-3); font-size: 0.9375rem; } .ds-linkcard svg { flex: none; color: var(--isb-form-ink); transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-linkcard:hover { background: var(--isb-paper-2); } .ds-linkcard:hover svg { transform: translateX(0.25rem); } .ds-linkcard:focus-visible { outline: 2px solid var(--isb-form-ink); outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Formulário em vias",
+    "overview": "**Creative North Star: \"Formulário em vias\"**\n\nThe site is printed as the Brazilian health form that FHIR replaces: a TISS guide or a carbonless requisition with labelled fields, one red dropout \"form ink\" for the printed structure and black \"data ink\" for whatever was filled in. BR Core and RNDS are two copies of the same document: BR Core is the white first copy (1ª via); everything RNDS sits on the canary second copy (2ª via). Dark mode is the carbon sheet: navy-black paper, salmon form ink, cream data ink.\n\nDensity is that of a form, not a brochure: 1px rules everywhere, square corners, condensed caps labels above every value, a numbered index on the left and a perforated stub (canhoto) on the right. Reading happens in one calm column of Atkinson Hyperlegible Next at a generous 1.7 line height; the drama is reserved for the wide, heavy Archivo titles and the overlapping sheets of the home hero.\n\nEvery colour and font is a custom property in `src/styles/tokens.css`; theme and components only reference variables, so the whole identity can be swapped for the gov.br Design System without touching components. The world deliberately does not imitate a government site.",
+    "keyCharacteristics": [
+      "Three inks: form ink (structure and location), data ink (content), canary 2ª via (RNDS).",
+      "Zero radius on every surface, control, badge and code frame.",
+      "1px rules in form ink; softer hairlines are form ink mixed down, never grey.",
+      "Field labels in condensed Archivo caps over every value.",
+      "Status printed as a tilted, outlined stamp.",
+      "Numbered sidebar and document number that match each other."
+    ],
+    "rules": [
+      {
+        "name": "The Three Inks Rule",
+        "body": "Form ink draws structure and location, data ink carries content, canary marks RNDS. A new element picks exactly one role before it picks a colour.",
+        "section": "colors"
+      },
+      {
+        "name": "The Second Copy Rule",
+        "body": "Anything that is specific to RNDS (profile, column, legacy URI, hero sheet) sits on via2 with via2-ink text. BR Core material never does.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Source Rule",
+        "body": "No colour or font literal outside `src/styles/tokens.css`; components reference `--isb-*` or `--sl-*` variables only.",
+        "section": "colors"
+      },
+      {
+        "name": "The Width Axis Rule",
+        "body": "Hierarchy in Archivo is set by `font-stretch`: about 78% for labels and stamps, 90 to 105% for navigation and card titles, 116 to 118% for page and hero titles. Do not add another display family.",
+        "section": "typography"
+      },
+      {
+        "name": "The Labelled Field Rule",
+        "body": "A value shown as data (canonical URL, status, version, resource type) sits under a Label in form ink. Labels name fields; they never float above a heading as decoration.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Form Rule",
+        "body": "Surfaces are flat at rest and on hover; hover changes fill to paper-2, never adds a shadow or lift.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** add every new colour or font to `src/styles/tokens.css` as a variable, in both the dark (carbon) and light (1ª via) blocks, and reference it from components.",
+      "**Do** frame grouped data in 1px form ink and divide inside it with hairlines (form ink at 38% or 18%).",
+      "**Do** put RNDS-specific material on via2 with via2-ink text, and label which copy a block belongs to.",
+      "**Do** show status as a stamp: 1.5px `currentColor` outline, condensed caps, -2deg.",
+      "**Do** set Archivo hierarchy with the width axis: about 78% for labels, 116 to 118% for page and hero titles.",
+      "**Do** keep hover as a paper-2 fill or a form-ink colour shift, with 160ms transitions that drop under reduced motion."
+    ],
+    "donts": [
+      "**Don't** round anything; radius is 0 on every surface and control.",
+      "**Don't** use shadows for elevation; the copy-lift shadow belongs only to overlapping sheets.",
+      "**Don't** use form ink for body text or large fills; it is for structure and location only.",
+      "**Don't** render badges or status as filled, rounded pills.",
+      "**Don't** put BR Core material on the canary copy.",
+      "**Don't** use gov.br colours, the brasão or Ministério da Saúde marks, or anything that reads as an official government page."
+    ]
+  }
+}

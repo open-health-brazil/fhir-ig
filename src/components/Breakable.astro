@@ -1,0 +1,14 @@
+---
+// Renders text with line-break opportunities after the given characters, so long
+// canonical URLs and element paths wrap at "/" or "." instead of mid-word.
+interface Props {
+	text: string;
+	/** Characters that may end a line, e.g. "/" for URLs or ".:" for element paths. */
+	after?: string;
+}
+
+const { text, after = '/' } = Astro.props;
+const parts = text.split(new RegExp(`(?<=[${after.replace(/[\]\\^-]/g, '\\$&')}])`));
+---
+
+{parts.map((part, i) => (i > 0 ? <><wbr />{part}</> : part))}

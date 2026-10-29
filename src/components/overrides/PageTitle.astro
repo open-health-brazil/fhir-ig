@@ -1,0 +1,95 @@
+---
+// Page title followed by a row of form fields: track, section, document number and
+// last update. The number matches the CSS counters that number the sidebar.
+import Default from '@astrojs/starlight/components/PageTitle.astro';
+
+type Entry = (typeof Astro.locals.starlightRoute.sidebar)[number];
+
+function findPath(entries: Entry[], trail: { label: string; n: number }[] = []): { label: string; n: number }[] | undefined {
+	for (const [i, entry] of entries.entries()) {
+		const step = [...trail, { label: entry.label, n: i + 1 }];
+		if (entry.type === 'link' && entry.isCurrent) return step;
+		if (entry.type === 'group') {
+			const found = findPath(entry.entries, step);
+			if (found) return found;
+		}
+	}
+}
+
+const { sidebar, lastUpdated } = Astro.locals.starlightRoute;
+const path = findPath(sidebar);
+const groups = path?.slice(0, -1) ?? [];
+const fields = [
+	groups[0] && { label: 'Trilha', value: groups[0].label },
+	groups.length > 1 && { label: 'Seção', value: groups.at(-1)!.label },
+	path && { label: 'Documento', value: path.map((s) => s.n).join('.'), mono: true },
+	lastUpdated && {
+		label: 'Atualizado em',
+		value: lastUpdated.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }),
+	},
+].filter(Boolean) as { label: string; value: string; mono?: boolean }[];
+---
+
+<Default />
+{
+	fields.length > 0 && (
+		<dl class="isb-docmeta">
+			{fields.map((f) => (
+				<div>
+					<dt class="isb-label">{f.label}</dt>
+					<dd class:list={{ mono: f.mono }}>{f.value}</dd>
+				</div>
+			))}
+		</dl>
+	)
+}
+
+<style>
+	:global(h1#_top) {
+		font-family: var(--isb-font-display);
+		font-stretch: 116%;
+		font-weight: 800;
+		line-height: 0.98;
+		letter-spacing: -0.025em;
+		text-wrap: balance;
+		color: var(--isb-data-ink);
+	}
+	.isb-docmeta {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 1.5rem 0 0;
+		border-top: 1px solid var(--isb-form-ink);
+	}
+	.isb-docmeta > div {
+		padding: 0.5rem 1.25rem 0.625rem 0;
+		margin-inline-end: 1.25rem;
+		border-inline-end: 1px solid var(--isb-hair);
+	}
+	.isb-docmeta > div:last-child {
+		border-inline-end: 0;
+	}
+	@media (max-width: 40rem) {
+		.isb-docmeta {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+		}
+		.isb-docmeta > div {
+			margin-inline-end: 0;
+			padding-inline-start: 0.75rem;
+			border-inline-end: 0;
+			border-bottom: 1px solid var(--isb-hair);
+		}
+		.isb-docmeta > div:nth-child(odd) {
+			padding-inline-start: 0;
+			border-inline-end: 1px solid var(--isb-hair);
+		}
+	}
+	dd {
+		margin: 0.25rem 0 0;
+		font-size: var(--sl-text-sm);
+		color: var(--isb-data-ink);
+	}
+	dd.mono {
+		font-family: var(--__sl-font-mono);
+	}
+</style>
